@@ -8,7 +8,10 @@ const archivo = Archivo({ subsets: ['latin'], axes: ['wdth'], variable: '--font-
 const plexMono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '500'], variable: '--font-plex-mono', display: 'swap' });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ||
+      (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : 'http://localhost:3000'),
+  ),
   title: { default: 'Godet — le garage de votre parc d’engins', template: '%s · Godet' },
   description:
     'Carnet d’entretien numérique des machines de chantier : services, réparations, pièces, coûts, photos et vidéos, échéances. Pensé en Suisse, pour les entreprises de construction.',

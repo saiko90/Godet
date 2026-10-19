@@ -71,6 +71,8 @@ export interface UploadOptions {
   fileName?: string;
   /** Date de prise de vue (par défaut : maintenant). */
   takenAt?: string;
+  /** Avancement de l'envoi (0 à 1), quand le transport le permet. */
+  onProgress?: (fraction: number) => void;
 }
 
 export interface GarageRepo {

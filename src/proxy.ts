@@ -3,7 +3,7 @@ import { NextResponse, type NextRequest } from 'next/server';
 import { SUPABASE_PUBLISHABLE_KEY, SUPABASE_URL } from '@/lib/env';
 
 // Pages réservées aux personnes connectées.
-const PRIVATE = ['/garage', '/bienvenue', '/parametres'];
+const PRIVATE = ['/garage', '/bienvenue', '/parametres', '/carnet'];
 
 /** Rafraîchit la session Supabase à chaque requête et protège les pages privées. */
 export async function proxy(request: NextRequest) {

@@ -1,0 +1,37 @@
+/* Laboratoire du moteur 3D (développement uniquement). */
+.labo { position: fixed; inset: 0; overflow: hidden; background: var(--night); }
+.labo-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; outline: none; }
+.labo-labels { position: absolute; inset: 0; pointer-events: none; z-index: 4; overflow: hidden; }
+.labo-bar {
+  position: absolute; z-index: 10; top: 0; left: 0; right: 0; display: grid; gap: 8px;
+  padding: calc(env(safe-area-inset-top, 0px) + 12px) max(16px, env(safe-area-inset-right, 0px)) 18px max(16px, env(safe-area-inset-left, 0px));
+  background: linear-gradient(to bottom, rgba(8, 9, 11, 0.9), rgba(8, 9, 11, 0));
+  pointer-events: none;
+}
+.labo-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; pointer-events: auto; }
+.labo-row .seg button { min-height: 40px; min-width: 44px; }
+.labo-row .seg button:not([aria-pressed="true"]) { background: var(--glass); }
+.labo-small { min-height: 40px; padding: 0 14px; font-size: var(--t-sm); }
+.labo-select { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 10px; border-radius: 12px; border: 1px solid var(--line); background: var(--glass); font-size: var(--t-sm); }
+.labo-select span { color: var(--steel); }
+.labo-select select { background: transparent; border: 0; color: var(--chalk); min-height: 36px; }
+.labo-select select option { background: var(--graphite); }
+.labo-status { margin: 0; color: var(--steel); font-size: var(--t-sm); font-variant-numeric: tabular-nums; }
+.labo-sheet {
+  position: absolute; z-index: 20; top: calc(env(safe-area-inset-top, 0px) + 120px); right: 16px; bottom: 16px; width: 420px;
+  padding: 22px; border-radius: 20px; background: var(--glass); border: 1px solid var(--line); backdrop-filter: blur(20px);
+  display: grid; align-content: start; gap: 10px;
+}
+.labo-sheet h2 { margin: 0; font-family: var(--f-display); font-weight: 400; letter-spacing: 0.14em; font-size: 1.6rem; }
+.labo-shot { position: absolute; z-index: 12; left: 16px; bottom: 16px; width: 200px; border-radius: 12px; overflow: hidden; border: 1px solid var(--line-strong); }
+.labo-shot img { display: block; width: 100%; height: auto; }
+.labo-error { position: absolute; z-index: 30; inset: 0; display: grid; place-items: center; padding: 24px; text-align: center; background: rgba(8, 9, 11, 0.8); }
+.labo-mobile { display: none; }
+@media (max-width: 760px) {
+  .labo-mobile { display: flex; }
+  .labo-bar:not(.open) .labo-tools { display: none; }
+  .labo-bar.open { background: rgba(8, 9, 11, 0.92); }
+  .labo-sheet { top: auto; left: 0; right: 0; bottom: 0; width: auto; height: 50%; border-radius: 22px 22px 0 0; }
+  .labo-bar .icon-btn .lbl { display: none; }
+  .labo-status { width: 100%; }
+}

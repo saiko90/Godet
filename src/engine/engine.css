@@ -1,0 +1,44 @@
+/* Étiquettes flottantes du showroom 3D (complète .tag, .dot, .hot, .hide de globals.css). */
+.gd-tag {
+  pointer-events: auto;
+  cursor: pointer;
+  will-change: transform, opacity;
+  transform-origin: 50% calc(100% + 14px);
+  user-select: none;
+  -webkit-user-select: none;
+}
+.gd-tag.hide { pointer-events: none; }
+.gd-tag span { color: var(--steel); }
+/* fine tige qui relie l'étiquette à la machine */
+.gd-tag::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 1px;
+  height: 14px;
+  background: linear-gradient(var(--line-strong), rgba(236, 232, 222, 0));
+  pointer-events: none;
+}
+.gd-tag.hot::after { background: linear-gradient(var(--paint), rgba(243, 183, 27, 0)); }
+.gd-tag.hot { box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45); }
+.gd-tag .gd-alerts {
+  display: inline-grid;
+  place-items: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  margin-left: 2px;
+  border-radius: 999px;
+  background: var(--warn-soft);
+  color: var(--warn);
+  font-family: var(--f-mono);
+  font-style: normal;
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+.gd-tag .gd-alerts.bad { background: var(--bad-soft); color: var(--bad); }
+@media (prefers-reduced-motion: reduce) {
+  .gd-tag { transition: none; }
+}
