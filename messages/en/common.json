@@ -1,0 +1,56 @@
+{
+  "brand": "Godet",
+  "tagline": "The garage for your equipment fleet",
+  "meta": {
+    "title": "Godet — the garage for your equipment fleet",
+    "titleTemplate": "%s · Godet",
+    "description": "Digital maintenance log for construction machinery: services, repairs, parts, costs, photos and videos, due dates. Designed in Switzerland for construction companies.",
+    "ogDescription": "The maintenance log of every machine, in a 3D showroom. Services, repairs, parts, costs, photos."
+  },
+  "languageLabel": "Language",
+  "languages": { "fr": "Français", "de": "Deutsch", "it": "Italiano", "en": "English" },
+  "actions": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "close": "Close",
+    "back": "Back",
+    "retry": "Try again",
+    "send": "Send",
+    "edit": "Edit",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "copy": "Copy",
+    "copied": "Copied",
+    "continue": "Continue",
+    "next": "Next",
+    "previous": "Previous",
+    "open": "Open",
+    "print": "Print"
+  },
+  "loading": {
+    "default": "Loading…",
+    "garage": "Opening the garage…",
+    "page": "Preparing the page…"
+  },
+  "errors": {
+    "generic": "Something went wrong. Please try again in a moment.",
+    "network": "No connection. Please check your network.",
+    "forbidden": "Your role does not allow this action.",
+    "sessionExpired": "Your session has expired. Please sign in again.",
+    "rateLimited": "Too many requests in a short time. Please try again later.",
+    "busy": "The service is very busy. Please try again in a few minutes."
+  },
+  "countries": {
+    "CH": "Switzerland",
+    "DE": "Germany",
+    "AT": "Austria",
+    "IT": "Italy",
+    "FR": "France",
+    "LI": "Liechtenstein",
+    "BE": "Belgium",
+    "LU": "Luxembourg",
+    "GB": "United Kingdom",
+    "OTHER": "Other country"
+  },
+  "currency": { "CHF": "Swiss francs (CHF)", "EUR": "euros (EUR)", "GBP": "pounds sterling (GBP)", "USD": "US dollars (USD)" }
+}

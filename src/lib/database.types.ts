@@ -48,6 +48,87 @@ export type Database = {
         }
         Relationships: []
       }
+      contact_messages: {
+        Row: {
+          admin_note: string | null
+          company: string | null
+          consent: boolean
+          country: string | null
+          created_at: string
+          email: string
+          fleet_size: string | null
+          id: string
+          kind: string
+          locale: string | null
+          message: string
+          name: string | null
+          phone: string | null
+          source: string | null
+          status: string
+          user_id: string | null
+        }
+        Insert: {
+          admin_note?: string | null
+          company?: string | null
+          consent?: boolean
+          country?: string | null
+          created_at?: string
+          email: string
+          fleet_size?: string | null
+          id?: string
+          kind?: string
+          locale?: string | null
+          message: string
+          name?: string | null
+          phone?: string | null
+          source?: string | null
+          status?: string
+          user_id?: string | null
+        }
+        Update: {
+          admin_note?: string | null
+          company?: string | null
+          consent?: boolean
+          country?: string | null
+          created_at?: string
+          email?: string
+          fleet_size?: string | null
+          id?: string
+          kind?: string
+          locale?: string | null
+          message?: string
+          name?: string | null
+          phone?: string | null
+          source?: string | null
+          status?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      demo_visits: {
+        Row: {
+          created_at: string
+          id: number
+          locale: string | null
+          path: string | null
+          ref_code: string
+        }
+        Insert: {
+          created_at?: string
+          id?: never
+          locale?: string | null
+          path?: string | null
+          ref_code: string
+        }
+        Update: {
+          created_at?: string
+          id?: never
+          locale?: string | null
+          path?: string | null
+          ref_code?: string
+        }
+        Relationships: []
+      }
       entries: {
         Row: {
           cost_labour: number
@@ -196,6 +277,59 @@ export type Database = {
           },
         ]
       }
+      ideas: {
+        Row: {
+          admin_note: string | null
+          category: string
+          created_at: string
+          details: string | null
+          email: string | null
+          id: string
+          locale: string | null
+          org_id: string | null
+          status: string
+          title: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          admin_note?: string | null
+          category?: string
+          created_at?: string
+          details?: string | null
+          email?: string | null
+          id?: string
+          locale?: string | null
+          org_id?: string | null
+          status?: string
+          title: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          admin_note?: string | null
+          category?: string
+          created_at?: string
+          details?: string | null
+          email?: string | null
+          id?: string
+          locale?: string | null
+          org_id?: string | null
+          status?: string
+          title?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ideas_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       invitations: {
         Row: {
           accepted_at: string | null
@@ -242,6 +376,21 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      job_runs: {
+        Row: {
+          job: string
+          last_run_at: string
+        }
+        Insert: {
+          job: string
+          last_run_at: string
+        }
+        Update: {
+          job?: string
+          last_run_at?: string
+        }
+        Relationships: []
       }
       machines: {
         Row: {
@@ -420,11 +569,84 @@ export type Database = {
           },
         ]
       }
+      notification_log: {
+        Row: {
+          channel: string
+          created_at: string
+          detail: string | null
+          id: number
+          kind: string
+          org_id: string | null
+          status: string
+          user_id: string | null
+        }
+        Insert: {
+          channel?: string
+          created_at?: string
+          detail?: string | null
+          id?: never
+          kind: string
+          org_id?: string | null
+          status: string
+          user_id?: string | null
+        }
+        Update: {
+          channel?: string
+          created_at?: string
+          detail?: string | null
+          id?: never
+          kind?: string
+          org_id?: string | null
+          status?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      notification_prefs: {
+        Row: {
+          email_enabled: boolean
+          frequency: string
+          last_digest_at: string | null
+          lead_days: number
+          lead_hours: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          email_enabled?: boolean
+          frequency?: string
+          last_digest_at?: string | null
+          lead_days?: number
+          lead_hours?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          email_enabled?: boolean
+          frequency?: string
+          last_digest_at?: string | null
+          lead_days?: number
+          lead_hours?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notification_prefs_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       organizations: {
         Row: {
           canton: string | null
+          country: string
           created_at: string
           created_by: string | null
+          currency: string
           id: string
           name: string
           plan: string
@@ -432,8 +654,10 @@ export type Database = {
         }
         Insert: {
           canton?: string | null
+          country?: string
           created_at?: string
           created_by?: string | null
+          currency?: string
           id?: string
           name: string
           plan?: string
@@ -441,8 +665,10 @@ export type Database = {
         }
         Update: {
           canton?: string | null
+          country?: string
           created_at?: string
           created_by?: string | null
+          currency?: string
           id?: string
           name?: string
           plan?: string
@@ -450,24 +676,164 @@ export type Database = {
         }
         Relationships: []
       }
+      outreach: {
+        Row: {
+          approved_at: string | null
+          approved_by: string | null
+          body: string
+          channel: string
+          created_at: string
+          id: string
+          locale: string
+          prospect_id: string
+          sent_at: string | null
+          status: string
+          step: number
+          subject: string | null
+        }
+        Insert: {
+          approved_at?: string | null
+          approved_by?: string | null
+          body: string
+          channel: string
+          created_at?: string
+          id?: string
+          locale: string
+          prospect_id: string
+          sent_at?: string | null
+          status?: string
+          step?: number
+          subject?: string | null
+        }
+        Update: {
+          approved_at?: string | null
+          approved_by?: string | null
+          body?: string
+          channel?: string
+          created_at?: string
+          id?: string
+          locale?: string
+          prospect_id?: string
+          sent_at?: string | null
+          status?: string
+          step?: number
+          subject?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "outreach_prospect_id_fkey"
+            columns: ["prospect_id"]
+            isOneToOne: false
+            referencedRelation: "prospects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           created_at: string
           email: string | null
           full_name: string | null
           id: string
+          locale: string
+          signup_ref: string | null
         }
         Insert: {
           created_at?: string
           email?: string | null
           full_name?: string | null
           id: string
+          locale?: string
+          signup_ref?: string | null
         }
         Update: {
           created_at?: string
           email?: string | null
           full_name?: string | null
           id?: string
+          locale?: string
+          signup_ref?: string | null
+        }
+        Relationships: []
+      }
+      prospects: {
+        Row: {
+          address: string | null
+          channel: string | null
+          city: string | null
+          company: string
+          country: string
+          created_at: string
+          created_by: string
+          email: string | null
+          fleet_estimate: string | null
+          id: string
+          legal_id: string | null
+          locale: string | null
+          next_action_at: string | null
+          notes: string | null
+          phone: string | null
+          postal_code: string | null
+          ref_code: string | null
+          region: string | null
+          segment: string
+          signals: string | null
+          source: string
+          status: string
+          updated_at: string
+          website: string | null
+        }
+        Insert: {
+          address?: string | null
+          channel?: string | null
+          city?: string | null
+          company: string
+          country: string
+          created_at?: string
+          created_by?: string
+          email?: string | null
+          fleet_estimate?: string | null
+          id?: string
+          legal_id?: string | null
+          locale?: string | null
+          next_action_at?: string | null
+          notes?: string | null
+          phone?: string | null
+          postal_code?: string | null
+          ref_code?: string | null
+          region?: string | null
+          segment?: string
+          signals?: string | null
+          source: string
+          status?: string
+          updated_at?: string
+          website?: string | null
+        }
+        Update: {
+          address?: string | null
+          channel?: string | null
+          city?: string | null
+          company?: string
+          country?: string
+          created_at?: string
+          created_by?: string
+          email?: string | null
+          fleet_estimate?: string | null
+          id?: string
+          legal_id?: string | null
+          locale?: string | null
+          next_action_at?: string | null
+          notes?: string | null
+          phone?: string | null
+          postal_code?: string | null
+          ref_code?: string | null
+          region?: string | null
+          segment?: string
+          signals?: string | null
+          source?: string
+          status?: string
+          updated_at?: string
+          website?: string | null
         }
         Relationships: []
       }
@@ -541,6 +907,19 @@ export type Database = {
     Functions: {
       accept_invitation: { Args: { p_token: string }; Returns: string }
       create_demo_machine: { Args: { p_org: string }; Returns: string }
+      create_demo_machine_v2: {
+        Args: { p_org: string; p_payload: Json }
+        Returns: string
+      }
+      create_org: {
+        Args: {
+          p_canton?: string
+          p_country?: string
+          p_locale?: string
+          p_name: string
+        }
+        Returns: string
+      }
       create_organization: {
         Args: { p_canton?: string; p_name: string }
         Returns: string
@@ -555,6 +934,13 @@ export type Database = {
           role: Database["public"]["Enums"]["member_role"]
         }[]
       }
+      is_platform_admin: { Args: never; Returns: boolean }
+      log_demo_visit: {
+        Args: { p_locale?: string; p_path?: string; p_ref: string }
+        Returns: undefined
+      }
+      submit_contact: { Args: { p: Json }; Returns: string }
+      submit_idea: { Args: { p: Json }; Returns: string }
     }
     Enums: {
       entry_kind:

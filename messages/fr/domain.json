@@ -1,0 +1,53 @@
+{
+  "machineKinds": {
+    "pelle": { "label": "Pelle sur chenilles", "short": "Pelle" },
+    "mini_pelle": { "label": "Mini-pelle", "short": "Mini-pelle" },
+    "chargeuse": { "label": "Chargeuse sur pneus", "short": "Chargeuse" },
+    "dumper": { "label": "Dumper", "short": "Dumper" },
+    "camion": { "label": "Camion", "short": "Camion" },
+    "grue": { "label": "Grue", "short": "Grue" },
+    "rouleau": { "label": "Rouleau compresseur", "short": "Rouleau" },
+    "autre": { "label": "Autre engin", "short": "Engin" }
+  },
+  "entryKinds": {
+    "service": { "label": "Service", "hint": "Vidanges, filtres, graissage selon le plan du constructeur" },
+    "controle": { "label": "Contrôle", "hint": "Contrôle de sécurité, expertise, contrôle annuel" },
+    "inspection": { "label": "Inspection", "hint": "Tour de la machine, niveaux, usure, nettoyage" },
+    "reparation": { "label": "Réparation", "hint": "Panne, fuite, casse : ce qui a été réparé et ce que ça a coûté" },
+    "piece": { "label": "Pièce", "hint": "Pièce changée ou achetée, avec sa référence et sa garantie" },
+    "note": { "label": "Note", "hint": "Remarque, observation du machiniste" }
+  },
+  "repairStatus": {
+    "fait": "Réparée",
+    "en_cours": "En cours",
+    "attente_piece": "En attente de pièce"
+  },
+  "roles": {
+    "owner": { "label": "Propriétaire", "hint": "Tous les droits, y compris l’entreprise et l’abonnement." },
+    "admin": { "label": "Administrateur", "hint": "Gère le parc, les échéances et l’équipe." },
+    "mechanic": { "label": "Mécanicien", "hint": "Ajoute et modifie les machines, les échéances et toutes les saisies." },
+    "operator": { "label": "Machiniste", "hint": "Consulte le parc, saisit les heures, les interventions et les photos." }
+  },
+  "costCategories": {
+    "entretien": "Entretien",
+    "reparations": "Réparations",
+    "pieces": "Pièces"
+  },
+  "health": {
+    "ok": "Opérationnelle",
+    "warn": "À surveiller",
+    "bad": "Échéance dépassée"
+  },
+  "due": {
+    "inHours": "dans {hours}",
+    "overdueHours": "dépassé de {hours}",
+    "onDate": "le {date}",
+    "lateDays": "{days, plural, one {en retard de # jour} other {en retard de # jours}}",
+    "hintEstimate": "Vers le {date} au rythme {rateKind, select, actual {actuel} other {moyen}} (≈ {rate} h par semaine)",
+    "hintAsap": "À faire dès que possible",
+    "hintLate": "En retard",
+    "hintToday": "Aujourd’hui",
+    "hintInDays": "{days, plural, one {Dans # jour} other {Dans # jours}}"
+  },
+  "machineTitle": "{kind} {weight} t"
+}

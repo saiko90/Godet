@@ -1,0 +1,56 @@
+{
+  "brand": "Godet",
+  "tagline": "Die Garage für Ihren Maschinenpark",
+  "meta": {
+    "title": "Godet — die Garage für Ihren Maschinenpark",
+    "titleTemplate": "%s · Godet",
+    "description": "Digitales Wartungsheft für Baumaschinen: Wartungen, Reparaturen, Ersatzteile, Kosten, Fotos und Videos, Termine. Entwickelt in der Schweiz für Bauunternehmen.",
+    "ogDescription": "Das Wartungsheft jeder Maschine, in einem 3D-Showroom. Wartungen, Reparaturen, Ersatzteile, Kosten, Fotos."
+  },
+  "languageLabel": "Sprache",
+  "languages": { "fr": "Français", "de": "Deutsch", "it": "Italiano", "en": "English" },
+  "actions": {
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "close": "Schliessen",
+    "back": "Zurück",
+    "retry": "Erneut versuchen",
+    "send": "Senden",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "confirm": "Bestätigen",
+    "copy": "Kopieren",
+    "copied": "Kopiert",
+    "continue": "Weiter",
+    "next": "Weiter",
+    "previous": "Zurück",
+    "open": "Öffnen",
+    "print": "Drucken"
+  },
+  "loading": {
+    "default": "Wird geladen…",
+    "garage": "Die Garage wird geöffnet…",
+    "page": "Seite wird vorbereitet…"
+  },
+  "errors": {
+    "generic": "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es gleich noch einmal.",
+    "network": "Keine Verbindung. Bitte prüfen Sie Ihr Netzwerk.",
+    "forbidden": "Ihre Rolle erlaubt diese Aktion nicht.",
+    "sessionExpired": "Ihre Sitzung ist abgelaufen. Bitte melden Sie sich erneut an.",
+    "rateLimited": "Zu viele Anfragen in kurzer Zeit. Bitte versuchen Sie es später erneut.",
+    "busy": "Der Dienst ist stark ausgelastet. Bitte versuchen Sie es in einigen Minuten erneut."
+  },
+  "countries": {
+    "CH": "Schweiz",
+    "DE": "Deutschland",
+    "AT": "Österreich",
+    "IT": "Italien",
+    "FR": "Frankreich",
+    "LI": "Liechtenstein",
+    "BE": "Belgien",
+    "LU": "Luxemburg",
+    "GB": "Vereinigtes Königreich",
+    "OTHER": "Anderes Land"
+  },
+  "currency": { "CHF": "Schweizer Franken (CHF)", "EUR": "Euro (EUR)", "GBP": "Pfund Sterling (GBP)", "USD": "US-Dollar (USD)" }
+}

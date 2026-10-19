@@ -1,7 +1,7 @@
 'use client';
 
 import { useActionState, useId } from 'react';
-import { creerEntreprise } from '@/app/bienvenue/actions';
+import { creerEntreprise } from '@/app/[locale]/bienvenue/actions';
 import { CANTONS } from './cantons';
 import { Alert, FieldError } from './Form';
 import type { BienvenueState } from './types';

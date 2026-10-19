@@ -1,0 +1,56 @@
+{
+  "brand": "Godet",
+  "tagline": "Le garage de votre parc d’engins",
+  "meta": {
+    "title": "Godet — le garage de votre parc d’engins",
+    "titleTemplate": "%s · Godet",
+    "description": "Carnet d’entretien numérique des machines de chantier : services, réparations, pièces, coûts, photos et vidéos, échéances. Pensé en Suisse, pour les entreprises de construction.",
+    "ogDescription": "Le carnet d’entretien de chaque machine, dans un showroom 3D. Services, réparations, pièces, coûts, photos."
+  },
+  "languageLabel": "Langue",
+  "languages": { "fr": "Français", "de": "Deutsch", "it": "Italiano", "en": "English" },
+  "actions": {
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "close": "Fermer",
+    "back": "Retour",
+    "retry": "Réessayer",
+    "send": "Envoyer",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "confirm": "Confirmer",
+    "copy": "Copier",
+    "copied": "Copié",
+    "continue": "Continuer",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "open": "Ouvrir",
+    "print": "Imprimer"
+  },
+  "loading": {
+    "default": "Chargement…",
+    "garage": "Ouverture du garage…",
+    "page": "Préparation de la page…"
+  },
+  "errors": {
+    "generic": "Une erreur est survenue. Réessayez dans un instant.",
+    "network": "Connexion impossible. Vérifiez votre réseau.",
+    "forbidden": "Votre rôle ne permet pas cette action.",
+    "sessionExpired": "Votre session a expiré. Reconnectez-vous.",
+    "rateLimited": "Trop de demandes en peu de temps. Réessayez plus tard.",
+    "busy": "Le service est très sollicité. Réessayez dans quelques minutes."
+  },
+  "countries": {
+    "CH": "Suisse",
+    "DE": "Allemagne",
+    "AT": "Autriche",
+    "IT": "Italie",
+    "FR": "France",
+    "LI": "Liechtenstein",
+    "BE": "Belgique",
+    "LU": "Luxembourg",
+    "GB": "Royaume-Uni",
+    "OTHER": "Autre pays"
+  },
+  "currency": { "CHF": "francs suisses (CHF)", "EUR": "euros (EUR)", "GBP": "livres sterling (GBP)", "USD": "dollars (USD)" }
+}

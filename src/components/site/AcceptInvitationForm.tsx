@@ -2,7 +2,7 @@
 
 import { useActionState } from 'react';
 import { Icon } from '@/components/Icons';
-import { accepterInvitation } from '@/app/invitation/actions';
+import { accepterInvitation } from '@/app/[locale]/invitation/actions';
 import { Alert } from './Form';
 import type { MessageState } from './types';
 

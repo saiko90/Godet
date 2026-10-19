@@ -1,0 +1,56 @@
+{
+  "brand": "Godet",
+  "tagline": "Il garage del vostro parco macchine",
+  "meta": {
+    "title": "Godet — il garage del vostro parco macchine",
+    "titleTemplate": "%s · Godet",
+    "description": "Libretto di manutenzione digitale per macchine edili: manutenzioni, riparazioni, ricambi, costi, foto e video, scadenze. Pensato in Svizzera per le imprese di costruzione.",
+    "ogDescription": "Il libretto di manutenzione di ogni macchina, in uno showroom 3D. Manutenzioni, riparazioni, ricambi, costi, foto."
+  },
+  "languageLabel": "Lingua",
+  "languages": { "fr": "Français", "de": "Deutsch", "it": "Italiano", "en": "English" },
+  "actions": {
+    "save": "Salva",
+    "cancel": "Annulla",
+    "close": "Chiudi",
+    "back": "Indietro",
+    "retry": "Riprova",
+    "send": "Invia",
+    "edit": "Modifica",
+    "delete": "Elimina",
+    "confirm": "Conferma",
+    "copy": "Copia",
+    "copied": "Copiato",
+    "continue": "Continua",
+    "next": "Avanti",
+    "previous": "Indietro",
+    "open": "Apri",
+    "print": "Stampa"
+  },
+  "loading": {
+    "default": "Caricamento…",
+    "garage": "Apertura del garage…",
+    "page": "Preparazione della pagina…"
+  },
+  "errors": {
+    "generic": "Si è verificato un errore. Riprovi tra un istante.",
+    "network": "Connessione impossibile. Verifichi la rete.",
+    "forbidden": "Il Suo ruolo non consente questa azione.",
+    "sessionExpired": "La sessione è scaduta. Effettui di nuovo l’accesso.",
+    "rateLimited": "Troppe richieste in poco tempo. Riprovi più tardi.",
+    "busy": "Il servizio è molto richiesto. Riprovi tra qualche minuto."
+  },
+  "countries": {
+    "CH": "Svizzera",
+    "DE": "Germania",
+    "AT": "Austria",
+    "IT": "Italia",
+    "FR": "Francia",
+    "LI": "Liechtenstein",
+    "BE": "Belgio",
+    "LU": "Lussemburgo",
+    "GB": "Regno Unito",
+    "OTHER": "Altro paese"
+  },
+  "currency": { "CHF": "franchi svizzeri (CHF)", "EUR": "euro (EUR)", "GBP": "sterline (GBP)", "USD": "dollari (USD)" }
+}

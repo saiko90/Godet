@@ -4,10 +4,29 @@ Godet (Swiss Digital Studio) : le carnet d'entretien numérique des machines de 
 un showroom 3D de luxe. Une entreprise ajoute son parc ; chaque machine a son carnet (services, réparations,
 pièces, contrôles, notes), ses échéances, ses relevés d'heures, ses coûts, ses photos, vidéos et documents.
 
-## Langue et ton
-- Interface en français de Suisse romande, vouvoiement, phrases courtes, pas de jargon technique.
-- Formats suisses (src/lib/format.ts) : `6’842 h`, `CHF 1’240`, `14.08.2026`. Apostrophe typographique `’`.
-- Vocabulaire : machiniste, chef d'atelier, chantier, service 500 h, contrôle annuel de sécurité, compteur d'heures.
+## Langues (next-intl)
+- 4 langues : français (défaut, sans préfixe : `/garage`), allemand `/de`, italien `/it`, anglais `/en`.
+  Configuration : `src/i18n/routing.ts` ; liens et redirections avec `Link`, `redirect`, `useRouter`, `usePathname`
+  de `@/i18n/navigation` (jamais `next/link` ni le `redirect` de `next/navigation` pour une page localisée).
+- Toutes les pages sont sous `src/app/[locale]/` ; `params` est une Promise (`const { locale } = await params`) et
+  chaque page/layout appelle `setRequestLocale(locale)`.
+- Textes : `messages/<langue>/<zone>.json` (zones : common, domain, site, auth, settings, carnet, contact, ideas, garage,
+  demo, notifications, emails, admin, legal). Le français fait foi ; `node scripts/check-messages.mjs` vérifie que
+  chaque langue a les mêmes clés et les mêmes variables. Syntaxe ICU (`{count, plural, one {…} other {…}}`).
+- Côté client : `useTranslations('zone')` ; le layout racine ne fournit que `common` et `domain` au navigateur :
+  chaque zone pose son propre `NextIntlClientProvider` avec `pickMessages(messages, [...])`.
+  Côté serveur : `getTranslations({ locale, namespace })`.
+- Formats : `makeFormat({ locale, country, currency })` (serveur) ou `useFormat()` sous `FormatProvider` (client) :
+  `6’842 h` et `CHF 1’240` en Suisse dans toutes les langues, `6.842 h` et `1.240 €` en Allemagne, etc.
+  Les anciennes fonctions (`grp`, `hrs`, `chf`, `dateCH`…) sont en français suisse et à remplacer.
+- Textes métier traduits (types de machines, saisies, rôles, échéances) : `useDomainText()` (client) ou
+  `getDomainText(locale, format)` (serveur), à partir des règles de `src/lib/domain.ts`.
+- Ton : vouvoiement en français, « Sie » en allemand (orthographe suisse : « ss », jamais « ß »), « Lei » en italien,
+  anglais britannique sobre. Phrases courtes, pas de jargon. Vocabulaire du chantier : machiniste / Maschinist /
+  operatore / operator ; service / Wartung / manutenzione / service ; compteur d'heures / Betriebsstunden /
+  contaore / hour meter.
+- Entreprise : pays (`organizations.country`, ISO) et devise (`currency`, CHF/EUR…) ; profil : `profiles.locale`
+  (langue des e-mails).
 
 ## Pile
 - Next.js 16 (App Router, `src/proxy.ts` remplace middleware), React 19, TypeScript strict.
@@ -19,8 +38,10 @@ Commandes : `npm run dev`, `npm run typecheck`, `npm run lint`, `npm run build`.
 Navigateur de test : Chromium de Playwright dans `/opt/pw-browsers` (ne pas lancer `playwright install`).
 
 ## Organisation
-- `src/app` : pages. Public : `/` (accueil), `/demo` (garage d'exemple, sans compte), `/connexion`, `/invitation/[token]`.
-  Privé (protégé par `src/proxy.ts`) : `/garage`, `/bienvenue` (création de l'entreprise), `/parametres`, `/carnet/[id]` (impression).
+- `src/app/[locale]` : pages. Public : `/` (accueil), `/demo` (garage d'exemple, sans compte), `/connexion`,
+  `/invitation/[token]`, `/contact`, `/idees`. Privé (protégé par `src/proxy.ts`) : `/garage`, `/bienvenue`,
+  `/parametres`, `/carnet/[id]` (impression), `/admin` (Swiss Digital Studio uniquement).
+- `src/proxy.ts` : session Supabase + protection des pages privées + langues (next-intl).
 - `src/engine` : moteur 3D. Contrat unique : `src/engine/types.ts` (`createShowroom`). Rien d'autre n'importe three.js.
 - `src/components/garage` : interface du garage (scène, fiche machine, saisies, mode atelier). Styles : `garage.css`.
 - `src/components/site` : pages du site et des comptes. Styles : `site.css`.
@@ -32,7 +53,15 @@ Navigateur de test : Chromium de Playwright dans `/opt/pw-browsers` (ne pas lanc
 
 ## Données et sécurité
 - Tables : organizations, profiles, memberships (rôles owner/admin/mechanic/operator), invitations, machines,
-  schedules (échéances en heures ou en date), entries (carnet), hour_readings, media, audit_log.
+  schedules (échéances en heures ou en date), entries (carnet), hour_readings, media, audit_log ;
+  contact_messages, ideas (boîte à idées), notification_prefs, notification_log, job_runs ;
+  prospects, outreach, demo_visits (prospection des agents, réservée à l'administration).
+- Administration de la plateforme : `public.is_platform_admin()` (adresse e-mail confirmée inscrite dans
+  `private.platform_admin_emails`). RPC publiques ajoutées : `create_org`, `create_demo_machine_v2` (contenu
+  traduit fourni par `src/lib/demo-content/machine-payload.ts`), `submit_contact`, `submit_idea`, `log_demo_visit`.
+  Leurs erreurs sont des codes (`invalid_email`, `rate_limited`, `busy`…) que l'interface traduit.
+- Suivi des liens envoyés par les agents : paramètre `?ref=code` → cookie `godet-ref` (30 jours) → transmis à
+  l'inscription (`options.data.ref` → `profiles.signup_ref`).
 - RLS partout : on ne voit que les données des entreprises dont on est membre. Les fonctions d'accès vivent dans
   le schéma `private` (non exposé). RPC publiques : `create_organization`, `create_demo_machine`,
   `invitation_info`, `accept_invitation`.

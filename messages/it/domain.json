@@ -1,0 +1,53 @@
+{
+  "machineKinds": {
+    "pelle": { "label": "Escavatore cingolato", "short": "Escavatore" },
+    "mini_pelle": { "label": "Miniescavatore", "short": "Miniescavatore" },
+    "chargeuse": { "label": "Pala gommata", "short": "Pala" },
+    "dumper": { "label": "Dumper", "short": "Dumper" },
+    "camion": { "label": "Camion", "short": "Camion" },
+    "grue": { "label": "Gru", "short": "Gru" },
+    "rouleau": { "label": "Rullo compattatore", "short": "Rullo" },
+    "autre": { "label": "Altra macchina", "short": "Macchina" }
+  },
+  "entryKinds": {
+    "service": { "label": "Manutenzione", "hint": "Cambio olio, filtri, ingrassaggio secondo il piano del costruttore" },
+    "controle": { "label": "Controllo", "hint": "Verifica di sicurezza, perizia, controllo annuale" },
+    "inspection": { "label": "Ispezione", "hint": "Giro della macchina, livelli, usura, pulizia" },
+    "reparation": { "label": "Riparazione", "hint": "Guasto, perdita, rottura: cosa è stato riparato e quanto è costato" },
+    "piece": { "label": "Ricambio", "hint": "Pezzo sostituito o acquistato, con riferimento e garanzia" },
+    "note": { "label": "Nota", "hint": "Osservazione, segnalazione dell’operatore" }
+  },
+  "repairStatus": {
+    "fait": "Riparata",
+    "en_cours": "In corso",
+    "attente_piece": "In attesa del ricambio"
+  },
+  "roles": {
+    "owner": { "label": "Titolare", "hint": "Tutti i diritti, compresa l’impresa e l’abbonamento." },
+    "admin": { "label": "Amministratore", "hint": "Gestisce il parco, le scadenze e il team." },
+    "mechanic": { "label": "Meccanico", "hint": "Aggiunge e modifica macchine, scadenze e tutte le registrazioni." },
+    "operator": { "label": "Operatore", "hint": "Consulta il parco, registra ore, interventi e foto." }
+  },
+  "costCategories": {
+    "entretien": "Manutenzione",
+    "reparations": "Riparazioni",
+    "pieces": "Ricambi"
+  },
+  "health": {
+    "ok": "Operativa",
+    "warn": "Da tenere d’occhio",
+    "bad": "Scadenza superata"
+  },
+  "due": {
+    "inHours": "tra {hours}",
+    "overdueHours": "superato di {hours}",
+    "onDate": "il {date}",
+    "lateDays": "{days, plural, one {in ritardo di # giorno} other {in ritardo di # giorni}}",
+    "hintEstimate": "Verso il {date} al ritmo {rateKind, select, actual {attuale} other {medio}} (≈ {rate} h a settimana)",
+    "hintAsap": "Da fare il prima possibile",
+    "hintLate": "In ritardo",
+    "hintToday": "Oggi",
+    "hintInDays": "{days, plural, one {Tra # giorno} other {Tra # giorni}}"
+  },
+  "machineTitle": "{kind} {weight} t"
+}

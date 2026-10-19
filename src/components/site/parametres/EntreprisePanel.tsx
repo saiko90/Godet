@@ -2,7 +2,7 @@
 
 import { useActionState, useId } from 'react';
 import { Icon } from '@/components/Icons';
-import { changerEntrepriseActive, enregistrerEntreprise } from '@/app/parametres/actions';
+import { changerEntrepriseActive, enregistrerEntreprise } from '@/app/[locale]/parametres/actions';
 import { ROLES } from '@/lib/domain';
 import type { MemberRole } from '@/lib/types';
 import { CANTONS, cantonLabel } from '../cantons';

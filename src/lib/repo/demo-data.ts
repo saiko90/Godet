@@ -1272,6 +1272,8 @@ export function buildDemoSeed(today: string): DemoSeed {
     id: DEMO_ORG_ID,
     name: 'Entreprise Démo SA',
     canton: 'VS',
+    country: 'CH',
+    currency: 'CHF',
     plan: 'essai',
     trial_ends_at: zurichISO(addDays(today, 30), 0),
     created_by: DEMO_USER_ID,

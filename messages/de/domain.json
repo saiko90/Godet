@@ -1,0 +1,53 @@
+{
+  "machineKinds": {
+    "pelle": { "label": "Raupenbagger", "short": "Bagger" },
+    "mini_pelle": { "label": "Minibagger", "short": "Minibagger" },
+    "chargeuse": { "label": "Radlader", "short": "Radlader" },
+    "dumper": { "label": "Dumper", "short": "Dumper" },
+    "camion": { "label": "Lastwagen", "short": "Lastwagen" },
+    "grue": { "label": "Kran", "short": "Kran" },
+    "rouleau": { "label": "Walzenzug", "short": "Walze" },
+    "autre": { "label": "Andere Maschine", "short": "Maschine" }
+  },
+  "entryKinds": {
+    "service": { "label": "Wartung", "hint": "Ölwechsel, Filter, Schmierung nach Wartungsplan des Herstellers" },
+    "controle": { "label": "Prüfung", "hint": "Sicherheitsprüfung, Expertise, jährliche Kontrolle" },
+    "inspection": { "label": "Inspektion", "hint": "Rundgang, Füllstände, Verschleiss, Reinigung" },
+    "reparation": { "label": "Reparatur", "hint": "Panne, Leck, Bruch: was repariert wurde und was es gekostet hat" },
+    "piece": { "label": "Ersatzteil", "hint": "Ersetztes oder gekauftes Teil, mit Referenz und Garantie" },
+    "note": { "label": "Notiz", "hint": "Bemerkung, Beobachtung des Maschinisten" }
+  },
+  "repairStatus": {
+    "fait": "Repariert",
+    "en_cours": "In Arbeit",
+    "attente_piece": "Wartet auf Ersatzteil"
+  },
+  "roles": {
+    "owner": { "label": "Inhaber", "hint": "Alle Rechte, einschliesslich Unternehmen und Abonnement." },
+    "admin": { "label": "Administrator", "hint": "Verwaltet den Maschinenpark, die Termine und das Team." },
+    "mechanic": { "label": "Mechaniker", "hint": "Erfasst und bearbeitet Maschinen, Termine und alle Einträge." },
+    "operator": { "label": "Maschinist", "hint": "Sieht den Maschinenpark, erfasst Stunden, Arbeiten und Fotos." }
+  },
+  "costCategories": {
+    "entretien": "Wartung",
+    "reparations": "Reparaturen",
+    "pieces": "Ersatzteile"
+  },
+  "health": {
+    "ok": "Einsatzbereit",
+    "warn": "Im Auge behalten",
+    "bad": "Termin überschritten"
+  },
+  "due": {
+    "inHours": "in {hours}",
+    "overdueHours": "{hours} überfällig",
+    "onDate": "am {date}",
+    "lateDays": "{days, plural, one {# Tag überfällig} other {# Tage überfällig}}",
+    "hintEstimate": "Etwa am {date} beim {rateKind, select, actual {aktuellen} other {durchschnittlichen}} Tempo (≈ {rate} h pro Woche)",
+    "hintAsap": "So bald wie möglich erledigen",
+    "hintLate": "Überfällig",
+    "hintToday": "Heute",
+    "hintInDays": "{days, plural, one {In # Tag} other {In # Tagen}}"
+  },
+  "machineTitle": "{kind} {weight} t"
+}

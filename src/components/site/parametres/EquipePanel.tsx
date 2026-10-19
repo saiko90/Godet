@@ -3,7 +3,7 @@
 import { unstable_rethrow } from 'next/navigation';
 import { useActionState, useId, useOptimistic, useState, useTransition } from 'react';
 import { Icon } from '@/components/Icons';
-import { changerRole, inviterMembre, retirerMembre, revoquerInvitation } from '@/app/parametres/actions';
+import { changerRole, inviterMembre, retirerMembre, revoquerInvitation } from '@/app/[locale]/parametres/actions';
 import { ROLES } from '@/lib/domain';
 import { dateCH } from '@/lib/format';
 import type { Member, MemberRole } from '@/lib/types';

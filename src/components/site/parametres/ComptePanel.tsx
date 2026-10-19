@@ -3,7 +3,7 @@
 import { useActionState, useId } from 'react';
 import { Icon } from '@/components/Icons';
 import { seDeconnecter } from '@/app/auth/actions';
-import { changerMotDePasse, enregistrerNom, quitterEntreprise } from '@/app/parametres/actions';
+import { changerMotDePasse, enregistrerNom, quitterEntreprise } from '@/app/[locale]/parametres/actions';
 import { FieldError } from '../Form';
 import { PasswordInput } from '../PasswordInput';
 import { EMPTY_FORM } from '../types';

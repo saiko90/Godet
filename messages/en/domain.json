@@ -1,0 +1,53 @@
+{
+  "machineKinds": {
+    "pelle": { "label": "Crawler excavator", "short": "Excavator" },
+    "mini_pelle": { "label": "Mini excavator", "short": "Mini excavator" },
+    "chargeuse": { "label": "Wheel loader", "short": "Loader" },
+    "dumper": { "label": "Dumper", "short": "Dumper" },
+    "camion": { "label": "Truck", "short": "Truck" },
+    "grue": { "label": "Crane", "short": "Crane" },
+    "rouleau": { "label": "Roller compactor", "short": "Roller" },
+    "autre": { "label": "Other machine", "short": "Machine" }
+  },
+  "entryKinds": {
+    "service": { "label": "Service", "hint": "Oil changes, filters, greasing per the manufacturer’s schedule" },
+    "controle": { "label": "Safety check", "hint": "Safety inspection, certification, annual check" },
+    "inspection": { "label": "Walk-around", "hint": "Walk-around check, fluid levels, wear, cleaning" },
+    "reparation": { "label": "Repair", "hint": "Breakdown, leak, damage: what was repaired and what it cost" },
+    "piece": { "label": "Part", "hint": "Part replaced or bought, with its reference and warranty" },
+    "note": { "label": "Note", "hint": "Remark, operator’s observation" }
+  },
+  "repairStatus": {
+    "fait": "Repaired",
+    "en_cours": "In progress",
+    "attente_piece": "Waiting for parts"
+  },
+  "roles": {
+    "owner": { "label": "Owner", "hint": "All rights, including the company and the subscription." },
+    "admin": { "label": "Administrator", "hint": "Manages the fleet, due dates and the team." },
+    "mechanic": { "label": "Mechanic", "hint": "Adds and edits machines, due dates and all log entries." },
+    "operator": { "label": "Operator", "hint": "Views the fleet, logs hours, work done and photos." }
+  },
+  "costCategories": {
+    "entretien": "Maintenance",
+    "reparations": "Repairs",
+    "pieces": "Parts"
+  },
+  "health": {
+    "ok": "Operational",
+    "warn": "Keep an eye on it",
+    "bad": "Overdue"
+  },
+  "due": {
+    "inHours": "in {hours}",
+    "overdueHours": "{hours} overdue",
+    "onDate": "on {date}",
+    "lateDays": "{days, plural, one {# day late} other {# days late}}",
+    "hintEstimate": "Around {date} at the {rateKind, select, actual {current} other {average}} pace (≈ {rate} h per week)",
+    "hintAsap": "Do it as soon as possible",
+    "hintLate": "Late",
+    "hintToday": "Today",
+    "hintInDays": "{days, plural, one {In # day} other {In # days}}"
+  },
+  "machineTitle": "{kind} {weight} t"
+}

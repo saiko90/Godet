@@ -441,3 +441,19 @@ tfoot td { font-weight: 700; }
   .loader-wait .loader-fill, .loader-wait .loader-bar i { animation: none; }
   .loader-fill, .loader-bar i, .loader-overlay { transition: none; }
 }
+
+/* ---------- choix de la langue ---------- */
+.lang-inline { display: inline-flex; gap: 2px; padding: 3px; border-radius: 999px; border: 1px solid var(--line); background: rgba(236, 232, 222, 0.03); }
+.lang-inline button {
+  min-width: 34px; min-height: 30px; padding: 0 8px; border: 0; border-radius: 999px; background: transparent;
+  color: var(--steel); font-size: var(--t-xs); font-weight: 650; letter-spacing: 0.08em;
+}
+.lang-inline button:hover { color: var(--chalk); }
+.lang-inline button.is-active { background: var(--paint); color: var(--night); }
+.lang-select { display: grid; gap: 6px; }
+.lang-select .lang-label { font-size: var(--t-xs); letter-spacing: 0.12em; text-transform: uppercase; color: var(--steel); font-weight: 650; }
+.lang-select select {
+  min-height: 44px; padding: 0 12px; border-radius: 10px; border: 1px solid var(--line-strong);
+  background: rgba(236, 232, 222, 0.04); color: var(--chalk);
+}
+.lang-select select option { background: var(--graphite); }

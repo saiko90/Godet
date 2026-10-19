@@ -97,6 +97,9 @@ export interface DueInfo {
   dueDate: string | null;
   /** Jours avant l'échéance (estimés pour la base heures) : sert au tri. */
   daysLeft: number;
+  /** Rythme utilisé pour l'estimation (h par semaine) et s'il vient des relevés (sinon : moyenne par défaut). */
+  rate: number;
+  rateKnown: boolean;
 }
 
 /** État d'une échéance pour une machine donnée. */
@@ -125,6 +128,8 @@ export function dueOf(s: Schedule, machineHours: number, rate: number | null, to
       progress,
       dueDate,
       daysLeft,
+      rate: r,
+      rateKnown: rate != null,
     };
   }
   const dueDate = s.due_date ?? today;
@@ -145,6 +150,8 @@ export function dueOf(s: Schedule, machineHours: number, rate: number | null, to
     progress,
     dueDate,
     daysLeft: days,
+    rate: r,
+    rateKnown: rate != null,
   };
 }
 

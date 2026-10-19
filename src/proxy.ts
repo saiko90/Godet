@@ -1,14 +1,32 @@
 import { createServerClient } from '@supabase/ssr';
+import createIntlMiddleware from 'next-intl/middleware';
 import { NextResponse, type NextRequest } from 'next/server';
+import { routing } from '@/i18n/routing';
 import { SUPABASE_PUBLISHABLE_KEY, SUPABASE_URL } from '@/lib/env';
 
-// Pages réservées aux personnes connectées.
-const PRIVATE = ['/garage', '/bienvenue', '/parametres', '/carnet'];
+const handleI18n = createIntlMiddleware(routing);
 
-/** Rafraîchit la session Supabase à chaque requête et protège les pages privées. */
+// Pages réservées aux personnes connectées (chemins sans la langue).
+const PRIVATE = ['/garage', '/bienvenue', '/parametres', '/carnet', '/admin'];
+
+type CookieToSet = { name: string; value: string; options?: Parameters<NextResponse['cookies']['set']>[2] };
+
+/** Sépare la langue du chemin : « /de/garage » → { locale: 'de', path: '/garage' }. */
+function splitLocale(pathname: string): { locale: string | null; path: string } {
+  const first = pathname.split('/')[1] ?? '';
+  if ((routing.locales as readonly string[]).includes(first)) {
+    return { locale: first, path: pathname.slice(first.length + 1) || '/' };
+  }
+  return { locale: null, path: pathname };
+}
+
+/**
+ * 1. Rafraîchit la session Supabase (les cookies mis à jour sont transmis à la page et au navigateur).
+ * 2. Protège les pages privées (redirection vers la connexion, dans la bonne langue).
+ * 3. Gère les langues : français sans préfixe, /de, /it, /en ; détection par cookie puis par le navigateur.
+ */
 export async function proxy(request: NextRequest) {
-  let response = NextResponse.next({ request });
-
+  const cookiesToSet: CookieToSet[] = [];
   const supabase = createServerClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
     cookies: {
       getAll() {
@@ -16,33 +34,35 @@ export async function proxy(request: NextRequest) {
       },
       setAll(list) {
         list.forEach(({ name, value }) => request.cookies.set(name, value));
-        response = NextResponse.next({ request });
-        list.forEach(({ name, value, options }) => response.cookies.set(name, value, options));
+        cookiesToSet.push(...list);
       },
     },
   });
 
   const { data } = await supabase.auth.getClaims();
   const signedIn = Boolean(data?.claims?.sub);
-  const path = request.nextUrl.pathname;
-  // Seules les pages (GET) sont redirigées. Une action serveur (POST) arrivée sans session suit son cours : elle
-  // revérifie la session et renvoie elle-même vers /connexion, ce que le navigateur sait suivre. Rediriger le POST
-  // ici renverrait une page HTML à l'action : « Une erreur est survenue » au lieu de la page de connexion.
+  const { locale, path } = splitLocale(request.nextUrl.pathname);
+  // Seules les pages (GET) sont redirigées : une action serveur (POST) sans session revérifie elle-même.
   const isPage = request.method === 'GET' || request.method === 'HEAD';
 
   if (!signedIn && isPage && PRIVATE.some((p) => path === p || path.startsWith(p + '/'))) {
+    const cookieLocale = request.cookies.get('godet-lang')?.value;
+    const target = locale ?? (cookieLocale && (routing.locales as readonly string[]).includes(cookieLocale) ? cookieLocale : null);
     const url = request.nextUrl.clone();
-    url.pathname = '/connexion';
+    url.pathname = (target && target !== routing.defaultLocale ? `/${target}` : '') + '/connexion';
     url.search = '';
-    url.searchParams.set('suite', path + request.nextUrl.search);
+    url.searchParams.set('suite', request.nextUrl.pathname + request.nextUrl.search);
     const redirect = NextResponse.redirect(url);
-    response.cookies.getAll().forEach((c) => redirect.cookies.set(c));
+    cookiesToSet.forEach(({ name, value, options }) => redirect.cookies.set(name, value, options));
     return redirect;
   }
 
+  const response = handleI18n(request);
+  cookiesToSet.forEach(({ name, value, options }) => response.cookies.set(name, value, options));
   return response;
 }
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico|icons/|sounds/|manifest.webmanifest|robots.txt|sitemap.xml|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|mp3|wav|woff2?)$).*)'],
+  // Tout sauf les routes d'API et d'authentification, les fichiers internes et les fichiers statiques (avec un point).
+  matcher: ['/((?!api|auth|_next|_vercel|.*\\..*).*)'],
 };

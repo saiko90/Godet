@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useId } from 'react';
 import { Icon } from '@/components/Icons';
-import { restaurerMachine } from '@/app/parametres/actions';
+import { restaurerMachine } from '@/app/[locale]/parametres/actions';
 import { dateCH } from '@/lib/format';
 import type { ArchivedMachine } from '../types';
 import { useServerAction } from './useServerAction';
