@@ -28,6 +28,8 @@ const SECURITE = [
 ];
 
 const nextConfig: NextConfig = {
+  // Permet de lancer plusieurs serveurs de développement en parallèle (NEXT_DIST_DIR=.next-a, .next-b…).
+  distDir: process.env.NEXT_DIST_DIR || '.next',
   reactStrictMode: true,
   poweredByHeader: false,
   async headers() {
