@@ -1,0 +1,23 @@
+# dépendances
+/node_modules
+/.pnp
+.pnp.*
+
+# build
+/.next/
+/out/
+/build
+*.tsbuildinfo
+next-env.d.ts
+
+# environnement (les clés publiques sont dans src/lib/env.ts ; rien de secret ici)
+.env*
+!.env.example
+
+# divers
+.DS_Store
+*.pem
+npm-debug.log*
+.vercel
+/test-results/
+/playwright-report/
