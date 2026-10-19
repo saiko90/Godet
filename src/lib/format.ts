@@ -31,16 +31,32 @@ export function chf2(n: number | null | undefined): string {
 
 const pad = (n: number) => String(n).padStart(2, '0');
 
-/** Date du jour à Zurich, au format ISO (AAAA-MM-JJ). */
-export function todayISO(now: Date = new Date()): string {
-  const parts = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Zurich', year: 'numeric', month: '2-digit', day: '2-digit' }).format(now);
-  return parts; // en-CA donne déjà AAAA-MM-JJ
+const ZURICH_DAY = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Zurich', year: 'numeric', month: '2-digit', day: '2-digit' });
+
+/** Jour à Zurich d'un instant, au format ISO (AAAA-MM-JJ). */
+function zurichDay(at: Date): string {
+  const parts = ZURICH_DAY.formatToParts(at);
+  const get = (type: Intl.DateTimeFormatPartTypes) => parts.find((p) => p.type === type)?.value ?? '';
+  return `${get('year')}-${get('month')}-${get('day')}`;
 }
 
-/** Date ISO (ou horodatage) → « 14.08.2026 ». */
+/** Date du jour à Zurich, au format ISO (AAAA-MM-JJ). */
+export function todayISO(now: Date = new Date()): string {
+  return zurichDay(now);
+}
+
+/**
+ * Date ISO (« 2026-08-14 ») ou horodatage → « 14.08.2026 ».
+ * Un horodatage de la base est en UTC : on affiche le jour de Zurich (00:30 à Zurich = la veille en UTC).
+ */
 export function dateCH(iso: string | null | undefined): string {
   if (!iso) return '—';
-  const d = iso.slice(0, 10).split('-');
+  let day = iso.slice(0, 10);
+  if (iso.length > 10) {
+    const t = new Date(iso);
+    if (!Number.isNaN(t.getTime())) day = zurichDay(t);
+  }
+  const d = day.split('-');
   return d.length === 3 ? `${d[2]}.${d[1]}.${d[0]}` : iso;
 }
 

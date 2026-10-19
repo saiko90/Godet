@@ -25,8 +25,12 @@ export async function proxy(request: NextRequest) {
   const { data } = await supabase.auth.getClaims();
   const signedIn = Boolean(data?.claims?.sub);
   const path = request.nextUrl.pathname;
+  // Seules les pages (GET) sont redirigées. Une action serveur (POST) arrivée sans session suit son cours : elle
+  // revérifie la session et renvoie elle-même vers /connexion, ce que le navigateur sait suivre. Rediriger le POST
+  // ici renverrait une page HTML à l'action : « Une erreur est survenue » au lieu de la page de connexion.
+  const isPage = request.method === 'GET' || request.method === 'HEAD';
 
-  if (!signedIn && PRIVATE.some((p) => path === p || path.startsWith(p + '/'))) {
+  if (!signedIn && isPage && PRIVATE.some((p) => path === p || path.startsWith(p + '/'))) {
     const url = request.nextUrl.clone();
     url.pathname = '/connexion';
     url.search = '';

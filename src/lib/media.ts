@@ -9,8 +9,8 @@ export interface UploadProgressOptions extends UploadOptions {
   onProgress?: (fraction: number) => void;
 }
 
-/** Limite du bucket « medias » (100 Mo). */
-export const MAX_UPLOAD_BYTES = 100 * 1024 * 1024;
+/** Limite d'envoi par fichier : 50 Mo (plafond global de Supabase sur l'offre gratuite ; le bucket accepte 100 Mo). */
+export const MAX_UPLOAD_BYTES = 50 * 1024 * 1024;
 /** Une image plus lourde (ou plus grande que IMAGE_MAX_SIDE) est recompressée avant l'envoi. */
 export const IMAGE_COMPRESS_ABOVE = 1.5 * 1024 * 1024;
 export const IMAGE_MAX_SIDE = 2560;
@@ -106,7 +106,7 @@ function renameTo(name: string, ext: string): string {
 }
 
 function tooBig(what: string, bytes: number): UploadRejected {
-  return new UploadRejected(`${what} pèse ${fileSize(bytes)} : la limite est de 100 Mo par fichier.`);
+  return new UploadRejected(`${what} pèse ${fileSize(bytes)} : la limite est de 50 Mo par fichier.`);
 }
 
 /** Décode une image en respectant l'orientation de l'appareil photo (null si le navigateur ne sait pas la lire, ex. HEIC). */
@@ -139,8 +139,8 @@ function canvasToJpeg(bitmap: ImageBitmap, scale: number): Promise<Blob | null> 
  * Vérifie un fichier et le prépare pour l'envoi :
  * - photos : réduites à 2560 px de côté et recompressées en JPEG 0.85 si elles dépassent 1,5 Mo ou 2560 px ;
  *   formats non acceptés par le stockage (GIF, BMP, AVIF…) convertis en JPEG ; HEIC illisible → envoyé tel quel ;
- * - vidéos : MP4, MOV ou WebM, 100 Mo au maximum ;
- * - documents : PDF, 100 Mo au maximum.
+ * - vidéos : MP4, MOV ou WebM, 50 Mo au maximum ;
+ * - documents : PDF, 50 Mo au maximum.
  * Lève `UploadRejected` avec un message clair si le fichier ne peut pas être envoyé.
  */
 export async function prepareUpload(file: File): Promise<PreparedUpload> {

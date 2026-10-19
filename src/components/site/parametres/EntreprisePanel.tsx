@@ -24,6 +24,11 @@ export function EntreprisePanel({ org, planLabel, createdLabel, canEdit, orgs }:
   const switcher = useServerAction(changerEntrepriseActive);
   const uid = useId();
   const ids = { nom: `${uid}-nom`, nomErr: `${uid}-nom-err`, canton: `${uid}-canton`, cantonErr: `${uid}-canton-err` };
+  // React remet le formulaire à ses valeurs par défaut après chaque envoi : après un refus, on réaffiche la saisie ;
+  // sinon, les valeurs enregistrées. Une liste déroulante ne relit pas `defaultValue` : la clé la recrée.
+  const failed = state.ok === false && state.values ? state.values : null;
+  const nomShown = failed ? (failed.nom ?? '') : org.name;
+  const cantonShown = failed ? (failed.canton ?? '') : (org.canton ?? '');
 
   return (
     <section id="entreprise" className="s-panel" aria-labelledby={`${uid}-titre`}>
@@ -75,7 +80,7 @@ export function EntreprisePanel({ org, planLabel, createdLabel, canEdit, orgs }:
                 required
                 minLength={2}
                 maxLength={80}
-                defaultValue={org.name}
+                defaultValue={nomShown}
                 aria-invalid={state.errors.nom ? true : undefined}
                 aria-describedby={state.errors.nom ? ids.nomErr : undefined}
               />
@@ -84,9 +89,10 @@ export function EntreprisePanel({ org, planLabel, createdLabel, canEdit, orgs }:
             <div className="field">
               <label htmlFor={ids.canton}>Canton</label>
               <select
+                key={cantonShown}
                 id={ids.canton}
                 name="canton"
-                defaultValue={org.canton ?? ''}
+                defaultValue={cantonShown}
                 aria-invalid={state.errors.canton ? true : undefined}
                 aria-describedby={state.errors.canton ? ids.cantonErr : undefined}
               >

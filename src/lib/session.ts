@@ -24,10 +24,19 @@ export async function getSession(): Promise<SessionResult> {
   const user = auth.user;
   if (!user) return { status: 'anon' };
 
-  const [{ data: rows }, { data: profile }] = await Promise.all([
-    supabase.from('memberships').select('role, org_id, organizations(*)').eq('user_id', user.id),
+  const [{ data: rows, error: rowsError }, { data: profile }] = await Promise.all([
+    // Ordre fixe : sans cookie d'entreprise, la plus ancienne adhésion est l'entreprise active.
+    supabase
+      .from('memberships')
+      .select('role, org_id, created_at, organizations(*)')
+      .eq('user_id', user.id)
+      .order('created_at', { ascending: true })
+      .order('org_id', { ascending: true }),
     supabase.from('profiles').select('full_name').eq('id', user.id).maybeSingle(),
   ]);
+  // Lecture impossible (réseau, base) : on s'arrête ici. Conclure « sans entreprise » enverrait la personne vers
+  // /bienvenue, où elle pourrait créer une seconde entreprise.
+  if (rowsError) throw new Error(`Session : entreprises illisibles (${rowsError.code || rowsError.message})`);
 
   const fullName = profile?.full_name ?? (user.user_metadata?.full_name as string | undefined) ?? null;
   const email = user.email ?? '';

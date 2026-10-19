@@ -18,6 +18,11 @@ export interface FormState {
   errors: Record<string, string>;
   /** Incrémenté à chaque envoi réussi (permet de vider un formulaire). */
   done: number;
+  /**
+   * Valeurs envoyées, renvoyées en cas d'échec : React vide les champs d'un formulaire après chaque envoi,
+   * le formulaire les réaffiche ainsi à côté du message d'erreur.
+   */
+  values?: Record<string, string>;
 }
 
 export const EMPTY_FORM: FormState = { ok: null, message: null, errors: {}, done: 0 };

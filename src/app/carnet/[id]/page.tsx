@@ -22,6 +22,8 @@ async function allEntries(supabase: Supabase, machineId: string): Promise<Entry[
       .eq('machine_id', machineId)
       .order('date', { ascending: true })
       .order('created_at', { ascending: true })
+      // Départage stable entre les pages (les saisies d'une même transaction ont le même created_at).
+      .order('id', { ascending: true })
       .range(from, from + PAGE - 1);
     if (error) throw new Error(`Carnet : saisies illisibles (${error.code})`);
     out.push(...data);

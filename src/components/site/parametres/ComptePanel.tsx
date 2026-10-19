@@ -55,7 +55,7 @@ export function ComptePanel({ fullName, email, orgName, canLeave }: Props) {
               required
               minLength={2}
               maxLength={80}
-              defaultValue={fullName ?? ''}
+              defaultValue={nameState.ok === false && nameState.values ? (nameState.values.nom ?? '') : (fullName ?? '')}
               aria-invalid={nameState.errors.nom ? true : undefined}
               aria-describedby={nameState.errors.nom ? ids.nomErr : undefined}
             />

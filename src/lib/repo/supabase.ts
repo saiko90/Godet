@@ -48,7 +48,7 @@ function fileReadingsSince(today: string): string {
 const NETWORK = 'Pas de connexion au serveur. Vérifiez le réseau, puis réessayez.';
 const RIGHTS = 'Votre rôle ne permet pas cette action. Demandez à un responsable du parc.';
 const SESSION = 'Votre session a expiré. Rechargez la page pour vous reconnecter.';
-const TOO_BIG = 'Le fichier est trop gros : 100 Mo au maximum.';
+const TOO_BIG = 'Le fichier est trop gros : 50 Mo au maximum.';
 const BAD_TYPE = 'Ce type de fichier n’est pas accepté : photos JPEG, PNG, WebP ou HEIC, vidéos MP4, MOV ou WebM, documents PDF.';
 
 /** Contraintes de la base (nommées par Postgres « <table>_<colonne>_check ») → explication. */
@@ -314,6 +314,16 @@ async function uploadWithProgress(
 export function createSupabaseRepo(client: GarageClient, ctx: RepoContext): GarageRepo {
   const orgId = ctx.org.id;
 
+  /**
+   * La session est-elle toujours ouverte dans ce navigateur ? Après une déconnexion dans un autre onglet, les requêtes
+   * partiraient en anonyme : la RLS renverrait un parc vide (le garage se viderait à l'actualisation) et chaque
+   * enregistrement serait refusé comme une question de rôle. On le dit clairement à la place.
+   */
+  async function ensureSession(): Promise<void> {
+    const { data } = await client.auth.getSession();
+    if (!data.session) throw fail(SESSION);
+  }
+
   async function currentMachine(id: string): Promise<Machine> {
     const { data, error } = await client.from('machines').select('*').eq('id', id).maybeSingle();
     if (error) throw frenchError(error, 'La machine n’a pas pu être chargée.');
@@ -384,9 +394,13 @@ export function createSupabaseRepo(client: GarageClient, ctx: RepoContext): Gara
   const repo: GarageRepo = {
     mode: 'cloud',
 
-    loadFleet: () => loadFleet(client, ctx),
+    async loadFleet(): Promise<FleetSnapshot> {
+      await ensureSession();
+      return loadFleet(client, ctx);
+    },
 
     async loadMachineFile(machineId: string): Promise<MachineFile> {
+      await ensureSession();
       const today = todayISO();
       const since = fileReadingsSince(today);
       const why = 'La fiche de la machine n’a pas pu être chargée.';
@@ -440,6 +454,7 @@ export function createSupabaseRepo(client: GarageClient, ctx: RepoContext): Gara
     },
 
     async addMachine(input: NewMachine): Promise<Machine> {
+      await ensureSession();
       const why = 'La machine n’a pas pu être ajoutée.';
       const last = await client
         .from('machines')
@@ -470,6 +485,7 @@ export function createSupabaseRepo(client: GarageClient, ctx: RepoContext): Gara
     },
 
     async updateMachine(id, patch): Promise<Machine> {
+      await ensureSession();
       const why = 'La machine n’a pas pu être modifiée.';
       const current = await currentMachine(id);
       const fields = machineFields(patch);
@@ -495,6 +511,7 @@ export function createSupabaseRepo(client: GarageClient, ctx: RepoContext): Gara
     },
 
     async archiveMachine(id: string): Promise<void> {
+      await ensureSession();
       const { error } = await client
         .from('machines')
         .update({ archived_at: new Date().toISOString() })
@@ -506,12 +523,14 @@ export function createSupabaseRepo(client: GarageClient, ctx: RepoContext): Gara
     },
 
     async addEntry(input: NewEntry): Promise<Entry> {
+      await ensureSession();
       const { data, error } = await client.from('entries').insert(entryInsert(input)).select('*').single();
       if (error) throw frenchError(error, 'La saisie n’a pas pu être enregistrée.');
       return data;
     },
 
     async updateEntry(id, patch): Promise<Entry> {
+      await ensureSession();
       const { data, error } = await client
         .from('entries')
         .update(entryUpdate(patch))
@@ -528,6 +547,7 @@ export function createSupabaseRepo(client: GarageClient, ctx: RepoContext): Gara
     },
 
     async removeEntry(id: string, reason: string): Promise<void> {
+      await ensureSession();
       const why = reason.trim();
       if (!why) throw fail('Indiquez le motif du retrait.');
       const { error } = await client
@@ -545,6 +565,7 @@ export function createSupabaseRepo(client: GarageClient, ctx: RepoContext): Gara
     },
 
     async addReading(machineId: string, hours: number): Promise<void> {
+      await ensureSession();
       if (!Number.isFinite(hours) || hours < 0) throw fail('Le compteur doit être un nombre d’heures positif.');
       const m = await currentMachine(machineId);
       if (hours < Number(m.hours)) {
@@ -555,6 +576,7 @@ export function createSupabaseRepo(client: GarageClient, ctx: RepoContext): Gara
     },
 
     async addSchedule(input: NewSchedule): Promise<Schedule> {
+      await ensureSession();
       const row: TablesInsert<'schedules'> = {
         org_id: orgId,
         machine_id: input.machineId,
@@ -573,6 +595,7 @@ export function createSupabaseRepo(client: GarageClient, ctx: RepoContext): Gara
     },
 
     async updateSchedule(id, patch): Promise<Schedule> {
+      await ensureSession();
       const u: TablesUpdate<'schedules'> = {};
       if (patch.label !== undefined) u.label = patch.label.trim();
       if (patch.basis !== undefined) u.basis = patch.basis;
@@ -596,11 +619,13 @@ export function createSupabaseRepo(client: GarageClient, ctx: RepoContext): Gara
     },
 
     async deleteSchedule(id: string): Promise<void> {
+      await ensureSession();
       const { error } = await client.from('schedules').delete().eq('id', id).select('id').single();
       if (error) throw frenchError(error, 'L’échéance n’a pas pu être supprimée.');
     },
 
     async uploadMedia(machineId: string, file: Blob, opts: UploadProgressOptions): Promise<MediaItem> {
+      await ensureSession();
       const why = 'Le fichier n’a pas pu être envoyé.';
       const mime = file.type || 'application/octet-stream';
       const id =
@@ -644,6 +669,7 @@ export function createSupabaseRepo(client: GarageClient, ctx: RepoContext): Gara
     },
 
     async deleteMedia(id: string): Promise<void> {
+      await ensureSession();
       const { data, error } = await client.from('media').delete().eq('id', id).select('path').single();
       if (error) {
         throw error.code === 'PGRST116'

@@ -198,7 +198,7 @@ export function MediaTab({ machine, file }: { machine: Machine; file: MachineFil
           </span>
         </div>
       ) : (
-        <p className="g-note">Photos allégées avant l’envoi · vidéos et documents jusqu’à 100 Mo.</p>
+        <p className="g-note">Photos allégées avant l’envoi · vidéos et documents jusqu’à 50 Mo.</p>
       )}
     </div>
   );

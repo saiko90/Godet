@@ -203,6 +203,11 @@ export function EquipePanel({ members, membersError, invitations, meId, canManag
   const created = state.invitation;
   const createdLink = created ? inviteLink(origin, created.token) : '';
   const now = Date.parse(nowIso);
+  // Après un refus, la saisie est réaffichée (React vide le formulaire après chaque envoi) ;
+  // après une invitation créée, le formulaire repart à zéro.
+  const failed = state.ok === false ? state.values : undefined;
+  const emailShown = failed?.email ?? '';
+  const roleShown = failed?.role && ASSIGNABLE.includes(failed.role as MemberRole) ? failed.role : 'operator';
 
   return (
     <section id="equipe" className="s-panel" aria-labelledby={ids.title}>
@@ -248,7 +253,7 @@ export function EquipePanel({ members, membersError, invitations, meId, canManag
                   required
                   maxLength={200}
                   key={state.done}
-                  defaultValue=""
+                  defaultValue={emailShown}
                   aria-invalid={state.errors.email ? true : undefined}
                   aria-describedby={state.errors.email ? ids.emailErr : undefined}
                 />
@@ -256,9 +261,10 @@ export function EquipePanel({ members, membersError, invitations, meId, canManag
               <div className="field">
                 <label htmlFor={ids.role}>Rôle</label>
                 <select
+                  key={`${state.done}-${roleShown}`}
                   id={ids.role}
                   name="role"
-                  defaultValue="operator"
+                  defaultValue={roleShown}
                   aria-invalid={state.errors.role ? true : undefined}
                   aria-describedby={state.errors.role ? ids.roleErr : undefined}
                 >

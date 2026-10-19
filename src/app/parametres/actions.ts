@@ -36,8 +36,8 @@ function refresh() {
   revalidatePath('/garage');
 }
 
-function fail(prev: FormState, message: string, errors: Record<string, string> = {}): FormState {
-  return { ok: false, message, errors, done: prev.done };
+function fail(prev: FormState, message: string, errors: Record<string, string> = {}, values?: Record<string, string>): FormState {
+  return { ok: false, message, errors, done: prev.done, values };
 }
 
 function success(prev: FormState, message: string): FormState {
@@ -49,14 +49,15 @@ function success(prev: FormState, message: string): FormState {
 export async function enregistrerEntreprise(prev: FormState, formData: FormData): Promise<FormState> {
   const nom = text(formData, 'nom');
   const canton = text(formData, 'canton').toUpperCase();
+  const values = { nom, canton };
   const errors: Record<string, string> = {};
   if (nom.length < 2) errors.nom = `Indiquez le nom de l’entreprise (2${NB}caractères au moins).`;
   else if (nom.length > 80) errors.nom = `80${NB}caractères au maximum.`;
   if (canton && !isCanton(canton)) errors.canton = 'Choisissez un canton dans la liste.';
-  if (Object.keys(errors).length) return fail(prev, 'Vérifiez les champs signalés.', errors);
+  if (Object.keys(errors).length) return fail(prev, 'Vérifiez les champs signalés.', errors, values);
 
   const ctx = await requireContext();
-  if (!can.manageTeam(ctx.role)) return fail(prev, 'Seuls le propriétaire et les administrateurs peuvent modifier l’entreprise.');
+  if (!can.manageTeam(ctx.role)) return fail(prev, 'Seuls le propriétaire et les administrateurs peuvent modifier l’entreprise.', {}, values);
 
   const supabase = await supabaseServer();
   const { data, error } = await supabase
@@ -66,7 +67,7 @@ export async function enregistrerEntreprise(prev: FormState, formData: FormData)
     .select('id');
   if (error || !data?.length) {
     if (error) console.error('[parametres] entreprise :', error.code, error.message);
-    return fail(prev, GENERIC);
+    return fail(prev, GENERIC, {}, values);
   }
   refresh();
   return success(prev, 'Entreprise enregistrée.');
@@ -86,16 +87,26 @@ export async function changerEntrepriseActive(orgId: string): Promise<ActionResu
 export async function inviterMembre(prev: InviteState, formData: FormData): Promise<InviteState> {
   const email = text(formData, 'email').toLowerCase();
   const role = text(formData, 'role') as MemberRole;
+  // Saisie réaffichée après un refus (React vide le formulaire après l'envoi).
+  const values = { email, role };
   const errors: Record<string, string> = {};
   if (!looksLikeEmail(email)) errors.email = `Adresse e-mail incomplète. Exemple${NB}: nom@entreprise.ch`;
   if (!ASSIGNABLE.includes(role)) errors.role = 'Choisissez un rôle.';
   if (Object.keys(errors).length) {
-    return { ...prev, ok: false, message: 'Vérifiez les champs signalés.', errors, invitation: null, existing: false };
+    return { ...prev, ok: false, message: 'Vérifiez les champs signalés.', errors, invitation: null, existing: false, values };
   }
 
   const ctx = await requireContext();
   if (!can.manageTeam(ctx.role)) {
-    return { ...prev, ok: false, message: 'Seuls le propriétaire et les administrateurs peuvent inviter.', errors: {}, invitation: null, existing: false };
+    return {
+      ...prev,
+      ok: false,
+      message: 'Seuls le propriétaire et les administrateurs peuvent inviter.',
+      errors: {},
+      invitation: null,
+      existing: false,
+      values,
+    };
   }
   const supabase = await supabaseServer();
 
@@ -113,6 +124,7 @@ export async function inviterMembre(prev: InviteState, formData: FormData): Prom
       errors: { email: 'Déjà membre de l’entreprise.' },
       invitation: null,
       existing: false,
+      values,
     };
   }
 
@@ -156,7 +168,15 @@ export async function inviterMembre(prev: InviteState, formData: FormData): Prom
     .single();
   if (error || !created) {
     if (error) console.error('[parametres] invitation :', error.code, error.message);
-    return { ...prev, ok: false, message: 'L’invitation n’a pas pu être créée. Réessayez dans un instant.', errors: {}, invitation: null, existing: false };
+    return {
+      ...prev,
+      ok: false,
+      message: 'L’invitation n’a pas pu être créée. Réessayez dans un instant.',
+      errors: {},
+      invitation: null,
+      existing: false,
+      values,
+    };
   }
   refresh();
   return {
@@ -233,14 +253,15 @@ export async function retirerMembre(userId: string): Promise<ActionResult> {
 
 export async function enregistrerNom(prev: FormState, formData: FormData): Promise<FormState> {
   const nom = text(formData, 'nom');
-  if (nom.length < 2) return fail(prev, 'Vérifiez le champ signalé.', { nom: 'Indiquez votre nom complet.' });
-  if (nom.length > 80) return fail(prev, 'Vérifiez le champ signalé.', { nom: `80${NB}caractères au maximum.` });
+  const values = { nom };
+  if (nom.length < 2) return fail(prev, 'Vérifiez le champ signalé.', { nom: 'Indiquez votre nom complet.' }, values);
+  if (nom.length > 80) return fail(prev, 'Vérifiez le champ signalé.', { nom: `80${NB}caractères au maximum.` }, values);
   const ctx = await requireContext();
   const supabase = await supabaseServer();
   const { data, error } = await supabase.from('profiles').update({ full_name: nom }).eq('id', ctx.userId).select('id');
   if (error || !data?.length) {
     if (error) console.error('[parametres] nom :', error.code, error.message);
-    return fail(prev, GENERIC);
+    return fail(prev, GENERIC, {}, values);
   }
   refresh();
   return success(prev, 'Nom enregistré.');

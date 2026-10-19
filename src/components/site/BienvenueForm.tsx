@@ -40,7 +40,10 @@ export function BienvenueForm() {
       </div>
       <div className="field">
         <label htmlFor={ids.canton}>Canton</label>
+        {/* Une liste déroulante ne relit pas `defaultValue` quand React vide le formulaire après l'envoi : la clé la
+            recrée avec le canton renvoyé par le serveur. */}
         <select
+          key={state.values.canton}
           id={ids.canton}
           name="canton"
           defaultValue={state.values.canton}

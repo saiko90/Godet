@@ -7,7 +7,10 @@ import { Icon } from '@/components/Icons';
 import type { MediaItem } from '@/lib/types';
 
 export function MediaPreview({ item, full = false, alt = '' }: { item: MediaItem; full?: boolean; alt?: string }) {
-  const [broken, setBroken] = useState(false);
+  // L'échec est mémorisé pour une adresse précise : un nouveau lien signé (fiche rechargée) est réessayé.
+  const [brokenUrl, setBrokenUrl] = useState<string | null>(null);
+  const broken = brokenUrl !== null && brokenUrl === item.url;
+  const markBroken = () => setBrokenUrl(item.url);
   if (!item.url || broken) {
     const heic = /hei[cf]/i.test(item.mime ?? '');
     return (
@@ -32,11 +35,11 @@ export function MediaPreview({ item, full = false, alt = '' }: { item: MediaItem
   }
   if (item.kind === 'video') {
     return full ? (
-      <video key={item.id} src={item.url} controls playsInline autoPlay muted onError={() => setBroken(true)} />
+      <video key={item.id} src={item.url} controls playsInline autoPlay muted onError={markBroken} />
     ) : (
-      <video src={item.url} muted playsInline preload="metadata" onError={() => setBroken(true)} />
+      <video src={item.url} muted playsInline preload="metadata" onError={markBroken} />
     );
   }
   // eslint-disable-next-line @next/next/no-img-element -- lien signé temporaire ou adresse locale : pas d'optimisation possible
-  return <img key={item.id} src={item.url} alt={alt} loading={full ? undefined : 'lazy'} onError={() => setBroken(true)} />;
+  return <img key={item.id} src={item.url} alt={alt} loading={full ? undefined : 'lazy'} onError={markBroken} />;
 }
