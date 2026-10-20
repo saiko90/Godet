@@ -5,10 +5,12 @@
 // POST { action: 'checkout', orgId, tier: 'essentiel'|'pro'|'parc', interval: 'mois'|'annee', locale }
 //   → { url }  (page de paiement Stripe ; ou portail si un abonnement existe déjà)
 // POST { action: 'portal', orgId, locale } → { url }
+// POST { action: 'sync', orgId } → { synced, status }  (relit l'abonnement chez Stripe)
 // Erreurs : { error: code } avec code parmi unauthorized, forbidden, bad_request, tier_too_small, not_configured,
 // no_customer, stripe.
-import { createClient } from '@supabase/supabase-js';
+import { createClient } from 'npm:@supabase/supabase-js@2.118.0';
 import {
+  applySubscription,
   ensureFounderCoupon,
   ensurePortalConfiguration,
   ensurePrice,
@@ -18,6 +20,7 @@ import {
   TIERS,
   type Currency,
   type Interval,
+  type Subscription,
   type Tier,
 } from './stripe.ts';
 
@@ -96,7 +99,10 @@ Deno.serve(async (req) => {
   const { data: org, error: orgError } = await db.from('organizations').select('*').eq('id', orgId).single();
   if (orgError || !org) return json(req, 404, { error: 'bad_request' });
 
-  const settings = `${SITE}${localePath(locale, '/parametres')}`;
+  // Retour sur le même site que la page d'origine (godet.app ou www.godet.app) : la session y est enregistrée.
+  const origin = req.headers.get('Origin') ?? '';
+  const base = ALLOWED_ORIGINS.has(origin) ? origin : SITE;
+  const settings = `${base}${localePath(locale, '/parametres')}`;
 
   try {
     const portal = async () => {
@@ -112,6 +118,25 @@ Deno.serve(async (req) => {
     };
 
     if (body.action === 'portal') return await portal();
+
+    // Resynchronisation (retour du paiement, ou webhook en retard) : l'abonnement le plus récent du client Stripe.
+    if (body.action === 'sync') {
+      let customer = org.stripe_customer_id as string | null;
+      if (!customer) {
+        const found = await stripe<{ data: { id: string }[] }>('GET', 'customers/search', { query: `metadata['org_id']:'${orgId}'`, limit: 1 });
+        customer = found.data[0]?.id ?? null;
+      }
+      if (!customer) return json(req, 200, { synced: false });
+      const subs = await stripe<{ data: Subscription[] }>('GET', 'subscriptions', { customer, status: 'all', limit: 10, 'expand[]': 'data.discounts' });
+      const latest = [...subs.data].sort((a, b) => (b.created ?? 0) - (a.created ?? 0))[0];
+      if (!latest) {
+        await db.from('organizations').update({ stripe_customer_id: customer }).eq('id', orgId);
+        return json(req, 200, { synced: false });
+      }
+      const result = await applySubscription(db, latest, orgId);
+      if (result.error) console.error('[facturation] sync :', result.error);
+      return json(req, 200, { synced: !result.error, status: latest.status });
+    }
     if (body.action !== 'checkout') return json(req, 400, { error: 'bad_request' });
 
     const tier = body.tier as Tier;
@@ -133,7 +158,8 @@ Deno.serve(async (req) => {
         `godet-customer-${orgId}`,
       );
       customer = created.id;
-      await db.from('organizations').update({ stripe_customer_id: customer }).eq('id', orgId);
+      const { error: saveError } = await db.from('organizations').update({ stripe_customer_id: customer }).eq('id', orgId);
+      if (saveError) console.error('[facturation] client non enregistré :', saveError.code, saveError.message);
     }
 
     const currency: Currency = org.currency === 'EUR' ? 'eur' : 'chf';

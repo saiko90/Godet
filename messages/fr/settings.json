@@ -101,7 +101,10 @@
       "notConfigured": "Le paiement en ligne n’est pas encore activé. Écrivez-nous pour vous abonner.",
       "tooSmall": "Cette formule ne suffit pas pour le nombre de machines de votre parc.",
       "forbidden": "Seuls le propriétaire et les administrateurs peuvent gérer l’abonnement."
-    }
+    },
+    "activated": "Abonnement actif : merci, bienvenue dans Godet !",
+    "refresh": "Déjà payé et rien n’a changé ? Actualiser",
+    "refreshing": "Vérification…"
   },
   "team": {
     "title": "Équipe",

@@ -7,12 +7,12 @@ import { useLocale, useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { useFormat } from '@/components/FormatProvider';
 import { Icon } from '@/components/Icons';
-import { Link } from '@/i18n/navigation';
+import { Link, useRouter } from '@/i18n/navigation';
 import { billingState, tierFor, tierPrice, TIERS, trialDaysLeft, type BillingInterval, type Tier } from '@/lib/billing';
 import { supabaseBrowser } from '@/lib/supabase/client';
 import type { Org } from '@/lib/types';
 
-type Notice = 'thanks' | 'canceled' | null;
+type Notice = 'thanks' | 'activated' | 'canceled' | null;
 type ErrorKey = 'generic' | 'notConfigured' | 'tooSmall' | 'forbidden';
 
 const ERROR_FOR: Record<string, ErrorKey> = {
@@ -52,14 +52,55 @@ export function AbonnementPanel({ org, machines, founderSlots, canManage, nowIso
   const [error, setError] = useState<ErrorKey | null>(null);
   const [notice, setNotice] = useState<Notice>(null);
 
-  // Retour de Stripe (?abonnement=merci | annule) : message, puis adresse nettoyée.
+  const router = useRouter();
+  const [syncing, setSyncing] = useState(false);
+
+  /** Relit l'abonnement chez Stripe (retour du paiement, ou si le webhook tarde), puis recharge la page. */
+  async function sync(): Promise<boolean> {
+    setSyncing(true);
+    try {
+      const { data } = await supabaseBrowser().functions.invoke<{ synced?: boolean; status?: string }>('facturation', {
+        body: { action: 'sync', orgId: org.id, locale },
+      });
+      router.refresh();
+      return Boolean(data?.synced && (data.status === 'active' || data.status === 'trialing'));
+    } catch {
+      return false;
+    } finally {
+      setSyncing(false);
+    }
+  }
+
+  // Retour de Stripe (?abonnement=merci | annule) : message, synchronisation, puis adresse nettoyée.
   useEffect(() => {
     const url = new URL(window.location.href);
     const back = url.searchParams.get('abonnement');
     if (!back) return;
-    queueMicrotask(() => setNotice(back === 'merci' ? 'thanks' : 'canceled'));
     url.searchParams.delete('abonnement');
     window.history.replaceState(null, '', `${url.pathname}${url.search}${url.hash}`);
+    document.getElementById('abonnement')?.scrollIntoView({ block: 'start' });
+    if (back !== 'merci') {
+      queueMicrotask(() => setNotice('canceled'));
+      return;
+    }
+    queueMicrotask(() => setNotice('thanks'));
+    let alive = true;
+    (async () => {
+      // Le paiement peut mettre quelques secondes à se confirmer : trois essais espacés.
+      for (const wait of [0, 3000, 6000]) {
+        await new Promise((r) => setTimeout(r, wait));
+        if (!alive) return;
+        if (await sync()) {
+          if (alive) setNotice('activated');
+          return;
+        }
+      }
+    })();
+    return () => {
+      alive = false;
+    };
+    // Une seule fois, au retour du paiement.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const subscribed = state === 'active' || state === 'pastDue' || state === 'canceling';
@@ -187,7 +228,12 @@ export function AbonnementPanel({ org, machines, founderSlots, canManage, nowIso
             {t('moreThan')}{' '}
             <Link href="/contact">{t('contact')}</Link>
           </p>
-          <p className="muted s-billing-secure">{t('secure')}</p>
+          <p className="muted s-billing-secure">
+            {t('secure')}{' '}
+            <button type="button" className="s-linkbtn" disabled={syncing} onClick={() => void sync()}>
+              {syncing ? t('refreshing') : t('refresh')}
+            </button>
+          </p>
         </>
       )}
       {error ? (

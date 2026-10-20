@@ -101,7 +101,10 @@
       "notConfigured": "Die Online-Zahlung ist noch nicht aktiviert. Schreiben Sie uns, um ein Abo abzuschliessen.",
       "tooSmall": "Dieses Abo reicht für die Anzahl Maschinen in Ihrem Park nicht aus.",
       "forbidden": "Nur der Inhaber und die Administratoren können das Abo verwalten."
-    }
+    },
+    "activated": "Abo aktiv: Danke und willkommen bei Godet!",
+    "refresh": "Schon bezahlt, aber nichts hat sich geändert? Aktualisieren",
+    "refreshing": "Wird geprüft…"
   },
   "team": {
     "title": "Team",

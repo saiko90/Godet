@@ -101,7 +101,10 @@
       "notConfigured": "Online payment isn’t enabled yet. Write to us to subscribe.",
       "tooSmall": "This plan isn’t enough for the number of machines in your fleet.",
       "forbidden": "Only the owner and administrators can manage the subscription."
-    }
+    },
+    "activated": "Subscription active: thank you, welcome to Godet!",
+    "refresh": "Already paid and nothing changed? Refresh",
+    "refreshing": "Checking…"
   },
   "team": {
     "title": "Team",

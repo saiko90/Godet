@@ -138,3 +138,8 @@ returns integer language sql stable security definer set search_path = '' as $$
 $$;
 revoke execute on function public.founder_slots_left() from public;
 grant execute on function public.founder_slots_left() to anon, authenticated;
+
+-- La clé de service (fonctions facturation et stripe-webhook) passe par les déclencheurs qui appellent private.* :
+-- elle doit pouvoir les exécuter (sinon « permission denied for schema private »).
+grant usage on schema private to service_role;
+grant execute on all functions in schema private to service_role;

@@ -205,3 +205,71 @@ function timingSafeEqual(a: string, b: string): boolean {
   for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
   return diff === 0;
 }
+
+// ------------------------------------------------------------------ abonnement → entreprise
+
+export interface Subscription {
+  id: string;
+  customer: string;
+  status: string;
+  created?: number;
+  cancel_at_period_end: boolean;
+  current_period_end?: number;
+  metadata?: Record<string, string>;
+  items: { data: { current_period_end?: number; price: { lookup_key: string | null } }[] };
+  discount?: { coupon?: { id: string } } | null;
+  discounts?: ({ coupon?: { id: string } } | string)[];
+}
+
+/** État Stripe → plan Godet (actif : écriture permise ; suspendu : lecture seule). null : ne rien changer. */
+export function planFor(status: string): 'actif' | 'suspendu' | null {
+  if (['active', 'trialing', 'past_due'].includes(status)) return 'actif';
+  if (['canceled', 'unpaid', 'incomplete_expired', 'paused'].includes(status)) return 'suspendu';
+  return null; // incomplete : paiement en cours
+}
+
+/** Client Supabase minimal (clé de service) : évite d'importer le type complet ici. */
+// deno-lint-ignore no-explicit-any
+type Db = any;
+
+/**
+ * Recopie un abonnement Stripe dans l'entreprise (formule, état, fin de période, pack fondateur).
+ * Utilisé par le webhook et par la resynchronisation au retour du paiement. Renvoie l'entreprise touchée ou null.
+ */
+export async function applySubscription(db: Db, sub: Subscription, knownOrgId?: string): Promise<{ orgId: string | null; error?: string }> {
+  let orgId = sub.metadata?.org_id ?? knownOrgId ?? null;
+  if (!orgId) {
+    const { data } = await db.from('organizations').select('id').eq('stripe_customer_id', sub.customer).maybeSingle();
+    orgId = data?.id ?? null;
+  }
+  if (!orgId) return { orgId: null, error: 'no_org' };
+
+  const item = sub.items.data[0];
+  const parsed = parseLookupKey(item?.price.lookup_key);
+  const periodEnd = item?.current_period_end ?? sub.current_period_end ?? null;
+  const coupons = [
+    ...(sub.discounts ?? []).map((d) => (typeof d === 'string' ? null : d.coupon?.id ?? null)),
+    sub.discount?.coupon?.id ?? null,
+  ];
+  const plan = planFor(sub.status);
+
+  const { data: current } = await db.from('organizations').select('founder, stripe_subscription_id').eq('id', orgId).single();
+  // Un ancien abonnement résilié ne doit pas écraser le nouveau.
+  if (current?.stripe_subscription_id && current.stripe_subscription_id !== sub.id && plan === 'suspendu') return { orgId };
+
+  const patch: Record<string, unknown> = {
+    stripe_customer_id: sub.customer,
+    stripe_subscription_id: sub.id,
+    subscription_status: sub.status,
+    cancel_at_period_end: sub.cancel_at_period_end,
+    current_period_end: periodEnd ? new Date(periodEnd * 1000).toISOString() : null,
+    founder: Boolean(current?.founder) || coupons.includes(FOUNDER_COUPON),
+  };
+  if (parsed) {
+    patch.billing_tier = parsed.tier;
+    patch.billing_interval = parsed.interval;
+  }
+  if (plan) patch.plan = plan;
+  const { error } = await db.from('organizations').update(patch).eq('id', orgId);
+  return error ? { orgId, error: `${error.code} ${error.message}` } : { orgId };
+}

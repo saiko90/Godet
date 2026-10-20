@@ -910,3 +910,5 @@
 .s-plans strong { font-size: var(--t-md); font-variant-numeric: tabular-nums; }
 .s-price p.s-plans-note { font-size: var(--t-sm); }
 .s-price p.s-plans-founder { color: var(--paint); font-size: var(--t-sm); font-weight: 650; }
+.s-linkbtn { padding: 0; border: 0; background: none; color: inherit; font: inherit; text-decoration: underline; cursor: pointer; }
+.s-linkbtn:disabled { opacity: .6; cursor: progress; }

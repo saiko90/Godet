@@ -101,7 +101,10 @@
       "notConfigured": "Il pagamento online non è ancora attivo. Ci scriva per abbonarsi.",
       "tooSmall": "Questa formula non basta per il numero di macchine del suo parco.",
       "forbidden": "Solo il titolare e gli amministratori possono gestire l’abbonamento."
-    }
+    },
+    "activated": "Abbonamento attivo: grazie e benvenuto in Godet!",
+    "refresh": "Ha già pagato ma non è cambiato nulla? Aggiorna",
+    "refreshing": "Verifica…"
   },
   "team": {
     "title": "Squadra",
