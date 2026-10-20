@@ -515,7 +515,9 @@
         "not_configured": "La lecture sur photo n’est pas encore activée.",
         "forbidden": "Vous n’avez pas accès à cette entreprise.",
         "generic": "La photo n’a pas pu être lue. Réessayez, ou saisissez le chiffre."
-      }
+      },
+      "camera": "Prendre une photo",
+      "gallery": "Choisir dans la galerie"
     }
   },
   "scheduleForm": {

@@ -31,6 +31,16 @@ export function trapTab(e: KeyboardEvent, root: HTMLElement | null) {
   }
 }
 
+/** Écran tactile (le clavier virtuel s'ouvre dès qu'un champ de saisie reçoit le focus). */
+export const isTouch = () => typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
+
+/** Champ qui ouvre le clavier virtuel. */
+function isTextEntry(el: HTMLElement): boolean {
+  if (el instanceof HTMLTextAreaElement) return true;
+  if (!(el instanceof HTMLInputElement)) return false;
+  return !['checkbox', 'radio', 'button', 'submit', 'reset', 'file', 'range', 'color', 'date', 'time'].includes(el.type);
+}
+
 /**
  * Fenêtre modale : voile, focus sur le premier champ (ou l'élément `data-autofocus`), tabulation piégée,
  * focus rendu à l'élément d'origine à la fermeture. Échap est géré par le garage (modale, puis fiche).
@@ -62,7 +72,9 @@ export function Modal({
       root?.querySelector<HTMLElement>('[data-autofocus]') ??
       root?.querySelector<HTMLElement>('input:not([type="hidden"]):not([type="file"]), select, textarea') ??
       root?.querySelector<HTMLElement>(FOCUSABLE);
-    const t = window.setTimeout(() => first?.focus({ preventScroll: true }), 30);
+    // Téléphone, tablette : pas de clavier à l'ouverture (il cacherait la fenêtre) ; le focus va à la boîte elle-même.
+    const target = first && isTouch() && isTextEntry(first) ? root : first;
+    const t = window.setTimeout(() => target?.focus({ preventScroll: true }), 30);
     return () => {
       window.clearTimeout(t);
       if (previous && document.contains(previous)) previous.focus({ preventScroll: true });
@@ -76,6 +88,7 @@ export function Modal({
     'aria-labelledby': labelledBy,
     'aria-describedby': describedBy,
     'aria-busy': busy || undefined,
+    tabIndex: -1,
     onKeyDown: (e: KeyboardEvent) => {
       // Pendant un envoi, Échap ne ferme pas la boîte (l'enregistrement irait à son terme sans retour visible).
       if (e.key === 'Escape' && busy) {

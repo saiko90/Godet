@@ -23,7 +23,7 @@ import { FileButton } from './MediaTab';
 import { GeoNote } from './GeoNote';
 import { parseLocalNumber } from './numbers';
 import { useGarageText } from './text';
-import { Modal } from './ui';
+import { isTouch, Modal } from './ui';
 
 const THIS_YEAR = new Date().getFullYear();
 const bold = (chunks: React.ReactNode) => <b className="num">{chunks}</b>;
@@ -446,7 +446,7 @@ export function HoursModal({ machineId, onClose }: { machineId: string; onClose:
           text: `${sure ? t('hoursForm.photo.read', { hours: f.hours(r.hours) }) : t('hoursForm.photo.unsure', { hours: f.hours(r.hours) })}${r.note ? ` ${r.note}` : ''}`,
           tone: sure ? 'ok' : 'warn',
         });
-        document.getElementById('hr-value')?.focus();
+        if (!isTouch()) document.getElementById('hr-value')?.focus();
       }
     } catch (e) {
       setPhotoNote({ text: t(`hoursForm.photo.errors.${e instanceof AiError ? e.code : 'generic'}`), tone: 'warn' });
@@ -539,15 +539,24 @@ export function HoursModal({ machineId, onClose }: { machineId: string; onClose:
         </p>
       </div>
       <div className="g-meter-photo">
-        <FileButton
-          accept="image/*"
-          className="btn btn-soft"
-          disabled={reading || busy}
-          onFiles={(files) => void fromPhoto(files[0])}
-        >
-          {reading ? <span className="g-spinner" aria-hidden="true" /> : <Icon name="camera" />}
-          {reading ? t('hoursForm.photo.reading') : t('hoursForm.photo.button')}
-        </FileButton>
+        <p className="g-mini-title">{t('hoursForm.photo.button')}</p>
+        {reading ? (
+          <p className="g-hint" role="status">
+            <span className="g-spinner" aria-hidden="true" /> {t('hoursForm.photo.reading')}
+          </p>
+        ) : (
+          <div className="g-meter-photo-btns">
+            {/* Deux boutons : certains téléphones n'offrent que la galerie quand l'appareil photo n'est pas demandé. */}
+            <FileButton accept="image/*" capture="environment" className="btn btn-soft" disabled={busy} onFiles={(files) => void fromPhoto(files[0])}>
+              <Icon name="camera" />
+              {t('hoursForm.photo.camera')}
+            </FileButton>
+            <FileButton accept="image/*" className="btn btn-soft" disabled={busy} onFiles={(files) => void fromPhoto(files[0])}>
+              <Icon name="upload" />
+              {t('hoursForm.photo.gallery')}
+            </FileButton>
+          </div>
+        )}
         {photoNote ? (
           <p className={`g-hint${photoNote.tone === 'warn' ? ' is-warn' : ''}`} role="status">
             {photoNote.text}

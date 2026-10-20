@@ -1906,3 +1906,6 @@
 .g-geo-last { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin: 0; font-size: var(--t-sm); color: var(--steel); }
 .g-geo-last svg { width: 16px; height: 16px; color: var(--paint); }
 .g-geo-last a { color: var(--paint); }
+.g-dialog:focus { outline: none; }
+.g-meter-photo-btns { display: flex; flex-wrap: wrap; gap: 8px; }
+.g-meter-photo .g-mini-title { margin: 0; }

@@ -515,7 +515,9 @@
         "not_configured": "La lettura da foto non è ancora attiva.",
         "forbidden": "Non avete accesso a questa azienda.",
         "generic": "Non è stato possibile leggere la foto. Riprovate o inserite la cifra."
-      }
+      },
+      "camera": "Scatta una foto",
+      "gallery": "Scegli dalla galleria"
     }
   },
   "scheduleForm": {

@@ -515,7 +515,9 @@
         "not_configured": "Reading from a photo isn’t switched on yet.",
         "forbidden": "You don’t have access to this company.",
         "generic": "The photo couldn’t be read. Try again, or type the figure."
-      }
+      },
+      "camera": "Take a photo",
+      "gallery": "Choose from gallery"
     }
   },
   "scheduleForm": {

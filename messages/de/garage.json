@@ -515,7 +515,9 @@
         "not_configured": "Das Ablesen vom Foto ist noch nicht aktiviert.",
         "forbidden": "Sie haben keinen Zugang zu dieser Firma.",
         "generic": "Das Foto konnte nicht gelesen werden. Erneut versuchen oder Wert eintippen."
-      }
+      },
+      "camera": "Foto aufnehmen",
+      "gallery": "Aus der Galerie wählen"
     }
   },
   "scheduleForm": {
