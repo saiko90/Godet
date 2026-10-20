@@ -13,7 +13,8 @@
       "account": "Il mio account",
       "reminders": "Promemoria",
       "archives": "Macchine archiviate",
-      "ideas": "Cassetta delle idee"
+      "ideas": "Cassetta delle idee",
+      "billing": "Abbonamento"
     }
   },
   "plan": {
@@ -43,6 +44,64 @@
     "active": "Impresa attiva",
     "switch": "Lavora in questa impresa",
     "switching": "Cambio di impresa…"
+  },
+  "billing": {
+    "title": "Abbonamento",
+    "text": "Tutte le formule comprendono utenti illimitati, etichette QR, importazione ed esportazione Excel e modalità senza rete. Senza vincoli: disdicibile in ogni momento.",
+    "status": {
+      "trial": "Prova gratuita: ancora {days, plural, one {# giorno} other {# giorni}} (fino al {date}). Tutte le funzioni sono aperte.",
+      "trialEnded": "La prova è terminata: il garage è in sola lettura. Scelga una formula per continuare a registrare.",
+      "active": "Formula {tier}, fatturazione {interval}. Prossimo rinnovo il {date}.",
+      "canceling": "Formula {tier} disdetta: resta attiva fino al {date}.",
+      "pastDue": "L’ultimo pagamento non è andato a buon fine: aggiorni la carta per evitare la sospensione.",
+      "suspended": "Abbonamento inattivo: il garage è in sola lettura. Scelga una formula per riattivarlo."
+    },
+    "interval": {
+      "mois": "mensile",
+      "annee": "annuale"
+    },
+    "monthly": "Mensile",
+    "yearly": "Annuale · 2 mesi in regalo",
+    "billingPeriod": "Fatturazione",
+    "perMonth": "{price} al mese",
+    "perYear": "{price} all’anno",
+    "insteadOf": "invece di {price}",
+    "founderOffer": "Pacchetto fondatore: −30 % a vita per le prime 10 aziende. Ancora {n, plural, one {# posto} other {# posti}}.",
+    "founderYou": "Fa parte delle aziende fondatrici: −30 % a vita.",
+    "founderBadge": "Fondatore −30 %",
+    "tiers": {
+      "essentiel": {
+        "name": "Essentiel",
+        "machines": "Fino a 5 macchine"
+      },
+      "pro": {
+        "name": "Pro",
+        "machines": "Fino a 20 macchine"
+      },
+      "parc": {
+        "name": "Parc",
+        "machines": "Fino a 50 macchine"
+      }
+    },
+    "current": "La sua formula",
+    "recommended": "Consigliata per il suo parco",
+    "choose": "Scegli {name}",
+    "tooSmall": "Ha {count} macchine attive: formula troppo piccola.",
+    "manage": "Gestisci l’abbonamento",
+    "manageHint": "Cambiare formula o carta, scaricare le fatture o disdire.",
+    "opening": "Apertura della pagina sicura…",
+    "moreThan": "Più di 50 macchine? Ci scriva per un’offerta su misura.",
+    "contact": "Contattaci",
+    "onlyOwners": "Solo il titolare e gli amministratori possono scegliere o gestire l’abbonamento.",
+    "thanks": "Grazie! L’abbonamento è in fase di attivazione: ci vogliono pochi secondi.",
+    "canceled": "Pagamento annullato: non è stato addebitato nulla.",
+    "secure": "Pagamento con carta sicuro tramite Stripe. Fatture disponibili in ogni momento.",
+    "errors": {
+      "generic": "Non è stato possibile aprire la pagina di pagamento. Riprovi tra poco.",
+      "notConfigured": "Il pagamento online non è ancora attivo. Ci scriva per abbonarsi.",
+      "tooSmall": "Questa formula non basta per il numero di macchine del suo parco.",
+      "forbidden": "Solo il titolare e gli amministratori possono gestire l’abbonamento."
+    }
   },
   "team": {
     "title": "Squadra",
@@ -100,7 +159,7 @@
     "saving": "Salvataggio…",
     "passwordTitle": "Cambia la password",
     "newPassword": "Nuova password",
-    "passwordHint": "Almeno 8\u00a0caratteri.",
+    "passwordHint": "Almeno 8 caratteri.",
     "confirmation": "Conferma",
     "changePassword": "Cambia la password",
     "showPassword": "Mostra la password",
@@ -149,8 +208,8 @@
     "generic": "Il salvataggio non è riuscito. Riprovi tra un istante.",
     "checkFields": "Verifichi i campi segnalati.",
     "checkField": "Verifichi il campo segnalato.",
-    "orgNameShort": "Inserisca il nome dell’impresa (almeno 2\u00a0caratteri).",
-    "tooLong": "Al massimo 80\u00a0caratteri.",
+    "orgNameShort": "Inserisca il nome dell’impresa (almeno 2 caratteri).",
+    "tooLong": "Al massimo 80 caratteri.",
     "country": "Scelga un paese dall’elenco.",
     "canton": "Scelga un cantone dall’elenco.",
     "currency": "Scelga una valuta dall’elenco.",
@@ -183,8 +242,8 @@
     "removed": "Membro rimosso dall’impresa.",
     "nameRequired": "Inserisca il Suo nome e cognome.",
     "nameSaved": "Nome salvato.",
-    "passwordShort": "Password troppo corta: almeno 8\u00a0caratteri.",
-    "passwordLong": "Al massimo 72\u00a0caratteri.",
+    "passwordShort": "Password troppo corta: almeno 8 caratteri.",
+    "passwordLong": "Al massimo 72 caratteri.",
     "passwordMismatch": "Le due password non coincidono.",
     "passwordChanged": "Password cambiata.",
     "ownerCantLeave": "Il titolare non può lasciare la propria impresa.",

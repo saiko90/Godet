@@ -13,7 +13,8 @@
       "account": "Mein Konto",
       "reminders": "Erinnerungen",
       "archives": "Archivierte Maschinen",
-      "ideas": "Ideenbox"
+      "ideas": "Ideenbox",
+      "billing": "Abonnement"
     }
   },
   "plan": {
@@ -43,6 +44,64 @@
     "active": "Aktives Unternehmen",
     "switch": "In diesem Unternehmen arbeiten",
     "switching": "Unternehmen wird gewechselt…"
+  },
+  "billing": {
+    "title": "Abonnement",
+    "text": "Alle Abos enthalten unbegrenzt viele Benutzer, QR-Etiketten, Excel-Import und -Export sowie den Offline-Modus. Ohne Bindung: jederzeit kündbar.",
+    "status": {
+      "trial": "Gratis-Test: noch {days, plural, one {# Tag} other {# Tage}} (bis {date}). Alle Funktionen sind offen.",
+      "trialEnded": "Ihr Test ist abgelaufen: Die Garage ist schreibgeschützt. Wählen Sie ein Abo, um weiter zu erfassen.",
+      "active": "Abo {tier}, {interval} Abrechnung. Nächste Verlängerung am {date}.",
+      "canceling": "Abo {tier} gekündigt: Es bleibt bis {date} aktiv.",
+      "pastDue": "Die letzte Zahlung ist fehlgeschlagen: Aktualisieren Sie Ihre Karte, um eine Sperre zu vermeiden.",
+      "suspended": "Abo inaktiv: Die Garage ist schreibgeschützt. Wählen Sie ein Abo, um sie wieder zu aktivieren."
+    },
+    "interval": {
+      "mois": "monatliche",
+      "annee": "jährliche"
+    },
+    "monthly": "Monatlich",
+    "yearly": "Jährlich · 2 Monate geschenkt",
+    "billingPeriod": "Abrechnung",
+    "perMonth": "{price} pro Monat",
+    "perYear": "{price} pro Jahr",
+    "insteadOf": "statt {price}",
+    "founderOffer": "Gründerpaket: −30 % lebenslang für die ersten 10 Unternehmen. Noch {n, plural, one {# Platz} other {# Plätze}}.",
+    "founderYou": "Sie gehören zu den Gründerunternehmen: −30 % lebenslang.",
+    "founderBadge": "Gründer −30 %",
+    "tiers": {
+      "essentiel": {
+        "name": "Essentiel",
+        "machines": "Bis 5 Maschinen"
+      },
+      "pro": {
+        "name": "Pro",
+        "machines": "Bis 20 Maschinen"
+      },
+      "parc": {
+        "name": "Parc",
+        "machines": "Bis 50 Maschinen"
+      }
+    },
+    "current": "Ihr Abo",
+    "recommended": "Empfohlen für Ihren Maschinenpark",
+    "choose": "{name} wählen",
+    "tooSmall": "Sie haben {count} aktive Maschinen: Abo zu klein.",
+    "manage": "Abo verwalten",
+    "manageHint": "Abo oder Karte wechseln, Rechnungen herunterladen oder kündigen.",
+    "opening": "Sichere Seite wird geöffnet…",
+    "moreThan": "Mehr als 50 Maschinen? Schreiben Sie uns für ein individuelles Angebot.",
+    "contact": "Kontakt",
+    "onlyOwners": "Nur der Inhaber und die Administratoren können das Abo wählen oder verwalten.",
+    "thanks": "Danke! Ihr Abo wird aktiviert: Das dauert einige Sekunden.",
+    "canceled": "Zahlung abgebrochen: Es wurde nichts belastet.",
+    "secure": "Kartenzahlung sicher über Stripe. Rechnungen jederzeit verfügbar.",
+    "errors": {
+      "generic": "Die Zahlungsseite konnte nicht geöffnet werden. Versuchen Sie es gleich noch einmal.",
+      "notConfigured": "Die Online-Zahlung ist noch nicht aktiviert. Schreiben Sie uns, um ein Abo abzuschliessen.",
+      "tooSmall": "Dieses Abo reicht für die Anzahl Maschinen in Ihrem Park nicht aus.",
+      "forbidden": "Nur der Inhaber und die Administratoren können das Abo verwalten."
+    }
   },
   "team": {
     "title": "Team",
@@ -100,7 +159,7 @@
     "saving": "Wird gespeichert…",
     "passwordTitle": "Passwort ändern",
     "newPassword": "Neues Passwort",
-    "passwordHint": "Mindestens 8\u00a0Zeichen.",
+    "passwordHint": "Mindestens 8 Zeichen.",
     "confirmation": "Bestätigung",
     "changePassword": "Passwort ändern",
     "showPassword": "Passwort anzeigen",
@@ -149,8 +208,8 @@
     "generic": "Das Speichern ist fehlgeschlagen. Bitte versuchen Sie es gleich noch einmal.",
     "checkFields": "Bitte prüfen Sie die markierten Felder.",
     "checkField": "Bitte prüfen Sie das markierte Feld.",
-    "orgNameShort": "Bitte geben Sie den Namen des Unternehmens ein (mindestens 2\u00a0Zeichen).",
-    "tooLong": "Höchstens 80\u00a0Zeichen.",
+    "orgNameShort": "Bitte geben Sie den Namen des Unternehmens ein (mindestens 2 Zeichen).",
+    "tooLong": "Höchstens 80 Zeichen.",
     "country": "Bitte wählen Sie ein Land aus der Liste.",
     "canton": "Bitte wählen Sie einen Kanton aus der Liste.",
     "currency": "Bitte wählen Sie eine Währung aus der Liste.",
@@ -183,8 +242,8 @@
     "removed": "Mitglied aus dem Unternehmen entfernt.",
     "nameRequired": "Bitte geben Sie Ihren vollständigen Namen ein.",
     "nameSaved": "Name gespeichert.",
-    "passwordShort": "Passwort zu kurz: mindestens 8\u00a0Zeichen.",
-    "passwordLong": "Höchstens 72\u00a0Zeichen.",
+    "passwordShort": "Passwort zu kurz: mindestens 8 Zeichen.",
+    "passwordLong": "Höchstens 72 Zeichen.",
     "passwordMismatch": "Die beiden Passwörter stimmen nicht überein.",
     "passwordChanged": "Passwort geändert.",
     "ownerCantLeave": "Der Inhaber kann sein Unternehmen nicht verlassen.",

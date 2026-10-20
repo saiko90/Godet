@@ -758,7 +758,9 @@
       "notMedia": "«{name}» ist weder ein Foto noch ein Video noch ein PDF.",
       "tooBig": "{kind, select, video {Das Video «{name}»} document {Das Dokument «{name}»} other {Das Foto «{name}»}} ist {size} gross: Die Grenze liegt bei 50 MB pro Datei.",
       "prepareFailed": "«{name}» konnte auf diesem Gerät nicht vorbereitet werden."
-    }
+    },
+    "subscriptionInactive": "Die Garage ist schreibgeschützt: Der Test ist abgelaufen oder das Abo ist inaktiv. Wählen Sie ein Abo in den Einstellungen.",
+    "planLimit": "Ihr Abo erlaubt keine weiteren Maschinen. Wechseln Sie in den Einstellungen (Abonnement) zum grösseren Abo."
   },
   "suggestions": {
     "service": {
@@ -881,5 +883,14 @@
     "synced": "{count, plural, one {# Eintrag gesendet.} other {# Einträge gesendet.}}",
     "refused": "{count, plural, one {# Eintrag vom Server abgelehnt (Maschine inzwischen archiviert oder Zählerstand überholt).} other {# Einträge vom Server abgelehnt (Maschine inzwischen archiviert oder Zählerstand überholt).}}",
     "signOutPending": "{count, plural, one {Ein Eintrag ist noch nicht gesendet und ginge beim Abmelden verloren.} other {# Einträge sind noch nicht gesendet und gingen beim Abmelden verloren.}} Trotzdem abmelden?"
+  },
+  "billing": {
+    "trialEnds": "Gratis-Test: noch {days, plural, one {# Tag} other {# Tage}}.",
+    "readOnly": "Test abgelaufen: Die Garage ist schreibgeschützt.",
+    "suspended": "Abo inaktiv: Die Garage ist schreibgeschützt.",
+    "pastDue": "Die letzte Zahlung ist fehlgeschlagen: Aktualisieren Sie Ihre Karte.",
+    "cta": "Abo wählen",
+    "manage": "Aktualisieren",
+    "askOwner": "Bitten Sie den Inhaber, ein Abo zu wählen."
   }
 }

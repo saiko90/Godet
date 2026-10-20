@@ -1794,9 +1794,24 @@
 .g-excel-problems ul { font-size: var(--t-sm); color: var(--steel); overflow-wrap: anywhere; }
 
 /* ---------- hors ligne : état du réseau et saisies en attente ---------- */
-.g-offline {
+.g-notices {
   position: fixed; z-index: 45; left: 50%; transform: translateX(-50%);
-  top: calc(env(safe-area-inset-top, 0px) + 72px);
+  top: calc(env(safe-area-inset-top, 0px) + var(--top-h) + var(--demo-h));
+  display: grid; justify-items: center; gap: 8px; width: max-content; max-width: calc(100% - 32px);
+  pointer-events: none;
+}
+.g-notices > * { pointer-events: auto; }
+.g-notices:empty { display: none; }
+.g-billing {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: center;
+  padding: 8px 8px 8px 16px; border-radius: 16px; font-size: var(--t-sm);
+  background: color-mix(in srgb, var(--night) 90%, transparent); border: 1px solid color-mix(in srgb, var(--paint) 55%, var(--line));
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
+}
+.g-billing.is-warn { border-color: color-mix(in srgb, var(--warn) 70%, var(--line)); }
+.g-billing .btn { min-height: 34px; padding-inline: 14px; }
+.g-billing-ask { color: var(--steel); padding-right: 8px; }
+.g-offline {
   display: flex; align-items: center; gap: 10px; max-width: calc(100% - 32px);
   padding: 6px 8px 6px 14px; min-height: 40px; border-radius: 999px;
   background: color-mix(in srgb, var(--night) 88%, transparent); border: 1px solid var(--line);

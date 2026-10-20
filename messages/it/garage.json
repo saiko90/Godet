@@ -758,7 +758,9 @@
       "notMedia": "«{name}» non è né una foto, né un video, né un PDF.",
       "tooBig": "{kind, select, video {Il video «{name}»} document {Il documento «{name}»} other {La foto «{name}»}} pesa {size}: il limite è di 50 MB per file.",
       "prepareFailed": "«{name}» non ha potuto essere preparata su questo dispositivo."
-    }
+    },
+    "subscriptionInactive": "Il garage è in sola lettura: la prova è terminata o l’abbonamento è inattivo. Scelga una formula nelle impostazioni.",
+    "planLimit": "La sua formula non consente altre macchine. Passi alla formula superiore nelle impostazioni (Abbonamento)."
   },
   "suggestions": {
     "service": {
@@ -881,5 +883,14 @@
     "synced": "{count, plural, one {# registrazione inviata.} other {# registrazioni inviate.}}",
     "refused": "{count, plural, one {# registrazione rifiutata dal server (macchina archiviata o contaore superato nel frattempo).} other {# registrazioni rifiutate dal server (macchina archiviata o contaore superato nel frattempo).}}",
     "signOutPending": "{count, plural, one {Una registrazione non è ancora stata inviata e andrebbe persa uscendo ora.} other {# registrazioni non sono ancora state inviate e andrebbero perse uscendo ora.}} Uscire comunque?"
+  },
+  "billing": {
+    "trialEnds": "Prova gratuita: ancora {days, plural, one {# giorno} other {# giorni}}.",
+    "readOnly": "Prova terminata: il garage è in sola lettura.",
+    "suspended": "Abbonamento inattivo: il garage è in sola lettura.",
+    "pastDue": "L’ultimo pagamento non è andato a buon fine: aggiorni la carta.",
+    "cta": "Scegli una formula",
+    "manage": "Aggiorna",
+    "askOwner": "Chieda al titolare di scegliere una formula."
   }
 }

@@ -5,7 +5,7 @@
   "loading": "Chargement des paramètres…",
   "page": {
     "title": "Paramètres",
-    "role": "Votre rôle\u00a0: <b>{role}</b>. {hint}",
+    "role": "Votre rôle : <b>{role}</b>. {hint}",
     "nav": "Sections des paramètres",
     "sections": {
       "company": "Entreprise",
@@ -13,7 +13,8 @@
       "account": "Mon compte",
       "reminders": "Rappels",
       "archives": "Machines archivées",
-      "ideas": "Boîte à idées"
+      "ideas": "Boîte à idées",
+      "billing": "Abonnement"
     }
   },
   "plan": {
@@ -44,6 +45,64 @@
     "switch": "Travailler dans cette entreprise",
     "switching": "Changement d’entreprise…"
   },
+  "billing": {
+    "title": "Abonnement",
+    "text": "Toutes les formules comprennent les utilisateurs illimités, les étiquettes QR, l’import et l’export Excel et le mode sans réseau. Sans engagement : résiliable en tout temps.",
+    "status": {
+      "trial": "Essai gratuit : encore {days, plural, one {# jour} other {# jours}} (jusqu’au {date}). Toutes les fonctions sont ouvertes.",
+      "trialEnded": "Votre essai est terminé : le garage est en lecture seule. Choisissez une formule pour continuer à saisir.",
+      "active": "Formule {tier}, facturation {interval}. Prochain renouvellement le {date}.",
+      "canceling": "Formule {tier} résiliée : elle reste active jusqu’au {date}.",
+      "pastDue": "Le dernier paiement a échoué : mettez à jour votre carte pour éviter la suspension.",
+      "suspended": "Abonnement inactif : le garage est en lecture seule. Choisissez une formule pour le réactiver."
+    },
+    "interval": {
+      "mois": "mensuelle",
+      "annee": "annuelle"
+    },
+    "monthly": "Mensuel",
+    "yearly": "Annuel · 2 mois offerts",
+    "billingPeriod": "Facturation",
+    "perMonth": "{price} par mois",
+    "perYear": "{price} par an",
+    "insteadOf": "au lieu de {price}",
+    "founderOffer": "Pack fondateur : −30 % à vie pour les 10 premières entreprises. Encore {n, plural, one {# place} other {# places}}.",
+    "founderYou": "Vous faites partie des entreprises fondatrices : −30 % à vie.",
+    "founderBadge": "Fondateur −30 %",
+    "tiers": {
+      "essentiel": {
+        "name": "Essentiel",
+        "machines": "Jusqu’à 5 machines"
+      },
+      "pro": {
+        "name": "Pro",
+        "machines": "Jusqu’à 20 machines"
+      },
+      "parc": {
+        "name": "Parc",
+        "machines": "Jusqu’à 50 machines"
+      }
+    },
+    "current": "Votre formule",
+    "recommended": "Conseillée pour votre parc",
+    "choose": "Choisir {name}",
+    "tooSmall": "Vous avez {count} machines actives : formule trop petite.",
+    "manage": "Gérer l’abonnement",
+    "manageHint": "Changer de formule, de carte, télécharger les factures ou résilier.",
+    "opening": "Ouverture de la page sécurisée…",
+    "moreThan": "Plus de 50 machines ? Écrivez-nous pour une offre sur mesure.",
+    "contact": "Nous contacter",
+    "onlyOwners": "Seuls le propriétaire et les administrateurs peuvent choisir ou gérer l’abonnement.",
+    "thanks": "Merci ! Votre abonnement est en cours d’activation : cela prend quelques secondes.",
+    "canceled": "Paiement annulé : rien n’a été débité.",
+    "secure": "Paiement par carte sécurisé par Stripe. Factures disponibles en tout temps.",
+    "errors": {
+      "generic": "La page de paiement n’a pas pu s’ouvrir. Réessayez dans un instant.",
+      "notConfigured": "Le paiement en ligne n’est pas encore activé. Écrivez-nous pour vous abonner.",
+      "tooSmall": "Cette formule ne suffit pas pour le nombre de machines de votre parc.",
+      "forbidden": "Seuls le propriétaire et les administrateurs peuvent gérer l’abonnement."
+    }
+  },
   "team": {
     "title": "Équipe",
     "manageText": "Invitez vos mécaniciens et machinistes. Chacun accède au parc selon son rôle.",
@@ -56,7 +115,7 @@
     "roleOf": "Rôle de {name}",
     "thisMember": "ce membre",
     "remove": "Retirer",
-    "removeQuestion": "Retirer ce membre\u00a0?",
+    "removeQuestion": "Retirer ce membre ?",
     "removeConfirm": "Oui, retirer",
     "saving": "Enregistrement…",
     "invite": "Inviter une personne",
@@ -67,8 +126,8 @@
     "emailLanguage": "Langue de l’e-mail",
     "createAndSend": "Envoyer l’invitation",
     "sending": "Envoi…",
-    "linkReady": "<b>{message}</b> Transmettez ce lien à {email}\u00a0: il est valable jusqu’au {date} et ne sert qu’une fois.",
-    "linkSent": "<b>{message}</b> Le lien reste disponible ici au besoin\u00a0: il est valable jusqu’au {date} et ne sert qu’une fois.",
+    "linkReady": "<b>{message}</b> Transmettez ce lien à {email} : il est valable jusqu’au {date} et ne sert qu’une fois.",
+    "linkSent": "<b>{message}</b> Le lien reste disponible ici au besoin : il est valable jusqu’au {date} et ne sert qu’une fois.",
     "link": "Lien d’invitation",
     "sendEmail": "Envoyer par e-mail",
     "pending": "Invitations en attente",
@@ -78,17 +137,17 @@
     "send": "Envoyer",
     "delete": "Supprimer",
     "revoke": "Révoquer",
-    "deleteQuestion": "Supprimer l’invitation\u00a0?",
-    "revokeQuestion": "Révoquer l’invitation\u00a0?",
+    "deleteQuestion": "Supprimer l’invitation ?",
+    "revokeQuestion": "Révoquer l’invitation ?",
     "deleteConfirm": "Oui, supprimer",
     "revokeConfirm": "Oui, révoquer",
     "roles": "Les rôles",
     "mail": {
       "subject": "Invitation à rejoindre {org} sur Godet",
       "greeting": "Bonjour,",
-      "intro": "Je vous invite à rejoindre «\u00a0{org}\u00a0» sur Godet, le carnet d’entretien de notre parc d’engins. Votre rôle\u00a0: {role, select, owner {propriétaire} admin {administrateur} mechanic {mécanicien} operator {machiniste} other {membre}}.",
-      "open": "Ouvrez ce lien pour accepter l’invitation (valable jusqu’au {date})\u00a0:",
-      "account": "Créez votre compte avec cette adresse e-mail\u00a0: {email}."
+      "intro": "Je vous invite à rejoindre « {org} » sur Godet, le carnet d’entretien de notre parc d’engins. Votre rôle : {role, select, owner {propriétaire} admin {administrateur} mechanic {mécanicien} operator {machiniste} other {membre}}.",
+      "open": "Ouvrez ce lien pour accepter l’invitation (valable jusqu’au {date}) :",
+      "account": "Créez votre compte avec cette adresse e-mail : {email}."
     }
   },
   "account": {
@@ -100,7 +159,7 @@
     "saving": "Enregistrement…",
     "passwordTitle": "Changer le mot de passe",
     "newPassword": "Nouveau mot de passe",
-    "passwordHint": "8\u00a0caractères au minimum.",
+    "passwordHint": "8 caractères au minimum.",
     "confirmation": "Confirmation",
     "changePassword": "Changer le mot de passe",
     "showPassword": "Afficher le mot de passe",
@@ -109,7 +168,7 @@
     "session": "Session",
     "logout": "Se déconnecter",
     "leave": "Quitter {org}",
-    "leaveQuestion": "Quitter l’entreprise\u00a0? Vous perdrez l’accès à son garage.",
+    "leaveQuestion": "Quitter l’entreprise ? Vous perdrez l’accès à son garage.",
     "leaveConfirm": "Oui, quitter"
   },
   "reminders": {
@@ -132,7 +191,7 @@
   },
   "ideas": {
     "title": "Boîte à idées",
-    "text": "Une fonction vous manque, un détail vous gêne\u00a0? Proposez votre idée et suivez nos réponses.",
+    "text": "Une fonction vous manque, un détail vous gêne ? Proposez votre idée et suivez nos réponses.",
     "open": "Ouvrir la boîte à idées"
   },
   "copy": {
@@ -140,7 +199,7 @@
     "copied": "Copié",
     "failed": "Copie impossible",
     "copiedSr": "Lien copié dans le presse-papiers.",
-    "failedSr": "Copie impossible\u00a0: sélectionnez le lien à la main."
+    "failedSr": "Copie impossible : sélectionnez le lien à la main."
   },
   "confirm": {
     "pending": "Un instant…"
@@ -149,21 +208,21 @@
     "generic": "L’enregistrement a échoué. Réessayez dans un instant.",
     "checkFields": "Vérifiez les champs signalés.",
     "checkField": "Vérifiez le champ signalé.",
-    "orgNameShort": "Indiquez le nom de l’entreprise (2\u00a0caractères au moins).",
-    "tooLong": "80\u00a0caractères au maximum.",
+    "orgNameShort": "Indiquez le nom de l’entreprise (2 caractères au moins).",
+    "tooLong": "80 caractères au maximum.",
     "country": "Choisissez un pays dans la liste.",
     "canton": "Choisissez un canton dans la liste.",
     "currency": "Choisissez une devise dans la liste.",
     "orgManagersOnly": "Seuls le propriétaire et les administrateurs peuvent modifier l’entreprise.",
     "orgSaved": "Entreprise enregistrée.",
     "orgNotFound": "Entreprise introuvable.",
-    "orgActive": "Entreprise active\u00a0: {name}.",
-    "emailInvalid": "Adresse e-mail incomplète. Exemple\u00a0: nom@entreprise.ch",
+    "orgActive": "Entreprise active : {name}.",
+    "emailInvalid": "Adresse e-mail incomplète. Exemple : nom@entreprise.ch",
     "roleRequired": "Choisissez un rôle.",
     "inviteManagersOnly": "Seuls le propriétaire et les administrateurs peuvent inviter.",
     "alreadyMember": "Cette personne fait déjà partie de l’équipe.",
     "alreadyMemberField": "Déjà membre de l’entreprise.",
-    "inviteExisting": "Une invitation était déjà en attente pour {email}\u00a0: voici son lien.",
+    "inviteExisting": "Une invitation était déjà en attente pour {email} : voici son lien.",
     "inviteFailed": "L’invitation n’a pas pu être créée. Réessayez dans un instant.",
     "inviteReady": "Invitation prête pour {email} ({role, select, admin {administrateur} mechanic {mécanicien} operator {machiniste} other {membre}}).",
     "inviteSent": "Invitation envoyée par e-mail à {email}.",
@@ -172,19 +231,19 @@
     "inviteNotFound": "Invitation introuvable.",
     "managersOnly": "Action réservée au propriétaire et aux administrateurs.",
     "revokeFailed": "L’invitation n’a pas pu être révoquée.",
-    "revoked": "Invitation révoquée\u00a0: son lien ne fonctionne plus.",
+    "revoked": "Invitation révoquée : son lien ne fonctionne plus.",
     "roleInvalid": "Rôle non valable.",
     "ownRole": "Vous ne pouvez pas changer votre propre rôle.",
     "roleFailed": "Le rôle n’a pas pu être modifié.",
-    "roleSaved": "Rôle enregistré\u00a0: {role, select, admin {administrateur} mechanic {mécanicien} operator {machiniste} other {membre}}.",
+    "roleSaved": "Rôle enregistré : {role, select, admin {administrateur} mechanic {mécanicien} operator {machiniste} other {membre}}.",
     "memberNotFound": "Membre introuvable.",
-    "removeSelf": "Pour partir, utilisez «\u00a0Quitter l’entreprise\u00a0» dans Mon compte.",
+    "removeSelf": "Pour partir, utilisez « Quitter l’entreprise » dans Mon compte.",
     "removeFailed": "Ce membre n’a pas pu être retiré.",
     "removed": "Membre retiré de l’entreprise.",
     "nameRequired": "Indiquez votre nom complet.",
     "nameSaved": "Nom enregistré.",
-    "passwordShort": "Mot de passe trop court\u00a0: 8\u00a0caractères au minimum.",
-    "passwordLong": "72\u00a0caractères au maximum.",
+    "passwordShort": "Mot de passe trop court : 8 caractères au minimum.",
+    "passwordLong": "72 caractères au maximum.",
     "passwordMismatch": "Les deux mots de passe ne sont pas identiques.",
     "passwordChanged": "Mot de passe changé.",
     "ownerCantLeave": "Le propriétaire ne peut pas quitter son entreprise.",

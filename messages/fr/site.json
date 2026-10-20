@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Godet — le garage de votre parc d’engins",
-    "description": "Le carnet d’entretien numérique des machines de chantier\u00a0: services, réparations, pièces, coûts, photos, vidéos et échéances. Essai gratuit de 30\u00a0jours, sans carte de crédit.",
+    "description": "Le carnet d’entretien numérique des machines de chantier\u00a0: services, réparations, pièces, coûts, photos, vidéos et échéances. Essai gratuit de 15\u00a0jours, sans carte de crédit.",
     "ogDescription": "Chaque machine a son carnet complet. Les contrôles ne s’oublient plus, les coûts par machine sont clairs. Conforme à l’art. 32b OPA.",
     "ogImageAlt": "Le showroom 3D de Godet"
   },
@@ -55,7 +55,7 @@
       "hasAccount": "Déjà un compte\u00a0?",
       "login": "Se connecter",
       "assure": {
-        "trial": "Essai gratuit de 30\u00a0jours",
+        "trial": "Essai gratuit de 15\u00a0jours",
         "card": "Sans carte de crédit",
         "hosting": "Données hébergées dans l’UE"
       }
@@ -193,9 +193,27 @@
     },
     "pricing": {
       "eyebrow": "Tarif",
-      "title": "Essai gratuit de 30\u00a0jours",
-      "text": "Sans carte de crédit. Tarifs annoncés avant la fin de l’essai.",
-      "small": "Toutes les fonctions sont disponibles pendant l’essai."
+      "title": "Essai gratuit de 15\u00a0jours",
+      "text": "Sans carte de cr\u00e9dit. Ensuite, une formule selon la taille de votre parc\u00a0: utilisateurs illimit\u00e9s, sans engagement.",
+      "small": "Toutes les fonctions sont disponibles pendant l’essai.",
+      "perMonth": "{chf}\u00a0CHF ou {eur}\u00a0\u20ac par mois",
+      "yearly": "2 mois offerts en paiement annuel. R\u00e9siliable en tout temps.",
+      "founder": "Pack fondateur\u00a0: \u221230\u00a0% \u00e0 vie pour les 10 premi\u00e8res entreprises abonn\u00e9es.",
+      "tiers": {
+        "essentiel": {
+          "name": "Essentiel",
+          "machines": "Jusqu\u2019\u00e0 5 machines"
+        },
+        "pro": {
+          "name": "Pro",
+          "machines": "Jusqu\u2019\u00e0 20 machines"
+        },
+        "parc": {
+          "name": "Parc",
+          "machines": "Jusqu\u2019\u00e0 50 machines"
+        }
+      },
+      "more": "Plus de 50 machines\u00a0? Offre sur mesure."
     },
     "faq": {
       "eyebrow": "Questions",
@@ -227,7 +245,7 @@
         },
         "trial": {
           "q": "Que se passe-t-il après l’essai\u00a0?",
-          "a": "Les tarifs vous sont annoncés avant la fin des 30\u00a0jours. Aucune carte de crédit n’est demandée pour essayer."
+          "a": "Le garage passe en lecture seule\u00a0: rien n\u2019est effac\u00e9. Vous choisissez une formule quand vous voulez (d\u00e8s 29\u00a0CHF par mois), et tout redevient modifiable aussit\u00f4t."
         }
       }
     },

@@ -25,11 +25,14 @@ export type ErrorFallback =
   | 'deleteFile';
 
 /** Exceptions levées par les fonctions de la base (anciens messages ou codes) → message traduit. */
-const SERVER_MESSAGES: Record<string, 'machineGone' | 'forbidden' | 'session'> = {
+const SERVER_MESSAGES: Record<string, 'machineGone' | 'forbidden' | 'session' | 'subscriptionInactive' | 'planLimit'> = {
   'Machine introuvable': 'machineGone',
   'Action réservée aux responsables du parc': 'forbidden',
   forbidden: 'forbidden',
   auth_required: 'session',
+  // Abonnement (déclencheurs de la base, migration billing_stripe)
+  subscription_inactive: 'subscriptionInactive',
+  plan_limit: 'planLimit',
 };
 
 const isCheck = (c: string | undefined): c is CheckConstraint => (CHECK_CONSTRAINTS as readonly (string | undefined)[]).includes(c);

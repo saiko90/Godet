@@ -90,6 +90,14 @@ Navigateur de test : Chromium de Playwright dans `/opt/pw-browsers` (ne pas lanc
   avancer le compteur ; une saisie liée à une échéance (`schedule_id`) la renouvelle ; une nouvelle machine reçoit
   « Service » toutes les 500 h et « Contrôle annuel de sécurité » (dans la langue du profil de la personne qui
   l'ajoute) ; tout changement est journalisé.
+- Abonnement Stripe (migration `20261020170000_billing_stripe.sql`) : formules essentiel (5 machines, 29), pro (20, 59),
+  parc (50, 99) CHF ou EUR par mois, l'année = 10 mois ; pack fondateur −30 % à vie (10 premières, coupon
+  `godet-fondateur-30`, `public.founder_slots_left()`) ; essai 15 jours. Fonctions Supabase `facturation` (Checkout et
+  portail, session de la personne, propriétaire/admin) et `stripe-webhook` (signature `STRIPE_WEBHOOK_SECRET`, seule à
+  écrire les champs d'abonnement). Produits, prix, coupon et portail se créent seuls au premier appel
+  (`supabase/functions/facturation/stripe.ts`, recopié dans `stripe-webhook/`). Hors essai/abonnement actif : lecture
+  seule (déclencheurs `*_guard_writable`, erreur `subscription_inactive`) ; limite de machines (`plan_limit`).
+  Interface : `AbonnementPanel` (paramètres), bandeau du garage (`CloudGarage`), grille sur l'accueil ; `src/lib/billing.ts`.
 - Abonnement : `plan` et `trial_ends_at` d'une entreprise (et `created_by`, `created_at`) ne se modifient pas depuis
   l'application (déclencheur `organizations_guard_billing`, erreur `billing_locked`) : seulement la clé de service,
   une fonction SECURITY DEFINER ou l'administration de la plateforme.

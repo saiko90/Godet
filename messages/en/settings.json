@@ -13,7 +13,8 @@
       "account": "My account",
       "reminders": "Reminders",
       "archives": "Archived machines",
-      "ideas": "Ideas box"
+      "ideas": "Ideas box",
+      "billing": "Subscription"
     }
   },
   "plan": {
@@ -43,6 +44,64 @@
     "active": "Active company",
     "switch": "Work in this company",
     "switching": "Switching company…"
+  },
+  "billing": {
+    "title": "Subscription",
+    "text": "Every plan includes unlimited users, QR labels, Excel import and export, and offline mode. No commitment: cancel at any time.",
+    "status": {
+      "trial": "Free trial: {days, plural, one {# day} other {# days}} left (until {date}). Every feature is unlocked.",
+      "trialEnded": "Your trial has ended: the garage is read-only. Choose a plan to keep logging work.",
+      "active": "{tier} plan, {interval} billing. Next renewal on {date}.",
+      "canceling": "{tier} plan cancelled: it stays active until {date}.",
+      "pastDue": "The last payment failed: update your card to avoid suspension.",
+      "suspended": "Subscription inactive: the garage is read-only. Choose a plan to reactivate it."
+    },
+    "interval": {
+      "mois": "monthly",
+      "annee": "yearly"
+    },
+    "monthly": "Monthly",
+    "yearly": "Yearly · 2 months free",
+    "billingPeriod": "Billing",
+    "perMonth": "{price} per month",
+    "perYear": "{price} per year",
+    "insteadOf": "instead of {price}",
+    "founderOffer": "Founder pack: 30% off for life for the first 10 companies. {n, plural, one {# place} other {# places}} left.",
+    "founderYou": "You are one of our founding companies: 30% off for life.",
+    "founderBadge": "Founder −30%",
+    "tiers": {
+      "essentiel": {
+        "name": "Essentiel",
+        "machines": "Up to 5 machines"
+      },
+      "pro": {
+        "name": "Pro",
+        "machines": "Up to 20 machines"
+      },
+      "parc": {
+        "name": "Parc",
+        "machines": "Up to 50 machines"
+      }
+    },
+    "current": "Your plan",
+    "recommended": "Recommended for your fleet",
+    "choose": "Choose {name}",
+    "tooSmall": "You have {count} active machines: plan too small.",
+    "manage": "Manage subscription",
+    "manageHint": "Change plan or card, download invoices or cancel.",
+    "opening": "Opening the secure page…",
+    "moreThan": "More than 50 machines? Write to us for a tailored offer.",
+    "contact": "Contact us",
+    "onlyOwners": "Only the owner and administrators can choose or manage the subscription.",
+    "thanks": "Thank you! Your subscription is being activated: it takes a few seconds.",
+    "canceled": "Payment cancelled: nothing was charged.",
+    "secure": "Secure card payment by Stripe. Invoices available at any time.",
+    "errors": {
+      "generic": "The payment page couldn’t open. Try again in a moment.",
+      "notConfigured": "Online payment isn’t enabled yet. Write to us to subscribe.",
+      "tooSmall": "This plan isn’t enough for the number of machines in your fleet.",
+      "forbidden": "Only the owner and administrators can manage the subscription."
+    }
   },
   "team": {
     "title": "Team",
@@ -100,7 +159,7 @@
     "saving": "Saving…",
     "passwordTitle": "Change password",
     "newPassword": "New password",
-    "passwordHint": "At least 8\u00a0characters.",
+    "passwordHint": "At least 8 characters.",
     "confirmation": "Confirmation",
     "changePassword": "Change password",
     "showPassword": "Show password",
@@ -149,8 +208,8 @@
     "generic": "Saving failed. Please try again in a moment.",
     "checkFields": "Please check the highlighted fields.",
     "checkField": "Please check the highlighted field.",
-    "orgNameShort": "Please enter the company name (at least 2\u00a0characters).",
-    "tooLong": "80\u00a0characters maximum.",
+    "orgNameShort": "Please enter the company name (at least 2 characters).",
+    "tooLong": "80 characters maximum.",
     "country": "Please choose a country from the list.",
     "canton": "Please choose a canton from the list.",
     "currency": "Please choose a currency from the list.",
@@ -183,8 +242,8 @@
     "removed": "Member removed from the company.",
     "nameRequired": "Please enter your full name.",
     "nameSaved": "Name saved.",
-    "passwordShort": "Password too short: at least 8\u00a0characters.",
-    "passwordLong": "72\u00a0characters maximum.",
+    "passwordShort": "Password too short: at least 8 characters.",
+    "passwordLong": "72 characters maximum.",
     "passwordMismatch": "The two passwords do not match.",
     "passwordChanged": "Password changed.",
     "ownerCantLeave": "The owner cannot leave their own company.",

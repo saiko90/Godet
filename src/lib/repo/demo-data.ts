@@ -52,6 +52,14 @@ export function buildDemoSeed(today: string, texts: DemoTexts): DemoSeed {
     trial_ends_at: zurichISO(addDays(today, 30), 0),
     created_by: DEMO_USER_ID,
     created_at: created,
+    billing_tier: null,
+    billing_interval: null,
+    subscription_status: null,
+    current_period_end: null,
+    cancel_at_period_end: false,
+    founder: false,
+    stripe_customer_id: null,
+    stripe_subscription_id: null,
   };
 
   const machines: Machine[] = [];

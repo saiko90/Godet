@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Godet — il garage del vostro parco macchine",
-    "description": "Il libretto di manutenzione digitale per le macchine edili: manutenzioni, riparazioni, ricambi, costi, foto, video e scadenze. 30\u00a0giorni di prova gratuita, senza carta di credito.",
+    "description": "Il libretto di manutenzione digitale per le macchine edili: manutenzioni, riparazioni, ricambi, costi, foto, video e scadenze. 15\u00a0giorni di prova gratuita, senza carta di credito.",
     "ogDescription": "Ogni macchina ha il suo libretto completo. Nessun controllo dimenticato, costi chiari per ogni macchina. Per le imprese edili in Svizzera e in Italia.",
     "ogImageAlt": "Lo showroom 3D di Godet"
   },
@@ -55,7 +55,7 @@
       "hasAccount": "Ha già un account?",
       "login": "Accedi",
       "assure": {
-        "trial": "30\u00a0giorni di prova gratuita",
+        "trial": "15\u00a0giorni di prova gratuita",
         "card": "Senza carta di credito",
         "hosting": "Dati ospitati nell’UE"
       }
@@ -193,9 +193,27 @@
     },
     "pricing": {
       "eyebrow": "Prezzo",
-      "title": "30\u00a0giorni di prova gratuita",
-      "text": "Senza carta di credito. I prezzi vengono comunicati prima della fine della prova.",
-      "small": "Durante la prova sono disponibili tutte le funzioni."
+      "title": "15\u00a0giorni di prova gratuita",
+      "text": "Senza carta di credito. Poi una formula secondo la dimensione del suo parco: utenti illimitati, senza vincoli.",
+      "small": "Durante la prova sono disponibili tutte le funzioni.",
+      "perMonth": "{chf}\u00a0CHF o {eur}\u00a0\u20ac al mese",
+      "yearly": "2 mesi in regalo con pagamento annuale. Disdicibile in ogni momento.",
+      "founder": "Pacchetto fondatore: \u221230\u00a0% a vita per le prime 10 aziende abbonate.",
+      "tiers": {
+        "essentiel": {
+          "name": "Essentiel",
+          "machines": "Fino a 5 macchine"
+        },
+        "pro": {
+          "name": "Pro",
+          "machines": "Fino a 20 macchine"
+        },
+        "parc": {
+          "name": "Parc",
+          "machines": "Fino a 50 macchine"
+        }
+      },
+      "more": "Pi\u00f9 di 50 macchine? Offerta su misura."
     },
     "faq": {
       "eyebrow": "Domande",
@@ -227,7 +245,7 @@
         },
         "trial": {
           "q": "Cosa succede dopo la prova?",
-          "a": "I prezzi vengono comunicati prima della fine dei 30\u00a0giorni. Per provare non serve una carta di credito."
+          "a": "Il garage passa in sola lettura: non viene cancellato nulla. Sceglie una formula quando vuole (da 29\u00a0CHF al mese) e tutto torna subito modificabile."
         }
       }
     },

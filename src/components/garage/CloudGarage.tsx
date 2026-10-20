@@ -5,7 +5,9 @@
 import { useLocale, useTranslations } from 'next-intl';
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { Icon } from '@/components/Icons';
-import { getPathname, useRouter } from '@/i18n/navigation';
+import { getPathname, Link, useRouter } from '@/i18n/navigation';
+import { billingState, trialDaysLeft } from '@/lib/billing';
+import { can } from '@/lib/domain';
 import { createOfflineRepo, forgetDevice, type OfflineRepo, type OfflineState } from '@/lib/offline/repo';
 import { createSupabaseRepo } from '@/lib/repo/supabase';
 import { supabaseBrowser } from '@/lib/supabase/client';
@@ -31,6 +33,31 @@ function OfflineStatus({ state, onSend }: { state: OfflineState; onSend: () => v
         </button>
       ) : null}
       <span className="g-sr">{t('title')}</span>
+    </div>
+  );
+}
+
+/** Bandeau d'abonnement : fin d'essai proche (3 jours ou moins), lecture seule, paiement échoué. */
+function BillingBanner({ session }: { session: SessionContext }) {
+  const t = useTranslations('garage.billing');
+  const [now] = useState(() => Date.now());
+  const org = session.org;
+  const state = billingState(org, now);
+  const days = trialDaysLeft(org.trial_ends_at, now);
+  if (state === 'active' || state === 'canceling' || (state === 'trial' && days > 3)) return null;
+  const text =
+    state === 'trial' ? t('trialEnds', { days }) : state === 'pastDue' ? t('pastDue') : state === 'suspended' ? t('suspended') : t('readOnly');
+  const manager = can.manageTeam(session.role);
+  return (
+    <div className={`g-billing${state === 'trial' ? '' : ' is-warn'}`} role="status">
+      <span>{text}</span>
+      {manager ? (
+        <Link href="/parametres#abonnement" className="btn btn-primary">
+          {state === 'pastDue' ? t('manage') : t('cta')}
+        </Link>
+      ) : (
+        <span className="g-billing-ask">{t('askOwner')}</span>
+      )}
     </div>
   );
 }
@@ -149,7 +176,12 @@ export function CloudGarage({ session, fleet, machineId }: { session: SessionCon
       onSignOut={() => void signOut()}
       syncTick={tick}
       notice={notice}
-      status={<OfflineStatus state={state} onSend={() => void sendNow()} />}
+      status={
+        <div className="g-notices">
+          <BillingBanner session={session} />
+          <OfflineStatus state={state} onSend={() => void sendNow()} />
+        </div>
+      }
     />
   );
 }

@@ -758,7 +758,9 @@
       "notMedia": "“{name}” is not a photo, a video or a PDF.",
       "tooBig": "{kind, select, video {The video “{name}”} document {The document “{name}”} other {The photo “{name}”}} is {size}: the limit is 50 MB per file.",
       "prepareFailed": "“{name}” could not be prepared on this device."
-    }
+    },
+    "subscriptionInactive": "The garage is read-only: the trial has ended or the subscription is inactive. Choose a plan in the settings.",
+    "planLimit": "Your plan doesn’t allow more machines. Upgrade in the settings (Subscription)."
   },
   "suggestions": {
     "service": {
@@ -881,5 +883,14 @@
     "synced": "{count, plural, one {# entry sent.} other {# entries sent.}}",
     "refused": "{count, plural, one {# entry refused by the server (machine archived or hour meter overtaken in the meantime).} other {# entries refused by the server (machine archived or hour meter overtaken in the meantime).}}",
     "signOutPending": "{count, plural, one {One entry has not been sent yet} other {# entries have not been sent yet}} and would be lost if you sign out now. Sign out anyway?"
+  },
+  "billing": {
+    "trialEnds": "Free trial: {days, plural, one {# day} other {# days}} left.",
+    "readOnly": "Trial ended: the garage is read-only.",
+    "suspended": "Subscription inactive: the garage is read-only.",
+    "pastDue": "The last payment failed: update your card.",
+    "cta": "Choose a plan",
+    "manage": "Update",
+    "askOwner": "Ask the owner to choose a plan."
   }
 }

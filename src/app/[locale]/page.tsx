@@ -13,6 +13,7 @@ import { siteVideos } from '@/components/site/videos';
 import { Link } from '@/i18n/navigation';
 import { localizedAlternates } from '@/i18n/metadata';
 import type { AppLocale } from '@/i18n/routing';
+import { TIERS } from '@/lib/billing';
 import { makeFormat } from '@/lib/format';
 
 // Page générée au déploiement (une par langue) : rapide, et la présence des images du héros et des films y est
@@ -281,6 +282,17 @@ export default async function HomePage({ params }: { params: LocaleParams }) {
                 {t('pricing.title')}
               </h2>
               <p>{t('pricing.text')}</p>
+              <ul className="s-plans">
+                {TIERS.map((tier) => (
+                  <li key={tier.id}>
+                    <b>{t(`pricing.tiers.${tier.id}.name`)}</b>
+                    <span>{t(`pricing.tiers.${tier.id}.machines`)}</span>
+                    <strong>{t('pricing.perMonth', { chf: tier.monthly, eur: tier.monthly })}</strong>
+                  </li>
+                ))}
+              </ul>
+              <p className="s-plans-note">{t('pricing.yearly')} {t('pricing.more')}</p>
+              <p className="s-plans-founder">{t('pricing.founder')}</p>
               <div className="s-cta">
                 <Link href={{ pathname: '/connexion', query: { mode: 'inscription' } }} className="btn btn-primary">
                   {t('hero.signup')}

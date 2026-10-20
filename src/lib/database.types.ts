@@ -642,6 +642,14 @@ export type Database = {
       }
       organizations: {
         Row: {
+          billing_interval: string | null
+          billing_tier: string | null
+          cancel_at_period_end: boolean
+          current_period_end: string | null
+          founder: boolean
+          stripe_customer_id: string | null
+          stripe_subscription_id: string | null
+          subscription_status: string | null
           canton: string | null
           country: string
           created_at: string
@@ -653,6 +661,14 @@ export type Database = {
           trial_ends_at: string
         }
         Insert: {
+          billing_interval?: string | null
+          billing_tier?: string | null
+          cancel_at_period_end?: boolean
+          current_period_end?: string | null
+          founder?: boolean
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
+          subscription_status?: string | null
           canton?: string | null
           country?: string
           created_at?: string
@@ -664,6 +680,14 @@ export type Database = {
           trial_ends_at?: string
         }
         Update: {
+          billing_interval?: string | null
+          billing_tier?: string | null
+          cancel_at_period_end?: boolean
+          current_period_end?: string | null
+          founder?: boolean
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
+          subscription_status?: string | null
           canton?: string | null
           country?: string
           created_at?: string
@@ -924,6 +948,7 @@ export type Database = {
         Args: { p_canton?: string; p_name: string }
         Returns: string
       }
+      founder_slots_left: { Args: never; Returns: number }
       invitation_info: {
         Args: { p_token: string }
         Returns: {

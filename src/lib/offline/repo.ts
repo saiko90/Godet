@@ -288,6 +288,9 @@ export function createOfflineRepo(inner: GarageRepo, ctx: { orgId: string; userI
             else await inner.addReading(op.machineId, op.hours);
             result.sent++;
           } catch (e) {
+            // Lecture seule (essai terminé) : on garde la file, elle partira une fois l'abonnement actif.
+            const inactive = isGarageError(e) && e.code === 'server' && e.params.message === 'subscription_inactive';
+            if (inactive) break;
             if (isOfflineError(e) || (isGarageError(e) && e.code === 'session')) {
               markOnline(!isOfflineError(e));
               break;

@@ -758,7 +758,9 @@
       "notMedia": "« {name} » n’est ni une photo, ni une vidéo, ni un PDF.",
       "tooBig": "{kind, select, video {La vidéo « {name} »} document {Le document « {name} »} other {La photo « {name} »}} pèse {size} : la limite est de 50 Mo par fichier.",
       "prepareFailed": "« {name} » n’a pas pu être préparée sur cet appareil."
-    }
+    },
+    "subscriptionInactive": "Le garage est en lecture seule : l’essai est terminé ou l’abonnement est inactif. Choisissez une formule dans les paramètres.",
+    "planLimit": "Votre formule ne permet pas plus de machines. Passez à la formule supérieure dans les paramètres (Abonnement)."
   },
   "suggestions": {
     "service": {
@@ -881,5 +883,14 @@
     "synced": "{count, plural, one {# saisie envoyée.} other {# saisies envoyées.}}",
     "refused": "{count, plural, one {# saisie refusée par le serveur (machine archivée ou compteur dépassé entre-temps).} other {# saisies refusées par le serveur (machine archivée ou compteur dépassé entre-temps).}}",
     "signOutPending": "{count, plural, one {Une saisie n’est pas encore envoyée : elle serait perdue en vous déconnectant maintenant.} other {# saisies ne sont pas encore envoyées : elles seraient perdues en vous déconnectant maintenant.}} Se déconnecter quand même ?"
+  },
+  "billing": {
+    "trialEnds": "Essai gratuit : plus que {days, plural, one {# jour} other {# jours}}.",
+    "readOnly": "Essai terminé : le garage est en lecture seule.",
+    "suspended": "Abonnement inactif : le garage est en lecture seule.",
+    "pastDue": "Le dernier paiement a échoué : mettez à jour votre carte.",
+    "cta": "Choisir une formule",
+    "manage": "Mettre à jour",
+    "askOwner": "Demandez au propriétaire de choisir une formule."
   }
 }

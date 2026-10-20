@@ -8,6 +8,7 @@ import { NotificationsPanel } from '@/components/notifications/NotificationsPane
 import { cantonLabel, cantonOptions, type CantonCode } from '@/components/site/cantons';
 import { countryName, countryOptions, type MainCountry } from '@/components/site/countries';
 import { localizePath } from '@/components/site/nav';
+import { AbonnementPanel } from '@/components/site/parametres/AbonnementPanel';
 import { ArchivesPanel } from '@/components/site/parametres/ArchivesPanel';
 import { ComptePanel } from '@/components/site/parametres/ComptePanel';
 import { EntreprisePanel } from '@/components/site/parametres/EntreprisePanel';
@@ -120,6 +121,13 @@ export default async function ParametresPage({ params }: { params: LocaleParams 
   }));
 
   const nowIso = new Date().toISOString();
+  // Abonnement : machines actives (formule conseillée) et places restantes du pack fondateur.
+  const [machinesRes, slotsRes] = await Promise.all([
+    supabase.from('machines').select('id', { count: 'exact', head: true }).eq('org_id', orgId).is('archived_at', null),
+    supabase.rpc('founder_slots_left'),
+  ]);
+  const activeMachines = machinesRes.count ?? 0;
+  const founderSlots = typeof slotsRes.data === 'number' ? slotsRes.data : 0;
   const myName = ctx.fullName?.trim() || members.find((m) => m.userId === ctx.userId)?.fullName || '';
   const mainCountry = (code: MainCountry) => tc(`countries.${code}`);
   const cantonName = (code: CantonCode) => ts(`cantons.${code}`);
@@ -133,6 +141,7 @@ export default async function ParametresPage({ params }: { params: LocaleParams 
 
   const sections = [
     { href: '#entreprise', icon: 'garage', label: t('page.sections.company') },
+    { href: '#abonnement', icon: 'chf', label: t('page.sections.billing') },
     { href: '#equipe', icon: 'users', label: t('page.sections.team') },
     { href: '#compte', icon: 'edit', label: t('page.sections.account') },
     { href: '#rappels', icon: 'calendar', label: t('page.sections.reminders') },
@@ -191,6 +200,13 @@ export default async function ParametresPage({ params }: { params: LocaleParams 
                   orgs={ctx.orgs}
                   countries={countryOptions(locale, mainCountry)}
                   cantons={cantonOptions(cantonName, htmlLang(locale))}
+                />
+                <AbonnementPanel
+                  org={ctx.org}
+                  machines={activeMachines}
+                  founderSlots={founderSlots}
+                  canManage={can.manageTeam(ctx.role)}
+                  nowIso={nowIso}
                 />
                 <EquipePanel
                   members={members}

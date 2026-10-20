@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Godet — die Garage für Ihren Maschinenpark",
-    "description": "Das digitale Wartungsheft für Baumaschinen: Wartungen, Reparaturen, Ersatzteile, Kosten, Fotos, Videos und Termine. 30\u00a0Tage kostenlos testen, ohne Kreditkarte.",
+    "description": "Das digitale Wartungsheft für Baumaschinen: Wartungen, Reparaturen, Ersatzteile, Kosten, Fotos, Videos und Termine. 15\u00a0Tage kostenlos testen, ohne Kreditkarte.",
     "ogDescription": "Jede Maschine hat ihr vollständiges Wartungsheft. Keine Prüfung wird mehr vergessen, die Kosten pro Maschine sind klar.",
     "ogImageAlt": "Der 3D-Showroom von Godet"
   },
@@ -55,7 +55,7 @@
       "hasAccount": "Schon ein Konto?",
       "login": "Anmelden",
       "assure": {
-        "trial": "30\u00a0Tage kostenlos testen",
+        "trial": "15\u00a0Tage kostenlos testen",
         "card": "Ohne Kreditkarte",
         "hosting": "Daten in der EU gespeichert"
       }
@@ -193,9 +193,27 @@
     },
     "pricing": {
       "eyebrow": "Preis",
-      "title": "30\u00a0Tage kostenlos testen",
-      "text": "Ohne Kreditkarte. Die Preise erfahren Sie vor Ende der Testphase.",
-      "small": "Während der Testphase stehen alle Funktionen zur Verfügung."
+      "title": "15\u00a0Tage kostenlos testen",
+      "text": "Ohne Kreditkarte. Danach ein Abo nach Gr\u00f6sse Ihres Maschinenparks: unbegrenzt viele Benutzer, ohne Bindung.",
+      "small": "Während der Testphase stehen alle Funktionen zur Verfügung.",
+      "perMonth": "{chf}\u00a0CHF oder {eur}\u00a0\u20ac pro Monat",
+      "yearly": "2 Monate geschenkt bei j\u00e4hrlicher Zahlung. Jederzeit k\u00fcndbar.",
+      "founder": "Gr\u00fcnderpaket: \u221230\u00a0% lebenslang f\u00fcr die ersten 10 Unternehmen mit Abo.",
+      "tiers": {
+        "essentiel": {
+          "name": "Essentiel",
+          "machines": "Bis 5 Maschinen"
+        },
+        "pro": {
+          "name": "Pro",
+          "machines": "Bis 20 Maschinen"
+        },
+        "parc": {
+          "name": "Parc",
+          "machines": "Bis 50 Maschinen"
+        }
+      },
+      "more": "Mehr als 50 Maschinen? Individuelles Angebot."
     },
     "faq": {
       "eyebrow": "Fragen",
@@ -227,7 +245,7 @@
         },
         "trial": {
           "q": "Was passiert nach der Testphase?",
-          "a": "Die Preise erfahren Sie vor Ablauf der 30\u00a0Tage. Zum Testen ist keine Kreditkarte nötig."
+          "a": "Die Garage wird schreibgesch\u00fctzt: Es wird nichts gel\u00f6scht. Sie w\u00e4hlen ein Abo, wann Sie wollen (ab 29\u00a0CHF pro Monat), und alles ist sofort wieder bearbeitbar."
         }
       }
     },
