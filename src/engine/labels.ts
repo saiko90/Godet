@@ -77,10 +77,21 @@ export class Labels {
     }
   }
 
+  /**
+   * Infobulle du nombre d'alertes, dans la langue de l'interface : modèles « # alerte » / « # alertes » posés par
+   * l'interface sur la couche (data-alert-one, data-alert-other ; # = le nombre). À défaut, le français.
+   */
+  private alertTitle(n: number): string {
+    const set = this.layer?.dataset;
+    const one = set?.alertOne || '# alerte';
+    const other = set?.alertOther || '# alertes';
+    return (n === 1 ? one : other).replace('#', String(n));
+  }
+
   private render(t: Tag): void {
     const d = t.data;
     const alerts =
-      d.alerts > 0 ? `<em class="gd-alerts ${d.state === 'bad' ? 'bad' : ''}" title="${d.alerts} alerte${d.alerts > 1 ? 's' : ''}">${d.alerts}</em>` : '';
+      d.alerts > 0 ? `<em class="gd-alerts ${d.state === 'bad' ? 'bad' : ''}" title="${escapeHtml(this.alertTitle(d.alerts))}">${d.alerts}</em>` : '';
     t.el.innerHTML = `<i class="dot ${d.state === 'ok' ? '' : d.state}"></i><b>${escapeHtml(d.code)}</b><span>${escapeHtml(d.label)}</span>${alerts}`;
     t.w = 0;
   }

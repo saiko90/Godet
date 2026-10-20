@@ -1,16 +1,16 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { useId, useState } from 'react';
+import { useRouter } from '@/i18n/navigation';
 import { supabaseBrowser } from '@/lib/supabase/client';
-import { authMessage } from './auth-errors';
+import { authErrorKey } from './auth-errors';
 import { Alert, FieldError } from './Form';
 import { PasswordInput } from './PasswordInput';
 
-const NB = '\u00a0';
-
 /** Choix d'un nouveau mot de passe, avec la session ouverte par le lien « mot de passe oublié ». */
 export function NouveauMotDePasseForm({ email }: { email: string }) {
+  const t = useTranslations('auth');
   const router = useRouter();
   const uid = useId();
   const ids = {
@@ -32,8 +32,8 @@ export function NouveauMotDePasseForm({ email }: { email: string }) {
     if (pending) return;
     setFormError(null);
     const e: { password?: string; confirm?: string } = {};
-    if (password.length < 8) e.password = `Mot de passe trop court${NB}: 8${NB}caractères au minimum.`;
-    else if (confirm !== password) e.confirm = 'Les deux mots de passe ne sont pas identiques.';
+    if (password.length < 8) e.password = t('validation.passwordTooShort');
+    else if (confirm !== password) e.confirm = t('validation.passwordMismatch');
     setErrors(e);
     if (e.password || e.confirm) {
       document.getElementById(e.password ? ids.pw : ids.confirm)?.focus();
@@ -43,7 +43,7 @@ export function NouveauMotDePasseForm({ email }: { email: string }) {
     const { error } = await supabaseBrowser().auth.updateUser({ password });
     if (error) {
       setPending(false);
-      setFormError(authMessage(error));
+      setFormError(t(`errors.${authErrorKey(error)}`));
       return;
     }
     setDone(true);
@@ -53,10 +53,8 @@ export function NouveauMotDePasseForm({ email }: { email: string }) {
   return (
     <>
       <div className="s-auth-head">
-        <h1>Nouveau mot de passe</h1>
-        <p>
-          Choisissez un nouveau mot de passe pour <b>{email}</b>.
-        </p>
+        <h1>{t('password.title')}</h1>
+        <p>{t.rich('password.lead', { email, b: (chunks) => <b>{chunks}</b> })}</p>
       </div>
       {formError ? (
         <Alert tone="bad" live>
@@ -65,16 +63,17 @@ export function NouveauMotDePasseForm({ email }: { email: string }) {
       ) : null}
       {done ? (
         <Alert tone="ok" live>
-          <p>Mot de passe enregistré. Ouverture du garage…</p>
+          <p>{t('password.done')}</p>
         </Alert>
       ) : null}
       <form className="s-form" onSubmit={onSubmit} noValidate>
         {/* Identifiant pour les gestionnaires de mots de passe. */}
         <input className="s-hidden-user" type="email" name="username" autoComplete="username" value={email} readOnly tabIndex={-1} aria-hidden="true" />
         <div className="field">
-          <label htmlFor={ids.pw}>Nouveau mot de passe</label>
+          <label htmlFor={ids.pw}>{t('password.newPassword')}</label>
           <PasswordInput
             id={ids.pw}
+            showLabel={t('fields.showPassword')}
             name="password"
             autoComplete="new-password"
             value={password}
@@ -85,14 +84,15 @@ export function NouveauMotDePasseForm({ email }: { email: string }) {
             disabled={pending}
           />
           <p id={ids.pwHint} className="s-field-hint">
-            8&nbsp;caractères au minimum.
+            {t('fields.passwordHint')}
           </p>
           <FieldError id={ids.pwErr} message={errors.password} />
         </div>
         <div className="field">
-          <label htmlFor={ids.confirm}>Confirmez le mot de passe</label>
+          <label htmlFor={ids.confirm}>{t('password.confirm')}</label>
           <PasswordInput
             id={ids.confirm}
+            showLabel={t('fields.showPassword')}
             name="confirmation"
             autoComplete="new-password"
             value={confirm}
@@ -104,7 +104,7 @@ export function NouveauMotDePasseForm({ email }: { email: string }) {
           <FieldError id={ids.confirmErr} message={errors.confirm} />
         </div>
         <button type="submit" className="btn btn-primary btn-block" disabled={pending} aria-busy={pending}>
-          {pending ? 'Enregistrement…' : 'Enregistrer et ouvrir le garage'}
+          {pending ? t('password.pending') : t('password.submit')}
         </button>
       </form>
     </>

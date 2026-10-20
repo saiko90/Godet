@@ -1,1 +1,90 @@
-{}
+{
+  "meta": {
+    "title": "Datenschutzerklärung",
+    "description": "Wie Godet Ihre Daten verarbeitet: Verantwortliche Stelle, verarbeitete Daten, Zwecke, Akquise, Erinnerungen per E-Mail, Auftragsverarbeiter, Aufbewahrung und Ihre Rechte nach DSG und DSGVO."
+  },
+  "eyebrow": "Datenschutz",
+  "title": "Datenschutzerklärung",
+  "updated": "Letzte Aktualisierung: {date}",
+  "intro": "Godet ist das digitale Wartungsheft für Baumaschinen. Diese Seite erklärt, welche Daten wir verarbeiten, warum, wo sie gespeichert sind und welche Rechte Sie haben. Sie stützt sich auf das Schweizer Bundesgesetz über den Datenschutz (DSG) und, für Personen in der Europäischen Union, auf die Datenschutz-Grundverordnung (DSGVO).",
+  "controller": {
+    "title": "Verantwortliche Stelle",
+    "text": "<strong>Swiss Digital Studio</strong>, Wallis, Schweiz, Herausgeberin von Godet. Bei Fragen zu Ihren Daten schreiben Sie uns über das <contact>Kontaktformular</contact> oder über <studio>www.swissdigitalstudio.ch</studio>.",
+    "customer": "Die Daten, die Ihr Unternehmen in Godet erfasst (Maschinenpark, Arbeiten, Medien), gehören ihm: Es entscheidet über deren Inhalt, und wir verarbeiten sie in seinem Auftrag."
+  },
+  "data": {
+    "title": "Verarbeitete Daten",
+    "items": {
+      "account": "<strong>Konto</strong>: Name, E-Mail-Adresse, Passwort (nie im Klartext gespeichert), gewählte Sprache, Unternehmen, denen Sie angehören, und Ihre Rolle in jedem davon.",
+      "fleet": "<strong>Daten des Maschinenparks</strong>: Maschinen, Arbeiten, Termine, Betriebsstunden, Kosten und Notizen, die Ihr Unternehmen erfasst, mit dem Namen der Person, die den jeweiligen Eintrag gemacht hat.",
+      "media": "<strong>Hochgeladene Medien</strong>: Fotos, Videos und Dokumente (Rechnungen, Berichte), die den Maschinen hinzugefügt werden.",
+      "journal": "<strong>Änderungsprotokoll</strong>: wer was erstellt, geändert oder entfernt hat, und wann.",
+      "contact": "<strong>Kontaktformular</strong>: Name, E-Mail-Adresse, Unternehmen, Telefon, Land, Grösse des Maschinenparks, Betreff und Nachricht sowie Ihre Angabe, ob wir Sie erneut kontaktieren dürfen.",
+      "ideas": "<strong>Ideenbox</strong>: Ihre Idee, ihr Bereich und ihre Details, Ihre E-Mail-Adresse oder Ihr Konto sowie die Antworten unseres Teams.",
+      "reminders": "<strong>Erinnerungen per E-Mail</strong>: Ihre Einstellungen (aktiv oder nicht, Häufigkeit, Vorlaufzeiten) und das Protokoll der Versände.",
+      "prospects": "<strong>Akquise</strong>: geschäftliche Kontaktdaten von Unternehmen (Name, Adresse, Website, geschäftliche Telefonnummer und E-Mail-Adresse, Branche) aus öffentlichen Quellen sowie der Verlauf unserer Kontaktaufnahmen.",
+      "technical": "<strong>Technische Daten</strong>: Angaben, die für Betrieb und Sicherheit nötig sind, etwa die IP-Adresse und der Browsertyp in den Serverprotokollen."
+    },
+    "demo": "Die 3D-Demo funktioniert ohne Konto: Was Sie dort tun, bleibt in Ihrem Browser. Kommen Sie über einen Demo-Link mit einem Tracking-Code, zählen wir den Besuch (Code, Seite, Sprache, Datum), ohne weitere Daten über Sie."
+  },
+  "purposes": {
+    "title": "Zwecke und Rechtsgrundlagen",
+    "items": {
+      "service": "Das Wartungsheft Ihrer Maschinen führen, Termine und Kosten berechnen, Konten, Einladungen und Zugriffsrechte Ihres Teams verwalten (Vertrag).",
+      "emails": "E-Mails zum Konto senden (Bestätigung der Adresse, neues Passwort) und, sofern Sie sie aktiviert lassen, Erinnerungen an Termine (Vertrag).",
+      "contact": "Ihre Nachrichten und Ideen beantworten und Godet verbessern (vorvertragliche Massnahmen, berechtigtes Interesse).",
+      "prospecting": "Godet Unternehmen bekannt machen, die es brauchen könnten (berechtigtes Interesse, siehe unten).",
+      "security": "Die Sicherheit des Dienstes gewährleisten und Missbrauch verhindern (berechtigtes Interesse, rechtliche Pflichten)."
+    },
+    "basis": "Für Personen in der EU entsprechen diese Rechtsgrundlagen Art. 6 Abs. 1 lit. b (Vertrag), c (rechtliche Verpflichtung) und f (berechtigtes Interesse) DSGVO. Ihre Zustimmung, erneut kontaktiert zu werden, beruht auf Ihrer Einwilligung (lit. a), die Sie jederzeit widerrufen können.",
+    "noSale": "Wir verkaufen Ihre Daten nicht und nutzen sie nicht für Werbezwecke."
+  },
+  "prospecting": {
+    "title": "Akquise bei Unternehmen",
+    "text": "Swiss Digital Studio stellt Godet Unternehmen aus Bau, Tiefbau und Maschinenvermietung vor, per Brief, E-Mail, Telefon oder LinkedIn. Wir verwenden ausschliesslich öffentlich zugängliche geschäftliche Kontaktdaten (Handelsregister, Websites der Unternehmen, Branchenverzeichnisse). Automatisierte Werkzeuge helfen uns, diese Unternehmen zu finden und Nachrichten vorzubereiten; jeder Versand wird von einer Person unseres Teams gelesen und freigegeben.",
+    "object": "<strong>Widerspruchsrecht</strong>: Sie können jederzeit und ohne Begründung widersprechen, dass wir Sie kontaktieren. Antworten Sie einfach auf unsere Nachricht oder schreiben Sie uns über das <contact>Kontaktformular</contact>. Wir stellen dann jeden Kontakt ein und behalten nur den Namen des Unternehmens und die betreffende Adresse, um Ihren Wunsch zu respektieren."
+  },
+  "reminders": {
+    "title": "Erinnerungen per E-Mail",
+    "text": "Sind Sie Mitglied eines Unternehmens, kann Godet Ihnen die anstehenden Termine seines Maschinenparks per E-Mail senden, in Ihrer Sprache. Die Häufigkeit wählen oder die Erinnerungen abschalten können Sie unter <reminders>Einstellungen → Erinnerungen</reminders>."
+  },
+  "cookies": {
+    "title": "Cookies und Tracker",
+    "text": "Godet verwendet nur technisch notwendige Cookies: für Ihre Anmeldesitzung, für das aktive Unternehmen, für die gewählte Sprache (ein Jahr) und, wenn Sie über einen Demo-Link kommen, für dessen Tracking-Code (30\u00a0Tage). Der Browser speichert ausserdem einige Einstellungen der Garage (Ton, 3D-Qualität) lokal. Keine Werbetracker, keine Analysewerkzeuge von Dritten."
+  },
+  "processors": {
+    "title": "Auftragsverarbeiter und Speicherort",
+    "items": {
+      "supabase": "<strong>Supabase</strong>: Datenbank, Authentifizierung und Dateispeicher. Die Daten werden in der Europäischen Union (Irland) gespeichert.",
+      "vercel": "<strong>Vercel</strong>: Hosting und Auslieferung der Website.",
+      "email": "<strong>E-Mail-Versanddienst</strong>: E-Mails zum Konto und Erinnerungen."
+    },
+    "transfers": "Diese Dienstleister können ausserhalb der Schweiz und der EU ansässig sein, zum Beispiel in den USA. Werden Daten dorthin übermittelt, stützen wir uns auf einen Angemessenheitsbeschluss (des Bundesrates oder der Europäischen Kommission) oder auf anerkannte vertragliche Garantien wie die Standardvertragsklauseln."
+  },
+  "security": {
+    "title": "Sicherheit",
+    "text": "Die Verbindungen sind verschlüsselt (HTTPS). Jedes Unternehmen sieht nur seine eigenen Daten: Die Zugriffsregeln setzt die Datenbank selbst durch. Fotos, Videos und Dokumente liegen in einem privaten Speicher und öffnen sich nur über zeitlich begrenzte Links."
+  },
+  "retention": {
+    "title": "Aufbewahrungsdauer",
+    "account": "Die Daten Ihres Kontos und Ihres Unternehmens werden aufbewahrt, solange das Konto aktiv ist. Das Wartungsheft dient als Nachweis: Ein entfernter Eintrag bleibt mit seinem Grund sichtbar. Nach Vertragsende werden die Daten gelöscht, sofern keine gesetzliche Aufbewahrungspflicht besteht. Vorher können Sie das Wartungsheft jeder Maschine drucken oder als PDF speichern.",
+    "messages": "Kontaktnachrichten und Ideen werden so lange aufbewahrt, wie ihre Bearbeitung es erfordert, danach höchstens zwei Jahre nach dem letzten Austausch. Akquisedaten werden spätestens zwei Jahre nach dem letzten erfolglosen Kontakt gelöscht; bei einem Widerspruch behalten wir nur, was nötig ist, um ihn zu respektieren."
+  },
+  "rights": {
+    "title": "Ihre Rechte",
+    "intro": "Sie können jederzeit verlangen:",
+    "items": {
+      "access": "Auskunft über die Daten, die Sie betreffen;",
+      "rectify": "deren Berichtigung, wenn sie unrichtig sind;",
+      "erase": "deren Löschung, im Rahmen der gesetzlichen Pflichten;",
+      "portability": "deren Herausgabe in einem gängigen Format;",
+      "restrict": "die Einschränkung ihrer Verarbeitung – oder ihr widersprechen, insbesondere der Akquise;",
+      "consent": "den Widerruf Ihrer Einwilligung, mit Wirkung für die Zukunft."
+    },
+    "box": "Ihren Namen und Ihre Sprache ändern Sie direkt unter <account>Einstellungen → Mein Konto</account>. Für alle anderen Anliegen schreiben Sie uns über das <contact>Kontaktformular</contact>. Sie können sich auch an den Eidgenössischen Datenschutz- und Öffentlichkeitsbeauftragten (EDÖB) wenden oder, wenn Sie sich in der EU befinden, an die Datenschutzbehörde Ihres Landes."
+  },
+  "changes": {
+    "title": "Änderungen",
+    "text": "Wir können diese Erklärung anpassen, zum Beispiel wenn sich der Dienst weiterentwickelt. Das Datum der letzten Aktualisierung steht oben auf dieser Seite."
+  }
+}

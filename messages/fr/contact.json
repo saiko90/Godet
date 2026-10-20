@@ -1,1 +1,74 @@
-{}
+{
+  "meta": {
+    "title": "Contact",
+    "description": "Une démonstration pour votre équipe, une question, un partenariat\u00a0: écrivez à l’équipe de Godet, le carnet d’entretien des machines de chantier."
+  },
+  "eyebrow": "Contact",
+  "title": "Parlons de votre parc",
+  "lead": "Une démonstration pour votre équipe, une question sur Godet, un partenariat\u00a0: écrivez-nous. Une personne de l’équipe vous répond.",
+  "points": {
+    "demo": {
+      "title": "Une démonstration",
+      "text": "Nous vous montrons Godet avec un parc comme le vôtre, et répondons à vos questions."
+    },
+    "languages": {
+      "title": "Dans votre langue",
+      "text": "Écrivez-nous en français, en allemand, en italien ou en anglais."
+    },
+    "ideas": {
+      "title": "Une idée pour Godet\u00a0?",
+      "text": "Proposez-la dans la <link>boîte à idées</link>\u00a0: vous pourrez suivre nos réponses."
+    }
+  },
+  "studio": "Godet est développé par <link>Swiss Digital Studio</link>, en Valais (Suisse).",
+  "form": {
+    "title": "Votre message",
+    "requiredNote": "Les champs marqués «\u00a0obligatoire\u00a0» doivent être remplis.",
+    "required": "obligatoire",
+    "subject": "Sujet",
+    "subjects": {
+      "demo": "Demander une démonstration",
+      "contact": "Question générale",
+      "partenaire": "Partenariat",
+      "support": "Aide à l’utilisation"
+    },
+    "name": "Nom et prénom",
+    "email": "Adresse e-mail",
+    "company": "Entreprise",
+    "phone": "Téléphone",
+    "country": "Pays",
+    "notSpecified": "Non précisé",
+    "countriesMain": "Pays les plus courants",
+    "countriesOther": "Autres pays",
+    "fleet": "Taille du parc",
+    "fleetSizes": {
+      "1-5": "1 à 5\u00a0machines",
+      "6-20": "6 à 20\u00a0machines",
+      "21-50": "21 à 50\u00a0machines",
+      "50+": "Plus de 50\u00a0machines"
+    },
+    "message": "Message",
+    "messageHint": "Votre parc, vos questions, vos disponibilités pour une démonstration… 4000\u00a0caractères au maximum.",
+    "consent": "Swiss Digital Studio peut me recontacter au sujet de Godet (nouveautés, offres). Facultatif, et révocable à tout moment.",
+    "privacy": "Vos données servent à répondre à votre message. Voir notre <link>politique de confidentialité</link>.",
+    "trap": "Ne pas remplir ce champ",
+    "submit": "Envoyer le message",
+    "pending": "Envoi…"
+  },
+  "sent": {
+    "title": "Message envoyé",
+    "text": "Merci\u00a0! Nous vous répondrons à l’adresse <b>{email}</b>.",
+    "again": "Écrire un autre message",
+    "home": "Retour à l’accueil"
+  },
+  "errors": {
+    "checkFields": "Vérifiez les champs signalés.",
+    "emailRequired": "Indiquez votre adresse e-mail, pour que nous puissions vous répondre.",
+    "emailInvalid": "Adresse incomplète. Exemple\u00a0: nom@entreprise.ch",
+    "messageRequired": "Écrivez votre message.",
+    "messageTooLong": "4000\u00a0caractères au maximum.",
+    "rateLimited": "Vous avez déjà envoyé plusieurs messages en peu de temps. Réessayez dans une heure, ou écrivez-nous plus tard.",
+    "busy": "Le service est très sollicité. Réessayez dans quelques minutes.",
+    "generic": "Le message n’a pas pu être envoyé. Réessayez dans un instant."
+  }
+}

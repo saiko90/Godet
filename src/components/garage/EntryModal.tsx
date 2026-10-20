@@ -2,40 +2,28 @@
 
 // Modale « intervention » : ajout ou modification d'une saisie du carnet (service, réparation, pièce, contrôle,
 // inspection, note), avec coûts, immobilisation, statut, pièce, échéance réglée et photos jointes.
+import { useMessages, useTranslations } from 'next-intl';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { useFormat } from '@/components/FormatProvider';
 import { Icon } from '@/components/Icons';
-import { ENTRY_KINDS, REPAIR_STATUS } from '@/lib/domain';
-import { dateCH, grp, hrs, parseNumber } from '@/lib/format';
+import { ENTRY_KINDS } from '@/lib/domain';
 import type { EntryKind, RepairStatus } from '@/lib/types';
 import type { NewEntry } from '@/lib/repo/types';
+import { useDomainText } from '@/lib/use-domain-text';
 import { useGarage } from './context';
+import { useErrorText } from './errors';
 import { aria, Field, focusFirstError, type Errors } from './fields';
-import { errorText, KINDS_WITH_HOURS, machineEyebrow, plural, scheduleTarget } from './helpers';
+import { isServiceLabel, KINDS_WITH_HOURS } from './helpers';
 import { FileButton, UploadStatus } from './MediaTab';
+import { parseLocalNumber } from './numbers';
+import { useGarageText } from './text';
 import { Modal } from './ui';
 
 const KIND_ORDER: EntryKind[] = ['service', 'reparation', 'piece', 'controle', 'inspection', 'note'];
 const STATUS_ORDER: RepairStatus[] = ['fait', 'en_cours', 'attente_piece'];
 
-const SUGGESTIONS: Record<EntryKind, string[]> = {
-  service: ['Graissage complet', 'Vidange de l’huile hydraulique', 'Préparation à l’hiver'],
-  reparation: ['Flexible hydraulique remplacé', 'Fuite réparée', 'Dents de godet remplacées', 'Batterie remplacée'],
-  piece: ['Filtre à huile moteur', 'Kit de filtres', 'Dents de godet', 'Batterie 12 V'],
-  controle: ['Contrôle annuel de sécurité', 'Contrôle de l’extincteur', 'Expertise périodique', 'Contrôle des freins'],
-  inspection: ['Contrôle des niveaux', 'Graissage et nettoyage', 'Contrôle du train de roulement', 'Tour de la machine'],
-  note: ['Bruit à surveiller', 'Fuite légère constatée', 'Machine déplacée sur un autre chantier'],
-};
-
-const PLACEHOLDER: Record<EntryKind, [string, string]> = {
-  service: ['Service 7’000 h', 'Huile moteur, filtres, graissage…'],
-  reparation: ['Flexible du godet remplacé', 'Cause, travail fait, pièces utilisées…'],
-  piece: ['Filtre à huile moteur', 'Pour quel usage, remarque…'],
-  controle: ['Contrôle de l’extincteur', 'Points vérifiés, défauts constatés…'],
-  inspection: ['Contrôle des niveaux', 'Ce qui a été vérifié, nettoyé, graissé…'],
-  note: ['Bruit à la rotation à surveiller', 'Ce que le machiniste a remarqué…'],
-};
-
-const WHO = ['Atelier interne', 'Chef d’atelier', 'Machiniste', 'Garage partenaire', 'Concessionnaire'];
+/** Montant saisi avec sa devise devant ou derrière (« CHF 1’240.50 », « 1.240,50 € ») : la devise est ignorée. */
+const CURRENCY_AFFIX = /^\s*(chf|eur|gbp|usd|fr\.?|€|£|\$)\s*|\s*(chf|eur|gbp|usd|fr\.?|€|£|\$)\s*$/gi;
 
 interface Photo {
   key: string;
@@ -58,6 +46,13 @@ export function EntryModal({
   scheduleId?: string;
   onClose: () => void;
 }) {
+  const t = useTranslations('garage');
+  const tc = useTranslations('common');
+  const f = useFormat();
+  const dt = useDomainText();
+  const gt = useGarageText();
+  const errorText = useErrorText();
+  const messages = useMessages();
   const g = useGarage();
   const machine = g.fleet.machines.find((m) => m.id === machineId);
   const file = g.files[machineId];
@@ -75,8 +70,8 @@ export function EntryModal({
   const [title, setTitle] = useState(() => {
     if (entry) return entry.title;
     if (linked)
-      return linked.basis === 'heures' && /^service$/i.test(linked.label.trim())
-        ? `Service ${grp(Number(linked.due_hours))} h`
+      return linked.basis === 'heures' && isServiceLabel(linked.label)
+        ? t('entryForm.serviceTitle', { hours: f.num(Number(linked.due_hours)) })
         : linked.label;
     return '';
   });
@@ -107,36 +102,38 @@ export function EntryModal({
     };
   }, []);
 
+  const who0 = messages.garage.entryForm.people;
   const whoOptions = useMemo(() => {
-    const seen = new Set(WHO);
+    const seen = new Set<string>(Object.values(who0));
     for (const e of file?.entries ?? g.fleet.recentEntries) if (e.performed_by) seen.add(e.performed_by);
     return [...seen].slice(0, 12);
-  }, [file, g.fleet.recentEntries]);
+  }, [file, g.fleet.recentEntries, who0]);
 
   if (!machine) return null;
 
   const current = Number(machine.hours);
   const editing = Boolean(entry);
-  const serviceSchedule = schedules.find((s) => s.basis === 'heures' && /^service$/i.test(s.label.trim()));
+  const serviceSchedule = schedules.find((s) => s.basis === 'heures' && isServiceLabel(s.label));
+  const serviceTitle = serviceSchedule ? t('entryForm.serviceTitle', { hours: f.num(Number(serviceSchedule.due_hours)) }) : null;
   const suggestions = [
-    ...(kind === 'service' && serviceSchedule ? [`Service ${grp(Number(serviceSchedule.due_hours))} h`] : []),
+    ...(kind === 'service' && serviceTitle ? [serviceTitle] : []),
     ...(kind === 'service' || kind === 'controle' || kind === 'inspection'
       ? schedules.filter((s) => s !== serviceSchedule).map((s) => s.label)
       : []),
-    ...SUGGESTIONS[kind],
+    ...Object.values(messages.garage.suggestions[kind]),
   ]
     .filter((s, i, all) => all.indexOf(s) === i && s !== title.trim())
     .slice(0, 5);
 
   // Exemple de titre : le prochain service de cette machine plutôt qu'un exemple générique.
-  const example = kind === 'service' && serviceSchedule ? `Service ${grp(Number(serviceSchedule.due_hours))} h` : PLACEHOLDER[kind][0];
+  const example = kind === 'service' && serviceTitle ? serviceTitle : t(`entryForm.placeholders.${kind}.title`);
 
-  const hoursNum = parseNumber(hours);
+  const hoursNum = parseLocalNumber(hours, f);
   const hoursWarn =
     hoursNum != null && hoursNum > current + 2000
-      ? `C’est ${hrs(hoursNum - current)} de plus que le compteur actuel (${hrs(current)}). Vérifiez la valeur.`
+      ? t('entryForm.warnHigh', { diff: f.hours(hoursNum - current), current: f.hours(current) })
       : hoursNum != null && hoursNum < current && !editing && date === g.today
-        ? `Inférieur au compteur actuel (${hrs(current)}) : la saisie est enregistrée, le compteur ne recule pas.`
+        ? t('entryForm.warnLower', { current: f.hours(current) })
         : undefined;
 
   function chooseKind(k: EntryKind) {
@@ -148,7 +145,7 @@ export function EntryModal({
 
   function applySuggestion(s: string) {
     setTitle(s);
-    const match = schedules.find((x) => x.label === s || (x === serviceSchedule && s.startsWith('Service ')));
+    const match = schedules.find((x) => x.label === s || (x === serviceSchedule && s === serviceTitle));
     if (match && !scheduleId && !editing) setScheduleId(match.id);
   }
 
@@ -169,48 +166,48 @@ export function EntryModal({
 
   function validate(): { errs: Errors; input: Omit<NewEntry, 'machineId'> | null } {
     const errs: Errors = {};
-    const t = title.trim();
-    if (!t) errs['iv-title'] = `Donnez un titre à l’intervention, par exemple « ${example} ».`;
-    else if (t.length > 120) errs['iv-title'] = 'Le titre fait 120 caractères au plus.';
-    if (!date) errs['iv-date'] = 'Indiquez la date de l’intervention.';
-    else if (date > g.today) errs['iv-date'] = 'La date ne peut pas être dans le futur.';
-    else if (date < '1990-01-01') errs['iv-date'] = 'Vérifiez l’année de la date.';
+    const tt = title.trim();
+    if (!tt) errs['iv-title'] = t('entryForm.errTitle', { example });
+    else if (tt.length > 120) errs['iv-title'] = t('entryForm.errTitleLong');
+    if (!date) errs['iv-date'] = t('entryForm.errDate');
+    else if (date > g.today) errs['iv-date'] = t('entryForm.errDateFuture');
+    else if (date < '1990-01-01') errs['iv-date'] = t('entryForm.errDateYear');
     let h: number | null = null;
     if (hours.trim()) {
-      h = parseNumber(hours);
-      if (h == null || h < 0) errs['iv-hours'] = 'Indiquez le compteur en heures, avec des chiffres (par exemple 6’842).';
-      else if (h > 9_999_999) errs['iv-hours'] = 'Ce compteur est trop élevé.';
+      h = parseLocalNumber(hours, f);
+      if (h == null || h < 0) errs['iv-hours'] = t('form.hoursDigits', { example: f.num(6842) });
+      else if (h > 9_999_999) errs['iv-hours'] = t('form.hoursTooHigh');
     }
     const money = (v: string, key: string) => {
       if (!v.trim()) return 0;
-      const n = parseNumber(v.replace(/^chf\s*/i, ''));
+      const n = parseLocalNumber(v.replace(CURRENCY_AFFIX, ''), f);
       if (n == null || n < 0) {
-        errs[key] = 'Indiquez un montant en francs, par exemple 1’240.50.';
+        errs[key] = t('entryForm.errMoney', { currency: f.currency, example: f.num(1240.5, 2) });
         return 0;
       }
       if (n > 99_999_999) {
-        errs[key] = 'Ce montant est trop élevé.';
+        errs[key] = t('entryForm.errMoneyHigh');
         return 0;
       }
       return Math.round(n * 100) / 100;
     };
     const cp = money(parts, 'iv-parts');
     const cl = money(labour, 'iv-labour');
-    let dt: number | null = null;
+    let down: number | null = null;
     if (kind === 'reparation' && downtime.trim()) {
-      dt = parseNumber(downtime);
-      if (dt == null || dt < 0 || dt > 99_999) errs['iv-downtime'] = 'Indiquez les heures d’immobilisation, par exemple 6.';
+      down = parseLocalNumber(downtime, f);
+      if (down == null || down < 0 || down > 99_999) errs['iv-downtime'] = t('entryForm.errDowntime');
     }
     let q: number | null = null;
     if (kind === 'piece' && qty.trim()) {
-      q = parseNumber(qty);
-      if (q == null || q <= 0 || q > 999_999) errs['iv-qty'] = 'La quantité doit être un nombre supérieur à zéro.';
+      q = parseLocalNumber(qty, f);
+      if (q == null || q <= 0 || q > 999_999) errs['iv-qty'] = t('entryForm.errQty');
     }
-    if (kind === 'piece' && warranty && date && warranty < date) errs['iv-warranty'] = 'La garantie se termine avant la date de l’achat.';
-    if (details.length > 4000) errs['iv-details'] = 'Les détails font 4’000 caractères au plus.';
-    if (who.trim().length > 80) errs['iv-who'] = '80 caractères au plus.';
-    if (ref.trim().length > 40) errs['iv-ref'] = '40 caractères au plus.';
-    if (supplier.trim().length > 80) errs['iv-supplier'] = '80 caractères au plus.';
+    if (kind === 'piece' && warranty && date && warranty < date) errs['iv-warranty'] = t('entryForm.errWarranty');
+    if (details.length > 4000) errs['iv-details'] = t('entryForm.errDetails', { n: f.num(4000) });
+    if (who.trim().length > 80) errs['iv-who'] = t('form.maxChars', { n: f.num(80) });
+    if (ref.trim().length > 40) errs['iv-ref'] = t('form.maxChars', { n: f.num(40) });
+    if (supplier.trim().length > 80) errs['iv-supplier'] = t('form.maxChars', { n: f.num(80) });
     if (Object.values(errs).some(Boolean)) return { errs, input: null };
     return {
       errs,
@@ -218,12 +215,12 @@ export function EntryModal({
         kind,
         date,
         hours: h,
-        title: t,
+        title: tt,
         details: details.trim() || null,
         performedBy: who.trim() || null,
         costParts: cp,
         costLabour: cl,
-        downtimeHours: kind === 'reparation' ? dt : null,
+        downtimeHours: kind === 'reparation' ? down : null,
         repairStatus: kind === 'reparation' ? status : null,
         partRef: kind === 'piece' ? ref.trim() || null : null,
         partQty: kind === 'piece' ? q : null,
@@ -238,7 +235,7 @@ export function EntryModal({
     const { errs, input } = validate();
     setErrors(errs);
     if (!input) {
-      setError('Vérifiez les champs signalés.');
+      setError(t('form.checkFields'));
       focusFirstError(
         [
           'iv-date',
@@ -260,14 +257,14 @@ export function EntryModal({
     }
     setError(null);
     setBusy(true);
-    setStage(editing ? 'Enregistrement des modifications…' : 'Enregistrement de l’intervention…');
+    setStage(editing ? t('entryForm.savingEdit') : t('entryForm.saving'));
     try {
       const saved = entry
         ? await g.repo().updateEntry(entry.id, input)
         : await g.repo().addEntry({ machineId: machine.id, ...input, scheduleId: scheduleId || null });
       let photoErrors: string[] = [];
       if (photos.length) {
-        setStage(photos.length > 1 ? 'Envoi des photos…' : 'Envoi de la photo…');
+        setStage(t('entryForm.sendingPhotos', { count: photos.length }));
         const out = await g.upload(
           machine.id,
           photos.map((p) => p.file),
@@ -281,58 +278,59 @@ export function EntryModal({
       g.effect('save');
       if (!entry) g.animate(machine.id, kind === 'service' ? 'service' : kind === 'reparation' ? 'repair' : 'wake');
       onClose();
-      if (photoErrors.length) g.toast(`Intervention enregistrée, mais une photo n’a pas pu être envoyée : ${photoErrors[0]}`, 'error');
-      else if (entry) g.toast(`Saisie « ${input.title} » modifiée`);
+      if (photoErrors.length) g.toast(t('entryForm.photoFailed', { error: photoErrors[0] }), 'error');
+      else if (entry) g.toast(t('entryForm.edited', { title: input.title }));
       else {
         const linkedS = scheduleId ? schedules.find((s) => s.id === scheduleId) : null;
         g.toast(
           linkedS
-            ? `Intervention consignée pour ${machine.code} : « ${linkedS.label} » repart pour un nouvel intervalle`
-            : `Intervention consignée le ${dateCH(input.date)} pour ${machine.code}`,
+            ? t('entryForm.loggedSchedule', { code: machine.code, label: linkedS.label })
+            : t('entryForm.logged', { date: f.date(input.date), code: machine.code }),
         );
       }
     } catch (e) {
-      setError(errorText(e, 'L’intervention n’a pas pu être enregistrée.'));
+      setError(errorText(e, 'entry'));
       g.effect('alert');
       setBusy(false);
       setStage(null);
     }
   }
 
-  const ph = PLACEHOLDER[kind];
 
   return (
     <Modal labelledBy="iv-h" onClose={onClose} onSubmit={() => void submit()} busy={busy} className="g-dialog-wide">
       <p className="eyebrow">
-        {machine.code} · {machineEyebrow(machine)}
+        {machine.code} · {gt.eyebrow(machine)}
       </p>
-      <h2 id="iv-h">{editing ? 'Modifier la saisie' : linked ? `Marquer comme fait : ${linked.label}` : 'Nouvelle intervention'}</h2>
+      <h2 id="iv-h">
+        {editing ? t('entryForm.titleEdit') : linked ? t('entryForm.titleDone', { label: linked.label }) : t('entryForm.titleNew')}
+      </h2>
 
       <div className="field">
         <span className="label" id="iv-kind-l">
-          Type
+          {t('entryForm.type')}
         </span>
         <div className="seg g-kinds" role="group" aria-labelledby="iv-kind-l">
           {KIND_ORDER.map((k) => (
             <button key={k} type="button" aria-pressed={kind === k} onClick={() => chooseKind(k)} disabled={busy}>
               <Icon name={ENTRY_KINDS[k].icon} />
-              {ENTRY_KINDS[k].label}
+              {dt.entry(k)}
             </button>
           ))}
         </div>
-        <p className="g-hint">{ENTRY_KINDS[kind].hint}</p>
+        <p className="g-hint">{dt.entryHint(kind)}</p>
       </div>
 
       <div className="grid2">
-        <Field id="iv-date" label="Date" errors={errors}>
+        <Field id="iv-date" label={t('entryForm.date')} errors={errors}>
           <input {...aria('iv-date', errors)} type="date" value={date} max={g.today} required onChange={(e) => setDate(e.target.value)} />
         </Field>
         <Field
           id="iv-hours"
-          label={kind === 'piece' || kind === 'note' ? 'Compteur (h, facultatif)' : 'Compteur (h)'}
+          label={kind === 'piece' || kind === 'note' ? t('entryForm.hoursOptional') : t('entryForm.hours')}
           errors={errors}
           warn={hoursWarn}
-          hint={`Actuel : ${hrs(current)}`}
+          hint={t('form.currentHours', { hours: f.hours(current) })}
         >
           <input
             {...aria('iv-hours', errors, true)}
@@ -340,7 +338,7 @@ export function EntryModal({
             inputMode="decimal"
             autoComplete="off"
             value={hours}
-            placeholder={hrs(current)}
+            placeholder={f.hours(current)}
             onChange={(e) => {
               setHours(e.target.value);
               setHoursTouched(true);
@@ -349,7 +347,7 @@ export function EntryModal({
         </Field>
       </div>
 
-      <Field id="iv-title" label="Titre" errors={errors}>
+      <Field id="iv-title" label={t('entryForm.title')} errors={errors}>
         <input
           {...aria('iv-title', errors)}
           type="text"
@@ -362,7 +360,7 @@ export function EntryModal({
           onChange={(e) => setTitle(e.target.value)}
         />
         {suggestions.length ? (
-          <div className="g-suggest" role="group" aria-label="Suggestions de titre">
+          <div className="g-suggest" role="group" aria-label={t('entryForm.suggestions')}>
             {suggestions.map((s) => (
               <button key={s} type="button" onClick={() => applySuggestion(s)} disabled={busy}>
                 {s}
@@ -372,18 +370,18 @@ export function EntryModal({
         ) : null}
       </Field>
 
-      <Field id="iv-details" label="Détails" errors={errors}>
+      <Field id="iv-details" label={t('entryForm.details')} errors={errors}>
         <textarea
           {...aria('iv-details', errors)}
           maxLength={4000}
           value={details}
-          placeholder={ph[1]}
+          placeholder={t(`entryForm.placeholders.${kind}.details`)}
           onChange={(e) => setDetails(e.target.value)}
         />
       </Field>
 
       <div className="grid2">
-        <Field id="iv-who" label="Fait par" errors={errors}>
+        <Field id="iv-who" label={t('entryForm.who')} errors={errors}>
           <input
             {...aria('iv-who', errors)}
             type="text"
@@ -391,7 +389,7 @@ export function EntryModal({
             list="iv-who-list"
             autoComplete="off"
             value={who}
-            placeholder="Atelier interne"
+            placeholder={who0.workshop}
             onChange={(e) => setWho(e.target.value)}
           />
           <datalist id="iv-who-list">
@@ -401,7 +399,7 @@ export function EntryModal({
           </datalist>
         </Field>
         {kind === 'reparation' ? (
-          <Field id="iv-downtime" label="Immobilisation (h)" errors={errors} hint="Heures où la machine n’a pas pu travailler.">
+          <Field id="iv-downtime" label={t('entryForm.downtime')} errors={errors} hint={t('entryForm.downtimeHint')}>
             <input
               {...aria('iv-downtime', errors, true)}
               type="text"
@@ -418,7 +416,7 @@ export function EntryModal({
       </div>
 
       <div className="grid2">
-        <Field id="iv-parts" label="Pièces (CHF)" errors={errors}>
+        <Field id="iv-parts" label={t('entryForm.costParts', { currency: f.currency })} errors={errors}>
           <input
             {...aria('iv-parts', errors)}
             type="text"
@@ -429,7 +427,7 @@ export function EntryModal({
             onChange={(e) => setParts(e.target.value)}
           />
         </Field>
-        <Field id="iv-labour" label="Main-d’œuvre (CHF)" errors={errors}>
+        <Field id="iv-labour" label={t('entryForm.costLabour', { currency: f.currency })} errors={errors}>
           <input
             {...aria('iv-labour', errors)}
             type="text"
@@ -445,12 +443,12 @@ export function EntryModal({
       {kind === 'reparation' ? (
         <div className="field">
           <span className="label" id="iv-status-l">
-            Statut de la réparation
+            {t('entryForm.status')}
           </span>
           <div className="seg" role="group" aria-labelledby="iv-status-l">
             {STATUS_ORDER.map((s) => (
               <button key={s} type="button" aria-pressed={status === s} onClick={() => setStatus(s)} disabled={busy}>
-                {REPAIR_STATUS[s].label}
+                {dt.repair(s)}
               </button>
             ))}
           </div>
@@ -460,18 +458,18 @@ export function EntryModal({
       {kind === 'piece' ? (
         <>
           <div className="grid2">
-            <Field id="iv-ref" label="Référence" errors={errors}>
+            <Field id="iv-ref" label={t('entryForm.ref')} errors={errors}>
               <input
                 {...aria('iv-ref', errors)}
                 type="text"
                 maxLength={40}
                 autoComplete="off"
                 value={ref}
-                placeholder="ex. KF-7000"
+                placeholder={t('entryForm.refPlaceholder')}
                 onChange={(e) => setRef(e.target.value)}
               />
             </Field>
-            <Field id="iv-qty" label="Quantité" errors={errors}>
+            <Field id="iv-qty" label={t('entryForm.qty')} errors={errors}>
               <input
                 {...aria('iv-qty', errors)}
                 type="text"
@@ -483,18 +481,18 @@ export function EntryModal({
             </Field>
           </div>
           <div className="grid2">
-            <Field id="iv-supplier" label="Fournisseur" errors={errors}>
+            <Field id="iv-supplier" label={t('entryForm.supplier')} errors={errors}>
               <input
                 {...aria('iv-supplier', errors)}
                 type="text"
                 maxLength={80}
                 autoComplete="off"
                 value={supplier}
-                placeholder="Nom du fournisseur"
+                placeholder={t('entryForm.supplierPlaceholder')}
                 onChange={(e) => setSupplier(e.target.value)}
               />
             </Field>
-            <Field id="iv-warranty" label="Garantie jusqu’au" errors={errors}>
+            <Field id="iv-warranty" label={t('entryForm.warranty')} errors={errors}>
               <input
                 {...aria('iv-warranty', errors)}
                 type="date"
@@ -510,19 +508,15 @@ export function EntryModal({
       {!editing && schedules.length ? (
         <Field
           id="iv-schedule"
-          label="Échéance réglée"
+          label={t('entryForm.schedule')}
           errors={errors}
-          hint={
-            scheduleId
-              ? 'Cette échéance repartira pour un nouvel intervalle à partir de cette intervention.'
-              : 'Facultatif : choisissez l’échéance que cette intervention accomplit.'
-          }
+          hint={scheduleId ? t('entryForm.scheduleHintLinked') : t('entryForm.scheduleHint')}
         >
           <select {...aria('iv-schedule', errors, true)} value={scheduleId} onChange={(e) => setScheduleId(e.target.value)}>
-            <option value="">Aucune</option>
+            <option value="">{t('entryForm.scheduleNone')}</option>
             {schedules.map((s) => (
               <option key={s.id} value={s.id}>
-                {s.label} ({scheduleTarget(s)})
+                {t('entryForm.scheduleOption', { label: s.label, target: gt.target(s) })}
               </option>
             ))}
           </select>
@@ -531,7 +525,7 @@ export function EntryModal({
 
       <div className="field">
         <span className="label" id="iv-photos-l">
-          Photos jointes
+          {t('entryForm.photos')}
         </span>
         <div className="photo-in g-photo-in">
           <FileButton
@@ -539,19 +533,19 @@ export function EntryModal({
             capture="environment"
             disabled={busy || photos.length >= 12}
             onFiles={addPhotos}
-            label="Ajouter des photos à l’intervention"
+            label={t('entryForm.photosAdd')}
           >
             <Icon name="camera" />
-            {photos.length ? 'Ajouter' : 'Ajouter des photos'}
+            {photos.length ? t('entryForm.photosAddShort') : t('entryForm.photosAddLong')}
           </FileButton>
           {photos.map((p) => (
             <span key={p.key} className="g-photo-chip">
               {/* eslint-disable-next-line @next/next/no-img-element -- aperçu local */}
-              <img src={p.url} alt={`Aperçu : ${p.file.name}`} />
+              <img src={p.url} alt={t('entryForm.photoPreview', { name: p.file.name })} />
               <button
                 type="button"
                 className="g-photo-x"
-                aria-label={`Retirer ${p.file.name}`}
+                aria-label={t('entryForm.photoRemove', { name: p.file.name })}
                 onClick={() => removePhoto(p.key)}
                 disabled={busy}
               >
@@ -560,11 +554,11 @@ export function EntryModal({
             </span>
           ))}
         </div>
-        {photos.length ? <p className="g-hint">{plural(photos.length, 'photo')} · allégées avant l’envoi</p> : null}
+        {photos.length ? <p className="g-hint">{t('entryForm.photosCount', { count: photos.length, n: f.num(photos.length) })}</p> : null}
       </div>
 
       {editing && entry?.schedule_id ? (
-        <p className="g-hint">Cette saisie a réglé une échéance lors de son enregistrement ; la modifier ne change pas l’échéance.</p>
+        <p className="g-hint">{t('entryForm.linkedNote')}</p>
       ) : null}
 
       {busy && photos.length ? <UploadStatus machineId={machine.id} /> : null}
@@ -576,11 +570,11 @@ export function EntryModal({
 
       <div className="dialog-foot">
         <button type="button" className="btn btn-ghost" onClick={onClose} disabled={busy}>
-          Annuler
+          {tc('actions.cancel')}
         </button>
         <button type="submit" className="btn btn-primary" disabled={busy} aria-describedby={stage ? 'iv-stage' : undefined}>
           {busy ? <span className="g-spinner" aria-hidden="true" /> : <Icon name="check" />}
-          {editing ? 'Enregistrer les modifications' : 'Enregistrer l’intervention'}
+          {editing ? t('entryForm.saveEdit') : t('entryForm.save')}
         </button>
       </div>
       {stage ? (

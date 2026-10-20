@@ -2,20 +2,33 @@
 
 // Modales du garage : machine (ajout / modification), compteur d'heures, échéance, retrait d'une saisie,
 // confirmations (archivage, suppression d'échéance).
+import { useMessages, useTranslations } from 'next-intl';
 import { useState } from 'react';
+import { useFormat } from '@/components/FormatProvider';
 import { Icon } from '@/components/Icons';
-import { can, MACHINE_KINDS, PAINTS } from '@/lib/domain';
-import { addDays, dateCH, dateTimeCH, grp, hrs, parseNumber } from '@/lib/format';
+import { can, PAINTS } from '@/lib/domain';
+import { addDays } from '@/lib/format';
 import type { MachineKind, ScheduleBasis } from '@/lib/types';
 import type { NewMachine } from '@/lib/repo/types';
+import { useDomainText } from '@/lib/use-domain-text';
 import { useGarage } from './context';
+import { useErrorText } from './errors';
 import { aria, Field, focusFirstError, type Errors } from './fields';
-import { errorText, machineEyebrow, nextCode, PAINT_NAMES } from './helpers';
+import { nextCode } from './helpers';
 import { KindIcon } from './KindIcon';
+import { parseLocalNumber } from './numbers';
+import { useGarageText } from './text';
 import { Modal } from './ui';
 
 const KIND_ORDER: MachineKind[] = ['pelle', 'mini_pelle', 'chargeuse', 'dumper', 'camion', 'rouleau', 'grue', 'autre'];
 const THIS_YEAR = new Date().getFullYear();
+const bold = (chunks: React.ReactNode) => <b className="num">{chunks}</b>;
+
+/** Nom d'une peinture proposée (garage.paints.<hex>), sinon le code couleur. */
+function paintKey(hex: string): 'f3b71b' | 'e8792b' | 'd8362f' | '2f6fd8' | '3c9a5f' | 'e9e4d8' | '5b6068' | '1d1f24' | null {
+  const k = hex.replace('#', '').toLowerCase();
+  return (PAINTS as readonly string[]).includes(`#${k}`) ? (k as ReturnType<typeof paintKey>) : null;
+}
 
 function Foot({
   busy,
@@ -30,10 +43,11 @@ function Foot({
   danger?: boolean;
   icon?: 'check' | 'archive' | 'trash';
 }) {
+  const tc = useTranslations('common');
   return (
     <div className="dialog-foot">
       <button type="button" className="btn btn-ghost" onClick={onClose} disabled={busy}>
-        Annuler
+        {tc('actions.cancel')}
       </button>
       <button type="submit" className={`btn ${danger ? 'g-btn-danger' : 'btn-primary'}`} disabled={busy}>
         {busy ? <span className="g-spinner" aria-hidden="true" /> : <Icon name={icon} />}
@@ -46,11 +60,18 @@ function Foot({
 // ------------------------------------------------------------------ machine
 
 export function MachineModal({ machineId, onClose }: { machineId?: string; onClose: () => void }) {
+  const t = useTranslations('garage');
+  const tc = useTranslations('common');
+  const f = useFormat();
+  const dt = useDomainText();
+  const gt = useGarageText();
+  const errorText = useErrorText();
+  const prefixes = useMessages().garage.codePrefix;
   const g = useGarage();
   const machine = machineId ? g.fleet.machines.find((m) => m.id === machineId) : undefined;
   const editing = Boolean(machine);
   const [kind, setKind] = useState<MachineKind>(machine?.kind ?? 'pelle');
-  const [code, setCode] = useState(machine?.code ?? nextCode('pelle', g.fleet.machines));
+  const [code, setCode] = useState(machine?.code ?? nextCode('pelle', g.fleet.machines, prefixes));
   const [codeTouched, setCodeTouched] = useState(editing);
   const [brand, setBrand] = useState(machine?.brand ?? '');
   const [model, setModel] = useState(machine?.model ?? '');
@@ -68,45 +89,45 @@ export function MachineModal({ machineId, onClose }: { machineId?: string; onClo
   if (machineId && !machine) return null;
 
   const current = machine ? Number(machine.hours) : 0;
-  const h = parseNumber(hours);
+  const h = parseLocalNumber(hours, f);
   const lowering = editing && h != null && h < current;
   const paints: readonly string[] = PAINTS.includes(color as (typeof PAINTS)[number]) ? PAINTS : [...PAINTS, color];
 
   function chooseKind(k: MachineKind) {
     setKind(k);
-    if (!codeTouched) setCode(nextCode(k, g.fleet.machines));
+    if (!codeTouched) setCode(nextCode(k, g.fleet.machines, prefixes));
   }
 
   async function submit() {
     const errs: Errors = {};
     const c = code.trim().toUpperCase();
-    if (!c) errs['mc-code'] = 'Donnez un code interne à la machine, par exemple PE-02.';
-    else if (c.length > 16) errs['mc-code'] = 'Le code fait 16 caractères au plus.';
+    const maxChars = (n: number) => t('form.maxChars', { n: f.num(n) });
+    if (!c) errs['mc-code'] = t('machineForm.errCode');
+    else if (c.length > 16) errs['mc-code'] = t('machineForm.errCodeLong');
     else if (g.fleet.machines.some((m) => m.id !== machine?.id && m.code.toLowerCase() === c.toLowerCase())) {
-      errs['mc-code'] = `Le code ${c} est déjà utilisé dans le parc. Choisissez-en un autre.`;
+      errs['mc-code'] = t('machineForm.errCodeTaken', { code: c });
     }
     let y: number | null = null;
     if (year.trim()) {
-      y = parseNumber(year);
-      if (y == null || !Number.isInteger(y) || y < 1950 || y > THIS_YEAR + 1)
-        errs['mc-year'] = `Indiquez une année entre 1950 et ${THIS_YEAR + 1}.`;
+      y = parseLocalNumber(year, f);
+      if (y == null || !Number.isInteger(y) || y < 1950 || y > THIS_YEAR + 1) errs['mc-year'] = t('machineForm.errYear', { max: String(THIS_YEAR + 1) });
     }
     let w: number | null = null;
     if (weight.trim()) {
-      w = parseNumber(weight);
-      if (w == null || w <= 0 || w >= 1000) errs['mc-weight'] = 'Indiquez le poids en tonnes, par exemple 21 ou 2.7.';
+      w = parseLocalNumber(weight, f);
+      if (w == null || w <= 0 || w >= 1000) errs['mc-weight'] = t('machineForm.errWeight', { example: f.num(2.7, 1) });
       else w = Math.round(w * 10) / 10;
     }
-    if (h == null || h < 0) errs['mc-hours'] = 'Indiquez le compteur en heures, avec des chiffres (0 pour une machine neuve).';
-    else if (h > 9_999_999) errs['mc-hours'] = 'Ce compteur est trop élevé.';
-    if (brand.trim().length > 40) errs['mc-brand'] = '40 caractères au plus.';
-    if (model.trim().length > 40) errs['mc-model'] = '40 caractères au plus.';
-    if (serial.trim().length > 40) errs['mc-serial'] = '40 caractères au plus.';
-    if (plate.trim().length > 20) errs['mc-plate'] = '20 caractères au plus.';
-    if (notes.length > 2000) errs['mc-notes'] = '2’000 caractères au plus.';
+    if (h == null || h < 0) errs['mc-hours'] = t('machineForm.errHours');
+    else if (h > 9_999_999) errs['mc-hours'] = t('form.hoursTooHigh');
+    if (brand.trim().length > 40) errs['mc-brand'] = maxChars(40);
+    if (model.trim().length > 40) errs['mc-model'] = maxChars(40);
+    if (serial.trim().length > 40) errs['mc-serial'] = maxChars(40);
+    if (plate.trim().length > 20) errs['mc-plate'] = maxChars(20);
+    if (notes.length > 2000) errs['mc-notes'] = maxChars(2000);
     setErrors(errs);
     if (Object.values(errs).some(Boolean)) {
-      setError('Vérifiez les champs signalés.');
+      setError(t('form.checkFields'));
       focusFirstError(['mc-code', 'mc-brand', 'mc-model', 'mc-year', 'mc-serial', 'mc-plate', 'mc-weight', 'mc-hours', 'mc-notes'], errs);
       return;
     }
@@ -133,17 +154,17 @@ export function MachineModal({ machineId, onClose }: { machineId?: string; onClo
         await g.refresh(machine.id);
         g.effect('save');
         onClose();
-        g.toast(`${c} mise à jour`);
+        g.toast(t('machineForm.updated', { code: c }));
       } else {
         const created = await g.repo().addMachine(input);
         await g.refresh();
         g.effect('save');
         onClose();
-        g.toast(`${created.code} ajoutée au parc, avec ses échéances par défaut`);
+        g.toast(t('machineForm.added', { code: created.code }));
         g.openSheet(created.id);
       }
     } catch (e) {
-      setError(errorText(e, editing ? 'La machine n’a pas pu être modifiée.' : 'La machine n’a pas pu être ajoutée.'));
+      setError(errorText(e, editing ? 'updateMachine' : 'addMachine'));
       g.effect('alert');
       setBusy(false);
     }
@@ -151,25 +172,29 @@ export function MachineModal({ machineId, onClose }: { machineId?: string; onClo
 
   return (
     <Modal labelledBy="mc-h" onClose={onClose} onSubmit={() => void submit()} busy={busy} className="g-dialog-wide">
-      <p className="eyebrow">{editing && machine ? `${machine.code} · ${machineEyebrow(machine)}` : `Parc · ${g.org.name}`}</p>
-      <h2 id="mc-h">{editing ? 'Modifier la machine' : 'Ajouter une machine'}</h2>
+      <p className="eyebrow">
+        {editing && machine
+          ? t('machineForm.eyebrowEdit', { code: machine.code, eyebrow: gt.eyebrow(machine) })
+          : t('machineForm.eyebrowNew', { org: g.org.name })}
+      </p>
+      <h2 id="mc-h">{editing ? t('machineForm.titleEdit') : t('machineForm.titleNew')}</h2>
 
       <div className="field">
         <span className="label" id="mc-kind-l">
-          Type
+          {t('machineForm.type')}
         </span>
         <div className="g-kind-grid" role="group" aria-labelledby="mc-kind-l">
           {KIND_ORDER.map((k) => (
             <button key={k} type="button" className="g-kind" aria-pressed={kind === k} onClick={() => chooseKind(k)} disabled={busy}>
               <KindIcon kind={k} />
-              <span>{MACHINE_KINDS[k].label}</span>
+              <span>{dt.kind(k)}</span>
             </button>
           ))}
         </div>
       </div>
 
       <div className="grid2">
-        <Field id="mc-code" label="Code interne" errors={errors} hint="Marqué sur la machine et au sol de sa baie.">
+        <Field id="mc-code" label={t('machineForm.code')} errors={errors} hint={t('machineForm.codeHint')}>
           <input
             {...aria('mc-code', errors, true)}
             type="text"
@@ -185,7 +210,7 @@ export function MachineModal({ machineId, onClose }: { machineId?: string; onClo
             }}
           />
         </Field>
-        <Field id="mc-weight" label="Poids (t)" errors={errors}>
+        <Field id="mc-weight" label={t('machineForm.weight')} errors={errors}>
           <input
             {...aria('mc-weight', errors)}
             type="text"
@@ -199,32 +224,32 @@ export function MachineModal({ machineId, onClose }: { machineId?: string; onClo
       </div>
 
       <div className="grid2">
-        <Field id="mc-brand" label="Marque" errors={errors}>
+        <Field id="mc-brand" label={t('machineForm.brand')} errors={errors}>
           <input
             {...aria('mc-brand', errors)}
             type="text"
             maxLength={40}
             autoComplete="off"
             value={brand}
-            placeholder="Constructeur"
+            placeholder={t('machineForm.brandPlaceholder')}
             onChange={(e) => setBrand(e.target.value)}
           />
         </Field>
-        <Field id="mc-model" label="Modèle" errors={errors}>
+        <Field id="mc-model" label={t('machineForm.model')} errors={errors}>
           <input
             {...aria('mc-model', errors)}
             type="text"
             maxLength={40}
             autoComplete="off"
             value={model}
-            placeholder="Modèle"
+            placeholder={t('machineForm.modelPlaceholder')}
             onChange={(e) => setModel(e.target.value)}
           />
         </Field>
       </div>
 
       <div className="grid2">
-        <Field id="mc-year" label="Année" errors={errors}>
+        <Field id="mc-year" label={t('machineForm.year')} errors={errors}>
           <input
             {...aria('mc-year', errors)}
             type="text"
@@ -236,37 +261,37 @@ export function MachineModal({ machineId, onClose }: { machineId?: string; onClo
             onChange={(e) => setYear(e.target.value)}
           />
         </Field>
-        <Field id="mc-serial" label="N° de série" errors={errors}>
+        <Field id="mc-serial" label={t('machineForm.serial')} errors={errors}>
           <input
             {...aria('mc-serial', errors)}
             type="text"
             maxLength={40}
             autoComplete="off"
             value={serial}
-            placeholder="Plaque du constructeur"
+            placeholder={t('machineForm.serialPlaceholder')}
             onChange={(e) => setSerial(e.target.value)}
           />
         </Field>
       </div>
 
       <div className="grid2">
-        <Field id="mc-plate" label="Plaque" errors={errors} hint="Pour les engins immatriculés.">
+        <Field id="mc-plate" label={t('machineForm.plate')} errors={errors} hint={t('machineForm.plateHint')}>
           <input
             {...aria('mc-plate', errors, true)}
             type="text"
             maxLength={20}
             autoComplete="off"
             value={plate}
-            placeholder="VS 123 456"
+            placeholder={t('machineForm.platePlaceholder')}
             onChange={(e) => setPlate(e.target.value)}
           />
         </Field>
         <Field
           id="mc-hours"
-          label="Compteur (h)"
+          label={t('machineForm.hours')}
           errors={errors}
-          hint={editing ? `Actuel : ${hrs(current)}` : 'Heures au compteur aujourd’hui.'}
-          warn={lowering ? 'Correction à la baisse : à utiliser seulement pour corriger une erreur de saisie.' : undefined}
+          hint={editing ? t('form.currentHours', { hours: f.hours(current) }) : t('machineForm.hoursToday')}
+          warn={lowering ? t('machineForm.hoursLower') : undefined}
         >
           <input
             {...aria('mc-hours', errors, true)}
@@ -281,41 +306,43 @@ export function MachineModal({ machineId, onClose }: { machineId?: string; onClo
 
       <div className="field">
         <span className="label" id="mc-paint-l">
-          Peinture
+          {t('machineForm.paint')}
         </span>
         <div className="swatches" role="group" aria-labelledby="mc-paint-l">
-          {paints.map((p) => (
+          {paints.map((p) => {
+            const key = paintKey(p);
+            const name = key ? t(`paints.${key}`) : p;
+            return (
             <button
               key={p}
               type="button"
               className="swatch"
               aria-pressed={color === p}
-              aria-label={PAINT_NAMES[p] ?? p}
-              title={PAINT_NAMES[p] ?? p}
+              aria-label={name}
+              title={name}
               style={{ background: p }}
               onClick={() => setColor(p)}
               disabled={busy}
             >
               {color === p ? <Icon name="check" className="g-swatch-check" /> : null}
             </button>
-          ))}
+            );
+          })}
         </div>
       </div>
 
-      <Field id="mc-notes" label="Remarques" errors={errors}>
+      <Field id="mc-notes" label={t('machineForm.notes')} errors={errors}>
         <textarea
           {...aria('mc-notes', errors)}
           maxLength={2000}
           value={notes}
-          placeholder="Équipements, accessoires, particularités…"
+          placeholder={t('machineForm.notesPlaceholder')}
           onChange={(e) => setNotes(e.target.value)}
         />
       </Field>
 
       {!editing ? (
-        <p className="g-hint">
-          Godet ajoute deux échéances par défaut : un service toutes les 500 h et le contrôle annuel de sécurité. Vous pourrez les adapter.
-        </p>
+        <p className="g-hint">{t('machineForm.defaultsHint')}</p>
       ) : null}
       {error ? (
         <p className="err" role="alert">
@@ -332,16 +359,16 @@ export function MachineModal({ machineId, onClose }: { machineId?: string; onClo
             disabled={busy}
           >
             <Icon name="archive" />
-            Archiver
+            {t('machineForm.archive')}
           </button>
         ) : null}
         <span className="g-foot-gap" />
         <button type="button" className="btn btn-ghost" onClick={onClose} disabled={busy}>
-          Annuler
+          {tc('actions.cancel')}
         </button>
         <button type="submit" className="btn btn-primary" disabled={busy}>
           {busy ? <span className="g-spinner" aria-hidden="true" /> : <Icon name={editing ? 'check' : 'plus'} />}
-          {editing ? 'Enregistrer' : 'Ajouter au parc'}
+          {editing ? tc('actions.save') : t('machineForm.add')}
         </button>
       </div>
     </Modal>
@@ -350,9 +377,15 @@ export function MachineModal({ machineId, onClose }: { machineId?: string; onClo
 
 // ------------------------------------------------------------------ compteur d'heures
 
-const SOURCE: Record<string, string> = { saisie: 'relevé', intervention: 'intervention', creation: 'création' };
+/** Origine d'un relevé (garage.hoursForm.source.*). */
+const SOURCES = ['saisie', 'intervention', 'creation'] as const;
+const isSource = (s: string): s is (typeof SOURCES)[number] => (SOURCES as readonly string[]).includes(s);
 
 export function HoursModal({ machineId, onClose }: { machineId: string; onClose: () => void }) {
+  const t = useTranslations('garage');
+  const f = useFormat();
+  const gt = useGarageText();
+  const errorText = useErrorText();
   const g = useGarage();
   const machine = g.fleet.machines.find((m) => m.id === machineId);
   const file = g.files[machineId];
@@ -362,7 +395,7 @@ export function HoursModal({ machineId, onClose }: { machineId: string; onClose:
   if (!machine) return null;
 
   const current = Number(machine.hours);
-  const n = parseNumber(value);
+  const n = parseLocalNumber(value, f);
   const diff = n != null ? n - current : null;
   const lower = n != null && n < current;
   const recent = (file?.readings ?? g.fleet.readings.filter((r) => r.machine_id === machineId)).slice(-5).reverse();
@@ -371,19 +404,17 @@ export function HoursModal({ machineId, onClose }: { machineId: string; onClose:
   async function submit() {
     if (!machine) return;
     if (invalid) {
-      setError('Indiquez le compteur en heures, avec des chiffres (par exemple 6’866).');
+      setError(t('form.hoursDigits', { example: f.num(6866) }));
       document.getElementById('hr-value')?.focus();
       return;
     }
     if (lower) {
-      setError(
-        `Le compteur ne peut pas reculer : le dernier relevé est de ${hrs(current)}. En cas d’erreur de saisie, corrigez-le dans « Modifier la machine ».`,
-      );
+      setError(t('hoursForm.errBackwards', { hours: f.hours(current) }));
       document.getElementById('hr-value')?.focus();
       return;
     }
     if (n > 9_999_999) {
-      setError('Ce compteur est trop élevé.');
+      setError(t('form.hoursTooHigh'));
       return;
     }
     setError(null);
@@ -393,9 +424,13 @@ export function HoursModal({ machineId, onClose }: { machineId: string; onClose:
       await g.refresh(machine.id);
       g.effect('tick');
       onClose();
-      g.toast(`Compteur de ${machine.code} : ${hrs(n)}${diff ? ` (+${hrs(diff)})` : ''}`);
+      g.toast(
+        diff
+          ? t('hoursForm.savedDiff', { code: machine.code, hours: f.hours(n), diff: f.hours(diff) })
+          : t('hoursForm.saved', { code: machine.code, hours: f.hours(n) }),
+      );
     } catch (e) {
-      setError(errorText(e, 'Le relevé n’a pas pu être enregistré.'));
+      setError(errorText(e, 'reading'));
       g.effect('alert');
       setBusy(false);
     }
@@ -404,14 +439,14 @@ export function HoursModal({ machineId, onClose }: { machineId: string; onClose:
   return (
     <Modal labelledBy="hr-h" describedBy="hr-d" onClose={onClose} onSubmit={() => void submit()} busy={busy}>
       <p className="eyebrow">
-        {machine.code} · {machineEyebrow(machine)}
+        {machine.code} · {gt.eyebrow(machine)}
       </p>
-      <h2 id="hr-h">Compteur d’heures</h2>
+      <h2 id="hr-h">{t('hoursForm.title')}</h2>
       <p className="muted" id="hr-d">
-        Dernière valeur : <b className="num">{hrs(current)}</b>, le {dateCH(machine.hours_at)}. Le compteur ne peut qu’avancer.
+        {t.rich('hoursForm.last', { hours: f.hours(current), date: f.date(machine.hours_at), b: bold })}
       </p>
       <div className="field">
-        <label htmlFor="hr-value">Compteur actuel (h)</label>
+        <label htmlFor="hr-value">{t('hoursForm.label')}</label>
         <div className="g-input-unit">
           <input
             id="hr-value"
@@ -428,29 +463,29 @@ export function HoursModal({ machineId, onClose }: { machineId: string; onClose:
             }}
             onFocus={(e) => e.currentTarget.select()}
           />
-          <span aria-hidden="true">h</span>
+          <span aria-hidden="true">{t('hoursForm.unit')}</span>
         </div>
         <p className={`g-hint${lower ? ' is-bad' : diff && diff > 2000 ? ' is-warn' : ''}`} id="hr-diff" aria-live="polite">
           {n == null
-            ? 'Saisissez les heures affichées au compteur de la machine.'
+            ? t('hoursForm.hintEmpty')
             : lower
-              ? `${hrs(current - n)} de moins que le dernier relevé : le compteur ne peut pas reculer.`
+              ? t('hoursForm.hintLower', { hours: f.hours(current - n) })
               : diff === 0
-                ? 'Même valeur que le dernier relevé.'
+                ? t('hoursForm.hintSame')
                 : diff && diff > 2000
-                  ? `+${hrs(diff)} depuis le dernier relevé : c’est beaucoup, vérifiez la valeur.`
-                  : `+${hrs(diff ?? 0)} depuis le dernier relevé.`}
+                  ? t('hoursForm.hintBig', { hours: f.hours(diff) })
+                  : t('hoursForm.hintDiff', { hours: f.hours(diff ?? 0) })}
         </p>
       </div>
       {recent.length ? (
         <div>
-          <p className="g-mini-title">Derniers relevés</p>
+          <p className="g-mini-title">{t('hoursForm.recent')}</p>
           <ul className="g-readings">
             {recent.map((r) => (
               <li key={r.id}>
-                <span className="num">{hrs(Number(r.hours))}</span>
-                <span>{dateTimeCH(r.read_at)}</span>
-                <span className="g-reading-src">{SOURCE[r.source] ?? r.source}</span>
+                <span className="num">{f.hours(Number(r.hours))}</span>
+                <span>{f.dateTime(r.read_at)}</span>
+                <span className="g-reading-src">{isSource(r.source) ? t(`hoursForm.source.${r.source}`) : r.source}</span>
               </li>
             ))}
           </ul>
@@ -461,7 +496,7 @@ export function HoursModal({ machineId, onClose }: { machineId: string; onClose:
           {error}
         </p>
       ) : null}
-      <Foot busy={busy} onClose={onClose} label="Enregistrer le relevé" />
+      <Foot busy={busy} onClose={onClose} label={t('hoursForm.save')} />
     </Modal>
   );
 }
@@ -479,16 +514,22 @@ function splitDays(days: number | null): { value: string; unit: Unit } {
   return { value: String(days), unit: 'jours' };
 }
 
-const PRESETS: { label: string; basis: ScheduleBasis; hours?: number; years?: number }[] = [
-  { label: 'Service', basis: 'heures', hours: 500 },
-  { label: 'Contrôle annuel de sécurité', basis: 'date', years: 1 },
-  { label: 'Contrôle de l’extincteur', basis: 'date', years: 1 },
-  { label: 'Vidange de l’huile hydraulique', basis: 'heures', hours: 2000 },
-  { label: 'Inspection du train de roulement', basis: 'heures', hours: 1000 },
-  { label: 'Expertise périodique', basis: 'date', years: 1 },
+/** Échéances courantes (libellés : garage.schedules.presets.*). */
+const PRESETS: { key: 'service' | 'safety' | 'extinguisher' | 'hydraulicOil' | 'undercarriage' | 'roadworthiness'; basis: ScheduleBasis; hours?: number; years?: number }[] = [
+  { key: 'service', basis: 'heures', hours: 500 },
+  { key: 'safety', basis: 'date', years: 1 },
+  { key: 'extinguisher', basis: 'date', years: 1 },
+  { key: 'hydraulicOil', basis: 'heures', hours: 2000 },
+  { key: 'undercarriage', basis: 'heures', hours: 1000 },
+  { key: 'roadworthiness', basis: 'date', years: 1 },
 ];
 
 export function ScheduleModal({ machineId, scheduleId, onClose }: { machineId: string; scheduleId?: string; onClose: () => void }) {
+  const t = useTranslations('garage');
+  const tc = useTranslations('common');
+  const f = useFormat();
+  const gt = useGarageText();
+  const errorText = useErrorText();
   const g = useGarage();
   const machine = g.fleet.machines.find((m) => m.id === machineId);
   const schedule = scheduleId ? (g.files[machineId]?.schedules ?? g.fleet.schedules).find((s) => s.id === scheduleId) : undefined;
@@ -510,22 +551,24 @@ export function ScheduleModal({ machineId, scheduleId, onClose }: { machineId: s
   if (!machine || (scheduleId && !schedule)) return null;
 
   const days = () => {
-    const v = parseNumber(everyD);
+    const v = parseLocalNumber(everyD, f);
     return v != null && v > 0 ? Math.round(v * UNIT_DAYS[unit]) : null;
   };
 
   function retarget(nextBasis: ScheduleBasis, hoursEvery: string, dEvery: string, dUnit: Unit) {
     if (dueTouched) return;
     if (nextBasis === 'heures') {
-      const e = parseNumber(hoursEvery);
+      const e = parseLocalNumber(hoursEvery, f);
       if (e != null && e > 0) setDueH(String(Math.round(base + e)));
     } else {
-      const v = parseNumber(dEvery);
+      const v = parseLocalNumber(dEvery, f);
       if (v != null && v > 0) setDueD(addDays(g.today, Math.round(v * UNIT_DAYS[dUnit])));
     }
   }
 
-  function preset(p: (typeof PRESETS)[number]) {
+  const presets = PRESETS.map((p) => ({ ...p, label: t(`schedules.presets.${p.key}`) }));
+
+  function preset(p: (typeof presets)[number]) {
     setLabel(p.label);
     setBasis(p.basis);
     if (p.basis === 'heures' && p.hours) {
@@ -542,32 +585,30 @@ export function ScheduleModal({ machineId, scheduleId, onClose }: { machineId: s
     if (!machine) return;
     const errs: Errors = {};
     const l = label.trim();
-    if (!l) errs['sc-label'] = 'Donnez un nom à l’échéance, par exemple « Service ».';
-    else if (l.length > 80) errs['sc-label'] = '80 caractères au plus.';
+    if (!l) errs['sc-label'] = t('scheduleForm.errLabel');
+    else if (l.length > 80) errs['sc-label'] = t('form.maxChars', { n: f.num(80) });
     let intervalHours: number | null = null;
     let dueHours: number | null = null;
     let intervalDays: number | null = null;
     let dueDate: string | null = null;
     if (basis === 'heures') {
       if (everyH.trim()) {
-        intervalHours = parseNumber(everyH);
-        if (intervalHours == null || intervalHours <= 0 || intervalHours > 100_000)
-          errs['sc-every-h'] = 'Indiquez un intervalle en heures, par exemple 500.';
+        intervalHours = parseLocalNumber(everyH, f);
+        if (intervalHours == null || intervalHours <= 0 || intervalHours > 100_000) errs['sc-every-h'] = t('scheduleForm.errEveryHours');
       }
-      dueHours = parseNumber(dueH);
-      if (dueHours == null || dueHours < 0 || dueHours > 9_999_999)
-        errs['sc-due-h'] = 'Indiquez à combien d’heures tombe la prochaine échéance.';
+      dueHours = parseLocalNumber(dueH, f);
+      if (dueHours == null || dueHours < 0 || dueHours > 9_999_999) errs['sc-due-h'] = t('scheduleForm.errDueHours');
     } else {
       if (everyD.trim()) {
         intervalDays = days();
-        if (intervalDays == null || intervalDays > 36_500) errs['sc-every-d'] = 'Indiquez un intervalle, par exemple 1 an.';
+        if (intervalDays == null || intervalDays > 36_500) errs['sc-every-d'] = t('scheduleForm.errEvery');
       }
       dueDate = dueD || null;
-      if (!dueDate) errs['sc-due-d'] = 'Indiquez la date de la prochaine échéance.';
+      if (!dueDate) errs['sc-due-d'] = t('scheduleForm.errDueDate');
     }
     setErrors(errs);
     if (Object.values(errs).some(Boolean)) {
-      setError('Vérifiez les champs signalés.');
+      setError(t('form.checkFields'));
       focusFirstError(['sc-label', 'sc-every-h', 'sc-due-h', 'sc-every-d', 'sc-due-d'], errs);
       return;
     }
@@ -610,9 +651,9 @@ export function ScheduleModal({ machineId, scheduleId, onClose }: { machineId: s
       g.setFlash(savedId);
       g.effect('save');
       onClose();
-      g.toast(editing ? `Échéance « ${l} » modifiée` : `Échéance « ${l} » ajoutée à ${machine.code}`);
+      g.toast(editing ? t('scheduleForm.updated', { label: l }) : t('scheduleForm.added', { label: l, code: machine.code }));
     } catch (e) {
-      setError(errorText(e, 'L’échéance n’a pas pu être enregistrée.'));
+      setError(errorText(e, 'schedule'));
       g.effect('alert');
       setBusy(false);
     }
@@ -621,25 +662,25 @@ export function ScheduleModal({ machineId, scheduleId, onClose }: { machineId: s
   return (
     <Modal labelledBy="sc-h" onClose={onClose} onSubmit={() => void submit()} busy={busy}>
       <p className="eyebrow">
-        {machine.code} · {machineEyebrow(machine)}
+        {machine.code} · {gt.eyebrow(machine)}
       </p>
-      <h2 id="sc-h">{editing ? 'Modifier l’échéance' : 'Nouvelle échéance'}</h2>
+      <h2 id="sc-h">{editing ? t('scheduleForm.titleEdit') : t('scheduleForm.titleNew')}</h2>
 
-      <Field id="sc-label" label="Libellé" errors={errors}>
+      <Field id="sc-label" label={t('scheduleForm.label')} errors={errors}>
         <input
           {...aria('sc-label', errors)}
           type="text"
           maxLength={80}
           autoComplete="off"
           value={label}
-          placeholder="Service, contrôle annuel, expertise…"
+          placeholder={t('scheduleForm.labelPlaceholder')}
           data-autofocus=""
           onChange={(e) => setLabel(e.target.value)}
         />
         {!editing ? (
-          <div className="g-suggest" role="group" aria-label="Échéances courantes">
-            {PRESETS.filter((p) => p.label !== label.trim()).map((p) => (
-              <button key={p.label} type="button" onClick={() => preset(p)} disabled={busy}>
+          <div className="g-suggest" role="group" aria-label={t('scheduleForm.common')}>
+            {presets.filter((p) => p.label !== label.trim()).map((p) => (
+              <button key={p.key} type="button" onClick={() => preset(p)} disabled={busy}>
                 {p.label}
               </button>
             ))}
@@ -649,7 +690,7 @@ export function ScheduleModal({ machineId, scheduleId, onClose }: { machineId: s
 
       <div className="field">
         <span className="label" id="sc-basis-l">
-          Selon
+          {t('scheduleForm.basis')}
         </span>
         <div className="seg" role="group" aria-labelledby="sc-basis-l">
           <button
@@ -662,7 +703,7 @@ export function ScheduleModal({ machineId, scheduleId, onClose }: { machineId: s
             disabled={busy}
           >
             <Icon name="clock" />
-            Les heures du compteur
+            {t('scheduleForm.basisHours')}
           </button>
           <button
             type="button"
@@ -674,14 +715,14 @@ export function ScheduleModal({ machineId, scheduleId, onClose }: { machineId: s
             disabled={busy}
           >
             <Icon name="calendar" />
-            Une date
+            {t('scheduleForm.basisDate')}
           </button>
         </div>
       </div>
 
       {basis === 'heures' ? (
         <div className="grid2">
-          <Field id="sc-every-h" label="Intervalle (h)" errors={errors} hint="Laisser vide pour une échéance unique.">
+          <Field id="sc-every-h" label={t('scheduleForm.everyHours')} errors={errors} hint={t('scheduleForm.everyHint')}>
             <input
               {...aria('sc-every-h', errors, true)}
               type="text"
@@ -695,7 +736,7 @@ export function ScheduleModal({ machineId, scheduleId, onClose }: { machineId: s
               }}
             />
           </Field>
-          <Field id="sc-due-h" label="Prochaine échéance (h)" errors={errors} hint={`Compteur actuel : ${hrs(base)}`}>
+          <Field id="sc-due-h" label={t('scheduleForm.dueHours')} errors={errors} hint={t('scheduleForm.dueHoursHint', { hours: f.hours(base) })}>
             <input
               {...aria('sc-due-h', errors, true)}
               type="text"
@@ -711,7 +752,7 @@ export function ScheduleModal({ machineId, scheduleId, onClose }: { machineId: s
         </div>
       ) : (
         <div className="grid2">
-          <Field id="sc-every-d" label="Intervalle" errors={errors} hint="Laisser vide pour une échéance unique.">
+          <Field id="sc-every-d" label={t('scheduleForm.every')} errors={errors} hint={t('scheduleForm.everyHint')}>
             <div className="g-input-unit">
               <input
                 {...aria('sc-every-d', errors, true)}
@@ -726,7 +767,7 @@ export function ScheduleModal({ machineId, scheduleId, onClose }: { machineId: s
                 }}
               />
               <select
-                aria-label="Unité de l’intervalle"
+                aria-label={t('scheduleForm.unit')}
                 value={unit}
                 onChange={(e) => {
                   const u = e.target.value as Unit;
@@ -734,13 +775,13 @@ export function ScheduleModal({ machineId, scheduleId, onClose }: { machineId: s
                   retarget('date', everyH, everyD, u);
                 }}
               >
-                <option value="jours">jour(s)</option>
-                <option value="mois">mois</option>
-                <option value="ans">an(s)</option>
+                <option value="jours">{t('scheduleForm.units.jours')}</option>
+                <option value="mois">{t('scheduleForm.units.mois')}</option>
+                <option value="ans">{t('scheduleForm.units.ans')}</option>
               </select>
             </div>
           </Field>
-          <Field id="sc-due-d" label="Prochaine échéance" errors={errors}>
+          <Field id="sc-due-d" label={t('scheduleForm.dueDate')} errors={errors}>
             <input
               {...aria('sc-due-d', errors)}
               type="date"
@@ -756,8 +797,9 @@ export function ScheduleModal({ machineId, scheduleId, onClose }: { machineId: s
 
       {schedule?.last_date ? (
         <p className="g-hint">
-          Dernière fois : le {dateCH(schedule.last_date)}
-          {schedule.last_hours != null && schedule.basis === 'heures' ? ` à ${hrs(Number(schedule.last_hours))}` : ''}.
+          {schedule.last_hours != null && schedule.basis === 'heures'
+            ? t('scheduleForm.lastHours', { date: f.date(schedule.last_date), hours: f.hours(Number(schedule.last_hours)) })
+            : t('scheduleForm.last', { date: f.date(schedule.last_date) })}
         </p>
       ) : null}
       {error ? (
@@ -774,16 +816,16 @@ export function ScheduleModal({ machineId, scheduleId, onClose }: { machineId: s
             disabled={busy}
           >
             <Icon name="trash" />
-            Supprimer
+            {tc('actions.delete')}
           </button>
         ) : null}
         <span className="g-foot-gap" />
         <button type="button" className="btn btn-ghost" onClick={onClose} disabled={busy}>
-          Annuler
+          {tc('actions.cancel')}
         </button>
         <button type="submit" className="btn btn-primary" disabled={busy}>
           {busy ? <span className="g-spinner" aria-hidden="true" /> : <Icon name="check" />}
-          {editing ? 'Enregistrer' : 'Ajouter l’échéance'}
+          {editing ? tc('actions.save') : t('scheduleForm.add')}
         </button>
       </div>
     </Modal>
@@ -792,10 +834,12 @@ export function ScheduleModal({ machineId, scheduleId, onClose }: { machineId: s
 
 // ------------------------------------------------------------------ retrait d'une saisie
 
-const REASONS = ['Saisie en double', 'Mauvaise machine', 'Erreur de date ou de montant'];
-
 export function RemoveEntryModal({ machineId, entryId, onClose }: { machineId: string; entryId: string; onClose: () => void }) {
+  const t = useTranslations('garage');
+  const f = useFormat();
+  const errorText = useErrorText();
   const g = useGarage();
+  const reasons = [t('removeForm.reasons.duplicate'), t('removeForm.reasons.wrongMachine'), t('removeForm.reasons.wrongValue')];
   const entry = g.files[machineId]?.entries.find((e) => e.id === entryId);
   const [reason, setReason] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -806,12 +850,12 @@ export function RemoveEntryModal({ machineId, entryId, onClose }: { machineId: s
     if (!entry) return;
     const r = reason.trim();
     if (!r) {
-      setError('Indiquez pourquoi cette saisie est retirée : le motif reste visible dans le carnet.');
+      setError(t('removeForm.errReason'));
       document.getElementById('rm-reason')?.focus();
       return;
     }
     if (r.length > 300) {
-      setError('Le motif fait 300 caractères au plus.');
+      setError(t('removeForm.errReasonLong'));
       return;
     }
     setError(null);
@@ -822,9 +866,9 @@ export function RemoveEntryModal({ machineId, entryId, onClose }: { machineId: s
       g.setFlash(entry.id);
       g.effect('tick');
       onClose();
-      g.toast('Saisie retirée : elle reste dans le carnet, barrée, avec son motif');
+      g.toast(t('removeForm.done'));
     } catch (e) {
-      setError(errorText(e, 'La saisie n’a pas pu être retirée.'));
+      setError(errorText(e, 'removeEntry'));
       g.effect('alert');
       setBusy(false);
     }
@@ -833,15 +877,14 @@ export function RemoveEntryModal({ machineId, entryId, onClose }: { machineId: s
   return (
     <Modal labelledBy="rm-h" describedBy="rm-d" onClose={onClose} onSubmit={() => void submit()} busy={busy}>
       <p className="eyebrow">
-        {dateCH(entry.date)} · {entry.title}
+        {f.date(entry.date)} · {entry.title}
       </p>
-      <h2 id="rm-h">Retirer la saisie</h2>
+      <h2 id="rm-h">{t('removeForm.title')}</h2>
       <p className="muted" id="rm-d">
-        Le carnet d’entretien garde une trace de tout (art. 32b OPA) : la saisie reste visible, barrée, avec le motif ci-dessous, la date et
-        votre nom. Ses coûts ne sont plus comptés.
+        {t('removeForm.text')}
       </p>
       <div className={`field${error ? ' has-error' : ''}`}>
-        <label htmlFor="rm-reason">Motif du retrait</label>
+        <label htmlFor="rm-reason">{t('removeForm.reason')}</label>
         <textarea
           id="rm-reason"
           maxLength={300}
@@ -849,11 +892,11 @@ export function RemoveEntryModal({ machineId, entryId, onClose }: { machineId: s
           required
           aria-invalid={error ? true : undefined}
           aria-describedby={error ? 'rm-err' : undefined}
-          placeholder="Pourquoi cette saisie est-elle retirée ?"
+          placeholder={t('removeForm.reasonPlaceholder')}
           onChange={(e) => setReason(e.target.value)}
         />
-        <div className="g-suggest" role="group" aria-label="Motifs courants">
-          {REASONS.map((r) => (
+        <div className="g-suggest" role="group" aria-label={t('removeForm.common')}>
+          {reasons.map((r) => (
             <button key={r} type="button" onClick={() => setReason(r)} disabled={busy}>
               {r}
             </button>
@@ -865,7 +908,7 @@ export function RemoveEntryModal({ machineId, entryId, onClose }: { machineId: s
           {error}
         </p>
       ) : null}
-      <Foot busy={busy} onClose={onClose} label="Retirer la saisie" danger icon="trash" />
+      <Foot busy={busy} onClose={onClose} label={t('removeForm.submit')} danger icon="trash" />
     </Modal>
   );
 }
@@ -889,6 +932,8 @@ export function ConfirmModal({
   onConfirm: () => Promise<void>;
   onClose: () => void;
 }) {
+  const tc = useTranslations('common');
+  const errorText = useErrorText();
   const g = useGarage();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -899,7 +944,7 @@ export function ConfirmModal({
     try {
       await onConfirm();
     } catch (e) {
-      setError(errorText(e, 'L’action n’a pas pu être effectuée.'));
+      setError(errorText(e, 'action'));
       g.effect('alert');
       setBusy(false);
     }
@@ -919,7 +964,7 @@ export function ConfirmModal({
       ) : null}
       <div className="dialog-foot">
         <button type="button" className="btn btn-ghost" onClick={onClose} disabled={busy} data-autofocus="">
-          Annuler
+          {tc('actions.cancel')}
         </button>
         <button type="submit" className="btn g-btn-danger" disabled={busy}>
           {busy ? <span className="g-spinner" aria-hidden="true" /> : <Icon name={icon} />}
@@ -931,14 +976,17 @@ export function ConfirmModal({
 }
 
 export function ArchiveModal({ machineId, onClose, onArchived }: { machineId: string; onClose: () => void; onArchived: () => void }) {
+  const t = useTranslations('garage.archiveForm');
+  const f = useFormat();
+  const gt = useGarageText();
   const g = useGarage();
   const machine = g.fleet.machines.find((m) => m.id === machineId);
   if (!machine) return null;
   return (
     <ConfirmModal
-      title={`Archiver ${machine.code} ?`}
-      eyebrow={machineEyebrow(machine)}
-      confirm="Archiver la machine"
+      title={t('title', { code: machine.code })}
+      eyebrow={gt.eyebrow(machine)}
+      confirm={t('confirm')}
       icon="archive"
       onClose={onClose}
       onConfirm={async () => {
@@ -947,28 +995,30 @@ export function ArchiveModal({ machineId, onClose, onArchived }: { machineId: st
         await g.refresh();
         g.effect('close');
         onClose();
-        g.toast(`${machine.code} archivée : son carnet reste conservé`);
+        g.toast(t('done', { code: machine.code }));
       }}
     >
-      <p>La machine quitte le garage et la liste du parc. Son carnet, ses coûts, ses photos et ses documents restent conservés.</p>
+      <p>{t('text')}</p>
       <p>
-        Compteur à l’archivage : <b className="num">{hrs(Number(machine.hours))}</b>
-        {machine.year ? ` · mise en service ${grp(machine.year)}` : ''}.
+        {machine.year
+          ? t.rich('meterYear', { hours: f.hours(Number(machine.hours)), year: String(machine.year), b: bold })
+          : t.rich('meter', { hours: f.hours(Number(machine.hours)), b: bold })}
       </p>
     </ConfirmModal>
   );
 }
 
 export function DeleteScheduleModal({ machineId, scheduleId, onClose }: { machineId: string; scheduleId: string; onClose: () => void }) {
+  const t = useTranslations('garage.deleteScheduleForm');
   const g = useGarage();
   const schedule = (g.files[machineId]?.schedules ?? g.fleet.schedules).find((s) => s.id === scheduleId);
   const machine = g.fleet.machines.find((m) => m.id === machineId);
   if (!schedule || !machine) return null;
   return (
     <ConfirmModal
-      title={`Supprimer « ${schedule.label} » ?`}
+      title={t('title', { label: schedule.label })}
       eyebrow={machine.code}
-      confirm="Supprimer l’échéance"
+      confirm={t('confirm')}
       icon="trash"
       onClose={onClose}
       onConfirm={async () => {
@@ -976,10 +1026,10 @@ export function DeleteScheduleModal({ machineId, scheduleId, onClose }: { machin
         await g.refresh(machineId);
         g.effect('tick');
         onClose();
-        g.toast(`Échéance « ${schedule.label} » supprimée`);
+        g.toast(t('done', { label: schedule.label }));
       }}
     >
-      <p>Godet ne rappellera plus cette échéance pour {machine.code}. Les interventions déjà saisies restent dans le carnet.</p>
+      <p>{t('text', { code: machine.code })}</p>
     </ConfirmModal>
   );
 }

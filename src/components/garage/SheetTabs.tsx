@@ -2,10 +2,13 @@
 
 // Contenu des onglets de la fiche machine : Aperçu, Carnet, Réparations, Pièces, Coûts, Échéances.
 // (Médias : MediaTab.tsx.) Les données viennent du dossier de la machine ; les actions passent par le contexte.
+import { useTranslations } from 'next-intl';
 import { useMemo, useState } from 'react';
+import { useFormat } from '@/components/FormatProvider';
 import { Icon } from '@/components/Icons';
 import {
   can,
+  DEFAULT_WEEKLY_RATE,
   duesOf,
   ENTRY_KINDS,
   entryCost,
@@ -15,12 +18,15 @@ import {
   type DueInfo,
   type MachineHealth,
 } from '@/lib/domain';
-import { chf, chf2, dateCH, daysBetween, grp, hrs } from '@/lib/format';
+import { daysBetween } from '@/lib/format';
 import type { Entry, EntryKind, Machine, MachineFile, RepairStatus } from '@/lib/types';
+import { useDomainText } from '@/lib/use-domain-text';
 import { CostChart } from './CostChart';
 import { useGarage } from './context';
+import { useErrorText } from './errors';
+import { canEditEntry, costWindowStart, kindForSchedule, machineStats } from './helpers';
 import { MediaPreview } from './MediaPreview';
-import { canEditEntry, costWindowStart, errorText, intervalText, kindForSchedule, machineStats, plural, scheduleTarget } from './helpers';
+import { useGarageText } from './text';
 
 function Kpi({ label, value, small }: { label: string; value: string; small?: string }) {
   return (
@@ -43,34 +49,41 @@ function Empty({ title, children, action }: { title: string; children: React.Rea
 }
 
 const live = (entries: Entry[]) => entries.filter((e) => !e.deleted_at);
+const bold = (chunks: React.ReactNode) => <b>{chunks}</b>;
 
 // ------------------------------------------------------------------ échéance (jauge)
 
 export function DueGauge({ due, children }: { due: DueInfo; children?: React.ReactNode }) {
+  const t = useTranslations('garage');
+  const f = useFormat();
+  const dt = useDomainText();
+  const gt = useGarageText();
   const s = due.schedule;
   const { flash } = useGarage();
   const pct = due.progress != null ? Math.round(due.progress * 100) : null;
+  const text = dt.dueText(due);
+  const last = s.last_date
+    ? s.basis === 'heures' && s.last_hours != null
+      ? t('due.lastHours', { date: f.date(s.last_date), hours: f.hours(Number(s.last_hours)) })
+      : t('due.last', { date: f.date(s.last_date) })
+    : null;
   return (
-    <section className={`gauge g-due${flash === s.id ? ' g-flash' : ''}`} aria-label={`${s.label} : ${due.text}`}>
+    <section className={`gauge g-due${flash === s.id ? ' g-flash' : ''}`} aria-label={t('due.aria', { label: s.label, text })}>
       <div className="gauge-top">
         <b>{s.label}</b>
-        <span className={`pill ${due.state}`}>{due.text}</span>
+        <span className={`pill ${due.state}`}>{text}</span>
       </div>
       {pct != null ? (
         <div
           className={`bar${due.state === 'ok' ? ' ok' : ''}${due.state === 'bad' ? ' g-bar-bad' : ''}`}
           role="img"
-          aria-label={`${pct} % de l’intervalle écoulé`}
+          aria-label={t('due.elapsed', { pct: String(pct) })}
         >
           <i style={{ width: `${Math.max(2, pct)}%` }} />
         </div>
       ) : null}
-      <p className="muted">{due.hint}</p>
-      <p className="g-due-meta">
-        Échéance {scheduleTarget(s)} · {intervalText(s)}
-        {s.last_date ? ` · dernière fois le ${dateCH(s.last_date)}` : ''}
-        {s.last_date && s.basis === 'heures' && s.last_hours != null ? ` à ${hrs(Number(s.last_hours))}` : ''}
-      </p>
+      <p className="muted">{dt.dueHint(due)}</p>
+      <p className="g-due-meta">{[t('due.meta', { target: gt.target(s), interval: gt.interval(s) }), last].filter(Boolean).join(' · ')}</p>
       {children}
     </section>
   );
@@ -79,36 +92,38 @@ export function DueGauge({ due, children }: { due: DueInfo; children?: React.Rea
 // ------------------------------------------------------------------ saisie du carnet
 
 function EntryItem({ entry, file, compact = false }: { entry: Entry; file: MachineFile; compact?: boolean }) {
+  const t = useTranslations('garage');
+  const tc = useTranslations('common');
+  const f = useFormat();
+  const dt = useDomainText();
+  const gt = useGarageText();
   const { role, userId, openModal, openLightbox, flash } = useGarage();
-  const k = ENTRY_KINDS[entry.kind];
   const removed = Boolean(entry.deleted_at);
   const cost = entryCost(entry);
   const media = file.media.filter((m) => m.entry_id === entry.id && m.kind !== 'document');
   const docs = file.media.filter((m) => m.entry_id === entry.id && m.kind === 'document');
   const editable = !removed && !compact && canEditEntry(role, userId, entry);
   const meta = [
-    k.label,
-    dateCH(entry.date),
-    entry.hours != null ? hrs(Number(entry.hours)) : null,
+    dt.entry(entry.kind),
+    f.date(entry.date),
+    entry.hours != null ? f.hours(Number(entry.hours)) : null,
     entry.performed_by,
-    entry.kind === 'reparation' && entry.repair_status && entry.repair_status !== 'fait'
-      ? REPAIR_STATUS[entry.repair_status].label.toLowerCase()
-      : null,
-    entry.kind === 'piece' && entry.part_ref ? `réf. ${entry.part_ref}` : null,
+    entry.kind === 'reparation' && entry.repair_status && entry.repair_status !== 'fait' ? gt.repairInline(entry.repair_status) : null,
+    entry.kind === 'piece' && entry.part_ref ? t('entry.ref', { ref: entry.part_ref }) : null,
   ].filter(Boolean);
 
   return (
     <li className={`tl g-tl${removed ? ' is-removed' : ''}${flash === entry.id ? ' new' : ''}`}>
       <span className={`tl-icon k-${entry.kind}`} aria-hidden="true">
-        <Icon name={k.icon} />
+        <Icon name={ENTRY_KINDS[entry.kind].icon} />
       </span>
       <div className="tl-main">
         <div className="tl-head">
           <b>
-            {removed ? <span className="g-sr">Saisie retirée : </span> : null}
+            {removed ? <span className="g-sr">{t('entry.removedSr')}</span> : null}
             {entry.title}
           </b>
-          {cost > 0 ? <span className="cost">{chf(cost)}</span> : null}
+          {cost > 0 ? <span className="cost">{f.money(cost)}</span> : null}
         </div>
         <div className="tl-meta">{meta.join(' · ')}</div>
         {entry.details && !compact ? <p>{entry.details}</p> : null}
@@ -120,7 +135,7 @@ function EntryItem({ entry, file, compact = false }: { entry: Entry; file: Machi
                 type="button"
                 className="g-thumb"
                 onClick={() => openLightbox(entry.machine_id, m.id)}
-                aria-label={`Agrandir ${m.kind === 'video' ? 'la vidéo' : 'la photo'} jointe à « ${entry.title} »`}
+                aria-label={m.kind === 'video' ? t('entry.openVideo', { title: entry.title }) : t('entry.openPhoto', { title: entry.title })}
               >
                 <MediaPreview item={m} />
               </button>
@@ -129,13 +144,14 @@ function EntryItem({ entry, file, compact = false }: { entry: Entry; file: Machi
         ) : null}
         {docs.length && !compact ? (
           <p className="g-tl-docs">
-            <Icon name="file" /> {plural(docs.length, 'document joint', 'documents joints')}
+            <Icon name="file" /> {t('entry.docs', { count: docs.length, n: f.num(docs.length) })}
           </p>
         ) : null}
         {removed ? (
           <p className="g-removed">
-            Retirée le {dateCH(entry.deleted_at)}
-            {entry.delete_reason ? ` : ${entry.delete_reason}` : ''}
+            {entry.delete_reason
+              ? t('entry.removedOnReason', { date: f.date(entry.deleted_at), reason: entry.delete_reason })
+              : t('entry.removedOn', { date: f.date(entry.deleted_at) })}
           </p>
         ) : null}
         {editable ? (
@@ -146,7 +162,7 @@ function EntryItem({ entry, file, compact = false }: { entry: Entry; file: Machi
               onClick={() => openModal({ type: 'entry', machineId: entry.machine_id, entryId: entry.id })}
             >
               <Icon name="edit" />
-              Modifier
+              {tc('actions.edit')}
             </button>
             <button
               type="button"
@@ -154,7 +170,7 @@ function EntryItem({ entry, file, compact = false }: { entry: Entry; file: Machi
               onClick={() => openModal({ type: 'remove-entry', machineId: entry.machine_id, entryId: entry.id })}
             >
               <Icon name="trash" />
-              Retirer
+              {t('entry.remove')}
             </button>
           </div>
         ) : null}
@@ -166,6 +182,9 @@ function EntryItem({ entry, file, compact = false }: { entry: Entry; file: Machi
 // ------------------------------------------------------------------ Aperçu
 
 export function OverviewTab({ machine, file, health }: { machine: Machine; file: MachineFile; health: MachineHealth | undefined }) {
+  const t = useTranslations('garage');
+  const f = useFormat();
+  const dt = useDomainText();
   const { today, openModal, setTab } = useGarage();
   const stats = useMemo(() => machineStats(machine, file.entries, file.readings, today), [machine, file, today]);
   const rate = weeklyRate(file.readings, machine.id);
@@ -176,24 +195,28 @@ export function OverviewTab({ machine, file, health }: { machine: Machine; file:
 
   return (
     <div className="stack fade-in">
-      <section className="kpis" aria-label="Indicateurs de la machine">
-        <Kpi label="Compteur" value={hrs(Number(machine.hours))} small={`relevé le ${dateCH(machine.hours_at)}`} />
+      <section className="kpis" aria-label={t('overview.kpis')}>
+        <Kpi label={t('overview.meter')} value={f.hours(Number(machine.hours))} small={t('overview.readOn', { date: f.date(machine.hours_at) })} />
         <Kpi
-          label="Coût par heure"
-          value={stats.costPerHour != null ? chf2(stats.costPerHour) : '—'}
-          small={stats.costPerHour != null ? `12 mois · ${hrs(Math.round(stats.worked ?? 0))} travaillées` : 'pas encore assez de relevés'}
+          label={t('overview.costPerHour')}
+          value={stats.costPerHour != null ? f.money2(stats.costPerHour) : '—'}
+          small={
+            stats.costPerHour != null
+              ? t('overview.costPerHourSmall', { hours: f.hours(Math.round(stats.worked ?? 0)) })
+              : t('overview.notEnoughReadings')
+          }
         />
-        <Kpi label="Coûts 12 mois" value={chf(stats.totals.total)} small="entretien, réparations, pièces" />
+        <Kpi label={t('overview.cost12')} value={f.money(stats.totals.total)} small={t('overview.cost12Small')} />
         <Kpi
-          label="Disponibilité"
-          value={stats.availability != null ? `${Math.round(stats.availability * 100)} %` : '—'}
-          small={stats.downtime ? `${hrs(stats.downtime)} d’immobilisation en 12 mois` : 'aucune immobilisation saisie'}
+          label={t('overview.availability')}
+          value={stats.availability != null ? t('overview.percent', { pct: String(Math.round(stats.availability * 100)) }) : '—'}
+          small={stats.downtime ? t('overview.downtime', { hours: f.hours(stats.downtime) }) : t('overview.noDowntime')}
         />
       </section>
 
       {next ? (
         <div>
-          <h3>Prochaine échéance</h3>
+          <h3>{t('overview.nextDue')}</h3>
           <DueGauge due={next}>
             <div className="g-due-actions">
               <button
@@ -209,40 +232,40 @@ export function OverviewTab({ machine, file, health }: { machine: Machine; file:
                 }
               >
                 <Icon name="check" />
-                Marquer comme fait
+                {t('due.markDone')}
               </button>
               <button type="button" className="g-link-btn" onClick={() => setTab('echeances')}>
-                Toutes les échéances ({dues.length})
+                {t('overview.allDues', { count: String(dues.length) })}
               </button>
             </div>
           </DueGauge>
-          {rate ? <p className="g-note">Rythme actuel : environ {grp(rate, rate < 10 ? 1 : 0)} h par semaine.</p> : null}
+          {rate ? <p className="g-note">{t('overview.rate', { rate: f.num(rate, rate < 10 ? 1 : 0) })}</p> : null}
         </div>
       ) : null}
 
       {open.length ? (
         <section>
-          <h3>{open.length > 1 ? 'Réparations ouvertes' : 'Réparation ouverte'}</h3>
+          <h3>{t('overview.openRepairs', { count: open.length })}</h3>
           <div className="cards">
-            {open.map((r) => (
-              <button key={r.id} type="button" className="card g-card-btn" onClick={() => setTab('reparations')}>
-                <span className="card-top">
-                  <b>{r.title}</b>
-                  <span className={`pill ${REPAIR_STATUS[r.repair_status ?? 'en_cours'].state}`}>
-                    {REPAIR_STATUS[r.repair_status ?? 'en_cours'].label}
+            {open.map((r) => {
+              const days = Math.max(0, daysBetween(r.date, today));
+              const status = r.repair_status ?? 'en_cours';
+              return (
+                <button key={r.id} type="button" className="card g-card-btn" onClick={() => setTab('reparations')}>
+                  <span className="card-top">
+                    <b>{r.title}</b>
+                    <span className={`pill ${REPAIR_STATUS[status].state}`}>{dt.repair(status)}</span>
                   </span>
-                </span>
-                <span className="tl-meta">
-                  Depuis le {dateCH(r.date)} · {plural(Math.max(0, daysBetween(r.date, today)), 'jour')}
-                </span>
-              </button>
-            ))}
+                  <span className="tl-meta">{t('overview.since', { date: f.date(r.date), count: days, n: f.num(days) })}</span>
+                </button>
+              );
+            })}
           </div>
         </section>
       ) : null}
 
       <section>
-        <h3>Dernières saisies</h3>
+        <h3>{t('overview.recent')}</h3>
         {recent.length ? (
           <ol className="timeline">
             {recent.map((e) => (
@@ -251,7 +274,7 @@ export function OverviewTab({ machine, file, health }: { machine: Machine; file:
           </ol>
         ) : (
           <Empty
-            title="Aucune saisie pour l’instant"
+            title={t('overview.emptyTitle')}
             action={
               <button
                 type="button"
@@ -259,37 +282,34 @@ export function OverviewTab({ machine, file, health }: { machine: Machine; file:
                 onClick={() => openModal({ type: 'entry', machineId: machine.id })}
               >
                 <Icon name="plus" />
-                Première intervention
+                {t('overview.emptyAction')}
               </button>
             }
           >
-            Services, réparations, pièces, contrôles : tout ce qui est fait sur la machine se note ici.
+            {t('overview.emptyText')}
           </Empty>
         )}
         {recent.length ? (
           <button type="button" className="g-link-btn g-more" onClick={() => setTab('carnet')}>
-            Tout le carnet ({live(file.entries).length})
+            {t('overview.allLog', { count: String(live(file.entries).length) })}
           </button>
         ) : null}
       </section>
 
       {machine.notes ? (
         <section>
-          <h3>Remarques</h3>
+          <h3>{t('overview.notes')}</h3>
           <p className="g-notes">{machine.notes}</p>
         </section>
       ) : null}
 
       {health && health.alerts === 0 && !open.length ? (
         <p className="g-ok-line">
-          <Icon name="check" /> Rien à signaler : échéances à jour, aucune réparation ouverte.
+          <Icon name="check" /> {t('overview.allClear')}
         </p>
       ) : null}
 
-      <p className="law">
-        <b>OPA, art. 32b :</b> « Les résultats des opérations d’entretien doivent être consignés. » Chaque saisie est datée et reste dans ce
-        carnet : une saisie retirée est barrée, jamais effacée.
-      </p>
+      <p className="law">{t.rich('overview.law', { b: bold })}</p>
     </div>
   );
 }
@@ -299,6 +319,9 @@ export function OverviewTab({ machine, file, health }: { machine: Machine; file:
 type LogFilter = 'tout' | EntryKind;
 
 export function LogbookTab({ machine, file }: { machine: Machine; file: MachineFile }) {
+  const t = useTranslations('garage');
+  const f = useFormat();
+  const dt = useDomainText();
   const { openModal } = useGarage();
   const [filter, setFilter] = useState<LogFilter>('tout');
   const counts = useMemo(() => {
@@ -315,37 +338,38 @@ export function LogbookTab({ machine, file }: { machine: Machine; file: MachineF
     return (
       <div className="stack fade-in">
         <Empty
-          title="Le carnet est vide"
+          title={t('logbook.emptyTitle')}
           action={
             <button type="button" className="btn btn-primary g-btn-sm" onClick={() => openModal({ type: 'entry', machineId: machine.id })}>
               <Icon name="plus" />
-              Ajouter une intervention
+              {t('logbook.emptyAction')}
             </button>
           }
         >
-          Chaque service, réparation, pièce changée ou contrôle s’ajoute ici, daté et signé.
+          {t('logbook.emptyText')}
         </Empty>
       </div>
     );
   }
 
+  const shown = items.filter((e) => !e.deleted_at).length;
+  const heading = t('logbook.heading', { title: filter === 'tout' ? t('logbook.title') : dt.entry(filter), count: shown, n: f.num(shown) });
+
   return (
     <div className="stack fade-in">
-      <div className="seg g-filter" role="group" aria-label="Filtrer le carnet par type">
+      <div className="seg g-filter" role="group" aria-label={t('logbook.filter')}>
         <button type="button" aria-pressed={filter === 'tout'} onClick={() => setFilter('tout')}>
-          Tout <span className="g-count">{total}</span>
+          {t('logbook.all')} <span className="g-count">{total}</span>
         </button>
         {kinds.map((k) => (
           <button key={k} type="button" aria-pressed={filter === k} onClick={() => setFilter(k)}>
-            {ENTRY_KINDS[k].label} <span className="g-count">{counts.get(k)}</span>
+            {dt.entry(k)} <span className="g-count">{counts.get(k)}</span>
           </button>
         ))}
       </div>
       <section aria-live="polite">
         <h3>
-          {filter === 'tout' ? 'Carnet d’entretien' : ENTRY_KINDS[filter].label} ·{' '}
-          {plural(items.filter((e) => !e.deleted_at).length, 'saisie')}
-          {removed && filter === 'tout' ? ` · ${plural(removed, 'retirée')}` : ''}
+          {removed && filter === 'tout' ? `${heading} · ${t('logbook.removed', { count: removed, n: f.num(removed) })}` : heading}
         </h3>
         {items.length ? (
           <ol className="timeline">
@@ -354,7 +378,7 @@ export function LogbookTab({ machine, file }: { machine: Machine; file: MachineF
             ))}
           </ol>
         ) : (
-          <p className="muted">Aucune saisie de ce type.</p>
+          <p className="muted">{t('logbook.noneOfKind')}</p>
         )}
       </section>
     </div>
@@ -366,6 +390,11 @@ export function LogbookTab({ machine, file }: { machine: Machine; file: MachineF
 const STATUS_ORDER: RepairStatus[] = ['en_cours', 'attente_piece', 'fait'];
 
 function RepairCard({ repair, file }: { repair: Entry; file: MachineFile }) {
+  const t = useTranslations('garage');
+  const f = useFormat();
+  const dt = useDomainText();
+  const gt = useGarageText();
+  const errorText = useErrorText();
   const { role, userId, repo, refresh, toast, effect, animate, flash } = useGarage();
   const [busy, setBusy] = useState(false);
   const status = repair.repair_status ?? 'fait';
@@ -378,11 +407,11 @@ function RepairCard({ repair, file }: { repair: Entry; file: MachineFile }) {
     try {
       await repo().updateEntry(repair.id, { repairStatus: next });
       await refresh(repair.machine_id);
-      toast(next === 'fait' ? `« ${repair.title} » : réparation terminée` : `Statut : ${REPAIR_STATUS[next].label.toLowerCase()}`);
+      toast(next === 'fait' ? t('repairs.done', { title: repair.title }) : t('repairs.status', { status: gt.repairInline(next) }));
       effect('save');
       if (next === 'fait') animate(repair.machine_id, 'repair');
     } catch (e) {
-      toast(errorText(e, 'Le statut n’a pas pu être changé.'), 'error');
+      toast(errorText(e, 'status'), 'error');
       effect('alert');
     } finally {
       setBusy(false);
@@ -393,14 +422,14 @@ function RepairCard({ repair, file }: { repair: Entry; file: MachineFile }) {
     <article className={`card${flash === repair.id ? ' new' : ''}`} aria-busy={busy || undefined}>
       <div className="card-top">
         <b>{repair.title}</b>
-        <span className={`pill ${REPAIR_STATUS[status].state}`}>{REPAIR_STATUS[status].label}</span>
+        <span className={`pill ${REPAIR_STATUS[status].state}`}>{dt.repair(status)}</span>
       </div>
       <div className="tl-meta">
         {[
-          dateCH(repair.date),
-          repair.hours != null ? hrs(Number(repair.hours)) : null,
+          f.date(repair.date),
+          repair.hours != null ? f.hours(Number(repair.hours)) : null,
           repair.performed_by,
-          photos ? plural(photos, 'photo') : null,
+          photos ? t('repairs.photos', { count: photos, n: f.num(photos) }) : null,
         ]
           .filter(Boolean)
           .join(' · ')}
@@ -408,27 +437,27 @@ function RepairCard({ repair, file }: { repair: Entry; file: MachineFile }) {
       {repair.details ? <p>{repair.details}</p> : null}
       <dl>
         <div>
-          <dt>Arrêt</dt>
-          <dd>{repair.downtime_hours ? hrs(Number(repair.downtime_hours)) : '—'}</dd>
+          <dt>{t('repairs.downtime')}</dt>
+          <dd>{repair.downtime_hours ? f.hours(Number(repair.downtime_hours)) : '—'}</dd>
         </div>
         <div>
-          <dt>Pièces</dt>
-          <dd>{chf(Number(repair.cost_parts))}</dd>
+          <dt>{t('repairs.parts')}</dt>
+          <dd>{f.money(Number(repair.cost_parts))}</dd>
         </div>
         <div>
-          <dt>Main-d’œuvre</dt>
-          <dd>{chf(Number(repair.cost_labour))}</dd>
+          <dt>{t('repairs.labour')}</dt>
+          <dd>{f.money(Number(repair.cost_labour))}</dd>
         </div>
         <div>
-          <dt>{status === 'fait' ? 'Total' : 'À ce jour'}</dt>
-          <dd>{chf(entryCost(repair))}</dd>
+          <dt>{status === 'fait' ? t('repairs.total') : t('repairs.toDate')}</dt>
+          <dd>{f.money(entryCost(repair))}</dd>
         </div>
       </dl>
       {editable ? (
-        <div className="g-status" role="group" aria-label={`Statut de « ${repair.title} »`}>
+        <div className="g-status" role="group" aria-label={t('repairs.statusGroup', { title: repair.title })}>
           {STATUS_ORDER.map((s) => (
             <button key={s} type="button" aria-pressed={status === s} disabled={busy} onClick={() => setStatus(s)}>
-              {REPAIR_STATUS[s].label}
+              {dt.repair(s)}
             </button>
           ))}
         </div>
@@ -438,6 +467,8 @@ function RepairCard({ repair, file }: { repair: Entry; file: MachineFile }) {
 }
 
 export function RepairsTab({ machine, file }: { machine: Machine; file: MachineFile }) {
+  const t = useTranslations('garage');
+  const f = useFormat();
   const { openModal, today } = useGarage();
   const repairs = live(file.entries)
     .filter((e) => e.kind === 'reparation')
@@ -447,14 +478,17 @@ export function RepairsTab({ machine, file }: { machine: Machine; file: MachineF
   const cost = year.reduce((s, r) => s + entryCost(r), 0);
   const down = year.reduce((s, r) => s + Number(r.downtime_hours || 0), 0);
   const open = repairs.filter(isOpenRepair).length;
+  const summary = t('repairs.summary', { count: year.length, n: f.num(year.length), cost: f.money(cost), down: f.hours(down) });
 
   return (
     <div className="stack fade-in">
       <div className="g-tab-head">
         <p className="muted">
           {repairs.length
-            ? `${plural(year.length, 'réparation')} sur 12 mois · ${chf(cost)} · ${hrs(down)} d’arrêt${open ? ` · ${open} ouverte${open > 1 ? 's' : ''}` : ''}`
-            : 'Aucune réparation enregistrée.'}
+            ? open
+              ? `${summary} · ${t('repairs.summaryOpen', { count: open, n: String(open) })}`
+              : summary
+            : t('repairs.none')}
         </p>
         <button
           type="button"
@@ -462,17 +496,17 @@ export function RepairsTab({ machine, file }: { machine: Machine; file: MachineF
           onClick={() => openModal({ type: 'entry', machineId: machine.id, kind: 'reparation' })}
         >
           <Icon name="plus" />
-          Réparation
+          {t('repairs.add')}
         </button>
       </div>
       {repairs.length ? (
-        <section className="cards" aria-label="Réparations, les ouvertes d’abord">
+        <section className="cards" aria-label={t('repairs.list')}>
           {repairs.map((r) => (
             <RepairCard key={r.id} repair={r} file={file} />
           ))}
         </section>
       ) : (
-        <Empty title="Aucune réparation">Les réparations saisies apparaîtront ici, avec leur coût et la durée d’immobilisation.</Empty>
+        <Empty title={t('repairs.emptyTitle')}>{t('repairs.emptyText')}</Empty>
       )}
     </div>
   );
@@ -481,6 +515,8 @@ export function RepairsTab({ machine, file }: { machine: Machine; file: MachineF
 // ------------------------------------------------------------------ Pièces
 
 export function PartsTab({ machine, file }: { machine: Machine; file: MachineFile }) {
+  const t = useTranslations('garage');
+  const f = useFormat();
   const { openModal, today, flash } = useGarage();
   const parts = live(file.entries).filter((e) => e.kind === 'piece');
   const total = parts.reduce((s, p) => s + entryCost(p), 0);
@@ -491,7 +527,7 @@ export function PartsTab({ machine, file }: { machine: Machine; file: MachineFil
     <div className="stack fade-in">
       <div className="g-tab-head">
         <p className="muted">
-          {parts.length ? `${plural(parts.length, 'pièce')} · ${chf(year)} sur 12 mois` : 'Aucune pièce enregistrée.'}
+          {parts.length ? t('parts.summary', { count: parts.length, n: f.num(parts.length), cost: f.money(year) }) : t('parts.none')}
         </p>
         <button
           type="button"
@@ -499,26 +535,26 @@ export function PartsTab({ machine, file }: { machine: Machine; file: MachineFil
           onClick={() => openModal({ type: 'entry', machineId: machine.id, kind: 'piece' })}
         >
           <Icon name="plus" />
-          Pièce
+          {t('parts.add')}
         </button>
       </div>
       {parts.length ? (
-        <div className="table-wrap" tabIndex={0} role="region" aria-label="Pièces et consommables (défilement horizontal)">
+        <div className="table-wrap" tabIndex={0} role="region" aria-label={t('parts.region')}>
           <table className="g-parts">
-            <caption className="g-sr">Pièces et consommables de {machine.code}</caption>
+            <caption className="g-sr">{t('parts.caption', { code: machine.code })}</caption>
             <thead>
               <tr>
-                <th scope="col">Date</th>
-                <th scope="col">Pièce</th>
-                <th scope="col">Réf.</th>
+                <th scope="col">{t('parts.date')}</th>
+                <th scope="col">{t('parts.part')}</th>
+                <th scope="col">{t('parts.ref')}</th>
                 <th scope="col" className="r">
-                  Qté
+                  {t('parts.qty')}
                 </th>
-                <th scope="col">Fournisseur</th>
+                <th scope="col">{t('parts.supplier')}</th>
                 <th scope="col" className="r">
-                  Prix
+                  {t('parts.price')}
                 </th>
-                <th scope="col">Garantie</th>
+                <th scope="col">{t('parts.warranty')}</th>
               </tr>
             </thead>
             <tbody>
@@ -526,19 +562,19 @@ export function PartsTab({ machine, file }: { machine: Machine; file: MachineFil
                 const valid = p.warranty_until ? p.warranty_until >= today : null;
                 return (
                   <tr key={p.id} className={flash === p.id ? 'new' : undefined}>
-                    <td className="nowrap">{dateCH(p.date)}</td>
+                    <td className="nowrap">{f.date(p.date)}</td>
                     <td>{p.title}</td>
                     <td className="mono nowrap">{p.part_ref || '—'}</td>
                     <td className="r">
-                      {p.part_qty != null ? grp(Number(p.part_qty), Number.isInteger(Number(p.part_qty)) ? 0 : 2) : '—'}
+                      {p.part_qty != null ? f.num(Number(p.part_qty), Number.isInteger(Number(p.part_qty)) ? 0 : 2) : '—'}
                     </td>
                     <td>{p.supplier || '—'}</td>
-                    <td className="r">{chf(entryCost(p))}</td>
+                    <td className="r">{f.money(entryCost(p))}</td>
                     <td className="nowrap">
                       {p.warranty_until ? (
                         <>
-                          {dateCH(p.warranty_until)}{' '}
-                          <span className={`pill ${valid ? '' : 'muted'} g-pill-xs`}>{valid ? 'valable' : 'échue'}</span>
+                          {f.date(p.warranty_until)}{' '}
+                          <span className={`pill ${valid ? '' : 'muted'} g-pill-xs`}>{valid ? t('parts.valid') : t('parts.expired')}</span>
                         </>
                       ) : (
                         '—'
@@ -550,17 +586,15 @@ export function PartsTab({ machine, file }: { machine: Machine; file: MachineFil
             </tbody>
             <tfoot>
               <tr>
-                <td colSpan={5}>Total</td>
-                <td className="r">{chf(total)}</td>
+                <td colSpan={5}>{t('parts.total')}</td>
+                <td className="r">{f.money(total)}</td>
                 <td />
               </tr>
             </tfoot>
           </table>
         </div>
       ) : (
-        <Empty title="Aucune pièce">
-          Les pièces et consommables achetés pour cette machine apparaîtront ici, avec leur référence et leur garantie.
-        </Empty>
+        <Empty title={t('parts.emptyTitle')}>{t('parts.emptyText')}</Empty>
       )}
     </div>
   );
@@ -569,18 +603,21 @@ export function PartsTab({ machine, file }: { machine: Machine; file: MachineFil
 // ------------------------------------------------------------------ Coûts
 
 export function CostsTab({ machine, file }: { machine: Machine; file: MachineFile }) {
+  const t = useTranslations('garage');
+  const f = useFormat();
+  const dt = useDomainText();
   const { today } = useGarage();
   const stats = useMemo(() => machineStats(machine, file.entries, file.readings, today), [machine, file, today]);
-  const t = stats.totals;
-  const pct = (v: number) => (t.total ? `${Math.round((v / t.total) * 100)} % du total` : '');
+  const totals = stats.totals;
+  const pct = (v: number) => (totals.total ? t('costs.share', { pct: String(Math.round((v / totals.total) * 100)) }) : '');
   const open = live(file.entries).filter(isOpenRepair);
   const first = stats.months[0];
   const last = stats.months[stats.months.length - 1];
 
-  if (!t.total) {
+  if (!totals.total) {
     return (
       <div className="stack fade-in">
-        <Empty title="Pas encore de coûts">Les coûts apparaissent dès la première intervention chiffrée (pièces et main-d’œuvre).</Empty>
+        <Empty title={t('costs.emptyTitle')}>{t('costs.emptyText')}</Empty>
       </div>
     );
   }
@@ -588,23 +625,26 @@ export function CostsTab({ machine, file }: { machine: Machine; file: MachineFil
   return (
     <div className="stack fade-in">
       <section className="kpis">
-        <Kpi label="Total 12 mois" value={chf(t.total)} small={`${first.label} à ${last.label} ${last.ym.slice(0, 4)}`} />
         <Kpi
-          label="Coût par heure"
-          value={stats.costPerHour != null ? chf2(stats.costPerHour) : '—'}
-          small={stats.worked ? `${hrs(Math.round(stats.worked))} travaillées` : 'relevés insuffisants'}
+          label={t('costs.total12')}
+          value={f.money(totals.total)}
+          small={t('costs.range', { from: f.month(first.ym), to: f.month(last.ym), year: last.ym.slice(0, 4) })}
+        />
+        <Kpi
+          label={t('costs.costPerHour')}
+          value={stats.costPerHour != null ? f.money2(stats.costPerHour) : '—'}
+          small={stats.worked ? t('costs.worked', { hours: f.hours(Math.round(stats.worked)) }) : t('costs.notEnough')}
         />
       </section>
-      <section className="split" aria-label="Répartition des coûts">
-        <Kpi label="Entretien" value={chf(t.entretien)} small={pct(t.entretien)} />
-        <Kpi label="Réparations" value={chf(t.reparations)} small={pct(t.reparations)} />
-        <Kpi label="Pièces" value={chf(t.pieces)} small={pct(t.pieces)} />
+      <section className="split" aria-label={t('costs.split')}>
+        <Kpi label={dt.cost('entretien')} value={f.money(totals.entretien)} small={pct(totals.entretien)} />
+        <Kpi label={dt.cost('reparations')} value={f.money(totals.reparations)} small={pct(totals.reparations)} />
+        <Kpi label={dt.cost('pieces')} value={f.money(totals.pieces)} small={pct(totals.pieces)} />
       </section>
-      <CostChart months={stats.months} title="Coûts par mois, en CHF" />
+      <CostChart months={stats.months} title={t('costs.chartTitle', { currency: f.currency })} />
       <p className="muted">
-        Le coût par heure compte l’entretien, les réparations et les pièces saisis dans le carnet. Il ne compte ni le carburant, ni
-        l’amortissement, ni le salaire du machiniste.
-        {open.length ? ' Les montants des réparations ouvertes sont comptés tels que saisis à ce jour.' : ''}
+        {t('costs.note')}
+        {open.length ? ` ${t('costs.noteOpen')}` : ''}
       </p>
     </div>
   );
@@ -613,23 +653,27 @@ export function CostsTab({ machine, file }: { machine: Machine; file: MachineFil
 // ------------------------------------------------------------------ Échéances
 
 export function SchedulesTab({ machine, file }: { machine: Machine; file: MachineFile }) {
+  const t = useTranslations('garage');
+  const tc = useTranslations('common');
+  const f = useFormat();
   const { role, today, openModal } = useGarage();
   const rate = weeklyRate(file.readings, machine.id);
   const dues = duesOf(machine, file.schedules, rate, today);
   const manage = can.manageFleet(role);
+  const rateText = rate
+    ? t('schedules.rateActual', { rate: f.num(rate, rate < 10 ? 1 : 0) })
+    : t('schedules.rateDefault', { rate: f.num(DEFAULT_WEEKLY_RATE) });
 
   return (
     <div className="stack fade-in">
       <div className="g-tab-head">
         <p className="muted">
-          {dues.length
-            ? `${plural(dues.length, 'échéance')} · ${rate ? `rythme actuel ≈ ${grp(rate, rate < 10 ? 1 : 0)} h par semaine` : 'rythme estimé à 30 h par semaine'}`
-            : 'Aucune échéance suivie.'}
+          {dues.length ? t('schedules.summary', { count: dues.length, n: f.num(dues.length), rate: rateText }) : t('schedules.none')}
         </p>
         {manage ? (
           <button type="button" className="btn btn-soft g-btn-sm" onClick={() => openModal({ type: 'schedule', machineId: machine.id })}>
             <Icon name="plus" />
-            Échéance
+            {t('schedules.add')}
           </button>
         ) : null}
       </div>
@@ -652,7 +696,7 @@ export function SchedulesTab({ machine, file }: { machine: Machine; file: Machin
                     }
                   >
                     <Icon name="check" />
-                    Marquer comme fait
+                    {t('due.markDone')}
                   </button>
                   {manage ? (
                     <>
@@ -662,7 +706,7 @@ export function SchedulesTab({ machine, file }: { machine: Machine; file: Machin
                         onClick={() => openModal({ type: 'schedule', machineId: machine.id, scheduleId: d.schedule.id })}
                       >
                         <Icon name="edit" />
-                        Modifier
+                        {tc('actions.edit')}
                       </button>
                       <button
                         type="button"
@@ -670,7 +714,7 @@ export function SchedulesTab({ machine, file }: { machine: Machine; file: Machin
                         onClick={() => openModal({ type: 'delete-schedule', machineId: machine.id, scheduleId: d.schedule.id })}
                       >
                         <Icon name="trash" />
-                        Supprimer
+                        {tc('actions.delete')}
                       </button>
                     </>
                   ) : null}
@@ -681,7 +725,7 @@ export function SchedulesTab({ machine, file }: { machine: Machine; file: Machin
         </ul>
       ) : (
         <Empty
-          title="Aucune échéance"
+          title={t('schedules.emptyTitle')}
           action={
             manage ? (
               <button
@@ -690,18 +734,15 @@ export function SchedulesTab({ machine, file }: { machine: Machine; file: Machin
                 onClick={() => openModal({ type: 'schedule', machineId: machine.id })}
               >
                 <Icon name="plus" />
-                Ajouter une échéance
+                {t('schedules.emptyAction')}
               </button>
             ) : undefined
           }
         >
-          Services toutes les 500 h, contrôle annuel de sécurité, expertise : Godet vous prévient avant qu’il soit trop tard.
+          {t('schedules.emptyText')}
         </Empty>
       )}
-      <p className="law">
-        <b>Comment ça marche :</b> « Marquer comme fait » ouvre l’intervention liée à l’échéance. Une fois enregistrée, l’échéance repart
-        pour un nouvel intervalle à partir du compteur ou de la date saisis.
-      </p>
+      <p className="law">{t.rich('schedules.how', { b: bold })}</p>
     </div>
   );
 }

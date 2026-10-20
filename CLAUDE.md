@@ -50,6 +50,10 @@ Navigateur de test : Chromium de Playwright dans `/opt/pw-browsers` (ne pas lanc
   `session.ts` (serveur : qui est connecté, entreprise active), `supabase/` (clients), `repo/` (accès aux données :
   contrat `types.ts`, implémentations `supabase.ts` et `demo.ts`), `database.types.ts` (généré, ne pas éditer).
 - `supabase/migrations` : schéma SQL (déjà appliqué sur le projet ; toute évolution = nouvelle migration).
+- `supabase/functions/rappels` : fonction Supabase (Deno) des rappels par e-mail ; exclue du `tsconfig.json`.
+- `docs/prospection` : prospection par pays (Suisse d'abord) et consignes des agents. Règle absolue : les agents
+  cherchent et rédigent, une personne relit et envoie (aucun envoi automatique, cf. UWG/LCD, RGPD, AI Act art. 50).
+- `docs/notifications.md` : rappels et e-mails (activation de Resend, tests).
 
 ## Données et sécurité
 - Tables : organizations, profiles, memberships (rôles owner/admin/mechanic/operator), invitations, machines,
@@ -67,7 +71,14 @@ Navigateur de test : Chromium de Playwright dans `/opt/pw-browsers` (ne pas lanc
   `invitation_info`, `accept_invitation`.
 - Déclencheurs : l'entreprise d'une saisie suit toujours sa machine ; une saisie avec compteur crée un relevé et fait
   avancer le compteur ; une saisie liée à une échéance (`schedule_id`) la renouvelle ; une nouvelle machine reçoit
-  « Service » toutes les 500 h et « Contrôle annuel de sécurité » ; tout changement est journalisé.
+  « Service » toutes les 500 h et « Contrôle annuel de sécurité » (dans la langue du profil de la personne qui
+  l'ajoute) ; tout changement est journalisé.
+- Abonnement : `plan` et `trial_ends_at` d'une entreprise (et `created_by`, `created_at`) ne se modifient pas depuis
+  l'application (déclencheur `organizations_guard_billing`, erreur `billing_locked`) : seulement la clé de service,
+  une fonction SECURITY DEFINER ou l'administration de la plateforme.
+- E-mails (Resend, serveur uniquement) : `src/lib/email` (invitations) et la fonction Supabase `rappels` (tâche
+  planifiée `godet-rappels`, 05:15 UTC). Sans `RESEND_API_KEY` et `EMAIL_FROM`, rien ne part (simulation).
+  Mode d'emploi : `docs/notifications.md`. WhatsApp : pas encore.
 - Le carnet ne s'efface pas (art. 32b OPA : consigner les résultats d'entretien) : retrait = `deleted_at`,
   `deleted_by`, `delete_reason`. Les machines s'archivent (`archived_at`).
 - Stockage : bucket privé `medias`, chemin `<org_id>/<machine_id>/<fichier>`, lecture par liens signés.

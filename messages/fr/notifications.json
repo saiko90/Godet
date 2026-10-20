@@ -1,1 +1,56 @@
-{}
+{
+  "title": "Rappels par e-mail",
+  "intro": "Godet vous écrit quand une échéance approche ou est dépassée, et tant qu’une réparation reste ouverte, dans chacune de vos entreprises.",
+  "loading": "Chargement de vos réglages…",
+  "loadError": "Vos réglages de rappels n’ont pas pu être chargés.",
+  "retry": "Réessayer",
+  "signedOut": "Connectez-vous pour régler vos rappels.",
+  "enabled": {
+    "label": "Recevoir les rappels par e-mail",
+    "hint": "Ils partent à l’adresse e-mail de votre compte."
+  },
+  "operator": "{operatorOnly, select, true {En tant que machiniste, vous ne recevez des rappels que si vous les activez et enregistrez ici.} other {Dans les entreprises où vous êtes machiniste, les rappels ne partent qu’une fois ces réglages enregistrés.}}",
+  "frequency": {
+    "legend": "Fréquence",
+    "quotidien": {
+      "label": "Chaque jour",
+      "hint": "Un e-mail le matin, seulement s’il y a quelque chose à signaler."
+    },
+    "hebdo": {
+      "label": "Chaque semaine",
+      "hint": "Un résumé le lundi matin, seulement s’il y a quelque chose à signaler."
+    },
+    "jamais": {
+      "label": "Jamais",
+      "hint": "Aucun rappel par e-mail."
+    }
+  },
+  "lead": {
+    "legend": "Anticipation",
+    "hint": "Une échéance figure dans le rappel dès qu’elle entre dans ces délais, puis tant qu’elle n’est pas faite.",
+    "days": {
+      "label": "Échéances en date",
+      "unit": "jours avant",
+      "hint": "De 1 à 90 jours.",
+      "error": "Indiquez un nombre entier de jours, de 1 à 90."
+    },
+    "hours": {
+      "label": "Échéances au compteur",
+      "unit": "heures avant",
+      "hint": "De 5 à 500 heures. Au rythme d’utilisation de la machine, une échéance peut aussi apparaître plus tôt si elle tombe dans le délai en jours.",
+      "error": "Indiquez un nombre entier d’heures, de 5 à 500."
+    }
+  },
+  "save": "Enregistrer les rappels",
+  "saving": "Enregistrement…",
+  "saved": "Réglages des rappels enregistrés.",
+  "unsaved": "Modifications non enregistrées.",
+  "errors": {
+    "invalid": "Vérifiez les champs signalés.",
+    "network": "Connexion impossible. Vérifiez votre réseau, puis réessayez.",
+    "session": "Votre session a expiré. Rechargez la page pour vous reconnecter.",
+    "generic": "L’enregistrement a échoué. Réessayez dans un instant."
+  },
+  "lastSent": "Dernier rappel envoyé le {date}.",
+  "neverSent": "Aucun rappel envoyé pour l’instant."
+}

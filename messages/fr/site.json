@@ -1,1 +1,270 @@
-{}
+{
+  "meta": {
+    "title": "Godet — le garage de votre parc d’engins",
+    "description": "Le carnet d’entretien numérique des machines de chantier\u00a0: services, réparations, pièces, coûts, photos, vidéos et échéances. Essai gratuit de 30\u00a0jours, sans carte de crédit.",
+    "ogDescription": "Chaque machine a son carnet complet. Les contrôles ne s’oublient plus, les coûts par machine sont clairs. Conforme à l’art. 32b OPA.",
+    "ogImageAlt": "Le showroom 3D de Godet"
+  },
+  "chrome": {
+    "skip": "Aller au contenu",
+    "logoHome": "Godet, accueil",
+    "logoBack": "Godet, retour à l’accueil",
+    "mainNav": "Navigation principale",
+    "anchors": {
+      "features": "Fonctions",
+      "compliance": "Conformité",
+      "pricing": "Tarif",
+      "questions": "Questions"
+    },
+    "demo": "Démo 3D",
+    "contact": "Contact",
+    "login": "Se connecter",
+    "signup": "Créer mon garage",
+    "footer": {
+      "tagline": "Le carnet d’entretien numérique des machines de chantier, pensé pour les entreprises suisses.",
+      "studio": "Une application de <link>Swiss Digital Studio</link>, en Valais.",
+      "godet": "Godet",
+      "info": "Informations",
+      "demo": "Démo 3D sans compte",
+      "signup": "Créer mon garage",
+      "login": "Se connecter",
+      "contact": "Contact",
+      "ideas": "Boîte à idées",
+      "privacy": "Politique de confidentialité",
+      "copyright": "© {year} Swiss Digital Studio · Valais, Suisse",
+      "hosting": "Données hébergées dans l’UE (Irlande)"
+    },
+    "auth": {
+      "demo": "Démo 3D",
+      "home": "Accueil",
+      "contact": "Contact",
+      "privacy": "Confidentialité"
+    },
+    "app": {
+      "garageOf": "Garage de {org}",
+      "backToGarage": "Retour au garage"
+    }
+  },
+  "home": {
+    "hero": {
+      "kicker": "Carnet d’entretien des machines de chantier",
+      "title": "Le garage de votre <em>parc d’engins</em>",
+      "lead": "Chaque machine a son carnet complet\u00a0: services, réparations, pièces, coûts, photos, vidéos et échéances. Les contrôles ne s’oublient plus. Vous savez enfin ce que coûte chaque engin.",
+      "demo": "Essayer la démo 3D",
+      "signup": "Créer mon garage",
+      "hasAccount": "Déjà un compte\u00a0?",
+      "login": "Se connecter",
+      "assure": {
+        "trial": "Essai gratuit de 30\u00a0jours",
+        "card": "Sans carte de crédit",
+        "hosting": "Données hébergées dans l’UE"
+      }
+    },
+    "stage": {
+      "line": "Parc d’engins · showroom",
+      "alt": "Le showroom 3D de Godet\u00a0: une pelle sur son plateau lumineux, avec sa fiche d’entretien.",
+      "cta": "Entrer dans le showroom · sans compte"
+    },
+    "problem": {
+      "eyebrow": "Le constat",
+      "title": "Le carnet papier ne suit plus le rythme du chantier",
+      "text": "Cinq, vingt ou cinquante machines, plusieurs chantiers, une équipe qui tourne. En route, l’information se perd.",
+      "items": {
+        "paper": {
+          "title": "Des carnets papier",
+          "text": "Ils restent dans la cabine, se salissent, se perdent. Personne ne sait vraiment où en est la machine."
+        },
+        "invoices": {
+          "title": "Des factures éparpillées",
+          "text": "Entre le classeur, la boîte e-mail et la camionnette, l’historique d’un engin devient introuvable."
+        },
+        "checks": {
+          "title": "Des contrôles oubliés",
+          "text": "Le service des 500\u00a0h ou le contrôle annuel de sécurité passe à la trappe. On s’en rend compte trop tard."
+        },
+        "costs": {
+          "title": "Des coûts flous",
+          "text": "Impossible de dire ce qu’une machine a coûté cette année, ni s’il est temps de la remplacer."
+        }
+      }
+    },
+    "features": {
+      "eyebrow": "Ce que fait Godet",
+      "title": "Tout l’entretien de votre parc, au même endroit",
+      "text": "L’historique, les échéances et les coûts de chaque machine, réunis dans un seul garage. Sur ordinateur, tablette et téléphone.",
+      "items": {
+        "log": {
+          "title": "Le carnet complet",
+          "text": "Services, contrôles, réparations, pièces et notes. Chaque intervention garde sa date, le compteur, qui l’a faite et ce qu’elle a coûté."
+        },
+        "dues": {
+          "title": "Échéances en heures ou en dates",
+          "text": "Service toutes les 500\u00a0h, contrôle annuel de sécurité\u00a0: Godet suit le rythme réel de chaque machine et vous prévient avant l’échéance."
+        },
+        "costs": {
+          "title": "Les coûts par machine",
+          "text": "Pièces, main-d’œuvre, immobilisation\u00a0: le coût de chaque engin sur douze mois, mois par mois."
+        },
+        "media": {
+          "title": "Photos, vidéos, documents",
+          "text": "Photographiez une fuite, filmez un bruit suspect, déposez la facture en PDF. Tout reste attaché à la machine."
+        },
+        "team": {
+          "title": "Équipe et rôles",
+          "text": "Propriétaire, administrateur, mécanicien, machiniste\u00a0: chacun accède au parc selon son rôle."
+        },
+        "workshop": {
+          "title": "Mode atelier, sans 3D",
+          "text": "Une vue en liste, rapide sur tous les appareils, pour saisir les heures et les interventions sans détour."
+        },
+        "print": {
+          "title": "Le carnet imprimé",
+          "text": "Le carnet d’une machine s’imprime ou s’enregistre en PDF\u00a0: pour un contrôle, une expertise ou une revente."
+        },
+        "showroom": {
+          "title": "Un showroom pour votre parc",
+          "text": "Chaque machine sur son plateau, son état visible d’un coup d’œil\u00a0: vert, orange ou rouge."
+        }
+      }
+    },
+    "compliance": {
+      "eyebrow": "Conformité",
+      "title": "Un carnet qui tient devant un contrôle",
+      "lawMark": "ART. 32B OPA",
+      "quoteOpen": "«\u00a0",
+      "quote": "Les résultats des opérations d’entretien doivent être consignés.",
+      "quoteClose": "\u00a0»",
+      "caption": "Ordonnance sur la prévention des accidents et des maladies professionnelles (OPA, RS 832.30), art. 32b. Godet consigne chaque intervention, datée, avec son auteur et ses coûts.",
+      "proofs": {
+        "kept": {
+          "title": "Rien ne s’efface",
+          "text": "Une saisie erronée est retirée avec son motif. Elle reste visible, barrée, dans l’historique."
+        },
+        "journal": {
+          "title": "Chaque changement est journalisé",
+          "text": "Qui a saisi, modifié ou retiré quoi, et quand."
+        },
+        "archive": {
+          "title": "Les machines s’archivent",
+          "text": "Une machine vendue ou hors service quitte le showroom. Son carnet reste consultable et imprimable."
+        }
+      },
+      "note": "Godet facilite la tenue du carnet. L’entretien des équipements de travail reste de la responsabilité de l’employeur."
+    },
+    "local": {
+      "eyebrow": "Pensé pour la Suisse",
+      "title": "Conçu en Valais, pour les entreprises suisses",
+      "text": "Godet parle la langue du chantier et respecte vos habitudes.",
+      "formatsLabel": "Exemples de formats",
+      "items": {
+        "formats": {
+          "title": "Les formats de chez vous",
+          "text": "Heures, montants et dates s’affichent comme vous les écrivez, en francs ou en euros."
+        },
+        "language": {
+          "title": "Dans la langue de chacun",
+          "text": "Français, allemand, italien ou anglais\u00a0: chacun choisit sa langue. Service 500\u00a0h, compteur d’heures, contrôle annuel\u00a0: le vocabulaire de l’atelier."
+        },
+        "hosting": {
+          "title": "Données hébergées dans l’UE",
+          "text": "Base de données et fichiers sont hébergés en Irlande, dans l’Union européenne."
+        },
+        "access": {
+          "title": "Accès réservé à votre entreprise",
+          "text": "Chaque entreprise ne voit que ses propres données. Les règles d’accès sont appliquées par la base de données elle-même."
+        }
+      }
+    },
+    "pricing": {
+      "eyebrow": "Tarif",
+      "title": "Essai gratuit de 30\u00a0jours",
+      "text": "Sans carte de crédit. Tarifs annoncés avant la fin de l’essai.",
+      "small": "Toutes les fonctions sont disponibles pendant l’essai."
+    },
+    "faq": {
+      "eyebrow": "Questions",
+      "title": "Questions fréquentes",
+      "items": {
+        "install": {
+          "q": "Faut-il installer quelque chose\u00a0?",
+          "a": "Non. Godet s’ouvre dans le navigateur, sur ordinateur, tablette ou téléphone. Vous pouvez l’ajouter à l’écran d’accueil comme une application."
+        },
+        "threeD": {
+          "q": "La 3D est-elle obligatoire\u00a0?",
+          "a": "Non. Le mode atelier affiche le parc en liste, sans 3D. Il convient aux appareils modestes et aux saisies rapides."
+        },
+        "data": {
+          "q": "Qui voit nos données\u00a0?",
+          "a": "Uniquement les personnes que vous invitez dans votre entreprise, selon leur rôle. Les données sont hébergées dans l’UE, en Irlande."
+        },
+        "erase": {
+          "q": "Peut-on effacer une intervention\u00a0?",
+          "a": "On peut la retirer, avec un motif. Elle reste visible dans l’historique\u00a0: c’est ce qui fait la valeur du carnet lors d’un contrôle."
+        },
+        "export": {
+          "q": "Peut-on sortir le carnet de Godet\u00a0?",
+          "a": "Oui. Chaque carnet s’imprime ou s’enregistre en PDF, avec les interventions, les réparations, les pièces et les coûts."
+        },
+        "languages": {
+          "q": "Godet existe-t-il dans d’autres langues\u00a0?",
+          "a": "Oui\u00a0: en français, en allemand, en italien et en anglais. Chaque personne choisit sa langue, et les montants s’affichent dans la devise de votre entreprise."
+        },
+        "trial": {
+          "q": "Que se passe-t-il après l’essai\u00a0?",
+          "a": "Les tarifs vous sont annoncés avant la fin des 30\u00a0jours. Aucune carte de crédit n’est demandée pour essayer."
+        }
+      }
+    },
+    "final": {
+      "title": "Ouvrez votre garage",
+      "text": "Visitez la démo sans compte, ou créez votre garage et ajoutez votre première machine.",
+      "contact": "Une question, une démonstration pour votre équipe\u00a0? <link>Écrivez-nous</link>."
+    }
+  },
+  "notFound": {
+    "metaTitle": "Page introuvable",
+    "title": "Cette page n’existe pas",
+    "text": "Le lien est peut-être incomplet, ou la page a changé d’adresse. Votre garage, lui, n’a pas bougé.",
+    "home": "Retour à l’accueil",
+    "garage": "Ouvrir mon garage"
+  },
+  "error": {
+    "metaTitle": "Erreur",
+    "title": "Une erreur est survenue",
+    "text": "La page n’a pas pu s’afficher. Ce qui était déjà enregistré n’est pas perdu\u00a0: réessayez, ou revenez dans un instant.",
+    "home": "Retour à l’accueil",
+    "reference": "Référence de l’erreur\u00a0: {digest}"
+  },
+  "cantons": {
+    "AG": "Argovie",
+    "AI": "Appenzell Rhodes-Intérieures",
+    "AR": "Appenzell Rhodes-Extérieures",
+    "BE": "Berne",
+    "BL": "Bâle-Campagne",
+    "BS": "Bâle-Ville",
+    "FR": "Fribourg",
+    "GE": "Genève",
+    "GL": "Glaris",
+    "GR": "Grisons",
+    "JU": "Jura",
+    "LU": "Lucerne",
+    "NE": "Neuchâtel",
+    "NW": "Nidwald",
+    "OW": "Obwald",
+    "SG": "Saint-Gall",
+    "SH": "Schaffhouse",
+    "SO": "Soleure",
+    "SZ": "Schwytz",
+    "TG": "Thurgovie",
+    "TI": "Tessin",
+    "UR": "Uri",
+    "VD": "Vaud",
+    "VS": "Valais",
+    "ZG": "Zoug",
+    "ZH": "Zurich"
+  },
+  "manifest": {
+    "name": "Godet — le garage de votre parc d’engins",
+    "description": "Carnet d’entretien des machines de chantier\u00a0: services, réparations, pièces, coûts, photos et vidéos."
+  }
+}

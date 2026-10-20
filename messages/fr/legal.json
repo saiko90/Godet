@@ -1,1 +1,90 @@
-{}
+{
+  "meta": {
+    "title": "Politique de confidentialité",
+    "description": "Comment Godet traite vos données\u00a0: responsable, données traitées, finalités, prospection, rappels par e-mail, sous-traitants, conservation et vos droits selon la nLPD et le RGPD."
+  },
+  "eyebrow": "Protection des données",
+  "title": "Politique de confidentialité",
+  "updated": "Dernière mise à jour\u00a0: {date}",
+  "intro": "Godet est le carnet d’entretien numérique des machines de chantier. Cette page explique quelles données nous traitons, pourquoi, où elles sont hébergées et quels sont vos droits. Elle se fonde sur la loi fédérale sur la protection des données (nLPD) et, pour les personnes qui se trouvent dans l’Union européenne, sur le règlement général sur la protection des données (RGPD).",
+  "controller": {
+    "title": "Responsable du traitement",
+    "text": "<strong>Swiss Digital Studio</strong>, Valais, Suisse, éditeur de Godet. Pour toute question sur vos données, écrivez-nous via le <contact>formulaire de contact</contact> ou via <studio>www.swissdigitalstudio.ch</studio>.",
+    "customer": "Les données que votre entreprise saisit dans Godet (parc, interventions, médias) sont les siennes\u00a0: elle décide de leur contenu, et nous les traitons pour son compte."
+  },
+  "data": {
+    "title": "Données traitées",
+    "items": {
+      "account": "<strong>Compte</strong>\u00a0: nom, adresse e-mail, mot de passe (jamais stocké en clair), langue choisie, entreprises dont vous êtes membre et rôle dans chacune.",
+      "fleet": "<strong>Données du parc</strong>\u00a0: machines, interventions, échéances, relevés d’heures, coûts et notes saisis par votre entreprise, avec le nom de la personne qui a fait chaque saisie.",
+      "media": "<strong>Médias déposés</strong>\u00a0: photos, vidéos et documents (factures, rapports) ajoutés aux machines.",
+      "journal": "<strong>Journal des modifications</strong>\u00a0: qui a créé, modifié ou retiré quoi, et quand.",
+      "contact": "<strong>Formulaire de contact</strong>\u00a0: nom, adresse e-mail, entreprise, téléphone, pays, taille du parc, sujet et message, et votre choix d’être recontacté ou non.",
+      "ideas": "<strong>Boîte à idées</strong>\u00a0: votre idée, son domaine et ses détails, votre adresse e-mail ou votre compte, et les réponses de notre équipe.",
+      "reminders": "<strong>Rappels par e-mail</strong>\u00a0: vos préférences (activés ou non, fréquence, délais) et la trace des envois.",
+      "prospects": "<strong>Prospection</strong>\u00a0: coordonnées professionnelles d’entreprises (nom, adresse, site web, téléphone et e-mail professionnels, domaine d’activité) tirées de sources publiques, et l’historique de nos prises de contact.",
+      "technical": "<strong>Données techniques</strong>\u00a0: informations nécessaires au fonctionnement et à la sécurité, comme l’adresse IP et le type de navigateur dans les journaux des serveurs."
+    },
+    "demo": "La démo 3D fonctionne sans compte\u00a0: ce que vous y faites reste dans votre navigateur. Si vous arrivez par un lien de démonstration muni d’un code de suivi, nous comptons la visite (code, page, langue, date), sans autre donnée sur vous."
+  },
+  "purposes": {
+    "title": "Finalités et bases juridiques",
+    "items": {
+      "service": "Tenir le carnet d’entretien de vos machines, calculer les échéances et les coûts, gérer les comptes, les invitations et les droits d’accès de votre équipe (contrat).",
+      "emails": "Envoyer les e-mails liés au compte (confirmation d’adresse, nouveau mot de passe) et, si vous les gardez activés, les rappels d’échéances (contrat).",
+      "contact": "Répondre à vos messages et à vos idées, et améliorer Godet (mesures précontractuelles, intérêt légitime).",
+      "prospecting": "Faire connaître Godet aux entreprises qui pourraient en avoir besoin (intérêt légitime, voir ci-dessous).",
+      "security": "Assurer la sécurité du service et prévenir les abus (intérêt légitime, obligations légales)."
+    },
+    "basis": "Pour les personnes qui se trouvent dans l’UE, ces bases juridiques correspondent à l’art. 6, paragraphe 1, points b (contrat), c (obligation légale) et f (intérêt légitime) du RGPD. Votre accord d’être recontacté repose sur votre consentement (point a), que vous pouvez retirer à tout moment.",
+    "noSale": "Nous ne vendons pas vos données et ne les utilisons pas à des fins publicitaires."
+  },
+  "prospecting": {
+    "title": "Prospection auprès des entreprises",
+    "text": "Swiss Digital Studio présente Godet à des entreprises de construction, de génie civil ou de location de machines, par courrier, e-mail, téléphone ou LinkedIn. Nous n’utilisons que des coordonnées professionnelles publiques (registres du commerce, sites des entreprises, annuaires professionnels). Des outils automatisés nous aident à trouver ces entreprises et à préparer les messages\u00a0; chaque envoi est relu et validé par une personne de notre équipe.",
+    "object": "<strong>Droit d’opposition</strong>\u00a0: vous pouvez vous opposer à tout moment, sans justification, à ce que nous vous contactions. Répondez simplement à notre message, ou écrivez-nous via le <contact>formulaire de contact</contact>. Nous cessons alors tout contact et ne gardons que le nom de l’entreprise et l’adresse concernée, pour respecter votre choix."
+  },
+  "reminders": {
+    "title": "Rappels par e-mail",
+    "text": "Si vous êtes membre d’une entreprise, Godet peut vous envoyer par e-mail les échéances à venir de son parc, dans votre langue. Vous choisissez la fréquence, ou désactivez les rappels, dans <reminders>Paramètres → Rappels</reminders>."
+  },
+  "cookies": {
+    "title": "Cookies et traceurs",
+    "text": "Godet utilise uniquement des cookies techniques\u00a0: celui de votre session de connexion, celui qui mémorise l’entreprise active, celui qui garde la langue choisie (un an) et, si vous arrivez par un lien de démonstration, le code de suivi de ce lien (30\u00a0jours). Le navigateur garde aussi quelques préférences du garage (son, qualité de la 3D) dans son stockage local. Aucun traceur publicitaire, aucun outil de mesure d’audience tiers."
+  },
+  "processors": {
+    "title": "Sous-traitants et lieu d’hébergement",
+    "items": {
+      "supabase": "<strong>Supabase</strong>\u00a0: base de données, authentification et stockage des fichiers. Les données sont hébergées dans l’Union européenne (Irlande).",
+      "vercel": "<strong>Vercel</strong>\u00a0: hébergement et diffusion du site.",
+      "email": "<strong>Prestataire d’envoi d’e-mails</strong>\u00a0: e-mails liés au compte et rappels."
+    },
+    "transfers": "Ces prestataires peuvent être établis hors de Suisse et de l’UE, par exemple aux États-Unis. Lorsque des données y sont communiquées, nous nous appuyons sur une décision d’adéquation (du Conseil fédéral ou de la Commission européenne) ou sur des garanties contractuelles reconnues, comme les clauses contractuelles types."
+  },
+  "security": {
+    "title": "Sécurité",
+    "text": "Les échanges sont chiffrés (HTTPS). Chaque entreprise ne voit que ses propres données\u00a0: les règles d’accès sont appliquées par la base de données elle-même. Les photos, vidéos et documents sont rangés dans un espace privé et ne s’ouvrent que par des liens temporaires."
+  },
+  "retention": {
+    "title": "Durée de conservation",
+    "account": "Les données de votre compte et de votre entreprise sont conservées tant que le compte est actif. Le carnet d’entretien sert de preuve\u00a0: une saisie retirée y reste visible avec son motif. Après la fin du contrat, les données sont supprimées, sauf obligation légale de conservation. Avant cela, vous pouvez imprimer ou enregistrer en PDF le carnet de chaque machine.",
+    "messages": "Les messages de contact et les idées sont conservés le temps de les traiter, puis au plus deux ans après le dernier échange. Les données de prospection sont effacées au plus tard deux ans après le dernier contact resté sans suite\u00a0; en cas d’opposition, nous gardons seulement ce qui permet de la respecter."
+  },
+  "rights": {
+    "title": "Vos droits",
+    "intro": "Vous pouvez à tout moment demander\u00a0:",
+    "items": {
+      "access": "l’accès aux données qui vous concernent\u00a0;",
+      "rectify": "leur rectification si elles sont inexactes\u00a0;",
+      "erase": "leur effacement, dans les limites des obligations légales\u00a0;",
+      "portability": "leur remise dans un format courant\u00a0;",
+      "restrict": "la limitation de leur traitement, ou vous y opposer, notamment à la prospection\u00a0;",
+      "consent": "le retrait de votre consentement, pour l’avenir."
+    },
+    "box": "Votre nom et votre langue se modifient directement dans <account>Paramètres → Mon compte</account>. Pour toute autre demande, écrivez-nous via le <contact>formulaire de contact</contact>. Vous pouvez aussi vous adresser au Préposé fédéral à la protection des données et à la transparence (PFPDT) ou, si vous êtes dans l’UE, à l’autorité de protection des données de votre pays."
+  },
+  "changes": {
+    "title": "Modifications",
+    "text": "Nous pouvons adapter cette politique, par exemple si le service évolue. La date de la dernière mise à jour figure en haut de cette page."
+  }
+}

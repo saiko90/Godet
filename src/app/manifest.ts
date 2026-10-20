@@ -1,11 +1,23 @@
 import type { MetadataRoute } from 'next';
+import { getTranslations } from 'next-intl/server';
+import { headers } from 'next/headers';
+import { cookieLocale } from '@/components/site/manifest-locale';
+import { htmlLang } from '@/i18n/routing';
 
-export default function manifest(): MetadataRoute.Manifest {
+/**
+ * Manifeste de l'application installable. Il est demandé par le navigateur sans le contexte de la page :
+ * sa langue suit le cookie de langue s'il est envoyé, sinon les langues préférées du navigateur.
+ * L'adresse de départ (/garage) s'ouvre ensuite dans la langue mémorisée.
+ */
+export default async function manifest(): Promise<MetadataRoute.Manifest> {
+  const h = await headers();
+  const locale = cookieLocale(h.get('cookie'), h.get('accept-language'));
+  const t = await getTranslations({ locale, namespace: 'site.manifest' });
   return {
-    name: 'Godet — le garage de votre parc d’engins',
+    name: t('name'),
     short_name: 'Godet',
-    description: 'Carnet d’entretien des machines de chantier : services, réparations, pièces, coûts, photos et vidéos.',
-    lang: 'fr-CH',
+    description: t('description'),
+    lang: htmlLang(locale),
     start_url: '/garage',
     scope: '/',
     display: 'standalone',

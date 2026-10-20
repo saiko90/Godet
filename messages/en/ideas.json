@@ -1,1 +1,76 @@
-{}
+{
+  "meta": {
+    "title": "Ideas box",
+    "description": "Suggest an idea to improve Godet, the maintenance log for construction machinery, and follow the team’s replies."
+  },
+  "eyebrow": "Ideas box",
+  "title": "Let’s improve Godet together",
+  "lead": "Missing a feature, or bothered by a detail in your daily work? Describe your idea. We read every suggestion and tell you what we do with it.",
+  "how": {
+    "title": "How it works",
+    "send": "You describe your idea, in one sentence or in detail.",
+    "review": "The team reviews it and gives it a status: under review, planned, done or declined, with a reply where needed.",
+    "follow": "When you are signed in, you can follow your ideas and our replies on this page."
+  },
+  "form": {
+    "title": "Your idea",
+    "required": "required",
+    "ideaTitle": "Your idea in one sentence",
+    "ideaTitleHint": "For example: “Read the hour meter with my phone’s camera”.",
+    "category": "Area",
+    "categories": {
+      "3d": "3D showroom",
+      "carnet": "Maintenance log",
+      "echeances": "Due dates",
+      "couts": "Costs",
+      "medias": "Photos, videos, documents",
+      "equipe": "Team and roles",
+      "notifications": "Reminders and emails",
+      "mobile": "Phone and tablet",
+      "autre": "Other"
+    },
+    "details": "Details",
+    "detailsHint": "The situation on site, the problem you ran into, what would help… 4000\u00a0characters maximum.",
+    "email": "Email address",
+    "emailHint": "So that we can reply. Have an account? <link>Sign in</link> to follow your ideas.",
+    "signedInAs": "Signed in as <b>{email}</b>: your idea will be linked to your account.",
+    "trap": "Leave this field empty",
+    "submit": "Send my idea",
+    "pending": "Sending…",
+    "privacy": "Your data is used to handle your idea. See our <link>privacy policy</link>."
+  },
+  "sent": {
+    "title": "Thank you for your idea!",
+    "text": "It has reached us. We will review it and reply by email if needed.",
+    "textSignedIn": "It has reached us and now appears under “My ideas”, where you will see our replies.",
+    "again": "Suggest another idea"
+  },
+  "mine": {
+    "title": "My ideas",
+    "count": "{count, plural, =0 {No ideas yet} one {# idea} other {# ideas}}",
+    "empty": "You have not suggested any ideas yet. The first one may well be the best!",
+    "loadError": "Your ideas could not be loaded. Please reload the page.",
+    "sentOn": "Sent on {date}",
+    "updatedOn": "updated on {date}",
+    "answer": "Reply from the team",
+    "anonymous": "<link>Sign in</link> to see your ideas and the team’s replies."
+  },
+  "status": {
+    "nouvelle": "Received",
+    "a_l_etude": "Under review",
+    "prevue": "Planned",
+    "faite": "Done",
+    "refusee": "Declined"
+  },
+  "errors": {
+    "checkFields": "Please check the highlighted fields.",
+    "titleShort": "Describe your idea in a few words (at least 3\u00a0characters).",
+    "titleLong": "120\u00a0characters maximum.",
+    "detailsLong": "4000\u00a0characters maximum.",
+    "emailRequired": "Please enter your email address so that we can reply.",
+    "emailInvalid": "Incomplete address. Example: name@company.com",
+    "rateLimited": "You have already sent a lot of ideas today: thank you! Please try again tomorrow.",
+    "busy": "The service is very busy. Please try again in a few minutes.",
+    "generic": "The idea could not be sent. Please try again in a moment."
+  }
+}

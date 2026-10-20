@@ -1,11 +1,13 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { unstable_rethrow } from 'next/navigation';
 import { useActionState, useId, useOptimistic, useState, useTransition } from 'react';
+import { useFormat } from '@/components/FormatProvider';
 import { Icon } from '@/components/Icons';
 import { changerRole, inviterMembre, retirerMembre, revoquerInvitation } from '@/app/[locale]/parametres/actions';
-import { ROLES } from '@/lib/domain';
-import { dateCH } from '@/lib/format';
+import { isAppLocale, routing, type AppLocale } from '@/i18n/routing';
+import { useDomainText } from '@/lib/use-domain-text';
 import type { Member, MemberRole } from '@/lib/types';
 import { CopyButton } from '../CopyButton';
 import { Alert, FieldError } from '../Form';
@@ -13,8 +15,8 @@ import { EMPTY_INVITE, type ActionResult, type PendingInvitation } from '../type
 import { ConfirmButton } from './ConfirmButton';
 import { useServerAction } from './useServerAction';
 
-const NB = '\u00a0';
 const ASSIGNABLE: MemberRole[] = ['admin', 'mechanic', 'operator'];
+const ALL_ROLES: MemberRole[] = ['owner', 'admin', 'mechanic', 'operator'];
 
 interface Props {
   members: Member[];
@@ -28,6 +30,10 @@ interface Props {
   origin: string;
   /** Instant du rendu côté serveur (invitations expirées). */
   nowIso: string;
+  /** L'envoi d'e-mails est configuré : l'invitation part par e-mail (sinon, lien à transmettre). */
+  emailEnabled: boolean;
+  /** Langue de la page (langue proposée pour l'e-mail d'invitation). */
+  locale: AppLocale;
 }
 
 function initials(name: string | null, email: string | null): string {
@@ -37,31 +43,39 @@ function initials(name: string | null, email: string | null): string {
   return letters.toUpperCase();
 }
 
+// Lien sans langue : la personne invitée arrive dans la langue de son navigateur.
 function inviteLink(origin: string, token: string): string {
   return `${origin}/invitation/${token}`;
 }
 
-/** Lien mailto: prérempli, envoyé depuis la messagerie de la personne qui invite. */
-function mailtoHref(inv: PendingInvitation, link: string, orgName: string, myName: string): string {
-  const subject = `Invitation à rejoindre ${orgName} sur Godet`;
-  const body = [
-    'Bonjour,',
-    '',
-    `Je vous invite à rejoindre «${NB}${orgName}${NB}» sur Godet, le carnet d’entretien de notre parc d’engins. Votre rôle${NB}: ${ROLES[inv.role].label.toLowerCase()}.`,
-    '',
-    `Ouvrez ce lien pour accepter l’invitation (valable jusqu’au ${dateCH(inv.expiresAt)})${NB}:`,
-    link,
-    '',
-    `Créez votre compte avec cette adresse e-mail${NB}: ${inv.email}.`,
-    '',
-    myName,
-  ]
-    .join('\r\n')
-    .trimEnd();
-  return `mailto:${inv.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+/** Lien mailto: prérempli (dans la langue de la personne qui invite), envoyé depuis sa propre messagerie. */
+function useMailto() {
+  const t = useTranslations('settings.team.mail');
+  const f = useFormat();
+  return (inv: PendingInvitation, link: string, orgName: string, myName: string): string => {
+    const subject = t('subject', { org: orgName });
+    const body = [
+      t('greeting'),
+      '',
+      t('intro', { org: orgName, role: inv.role }),
+      '',
+      t('open', { date: f.date(inv.expiresAt) }),
+      link,
+      '',
+      t('account', { email: inv.email }),
+      '',
+      myName,
+    ]
+      .join('\r\n')
+      .trimEnd();
+    return `mailto:${inv.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
 }
 
 function MemberRow({ member, me, canManage }: { member: Member; me: boolean; canManage: boolean }) {
+  const t = useTranslations('settings');
+  const dt = useDomainText();
+  const f = useFormat();
   const removal = useServerAction(retirerMembre);
   const [rolePending, startRole] = useTransition();
   const [shownRole, setShownRole] = useOptimistic(member.role);
@@ -78,7 +92,7 @@ function MemberRow({ member, me, canManage }: { member: Member; me: boolean; can
         setRoleResult(await changerRole(member.userId, next));
       } catch (error) {
         unstable_rethrow(error);
-        setRoleResult({ ok: false, message: 'Connexion au serveur impossible. Réessayez.' });
+        setRoleResult({ ok: false, message: t('messages.offline') });
       }
     });
   }
@@ -90,19 +104,19 @@ function MemberRow({ member, me, canManage }: { member: Member; me: boolean; can
       </span>
       <div className="s-member-main">
         <span className="s-member-name">
-          {member.fullName || member.email || 'Membre'}
-          {me ? <span className="pill muted">Vous</span> : null}
+          {member.fullName || member.email || t('team.member')}
+          {me ? <span className="pill muted">{t('team.you')}</span> : null}
         </span>
         <span className="s-member-meta">
           {member.fullName && member.email ? `${member.email} · ` : ''}
-          membre depuis le {dateCH(member.since)}
+          {t('team.since', { date: f.date(member.since) })}
         </span>
       </div>
       <div className="s-member-actions">
         {editable ? (
           <>
             <label className="s-sr" htmlFor={selectId}>
-              Rôle de {member.fullName || member.email || 'ce membre'}
+              {t('team.roleOf', { name: member.fullName || member.email || t('team.thisMember') })}
             </label>
             <select
               id={selectId}
@@ -113,24 +127,24 @@ function MemberRow({ member, me, canManage }: { member: Member; me: boolean; can
             >
               {ASSIGNABLE.map((r) => (
                 <option key={r} value={r}>
-                  {ROLES[r].label}
+                  {dt.role(r)}
                 </option>
               ))}
             </select>
             <ConfirmButton
-              label="Retirer"
-              question={'Retirer ce membre\u00a0?'}
-              confirmLabel="Oui, retirer"
+              label={t('team.remove')}
+              question={t('team.removeQuestion')}
+              confirmLabel={t('team.removeConfirm')}
               onConfirm={() => removal.run(member.userId)}
               pending={removal.pending}
             />
           </>
         ) : (
-          <span className={`pill${member.role === 'owner' ? '' : ' muted'}`}>{ROLES[member.role].label}</span>
+          <span className={`pill${member.role === 'owner' ? '' : ' muted'}`}>{dt.role(member.role)}</span>
         )}
         {rolePending || result ? (
           <p className={`s-status${result && !result.ok ? ' s-is-bad' : ''}`} role="status">
-            {rolePending ? 'Enregistrement…' : (result?.message ?? '')}
+            {rolePending ? t('team.saving') : (result?.message ?? '')}
           </p>
         ) : null}
       </div>
@@ -151,15 +165,18 @@ function InvitationRow({
   myName: string;
   expired: boolean;
 }) {
+  const t = useTranslations('settings.team');
+  const dt = useDomainText();
+  const f = useFormat();
+  const mailto = useMailto();
   const revoke = useServerAction(revoquerInvitation);
   const link = inviteLink(origin, inv.token);
+  const date = f.date(inv.expiresAt);
   return (
     <li className="s-invite">
       <div className="s-invite-main">
         <b>{inv.email}</b>
-        <span>
-          {ROLES[inv.role].label} · {expired ? `expirée le ${dateCH(inv.expiresAt)}` : `valable jusqu’au ${dateCH(inv.expiresAt)}`}
-        </span>
+        <span>{expired ? t('expiredOn', { role: dt.role(inv.role), date }) : t('validUntil', { role: dt.role(inv.role), date })}</span>
         {revoke.result && !revoke.result.ok ? (
           <span className="s-status s-is-bad" role="status">
             {revoke.result.message}
@@ -170,16 +187,16 @@ function InvitationRow({
         {!expired ? (
           <>
             <CopyButton text={link} />
-            <a className="btn btn-soft s-btn-sm" href={mailtoHref(inv, link, orgName, myName)}>
+            <a className="btn btn-soft s-btn-sm" href={mailto(inv, link, orgName, myName)}>
               <Icon name="mail" />
-              Envoyer
+              {t('send')}
             </a>
           </>
         ) : null}
         <ConfirmButton
-          label={expired ? 'Supprimer' : 'Révoquer'}
-          question={expired ? 'Supprimer l’invitation\u00a0?' : 'Révoquer l’invitation\u00a0?'}
-          confirmLabel={expired ? 'Oui, supprimer' : 'Oui, révoquer'}
+          label={expired ? t('delete') : t('revoke')}
+          question={expired ? t('deleteQuestion') : t('revokeQuestion')}
+          confirmLabel={expired ? t('deleteConfirm') : t('revokeConfirm')}
           onConfirm={() => revoke.run(inv.id)}
           pending={revoke.pending}
           icon="close"
@@ -189,7 +206,24 @@ function InvitationRow({
   );
 }
 
-export function EquipePanel({ members, membersError, invitations, meId, canManage, orgName, myName, origin, nowIso }: Props) {
+export function EquipePanel({
+  members,
+  membersError,
+  invitations,
+  meId,
+  canManage,
+  orgName,
+  myName,
+  origin,
+  nowIso,
+  emailEnabled,
+  locale,
+}: Props) {
+  const t = useTranslations('settings.team');
+  const tl = useTranslations('common.languages');
+  const dt = useDomainText();
+  const f = useFormat();
+  const mailto = useMailto();
   const [state, action, pending] = useActionState(inviterMembre, EMPTY_INVITE);
   const uid = useId();
   const ids = {
@@ -198,6 +232,7 @@ export function EquipePanel({ members, membersError, invitations, meId, canManag
     emailErr: `${uid}-email-err`,
     role: `${uid}-role`,
     roleErr: `${uid}-role-err`,
+    lang: `${uid}-langue`,
     link: `${uid}-lien`,
   };
   const created = state.invitation;
@@ -208,27 +243,24 @@ export function EquipePanel({ members, membersError, invitations, meId, canManag
   const failed = state.ok === false ? state.values : undefined;
   const emailShown = failed?.email ?? '';
   const roleShown = failed?.role && ASSIGNABLE.includes(failed.role as MemberRole) ? failed.role : 'operator';
+  const langShown = failed?.langue && isAppLocale(failed.langue) ? failed.langue : locale;
 
   return (
     <section id="equipe" className="s-panel" aria-labelledby={ids.title}>
       <div className="s-panel-head">
         <h2 id={ids.title}>
           <Icon name="users" />
-          Équipe
+          {t('title')}
         </h2>
-        <p>
-          {canManage
-            ? 'Invitez vos mécaniciens et machinistes. Chacun accède au parc selon son rôle.'
-            : 'Les personnes qui ont accès au garage. Seuls le propriétaire et les administrateurs gèrent l’équipe.'}
-        </p>
+        <p>{canManage ? t('manageText') : t('readText')}</p>
       </div>
 
       {membersError ? (
         <Alert tone="bad">
-          <p>L’équipe n’a pas pu être chargée. Rechargez la page.</p>
+          <p>{t('loadError')}</p>
         </Alert>
       ) : (
-        <ul className="s-members" aria-label="Membres de l’entreprise">
+        <ul className="s-members" aria-label={t('members')}>
           {members.map((m) => (
             <MemberRow key={m.userId} member={m} me={m.userId === meId} canManage={canManage} />
           ))}
@@ -237,11 +269,11 @@ export function EquipePanel({ members, membersError, invitations, meId, canManag
 
       {canManage ? (
         <div className="s-sub">
-          <h3>Inviter une personne</h3>
+          <h3>{t('invite')}</h3>
           <form action={action} className="s-inline-form" noValidate>
-            <div className="s-row s-row-3">
+            <div className={`s-row ${emailEnabled ? 's-row-4' : 's-row-3'}`}>
               <div className="field">
-                <label htmlFor={ids.email}>Adresse e-mail</label>
+                <label htmlFor={ids.email}>{t('email')}</label>
                 <input
                   id={ids.email}
                   name="email"
@@ -259,7 +291,7 @@ export function EquipePanel({ members, membersError, invitations, meId, canManag
                 />
               </div>
               <div className="field">
-                <label htmlFor={ids.role}>Rôle</label>
+                <label htmlFor={ids.role}>{t('role')}</label>
                 <select
                   key={`${state.done}-${roleShown}`}
                   id={ids.role}
@@ -270,14 +302,26 @@ export function EquipePanel({ members, membersError, invitations, meId, canManag
                 >
                   {ASSIGNABLE.map((r) => (
                     <option key={r} value={r}>
-                      {ROLES[r].label}
+                      {dt.role(r)}
                     </option>
                   ))}
                 </select>
               </div>
+              {emailEnabled ? (
+                <div className="field">
+                  <label htmlFor={ids.lang}>{t('emailLanguage')}</label>
+                  <select key={`${state.done}-${langShown}`} id={ids.lang} name="langue" defaultValue={langShown}>
+                    {routing.locales.map((l) => (
+                      <option key={l} value={l} lang={l}>
+                        {tl(l)}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              ) : null}
               <button type="submit" className="btn btn-primary" disabled={pending}>
-                <Icon name="link" />
-                {pending ? 'Création…' : 'Créer l’invitation'}
+                <Icon name={emailEnabled ? 'mail' : 'link'} />
+                {pending ? (emailEnabled ? t('sending') : t('creating')) : emailEnabled ? t('createAndSend') : t('create')}
               </button>
             </div>
             <FieldError id={ids.emailErr} message={state.errors.email} />
@@ -292,24 +336,28 @@ export function EquipePanel({ members, membersError, invitations, meId, canManag
           {state.ok && created ? (
             <div className="s-linkbox" role="status">
               <p>
-                <b>{state.message}</b> Transmettez ce lien à {created.email}&nbsp;: il est valable jusqu’au{' '}
-                {dateCH(created.expiresAt)} et ne sert qu’une fois.
+                {t.rich(state.emailed ? 'linkSent' : 'linkReady', {
+                  message: state.message ?? '',
+                  email: created.email,
+                  date: f.date(created.expiresAt),
+                  b: (chunks) => <b>{chunks}</b>,
+                })}
               </p>
               <label className="s-sr" htmlFor={ids.link}>
-                Lien d’invitation
+                {t('link')}
               </label>
               <input id={ids.link} type="text" readOnly value={createdLink} onFocus={(e) => e.currentTarget.select()} />
               <div className="s-linkbox-actions">
                 <CopyButton text={createdLink} className="btn btn-primary s-btn-sm" />
-                <a className="btn btn-soft s-btn-sm" href={mailtoHref(created, createdLink, orgName, myName)}>
+                <a className="btn btn-soft s-btn-sm" href={mailto(created, createdLink, orgName, myName)}>
                   <Icon name="mail" />
-                  Envoyer par e-mail
+                  {t('sendEmail')}
                 </a>
               </div>
             </div>
           ) : null}
 
-          <h3>Invitations en attente</h3>
+          <h3>{t('pending')}</h3>
           {invitations.length ? (
             <ul className="s-invites">
               {invitations.map((inv) => (
@@ -324,18 +372,18 @@ export function EquipePanel({ members, membersError, invitations, meId, canManag
               ))}
             </ul>
           ) : (
-            <p className="s-muted">Aucune invitation en attente.</p>
+            <p className="s-muted">{t('noPending')}</p>
           )}
         </div>
       ) : null}
 
       <div className="s-sub">
-        <h3>Les rôles</h3>
+        <h3>{t('roles')}</h3>
         <dl className="s-roles">
-          {(Object.keys(ROLES) as MemberRole[]).map((r) => (
+          {ALL_ROLES.map((r) => (
             <div key={r}>
-              <dt>{ROLES[r].label}</dt>
-              <dd>{ROLES[r].hint}</dd>
+              <dt>{dt.role(r)}</dt>
+              <dd>{dt.roleHint(r)}</dd>
             </div>
           ))}
         </dl>

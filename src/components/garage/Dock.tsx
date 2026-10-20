@@ -1,11 +1,13 @@
 'use client';
 
 // Dock des machines : une puce par machine (code, type, pastille d'état), précédente / suivante, « + Machine ».
+import { useTranslations } from 'next-intl';
 import { useEffect, useRef } from 'react';
+import { useFormat } from '@/components/FormatProvider';
 import { Icon } from '@/components/Icons';
-import { machineTitle, type MachineHealth } from '@/lib/domain';
+import type { MachineHealth } from '@/lib/domain';
 import type { Machine } from '@/lib/types';
-import { STATE_LABEL } from './helpers';
+import { useDomainText } from '@/lib/use-domain-text';
 
 export function Dock({
   machines,
@@ -28,6 +30,9 @@ export function Dock({
   onNext: () => void;
   onAdd: () => void;
 }) {
+  const t = useTranslations('garage');
+  const f = useFormat();
+  const dt = useDomainText();
   const row = useRef<HTMLDivElement>(null);
 
   // La puce de la machine ouverte reste visible dans le dock défilant.
@@ -40,10 +45,10 @@ export function Dock({
   const several = machines.length > 1;
 
   return (
-    <nav className="dock g-dock" aria-label="Machines du parc">
+    <nav className="dock g-dock" aria-label={t('dock.label')}>
       <div className="g-dock-inner">
         {several ? (
-          <button type="button" className="icon-btn g-dock-nav" aria-label="Machine précédente (flèche gauche)" onClick={onPrev}>
+          <button type="button" className="icon-btn g-dock-nav" aria-label={t('dock.prev')} onClick={onPrev}>
             <Icon name="chevron-left" />
           </button>
         ) : null}
@@ -63,10 +68,10 @@ export function Dock({
               >
                 <i className={`dot ${state}`} aria-hidden="true" />
                 <b>{m.code}</b>
-                <span>{machineTitle(m)}</span>
+                <span>{dt.machineTitle(m)}</span>
                 <span className="g-sr">
-                  , {STATE_LABEL[state]}
-                  {alerts ? `, ${alerts} point${alerts > 1 ? 's' : ''} d’attention` : ''}
+                  , {t(`state.${state}`)}
+                  {alerts ? `, ${t('dock.points', { count: alerts, n: f.num(alerts) })}` : ''}
                 </span>
               </button>
             );
@@ -74,13 +79,13 @@ export function Dock({
           {canAdd ? (
             <button type="button" className="chip add" onClick={onAdd}>
               <Icon name="plus" />
-              Machine
-              <span className="g-sr"> : ajouter une machine au parc</span>
+              {t('dock.add')}
+              <span className="g-sr">{t('dock.addSr')}</span>
             </button>
           ) : null}
         </div>
         {several ? (
-          <button type="button" className="icon-btn g-dock-nav" aria-label="Machine suivante (flèche droite)" onClick={onNext}>
+          <button type="button" className="icon-btn g-dock-nav" aria-label={t('dock.next')} onClick={onNext}>
             <Icon name="chevron-right" />
           </button>
         ) : null}

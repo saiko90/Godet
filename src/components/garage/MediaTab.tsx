@@ -2,13 +2,13 @@
 
 // Médias d'une machine : photos (appareil photo sur téléphone), vidéos, documents PDF, envoi multiple avec
 // progression, galerie et liste des documents. L'agrandissement (lightbox) est géré par le garage.
+import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
+import { useFormat } from '@/components/FormatProvider';
 import { Icon } from '@/components/Icons';
-import { dateCH, fileSize } from '@/lib/format';
 import type { Machine, MachineFile } from '@/lib/types';
 import { useGarage, type UploadOutcome } from './context';
 import { MediaPreview } from './MediaPreview';
-import { plural } from './helpers';
 import { Progress } from './ui';
 
 /** Bouton d'envoi de fichiers : un champ fichier transparent posé sur le bouton (fiable sur iPhone et Android). */
@@ -52,17 +52,19 @@ export function FileButton({
   );
 }
 
-function summary(out: UploadOutcome, code: string): string {
-  const where = `aux médias de ${code}`;
-  if (out.sent === out.photos) return out.photos > 1 ? `${out.photos} photos ajoutées ${where}` : `Photo ajoutée ${where}`;
-  if (out.sent === out.videos) return out.videos > 1 ? `${out.videos} vidéos ajoutées ${where}` : `Vidéo ajoutée ${where}`;
-  if (out.sent === out.documents) return out.documents > 1 ? `${out.documents} documents ajoutés ${where}` : `Document ajouté ${where}`;
-  return `${out.sent} fichiers ajoutés ${where}`;
-}
-
 /** Envoie des fichiers pour une machine, puis recharge sa fiche et affiche le résultat. */
 export function useSendFiles() {
+  const t = useTranslations('garage.media');
+  const f = useFormat();
   const { upload, refresh, toast, effect, setTab, fleet } = useGarage();
+
+  function summary(out: UploadOutcome, code: string): string {
+    if (out.sent === out.photos) return t('addedPhotos', { count: out.photos, n: f.num(out.photos), code });
+    if (out.sent === out.videos) return t('addedVideos', { count: out.videos, n: f.num(out.videos), code });
+    if (out.sent === out.documents) return t('addedDocs', { count: out.documents, n: f.num(out.documents), code });
+    return t('addedFiles', { count: out.sent, n: f.num(out.sent), code });
+  }
+
   return async function send(machineId: string, files: File[]) {
     const code = fleet.machines.find((m) => m.id === machineId)?.code ?? '';
     const out = await upload(machineId, files);
@@ -72,7 +74,8 @@ export function useSendFiles() {
       effect('photo');
     }
     if (out.errors.length) {
-      const more = out.errors.length > 1 ? ` (et ${plural(out.errors.length - 1, 'autre fichier', 'autres fichiers')})` : '';
+      const others = out.errors.length - 1;
+      const more = others > 0 ? ` ${t('andMore', { count: others, n: f.num(others) })}` : '';
       const done = out.sent ? `${summary(out, code)}. ` : '';
       toast(`${done}${out.errors[0]}${more}`, 'error');
       effect('alert');
@@ -83,29 +86,30 @@ export function useSendFiles() {
 }
 
 export function UploadStatus({ machineId }: { machineId: string }) {
+  const t = useTranslations('garage.media');
   const { uploads } = useGarage();
   if (!uploads || uploads.machineId !== machineId) return null;
   const overall = (uploads.index + (uploads.phase === 'send' ? uploads.progress : 0)) / uploads.total;
   const text =
     uploads.phase === 'prep'
-      ? `Préparation de « ${uploads.name} »`
-      : `Envoi de « ${uploads.name} » · ${Math.round(uploads.progress * 100)} %`;
+      ? t('preparing', { name: uploads.name })
+      : t('sending', { name: uploads.name, pct: String(Math.round(uploads.progress * 100)) });
   return (
     <div className="g-upload" role="status" aria-live="polite">
       <div className="g-upload-top">
         <span className="g-upload-name">{text}</span>
         {uploads.total > 1 ? (
-          <span className="num">
-            {uploads.index + 1} sur {uploads.total}
-          </span>
+          <span className="num">{t('position', { index: String(uploads.index + 1), total: String(uploads.total) })}</span>
         ) : null}
       </div>
-      <Progress value={overall} label="Avancement de l’envoi" />
+      <Progress value={overall} label={t('progress')} />
     </div>
   );
 }
 
 export function MediaTab({ machine, file }: { machine: Machine; file: MachineFile }) {
+  const t = useTranslations('garage.media');
+  const f = useFormat();
   const { openLightbox, uploads, flash } = useGarage();
   const send = useSendFiles();
   const busy = Boolean(uploads);
@@ -118,55 +122,58 @@ export function MediaTab({ machine, file }: { machine: Machine; file: MachineFil
       <div className="media-actions g-media-actions">
         <FileButton accept="image/*" capture="environment" disabled={busy} onFiles={go}>
           <Icon name="camera" />
-          Photo
+          {t('photo')}
         </FileButton>
         <FileButton accept="video/*" disabled={busy} onFiles={go}>
           <Icon name="video" />
-          Vidéo
+          {t('video')}
         </FileButton>
         <FileButton accept="image/*,video/*" disabled={busy} onFiles={go}>
           <Icon name="upload" />
-          Importer
+          {t('import')}
         </FileButton>
         <FileButton accept="application/pdf,.pdf" disabled={busy} onFiles={go}>
           <Icon name="file" />
-          Document PDF
+          {t('pdf')}
         </FileButton>
       </div>
       <UploadStatus machineId={machine.id} />
 
       {visual.length ? (
         <section>
-          <h3>Photos et vidéos · {visual.length}</h3>
+          <h3>{t('gallery', { count: String(visual.length) })}</h3>
           <ul className="gallery g-gallery">
-            {visual.map((m) => (
-              <li key={m.id}>
-                <button
-                  type="button"
-                  className={`shot${flash === m.id ? ' g-flash' : ''}`}
-                  onClick={() => openLightbox(machine.id, m.id)}
-                  aria-label={`Agrandir ${m.kind === 'video' ? 'la vidéo' : 'la photo'} du ${dateCH(m.taken_at)}${m.caption ? ` : ${m.caption}` : ''}`}
-                >
-                  <MediaPreview item={m} />
-                  <span className="badge">
-                    {m.kind === 'video' ? (
-                      <>
-                        <Icon name="video" className="g-badge-icon" /> {dateCH(m.taken_at)}
-                      </>
-                    ) : (
-                      dateCH(m.taken_at)
-                    )}
-                  </span>
-                </button>
-              </li>
-            ))}
+            {visual.map((m) => {
+              const open = m.kind === 'video' ? t('openVideo', { date: f.date(m.taken_at) }) : t('openPhoto', { date: f.date(m.taken_at) });
+              return (
+                <li key={m.id}>
+                  <button
+                    type="button"
+                    className={`shot${flash === m.id ? ' g-flash' : ''}`}
+                    onClick={() => openLightbox(machine.id, m.id)}
+                    aria-label={m.caption ? t('withCaption', { label: open, caption: m.caption }) : open}
+                  >
+                    <MediaPreview item={m} />
+                    <span className="badge">
+                      {m.kind === 'video' ? (
+                        <>
+                          <Icon name="video" className="g-badge-icon" /> {f.date(m.taken_at)}
+                        </>
+                      ) : (
+                        f.date(m.taken_at)
+                      )}
+                    </span>
+                  </button>
+                </li>
+              );
+            })}
           </ul>
         </section>
       ) : null}
 
       {docs.length ? (
         <section>
-          <h3>Documents · {docs.length}</h3>
+          <h3>{t('docs', { count: String(docs.length) })}</h3>
           <ul className="g-docs">
             {docs.map((d) => (
               <li key={d.id}>
@@ -175,10 +182,10 @@ export function MediaTab({ machine, file }: { machine: Machine; file: MachineFil
                     <Icon name="file" />
                   </span>
                   <span className="g-doc-main">
-                    <b>{d.caption || 'Document PDF'}</b>
+                    <b>{d.caption || t('pdf')}</b>
                     <span>
-                      {dateCH(d.taken_at)}
-                      {d.size_bytes != null ? ` · ${fileSize(d.size_bytes)}` : ''}
+                      {f.date(d.taken_at)}
+                      {d.size_bytes != null ? ` · ${f.fileSize(d.size_bytes)}` : ''}
                     </span>
                   </span>
                   <Icon name="chevron-right" />
@@ -191,14 +198,11 @@ export function MediaTab({ machine, file }: { machine: Machine; file: MachineFil
 
       {!file.media.length ? (
         <div className="empty">
-          <b>Aucun média pour cette machine</b>
-          <span>
-            Photographiez la machine, un dégât ou une plaque signalétique, filmez un bruit suspect, ou joignez une facture en PDF. Les
-            photos lourdes sont allégées avant l’envoi.
-          </span>
+          <b>{t('emptyTitle')}</b>
+          <span>{t('emptyText')}</span>
         </div>
       ) : (
-        <p className="g-note">Photos allégées avant l’envoi · vidéos et documents jusqu’à 50 Mo.</p>
+        <p className="g-note">{t('note')}</p>
       )}
     </div>
   );

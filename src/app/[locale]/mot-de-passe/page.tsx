@@ -1,16 +1,24 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
 import { Icon } from '@/components/Icons';
 import { NouveauMotDePasseForm } from '@/components/site/NouveauMotDePasseForm';
+import { checkLocale, metaLocale, NO_INDEX, type LocaleParams } from '@/components/site/seo';
 import { AuthShell } from '@/components/site/SiteChrome';
+import { pickMessages, type AppMessages } from '@/i18n/messages';
+import { Link } from '@/i18n/navigation';
 import { supabaseServer } from '@/lib/supabase/server';
 
-export const metadata: Metadata = {
-  title: 'Nouveau mot de passe',
-  robots: { index: false, follow: false },
-};
+export async function generateMetadata({ params }: { params: LocaleParams }): Promise<Metadata> {
+  const locale = metaLocale((await params).locale);
+  const t = await getTranslations({ locale, namespace: 'auth.meta' });
+  return { title: t('passwordTitle'), robots: NO_INDEX };
+}
 
-export default async function MotDePassePage() {
+export default async function MotDePassePage({ params }: { params: LocaleParams }) {
+  const locale = checkLocale((await params).locale);
+  setRequestLocale(locale);
+  const t = await getTranslations({ locale, namespace: 'auth.password' });
   const supabase = await supabaseServer();
   const { data } = await supabase.auth.getUser();
   const user = data.user;
@@ -22,23 +30,22 @@ export default async function MotDePassePage() {
           <Icon name="clock" />
         </span>
         <div className="s-auth-head">
-          <h1>Ce lien a expiré</h1>
-          <p>
-            Pour choisir un nouveau mot de passe, ouvrez le lien reçu par e-mail sur cet appareil. S’il ne
-            fonctionne plus, demandez-en un nouveau depuis la page de connexion, avec «&nbsp;Mot de passe
-            oublié&nbsp;?&nbsp;».
-          </p>
+          <h1>{t('expiredTitle')}</h1>
+          <p>{t('expiredText')}</p>
         </div>
         <Link href="/connexion" className="btn btn-primary btn-block">
-          Aller à la connexion
+          {t('goToLogin')}
         </Link>
       </AuthShell>
     );
   }
 
+  const messages = (await getMessages({ locale })) as unknown as AppMessages;
   return (
     <AuthShell>
-      <NouveauMotDePasseForm email={user.email ?? ''} />
+      <NextIntlClientProvider locale={locale} messages={pickMessages(messages, ['common', 'auth'])}>
+        <NouveauMotDePasseForm email={user.email ?? ''} />
+      </NextIntlClientProvider>
     </AuthShell>
   );
 }

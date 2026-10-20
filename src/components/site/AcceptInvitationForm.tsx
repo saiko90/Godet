@@ -8,8 +8,8 @@ import type { MessageState } from './types';
 
 const INITIAL: MessageState = { message: null };
 
-/** Bouton « Rejoindre l'entreprise » (la personne est connectée avec la bonne adresse). */
-export function AcceptInvitationForm({ token, orgName }: { token: string; orgName: string }) {
+/** Bouton « Rejoindre l'entreprise » (la personne est connectée avec la bonne adresse). Libellés traduits par la page. */
+export function AcceptInvitationForm({ token, label, pendingLabel }: { token: string; label: string; pendingLabel: string }) {
   const [state, action, pending] = useActionState(accepterInvitation, INITIAL);
   return (
     <form action={action} className="s-form">
@@ -21,7 +21,7 @@ export function AcceptInvitationForm({ token, orgName }: { token: string; orgNam
       ) : null}
       <button type="submit" className="btn btn-primary btn-block" disabled={pending} aria-busy={pending}>
         <Icon name="garage" />
-        {pending ? 'Ouverture du garage…' : `Rejoindre ${orgName}`}
+        {pending ? pendingLabel : label}
       </button>
     </form>
   );

@@ -1,13 +1,14 @@
 'use client';
 
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useLocale, useTranslations } from 'next-intl';
 import { useEffect, useId, useRef, useState } from 'react';
 import { Icon } from '@/components/Icons';
+import { Link, useRouter } from '@/i18n/navigation';
+import type { AppLocale } from '@/i18n/routing';
 import { supabaseBrowser } from '@/lib/supabase/client';
-import { authMessage } from './auth-errors';
+import { authErrorKey, type AuthErrorKey } from './auth-errors';
 import { Alert, FieldError } from './Form';
-import { looksLikeEmail } from './nav';
+import { localizePath, looksLikeEmail, splitLocale } from './nav';
 import { PasswordInput } from './PasswordInput';
 
 type Mode = 'connexion' | 'inscription';
@@ -17,22 +18,25 @@ type Errors = Partial<Record<Field, string>>;
 
 interface Props {
   initialMode: Mode;
-  /** Chemin interne où aller après la connexion (déjà vérifié côté serveur), ou '' pour le chemin par défaut. */
+  /** Chemin interne (localisé, déjà vérifié côté serveur) où aller après la connexion, ou '' pour le chemin par défaut. */
   suite: string;
   /** Arrivée depuis un lien d'e-mail invalide (/connexion?erreur=lien). */
   linkError: boolean;
   initialEmail: string;
+  /** Code de suivi d'un lien d'agent (cookie « godet-ref »), transmis à l'inscription. */
+  refCode: string | null;
 }
 
-const NB = '\u00a0';
 const RESEND_DELAY = 60;
 
-/** Adresse de retour des e-mails de Supabase (confirmation, mot de passe oublié). */
+/** Adresse de retour des e-mails de Supabase (confirmation, mot de passe oublié), vers un chemin localisé. */
 function callbackUrl(next: string): string {
   return `${window.location.origin}/auth/callback?suite=${encodeURIComponent(next)}`;
 }
 
-export function ConnexionForm({ initialMode, suite, linkError, initialEmail }: Props) {
+export function ConnexionForm({ initialMode, suite, linkError, initialEmail, refCode }: Props) {
+  const t = useTranslations('auth');
+  const locale = useLocale() as AppLocale;
   const router = useRouter();
   const uid = useId();
   const ids = {
@@ -63,8 +67,14 @@ export function ConnexionForm({ initialMode, suite, linkError, initialEmail }: P
   const shownView = useRef<View>(initialMode);
   const focusHeading = useRef(true);
 
-  const forInvitation = suite.startsWith('/invitation/');
-  const afterSignup = suite || '/bienvenue';
+  // La suite prévue garde sa langue ; un chemin sans préfixe suit la langue de la page.
+  const planned = suite ? splitLocale(suite) : null;
+  const forInvitation = Boolean(planned?.path.startsWith('/invitation/'));
+  const afterLogin = planned ? { locale: planned.locale ?? locale, path: planned.path } : { locale, path: '/garage' };
+  const afterSignup = planned ? afterLogin : { locale, path: '/bienvenue' };
+  const signupReturn = localizePath(afterSignup.path, afterSignup.locale);
+
+  const authError = (key: AuthErrorKey) => t(`errors.${key}`);
 
   // À chaque changement d'écran (pas au premier affichage, ni entre les onglets), le titre reçoit le focus.
   useEffect(() => {
@@ -76,8 +86,8 @@ export function ConnexionForm({ initialMode, suite, linkError, initialEmail }: P
   // Délai avant de pouvoir renvoyer un e-mail (limite d'envoi de Supabase).
   useEffect(() => {
     if (cooldown <= 0) return;
-    const t = window.setTimeout(() => setCooldown((c) => c - 1), 1000);
-    return () => window.clearTimeout(t);
+    const timer = window.setTimeout(() => setCooldown((c) => c - 1), 1000);
+    return () => window.clearTimeout(timer);
   }, [cooldown]);
 
   function resetMessages() {
@@ -95,7 +105,7 @@ export function ConnexionForm({ initialMode, suite, linkError, initialEmail }: P
       const url = new URL(window.location.href);
       if (next === 'inscription') url.searchParams.set('mode', 'inscription');
       else url.searchParams.delete('mode');
-      window.history.replaceState(null, '', url);
+      window.history.replaceState(window.history.state, '', url);
     }
   }
 
@@ -112,17 +122,17 @@ export function ConnexionForm({ initialMode, suite, linkError, initialEmail }: P
     const e: Errors = {};
     if (fields.includes('name')) {
       const n = name.trim();
-      if (n.length < 2) e.name = 'Indiquez votre nom complet.';
-      else if (n.length > 80) e.name = `80${NB}caractères au maximum.`;
+      if (n.length < 2) e.name = t('validation.nameRequired');
+      else if (n.length > 80) e.name = t('validation.nameTooLong');
     }
     if (fields.includes('email')) {
       const m = email.trim();
-      if (!m) e.email = 'Indiquez votre adresse e-mail.';
-      else if (!looksLikeEmail(m)) e.email = `Adresse incomplète. Exemple${NB}: nom@entreprise.ch`;
+      if (!m) e.email = t('validation.emailRequired');
+      else if (!looksLikeEmail(m)) e.email = t('validation.emailInvalid');
     }
     if (fields.includes('password')) {
-      if (!password) e.password = strictPassword ? 'Choisissez un mot de passe.' : 'Indiquez votre mot de passe.';
-      else if (strictPassword && password.length < 8) e.password = `Mot de passe trop court${NB}: 8${NB}caractères au minimum.`;
+      if (!password) e.password = strictPassword ? t('validation.passwordChoose') : t('validation.passwordRequired');
+      else if (strictPassword && password.length < 8) e.password = t('validation.passwordTooShort');
     }
     return e;
   }
@@ -147,12 +157,12 @@ export function ConnexionForm({ initialMode, suite, linkError, initialEmail }: P
     const { error } = await supabaseBrowser().auth.signInWithPassword({ email: email.trim(), password });
     if (error) {
       setPending(false);
-      setFormError(authMessage(error));
+      setFormError(authError(authErrorKey(error)));
       setUnconfirmed(error.code === 'email_not_confirmed');
       return;
     }
     setShowLinkError(false);
-    router.replace(suite || '/garage');
+    router.replace(afterLogin.path, { locale: afterLogin.locale });
   }
 
   async function onSignUp(ev: React.FormEvent<HTMLFormElement>) {
@@ -164,21 +174,25 @@ export function ConnexionForm({ initialMode, suite, linkError, initialEmail }: P
     const { data, error } = await supabaseBrowser().auth.signUp({
       email: email.trim(),
       password,
-      options: { data: { full_name: name.trim() }, emailRedirectTo: callbackUrl(afterSignup) },
+      options: {
+        // Langue des e-mails et code de suivi d'un lien d'agent (repris dans le profil par la base).
+        data: { full_name: name.trim(), locale, ...(refCode ? { ref: refCode } : {}) },
+        emailRedirectTo: callbackUrl(signupReturn),
+      },
     });
     if (error) {
       setPending(false);
-      setFormError(authMessage(error));
+      setFormError(authError(authErrorKey(error)));
       return;
     }
     // Adresse déjà inscrite et confirmée : Supabase renvoie un utilisateur sans identité.
     if (data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) {
       setPending(false);
-      setFormError(authMessage({ code: 'user_already_exists' }));
+      setFormError(authError('userExists'));
       return;
     }
     if (data.session) {
-      router.replace(afterSignup);
+      router.replace(afterSignup.path, { locale: afterSignup.locale });
       return;
     }
     setPending(false);
@@ -188,20 +202,26 @@ export function ConnexionForm({ initialMode, suite, linkError, initialEmail }: P
     setView('verifier');
   }
 
+  async function sendResetLink(): Promise<boolean> {
+    const { error } = await supabaseBrowser().auth.resetPasswordForEmail(email.trim(), {
+      redirectTo: callbackUrl(localizePath('/mot-de-passe', locale)),
+    });
+    if (error) {
+      setFormError(authError(authErrorKey(error)));
+      return false;
+    }
+    return true;
+  }
+
   async function onReset(ev: React.FormEvent<HTMLFormElement>) {
     ev.preventDefault();
     if (pending) return;
     resetMessages();
     if (!check(['email'], false)) return;
     setPending(true);
-    const { error } = await supabaseBrowser().auth.resetPasswordForEmail(email.trim(), {
-      redirectTo: callbackUrl('/mot-de-passe'),
-    });
+    const ok = await sendResetLink();
     setPending(false);
-    if (error) {
-      setFormError(authMessage(error));
-      return;
-    }
+    if (!ok) return;
     setShowLinkError(false);
     setCooldown(RESEND_DELAY);
     focusHeading.current = true;
@@ -216,14 +236,14 @@ export function ConnexionForm({ initialMode, suite, linkError, initialEmail }: P
     const { error } = await supabaseBrowser().auth.resend({
       type: 'signup',
       email: email.trim(),
-      options: { emailRedirectTo: callbackUrl(afterSignup) },
+      options: { emailRedirectTo: callbackUrl(signupReturn) },
     });
     setPending(false);
     if (error) {
-      setFormError(authMessage(error));
+      setFormError(authError(authErrorKey(error)));
       return;
     }
-    setNotice('Un nouvel e-mail de confirmation vient de partir.');
+    setNotice(t('check.confirmationResent'));
     setCooldown(RESEND_DELAY);
   }
 
@@ -232,15 +252,10 @@ export function ConnexionForm({ initialMode, suite, linkError, initialEmail }: P
     setFormError(null);
     setNotice(null);
     setPending(true);
-    const { error } = await supabaseBrowser().auth.resetPasswordForEmail(email.trim(), {
-      redirectTo: callbackUrl('/mot-de-passe'),
-    });
+    const ok = await sendResetLink();
     setPending(false);
-    if (error) {
-      setFormError(authMessage(error));
-      return;
-    }
-    setNotice('Un nouveau lien vient de partir.');
+    if (!ok) return;
+    setNotice(t('check.linkResent'));
     setCooldown(RESEND_DELAY);
   }
 
@@ -261,7 +276,7 @@ export function ConnexionForm({ initialMode, suite, linkError, initialEmail }: P
 
   const emailField = (autoComplete: 'username' | 'email') => (
     <div className="field">
-      <label htmlFor={ids.email}>Adresse e-mail</label>
+      <label htmlFor={ids.email}>{t('fields.email')}</label>
       <input
         id={ids.email}
         name="email"
@@ -283,7 +298,8 @@ export function ConnexionForm({ initialMode, suite, linkError, initialEmail }: P
     </div>
   );
 
-  const cooldownLabel = cooldown > 0 ? ` (${cooldown}${NB}s)` : '';
+  const cooldownLabel = cooldown > 0 ? ` ${t('login.cooldown', { seconds: cooldown })}` : '';
+  const bold = (chunks: React.ReactNode) => <b>{chunks}</b>;
 
   // ---------- écrans « vérifiez votre boîte e-mail » ----------
   if (view === 'verifier' || view === 'oubli-envoye') {
@@ -295,20 +311,10 @@ export function ConnexionForm({ initialMode, suite, linkError, initialEmail }: P
         </span>
         <div className="s-auth-head">
           <h1 ref={headingRef} tabIndex={-1}>
-            Vérifiez votre boîte e-mail
+            {t('check.title')}
           </h1>
-          {signup ? (
-            <p>
-              Nous avons envoyé un lien de confirmation à <b>{email.trim()}</b>. Ouvrez-le sur cet appareil pour
-              activer votre garage.
-            </p>
-          ) : (
-            <p>
-              Si un compte existe pour <b>{email.trim()}</b>, un lien vient de partir. Ouvrez-le sur cet appareil
-              pour choisir un nouveau mot de passe.
-            </p>
-          )}
-          <p>Rien reçu après quelques minutes&nbsp;? Regardez dans les courriers indésirables.</p>
+          <p>{t.rich(signup ? 'check.signupSent' : 'check.resetSent', { email: email.trim(), b: bold })}</p>
+          <p>{t('check.spam')}</p>
         </div>
         {messages}
         <div className="s-form-actions">
@@ -319,11 +325,11 @@ export function ConnexionForm({ initialMode, suite, linkError, initialEmail }: P
             disabled={pending || cooldown > 0}
           >
             <Icon name="mail" />
-            {signup ? 'Renvoyer l’e-mail' : 'Renvoyer le lien'}
+            {signup ? t('check.resendEmail') : t('check.resendLink')}
             {cooldownLabel}
           </button>
           <button type="button" className="btn btn-ghost btn-block" onClick={() => go(signup ? 'inscription' : 'connexion')}>
-            {signup ? 'Modifier l’adresse' : 'Retour à la connexion'}
+            {signup ? t('check.changeEmail') : t('check.backToLogin')}
           </button>
         </div>
       </>
@@ -336,20 +342,20 @@ export function ConnexionForm({ initialMode, suite, linkError, initialEmail }: P
       <>
         <div className="s-auth-head">
           <h1 ref={headingRef} tabIndex={-1}>
-            Mot de passe oublié
+            {t('forgot.title')}
           </h1>
-          <p>Indiquez votre adresse e-mail. Nous vous envoyons un lien pour choisir un nouveau mot de passe.</p>
+          <p>{t('forgot.lead')}</p>
         </div>
         {messages}
         <form className="s-form" onSubmit={onReset} noValidate>
           {emailField('email')}
           <div className="s-form-actions">
             <button type="submit" className="btn btn-primary btn-block" disabled={pending} aria-busy={pending}>
-              {pending ? 'Envoi…' : 'Envoyer le lien'}
+              {pending ? t('forgot.pending') : t('forgot.submit')}
             </button>
             <button type="button" className="btn btn-ghost btn-block" onClick={() => go('connexion')}>
               <Icon name="chevron-left" />
-              Retour à la connexion
+              {t('forgot.back')}
             </button>
           </div>
         </form>
@@ -361,7 +367,7 @@ export function ConnexionForm({ initialMode, suite, linkError, initialEmail }: P
   const signup = view === 'inscription';
   return (
     <>
-      <div className="s-tabs" role="tablist" aria-label="Accès au compte" onKeyDown={onTabKey}>
+      <div className="s-tabs" role="tablist" aria-label={t('login.tabs')} onKeyDown={onTabKey}>
         <button
           type="button"
           role="tab"
@@ -372,7 +378,7 @@ export function ConnexionForm({ initialMode, suite, linkError, initialEmail }: P
           tabIndex={signup ? -1 : 0}
           onClick={() => go('connexion', false)}
         >
-          Connexion
+          {t('login.tabLogin')}
         </button>
         <button
           type="button"
@@ -384,37 +390,27 @@ export function ConnexionForm({ initialMode, suite, linkError, initialEmail }: P
           tabIndex={signup ? 0 : -1}
           onClick={() => go('inscription', false)}
         >
-          Inscription
+          {t('login.tabSignup')}
         </button>
       </div>
 
       <div id={ids.panel} role="tabpanel" aria-labelledby={signup ? ids.tabSignup : ids.tabLogin} className="s-form">
         <div className="s-auth-head">
           <h1 ref={headingRef} tabIndex={-1}>
-            {signup ? 'Créer votre garage' : 'Bon retour au garage'}
+            {signup ? t('login.signupTitle') : t('login.loginTitle')}
           </h1>
-          <p>
-            {signup
-              ? 'Essai gratuit de 30 jours, sans carte de crédit.'
-              : 'Connectez-vous pour retrouver votre parc d’engins.'}
-          </p>
+          <p>{signup ? t('login.signupLead') : t('login.loginLead')}</p>
         </div>
 
         {forInvitation ? (
           <Alert tone="info" icon="users">
-            <p>
-              {signup ? 'Créez votre compte' : 'Connectez-vous'} avec l’adresse qui a reçu l’invitation. Vous
-              reviendrez ensuite sur l’invitation pour la confirmer.
-            </p>
+            <p>{signup ? t('login.invitationSignup') : t('login.invitationLogin')}</p>
           </Alert>
         ) : null}
 
         {showLinkError ? (
           <Alert tone="warn">
-            <p>
-              <b>Ce lien n’est plus valable.</b> Il a peut-être déjà servi, expiré, ou été ouvert dans un autre
-              navigateur. Connectez-vous, ou demandez un nouveau lien.
-            </p>
+            <p>{t.rich('login.linkError', { b: bold })}</p>
           </Alert>
         ) : null}
 
@@ -428,14 +424,15 @@ export function ConnexionForm({ initialMode, suite, linkError, initialEmail }: P
             disabled={pending || cooldown > 0}
           >
             <Icon name="mail" />
-            Renvoyer l’e-mail de confirmation{cooldownLabel}
+            {t('login.resendConfirmation')}
+            {cooldownLabel}
           </button>
         ) : null}
 
         <form className="s-form" onSubmit={signup ? onSignUp : onSignIn} noValidate>
           {signup ? (
             <div className="field">
-              <label htmlFor={ids.name}>Nom complet</label>
+              <label htmlFor={ids.name}>{t('fields.name')}</label>
               <input
                 id={ids.name}
                 name="name"
@@ -458,15 +455,16 @@ export function ConnexionForm({ initialMode, suite, linkError, initialEmail }: P
 
           <div className="field">
             <div className="s-label-row">
-              <label htmlFor={ids.password}>Mot de passe</label>
+              <label htmlFor={ids.password}>{t('fields.password')}</label>
               {!signup ? (
                 <button type="button" className="s-linkbtn" onClick={() => go('oubli')}>
-                  Mot de passe oublié&nbsp;?
+                  {t('login.forgot')}
                 </button>
               ) : null}
             </div>
             <PasswordInput
               id={ids.password}
+              showLabel={t('fields.showPassword')}
               name="password"
               autoComplete={signup ? 'new-password' : 'current-password'}
               value={password}
@@ -481,31 +479,39 @@ export function ConnexionForm({ initialMode, suite, linkError, initialEmail }: P
             />
             {signup ? (
               <p id={ids.passwordHint} className="s-field-hint">
-                8&nbsp;caractères au minimum.
+                {t('fields.passwordHint')}
               </p>
             ) : null}
             <FieldError id={ids.passwordErr} message={errors.password} />
           </div>
 
           <button type="submit" className="btn btn-primary btn-block" disabled={pending} aria-busy={pending}>
-            {pending ? (signup ? 'Création du compte…' : 'Connexion…') : signup ? 'Créer mon garage' : 'Se connecter'}
+            {pending
+              ? signup
+                ? t('login.pendingSignup')
+                : t('login.pendingLogin')
+              : signup
+                ? t('login.submitSignup')
+                : t('login.submitLogin')}
           </button>
 
           {signup ? (
             <p className="s-field-hint">
-              Vos données sont hébergées dans l’UE et traitées selon notre{' '}
-              <Link className="s-link" href="/confidentialite" target="_blank" rel="noopener">
-                politique de confidentialité
-              </Link>
-              .
+              {t.rich('login.privacy', {
+                link: (chunks) => (
+                  <Link className="s-link" href="/confidentialite" target="_blank" rel="noopener">
+                    {chunks}
+                  </Link>
+                ),
+              })}
             </p>
           ) : null}
         </form>
 
         <p className="s-auth-alt">
-          {signup ? 'Déjà un compte\u00a0? ' : 'Pas encore de compte\u00a0? '}
+          {signup ? t('login.hasAccount') : t('login.noAccount')}{' '}
           <button type="button" className="s-linkbtn" onClick={() => go(signup ? 'connexion' : 'inscription')}>
-            {signup ? 'Se connecter' : 'Créer mon garage'}
+            {signup ? t('login.switchLogin') : t('login.switchSignup')}
           </button>
         </p>
       </div>

@@ -1,9 +1,10 @@
 'use client';
 
 // Briques d'interface du garage : modale accessible (focus piégé et rendu), menu déroulant, notification.
-import Link from 'next/link';
-import { useEffect, useId, useRef, useState, type FormEvent, type KeyboardEvent, type ReactNode } from 'react';
+import { useTranslations } from 'next-intl';
+import { useEffect, useId, useRef, useState, type FocusEvent, type FormEvent, type KeyboardEvent, type ReactNode } from 'react';
 import { Icon, type IconName } from '@/components/Icons';
+import { Link } from '@/i18n/navigation';
 
 const FOCUSABLE =
   'a[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
@@ -134,11 +135,16 @@ export type MenuEntry =
     }
   | { key: string; heading: string; sub?: string };
 
-/** Bouton qui ouvre un menu (flèches haut/bas, Échap, clic à l'extérieur). */
+/**
+ * Bouton qui ouvre un menu (flèches haut/bas, Échap, clic à l'extérieur).
+ * `footer` : réglages posés sous les entrées du menu (choix de la langue) ; la tabulation y mène, et le menu se
+ * ferme quand le focus quitte l'ensemble.
+ */
 export function Menu({
   label,
   icon = 'menu',
   items,
+  footer,
   className,
   buttonClassName = 'icon-btn',
   showLabel = false,
@@ -146,10 +152,12 @@ export function Menu({
   label: string;
   icon?: IconName;
   items: MenuEntry[];
+  footer?: ReactNode;
   className?: string;
   buttonClassName?: string;
   showLabel?: boolean;
 }) {
+  const t = useTranslations('garage.menu');
   const [open, setOpen] = useState(false);
   const id = useId();
   const wrap = useRef<HTMLDivElement>(null);
@@ -184,14 +192,21 @@ export function Menu({
       e.preventDefault();
       items[e.key === 'Home' ? 0 : items.length - 1]?.focus();
     } else if (e.key === 'Tab') {
-      setOpen(false);
+      // Avec des réglages sous le menu, la tabulation y mène ; le menu se ferme quand le focus sort (onBlur).
+      if (!footer) setOpen(false);
     } else if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
       e.stopPropagation();
     }
   }
 
+  function onBlur(e: FocusEvent<HTMLDivElement>) {
+    if (!open || !footer) return;
+    const next = e.relatedTarget instanceof Node ? e.relatedTarget : null;
+    if (!next || !wrap.current?.contains(next)) setOpen(false);
+  }
+
   return (
-    <div className={`g-menu${className ? ` ${className}` : ''}`} ref={wrap} onKeyDown={onKeyDown} data-own-arrows="">
+    <div className={`g-menu${className ? ` ${className}` : ''}`} ref={wrap} onKeyDown={onKeyDown} onBlur={onBlur} data-own-arrows="">
       <button
         ref={button}
         type="button"
@@ -206,7 +221,8 @@ export function Menu({
         {showLabel ? <span className="lbl">{label}</span> : null}
       </button>
       {open ? (
-        <div className="g-menu-list" role="menu" id={id} aria-label={label}>
+        <div className="g-menu-list">
+          <div className="g-menu-items" role="menu" id={id} aria-label={label}>
           {items.map((it) => {
             if ('heading' in it) {
               return (
@@ -235,7 +251,7 @@ export function Menu({
                 onClick={() => setOpen(false)}
               >
                 {content}
-                {it.newTab ? <span className="g-sr"> (nouvel onglet)</span> : null}
+                {it.newTab ? <span className="g-sr"> {t('newTab')}</span> : null}
               </Link>
             ) : (
               <button
@@ -255,6 +271,8 @@ export function Menu({
               </button>
             );
           })}
+          </div>
+          {footer ? <div className="g-menu-foot">{footer}</div> : null}
         </div>
       ) : null}
     </div>

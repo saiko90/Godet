@@ -6,8 +6,8 @@ export type ActionResult = { ok: true; message: string } | { ok: false; message:
 
 /** État du formulaire de création de l'entreprise (/bienvenue). */
 export interface BienvenueState {
-  values: { nom: string; canton: string; demo: boolean };
-  errors: { nom?: string; canton?: string };
+  values: { nom: string; country: string; canton: string; demo: boolean };
+  errors: { nom?: string; country?: string; canton?: string };
   message: string | null;
 }
 
@@ -42,9 +42,11 @@ export interface InviteState extends FormState {
   invitation: PendingInvitation | null;
   /** L'invitation existait déjà (on renvoie son lien). */
   existing: boolean;
+  /** L'e-mail d'invitation est parti (sinon : lien à transmettre soi-même). */
+  emailed: boolean;
 }
 
-export const EMPTY_INVITE: InviteState = { ...EMPTY_FORM, invitation: null, existing: false };
+export const EMPTY_INVITE: InviteState = { ...EMPTY_FORM, invitation: null, existing: false, emailed: false };
 
 /** Machine archivée, telle qu'affichée dans les paramètres. */
 export interface ArchivedMachine {
@@ -61,3 +63,16 @@ export interface ArchivedMachine {
 export interface MessageState {
   message: string | null;
 }
+
+/** Envoi d'un formulaire public (contact, boîte à idées) : erreurs par champ, message général, succès. */
+export interface PublicFormState {
+  status: 'idle' | 'error' | 'sent';
+  message: string | null;
+  errors: Record<string, string>;
+  /** Saisie renvoyée après un refus (React vide le formulaire après l'envoi). */
+  values: Record<string, string>;
+  /** Incrémenté à chaque envoi réussi. */
+  sent: number;
+}
+
+export const EMPTY_PUBLIC_FORM: PublicFormState = { status: 'idle', message: null, errors: {}, values: {}, sent: 0 };

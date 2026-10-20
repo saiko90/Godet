@@ -3,28 +3,31 @@
 // Le garage : showroom 3D, barre du haut, dock, fiche machine, modales, mode atelier.
 // Mêmes composants pour /garage (dépôt Supabase) et /demo (dépôt en mémoire) : seul `makeRepo` change.
 import './garage.css';
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { useEffect, useEffectEvent, useMemo, useRef, useState } from 'react';
 import { Icon } from '@/components/Icons';
 import { Loader } from '@/components/Loader';
-import { can, costTotals, machineHealth, machineTitle, type MachineHealth } from '@/lib/domain';
+import { Link } from '@/i18n/navigation';
+import { can, costTotals, machineHealth, type MachineHealth } from '@/lib/domain';
 import { todayISO } from '@/lib/format';
 import { prepareUpload, UploadRejected, type UploadProgressOptions } from '@/lib/media';
 import type { GarageRepo } from '@/lib/repo/types';
 import type { FleetSnapshot, MachineFile, MediaItem } from '@/lib/types';
+import { useDomainText } from '@/lib/use-domain-text';
 import type { Showroom, ShowroomEffect, ShowroomMachine } from '@/engine/types';
 import { Atelier } from './Atelier';
 import { GarageContext, type GarageApi, type ModalSpec, type UploadOutcome, type UploadProgress } from './context';
 import { Dock } from './Dock';
 import { EntryModal } from './EntryModal';
-import { canDeleteMedia, errorText, type SheetTab } from './helpers';
+import { useErrorText } from './errors';
+import { canDeleteMedia, type SheetTab } from './helpers';
 import { Lightbox } from './Lightbox';
 import { ArchiveModal, DeleteScheduleModal, HoursModal, MachineModal, RemoveEntryModal, ScheduleModal } from './Modals';
 import { setPref, useMedia, usePageHidden, usePrefs, type QualityPref } from './prefs';
 import { Sheet } from './Sheet';
-import { QUALITY_LABEL, Topbar } from './Topbar';
+import { Topbar } from './Topbar';
 import { Toast } from './ui';
-import { useShowroom } from './useShowroom';
+import { useShowroom, type ShowroomTexts } from './useShowroom';
 import { Welcome } from './Welcome';
 
 export interface GarageAppProps {
@@ -51,6 +54,10 @@ function takenAt(file: File): string | undefined {
 }
 
 export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachineId, person, onSignOut }: GarageAppProps) {
+  const t = useTranslations('garage');
+  const tc = useTranslations('common');
+  const dt = useDomainText();
+  const errorText = useErrorText();
   const repoRef = useRef<GarageRepo | null>(null);
   const getRepo = () => {
     if (!repoRef.current) repoRef.current = makeRepo();
@@ -113,13 +120,24 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
           code: m.code,
           kind: m.kind,
           color: m.color,
-          label: machineTitle(m),
+          label: dt.machineTitle(m),
           state: h?.state ?? 'ok',
           alerts: h?.alerts ?? 0,
           weightT: m.weight_t != null ? Number(m.weight_t) : null,
         };
       }),
-    [fleet, health],
+    [fleet, health, dt],
+  );
+
+  const engineTexts = useMemo<ShowroomTexts>(
+    () => ({
+      canvas: t('engine.canvas'),
+      signageSub: t('engine.signage'),
+      signageFallback: t('engine.signageFallback'),
+      alertOne: t('engine.alertOne'),
+      alertOther: t('engine.alertOther'),
+    }),
+    [t],
   );
 
   const alerts = useMemo(() => [...health.values()].reduce((s, h) => s + h.alerts, 0), [health]);
@@ -163,6 +181,7 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
     sound: prefs.sound,
     reducedMotion,
     paused: atelierRequested || hidden,
+    texts: engineTexts,
     handlers: {
       onSelect: (id) => {
         if (modal || lightbox) return;
@@ -181,10 +200,10 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
       },
       onHover: () => {},
       onQualityChange: () => {
-        if (prefs.quality === 'auto') showToast('Qualité de la 3D ajustée pour garder l’affichage fluide');
+        if (prefs.quality === 'auto') showToast(t('app.qualityAdjusted'));
       },
       onContextLost: () => {
-        showToast('La 3D s’est arrêtée : vous passez en mode atelier.', 'error');
+        showToast(t('app.contextLost'), 'error');
       },
     },
   });
@@ -318,6 +337,7 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
   // ------------------------------------------------------------------ chargement des données
 
   // Démo : le parc d'exemple est créé dans le navigateur.
+  const onLoadError = useEffectEvent((e: unknown) => setLoadError(errorText(e, 'loadFleet')));
   useEffect(() => {
     if (initialFleet) return;
     let alive = true;
@@ -327,7 +347,7 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
         if (alive) setFleet(f);
       })
       .catch((e: unknown) => {
-        if (alive) setLoadError(errorText(e, 'Le parc n’a pas pu être chargé.'));
+        if (alive) onLoadError(e);
       });
     return () => {
       alive = false;
@@ -340,7 +360,7 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
       setFiles((prev) => ({ ...prev, [machineId]: f }));
       setFileErrors((prev) => ({ ...prev, [machineId]: undefined }));
     } catch (e) {
-      setFileErrors((prev) => ({ ...prev, [machineId]: errorText(e, 'Vérifiez la connexion, puis réessayez.') }));
+      setFileErrors((prev) => ({ ...prev, [machineId]: errorText(e, 'checkConnection') }));
     }
   }
 
@@ -354,7 +374,7 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
       setFiles((prev) => ({ ...prev, [machineId]: file }));
     }
     if (fl.status === 'fulfilled') setFleet(fl.value);
-    else showToast(errorText(fl.reason, 'Les données n’ont pas pu être actualisées.'), 'error');
+    else showToast(errorText(fl.reason, 'refresh'), 'error');
   }
 
   // Retour sur l'onglet après une longue absence : liens des photos et données rafraîchis.
@@ -432,7 +452,7 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
     if (fleet.machines.some((m) => m.id === initialMachineId)) openSheet(initialMachineId);
     else {
       syncUrl(null);
-      showToast('Cette machine n’est plus dans le parc (archivée ou supprimée).', 'error');
+      showToast(t('app.machineGone'), 'error');
     }
   });
   const deepLinkDone = useRef(false);
@@ -454,14 +474,16 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
     opts?: { entryId?: string | null; caption?: string | null },
   ): Promise<UploadOutcome> {
     const out: UploadOutcome = { sent: 0, photos: 0, videos: 0, documents: 0, errors: [] };
+    const fallbackName = t('app.fileName');
     for (let i = 0; i < list.length; i++) {
       const f = list[i];
-      setUploads({ machineId, index: i, total: list.length, name: f.name || 'fichier', phase: 'prep', progress: 0 });
+      const name = f.name || fallbackName;
+      setUploads({ machineId, index: i, total: list.length, name, phase: 'prep', progress: 0 });
       let prepared;
       try {
-        prepared = await prepareUpload(f);
+        prepared = await prepareUpload(f, { fallbackName });
       } catch (e) {
-        out.errors.push(e instanceof UploadRejected ? e.message : `« ${f.name} » n’a pas pu être préparé sur cet appareil.`);
+        out.errors.push(e instanceof UploadRejected ? errorText(e, 'send') : t('app.prepareFailed', { name }));
         continue;
       }
       setUploads((u) => (u ? { ...u, phase: 'send', progress: 0 } : u));
@@ -481,7 +503,7 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
         else if (prepared.kind === 'video') out.videos += 1;
         else out.documents += 1;
       } catch (e) {
-        out.errors.push(`« ${f.name} » : ${errorText(e, 'l’envoi a échoué.')}`);
+        out.errors.push(t('app.sendFailed', { name, error: errorText(e, 'send') }));
       }
     }
     setUploads(null);
@@ -528,20 +550,20 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
         // Son indisponible.
       }
     }
-    showToast(next ? 'Son activé' : 'Son coupé');
+    showToast(next ? t('app.soundOn') : t('app.soundOff'));
   }
 
   function cycleQuality() {
     const next = QUALITY_ORDER[(QUALITY_ORDER.indexOf(prefs.quality) + 1) % QUALITY_ORDER.length];
     setPref('quality', next);
     effect('tick');
-    showToast(next === 'auto' ? 'Qualité automatique : la 3D s’adapte à l’appareil' : `${QUALITY_LABEL[next]} pour la 3D`);
+    showToast(next === 'auto' ? t('app.qualityAuto') : t('app.qualitySet', { quality: t(`quality.${next}`) }));
   }
 
   function toggleAtelier() {
     const next = !atelierShown;
     if (!next && engineFailed) {
-      showToast('La 3D n’est pas disponible sur cet appareil : le mode atelier reste affiché.');
+      showToast(t('app.atelierLocked'));
       return;
     }
     setAtelier(next);
@@ -637,16 +659,16 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
     <div className={rootClass}>
       {/* Tout ce qui est derrière une modale ou la visionneuse devient inerte (clavier, lecteurs d'écran). */}
       <div className="g-layer" inert={covered}>
-        <h1 className="g-sr">Godet · garage de {displayName}</h1>
+        <h1 className="g-sr">{t('app.srTitle', { org: displayName })}</h1>
         {mode === 'demo' ? (
           <div className="g-demo-strip" role="note">
             <span>
-              <b>Démo</b>
-              <span className="g-demo-long"> — données d’exemple, rien n’est enregistré.</span>
-              <span className="g-demo-short"> · rien n’est enregistré</span>
+              <b>{t('demoStrip.badge')}</b>
+              <span className="g-demo-long"> — {t('demoStrip.long')}</span>
+              <span className="g-demo-short"> · {t('demoStrip.short')}</span>
             </span>
             <Link href="/connexion?mode=inscription" className="g-demo-cta">
-              Créer mon garage
+              {t('demoStrip.cta')}
               <Icon name="chevron-right" />
             </Link>
           </div>
@@ -679,24 +701,18 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
             ) : null}
 
             {showDock && !sheetVisible && !selectedOnce ? (
-              <p className="hint g-hint-float">
-                {coarse ? 'Touchez une machine pour ouvrir sa fiche' : 'Cliquez sur une machine pour ouvrir sa fiche'}
-              </p>
+              <p className="hint g-hint-float">{coarse ? t('app.hintTouch') : t('app.hintClick')}</p>
             ) : null}
 
             {engineReady && !atelierShown && entered && dockReady && machines.length === 0 ? (
               <section className="g-empty-fleet" aria-labelledby="empty-fleet-t">
                 <p className="eyebrow">{displayName}</p>
-                <h2 id="empty-fleet-t">Le garage est vide</h2>
-                <p className="muted">
-                  {can.manageFleet(role)
-                    ? 'Ajoutez votre première machine : elle prendra place dans le hall, avec son carnet et ses échéances.'
-                    : 'Aucune machine pour l’instant. Un responsable du parc peut les ajouter.'}
-                </p>
+                <h2 id="empty-fleet-t">{t('app.emptyTitle')}</h2>
+                <p className="muted">{can.manageFleet(role) ? t('app.emptyManage') : t('app.emptyRead')}</p>
                 {can.manageFleet(role) ? (
                   <button type="button" className="btn btn-primary" onClick={() => setModal({ type: 'machine' })}>
                     <Icon name="plus" />
-                    Ajouter une machine
+                    {t('app.addMachine')}
                   </button>
                 ) : null}
               </section>
@@ -778,7 +794,7 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
                 if (rest.length) setLightbox({ machineId: lightbox.machineId, mediaId: rest[Math.min(i, rest.length - 1)].id });
                 else setLightbox(null);
                 await refresh(lightbox.machineId);
-                showToast('Fichier supprimé');
+                showToast(t('app.fileDeleted'));
               }}
             />
           ) : null}
@@ -788,17 +804,17 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
       {loadError ? (
         <div className="fallback g-fallback" role="alert">
           <div className="dialog">
-            <h2>Le garage n’a pas pu s’ouvrir</h2>
+            <h2>{t('error.title')}</h2>
             <p className="muted">{loadError}</p>
             <button type="button" className="btn btn-primary" onClick={() => window.location.reload()}>
-              Réessayer
+              {tc('actions.retry')}
             </button>
           </div>
         </div>
       ) : null}
 
       <Toast toast={toast} />
-      <Loader progress={engine.progress} label={engine.label} done={loaderDone || Boolean(loadError)} />
+      <Loader progress={engine.progress} label={t(`loader.${engine.step}`)} done={loaderDone || Boolean(loadError)} />
     </div>
   );
 }

@@ -2,15 +2,18 @@
 
 // Fiche machine : panneau à droite sur ordinateur, feuille du bas sur téléphone (poignée : réduite / agrandie,
 // glisser vers le bas pour fermer). En-tête, pastilles d'état, actions rapides, onglets.
+import { useTranslations } from 'next-intl';
 import { useEffect, useRef, type KeyboardEvent, type Ref } from 'react';
+import { useFormat } from '@/components/FormatProvider';
 import { Icon } from '@/components/Icons';
-import { can, isOpenRepair, REPAIR_STATUS } from '@/lib/domain';
-import { hrs } from '@/lib/format';
+import { can, isOpenRepair } from '@/lib/domain';
 import type { Machine } from '@/lib/types';
+import { useDomainText } from '@/lib/use-domain-text';
 import { useGarage } from './context';
-import { machineDetails, machineEyebrow, TABS, type SheetTab } from './helpers';
+import { TABS, type SheetTab } from './helpers';
 import { FileButton, MediaTab, UploadStatus, useSendFiles } from './MediaTab';
 import { CostsTab, LogbookTab, OverviewTab, PartsTab, RepairsTab, SchedulesTab, tabCounts } from './SheetTabs';
+import { useGarageText } from './text';
 import { Menu, type MenuEntry } from './ui';
 
 export function Sheet({
@@ -42,6 +45,11 @@ export function Sheet({
   onRetry: () => void;
   fileError: string | null;
 }) {
+  const t = useTranslations('garage');
+  const tc = useTranslations('common');
+  const f = useFormat();
+  const dt = useDomainText();
+  const gt = useGarageText();
   const g = useGarage();
   const send = useSendFiles();
   const body = useRef<HTMLDivElement>(null);
@@ -72,7 +80,7 @@ export function Sheet({
       ? [
           {
             key: 'edit',
-            label: 'Modifier la machine',
+            label: t('sheet.menuEdit'),
             icon: 'edit' as const,
             onSelect: () => g.openModal({ type: 'machine', machineId: machine.id }),
           },
@@ -80,7 +88,7 @@ export function Sheet({
       : []),
     {
       key: 'hours',
-      label: 'Relever le compteur',
+      label: t('sheet.menuHours'),
       icon: 'clock' as const,
       onSelect: () => g.openModal({ type: 'hours', machineId: machine.id }),
     },
@@ -88,7 +96,7 @@ export function Sheet({
       ? [
           {
             key: 'print',
-            label: 'Imprimer le carnet',
+            label: t('sheet.menuPrint'),
             icon: 'print' as const,
             href: `/carnet/${encodeURIComponent(machine.id)}`,
             newTab: true,
@@ -99,7 +107,7 @@ export function Sheet({
       ? [
           {
             key: 'archive',
-            label: 'Archiver la machine',
+            label: t('sheet.menuArchive'),
             icon: 'archive' as const,
             danger: true,
             onSelect: () => g.openModal({ type: 'archive', machineId: machine.id }),
@@ -109,7 +117,7 @@ export function Sheet({
   ];
 
   function onTabsKey(e: KeyboardEvent<HTMLDivElement>) {
-    const i = TABS.findIndex((t) => t.id === tab);
+    const i = TABS.indexOf(tab);
     let j = -1;
     if (e.key === 'ArrowRight') j = (i + 1) % TABS.length;
     else if (e.key === 'ArrowLeft') j = (i - 1 + TABS.length) % TABS.length;
@@ -118,8 +126,8 @@ export function Sheet({
     if (j < 0) return;
     e.preventDefault();
     e.stopPropagation();
-    g.setTab(TABS[j].id);
-    const el = document.getElementById(`tab-${TABS[j].id}`);
+    g.setTab(TABS[j]);
+    const el = document.getElementById(`tab-${TABS[j]}`);
     el?.focus();
     el?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
   }
@@ -136,14 +144,14 @@ export function Sheet({
     >
       <div className="g-grab-row">
         {several ? (
-          <button type="button" className="icon-btn g-grab-nav" aria-label="Machine précédente" onClick={onPrev}>
+          <button type="button" className="icon-btn g-grab-nav" aria-label={t('sheet.prev')} onClick={onPrev}>
             <Icon name="chevron-left" />
           </button>
         ) : null}
         <button
           type="button"
           className="sheet-grab"
-          aria-label={tall ? 'Réduire la fiche' : 'Agrandir la fiche'}
+          aria-label={tall ? t('sheet.shrink') : t('sheet.expand')}
           aria-expanded={tall}
           onPointerDown={(e) => {
             drag.current = { y: e.clientY, dy: 0, moved: false };
@@ -193,7 +201,7 @@ export function Sheet({
           }}
         />
         {several ? (
-          <button type="button" className="icon-btn g-grab-nav" aria-label="Machine suivante" onClick={onNext}>
+          <button type="button" className="icon-btn g-grab-nav" aria-label={t('sheet.next')} onClick={onNext}>
             <Icon name="chevron-right" />
           </button>
         ) : null}
@@ -201,79 +209,79 @@ export function Sheet({
 
       <div className="sheet-head">
         <div className="sheet-title">
-          <p className="eyebrow">{machineEyebrow(machine)}</p>
+          <p className="eyebrow">{gt.eyebrow(machine)}</p>
           <h2 id="sheet-title" ref={titleRef} tabIndex={-1}>
             {machine.code}
           </h2>
-          <p className="sub">{machineDetails(machine) || 'Marque et modèle non renseignés'}</p>
+          <p className="sub">{gt.details(machine) || t('sheet.noDetails')}</p>
         </div>
         <div className="g-head-actions">
           {several ? (
             <>
-              <button type="button" className="icon-btn g-hide-sm" aria-label="Machine précédente" onClick={onPrev}>
+              <button type="button" className="icon-btn g-hide-sm" aria-label={t('sheet.prev')} onClick={onPrev}>
                 <Icon name="chevron-left" />
               </button>
-              <button type="button" className="icon-btn g-hide-sm" aria-label="Machine suivante" onClick={onNext}>
+              <button type="button" className="icon-btn g-hide-sm" aria-label={t('sheet.next')} onClick={onNext}>
                 <Icon name="chevron-right" />
               </button>
             </>
           ) : null}
-          <Menu label={`Actions sur ${machine.code}`} icon="list" items={menu} className="g-menu-right" />
-          <button type="button" className="icon-btn" aria-label="Fermer la fiche" onClick={onClose}>
+          <Menu label={t('sheet.actions', { code: machine.code })} icon="list" items={menu} className="g-menu-right" />
+          <button type="button" className="icon-btn" aria-label={t('sheet.close')} onClick={onClose}>
             <Icon name="close" />
           </button>
         </div>
       </div>
 
-      <div className="status-row" aria-label="État de la machine">
+      <div className="status-row" aria-label={t('sheet.status')}>
         {health?.state === 'bad' ? (
           <span className="pill bad">
             <Icon name="alert" className="g-pill-icon" />
-            Échéance dépassée
+            {dt.health('bad')}
           </span>
         ) : (
           <span className="pill">
             <Icon name="check" className="g-pill-icon" />
-            Opérationnelle
+            {dt.health('ok')}
           </span>
         )}
         {late.map((d) => (
           <span key={d.schedule.id} className={`pill ${d.state}`}>
-            {d.schedule.label} : {d.text}
+            {t('sheet.duePill', { label: d.schedule.label, text: dt.dueText(d) })}
           </span>
         ))}
         {open_.length === 1 ? (
-          <span className="pill warn">Réparation : {REPAIR_STATUS[open_[0].repair_status ?? 'en_cours'].label.toLowerCase()}</span>
+          <span className="pill warn">{t('sheet.repairOne', { status: gt.repairInline(open_[0].repair_status ?? 'en_cours') })}</span>
         ) : open_.length > 1 ? (
-          <span className="pill warn">{open_.length} réparations ouvertes</span>
+          <span className="pill warn">{t('sheet.repairsOpen', { count: open_.length, n: f.num(open_.length) })}</span>
         ) : null}
         <span className="pill muted">
           <Icon name="clock" className="g-pill-icon" />
-          {hrs(Number(machine.hours))}
+          {f.hours(Number(machine.hours))}
         </span>
       </div>
 
       <div className="quick g-quick">
         <button type="button" className="btn btn-primary" onClick={() => g.openModal({ type: 'entry', machineId: machine.id })}>
           <Icon name="plus" />
-          Intervention
+          {t('sheet.work')}
         </button>
-        <FileButton accept="image/*" capture="environment" disabled={busy} label="Photo" onFiles={(f) => void send(machine.id, f)}>
+        <FileButton accept="image/*" capture="environment" disabled={busy} label={t('sheet.photo')} onFiles={(list) => void send(machine.id, list)}>
           <Icon name="camera" />
-          <span className="g-quick-lbl">Photo</span>
+          <span className="g-quick-lbl">{t('sheet.photo')}</span>
         </FileButton>
-        <FileButton accept="video/*" disabled={busy} label="Vidéo" onFiles={(f) => void send(machine.id, f)}>
+        <FileButton accept="video/*" disabled={busy} label={t('sheet.video')} onFiles={(list) => void send(machine.id, list)}>
           <Icon name="video" />
-          <span className="g-quick-lbl">Vidéo</span>
+          <span className="g-quick-lbl">{t('sheet.video')}</span>
         </FileButton>
         <button
           type="button"
           className="btn btn-soft"
-          aria-label="Compteur d’heures"
+          aria-label={t('sheet.meterAria')}
           onClick={() => g.openModal({ type: 'hours', machineId: machine.id })}
         >
           <Icon name="clock" />
-          <span className="g-quick-lbl">Compteur</span>
+          <span className="g-quick-lbl">{t('sheet.meter')}</span>
         </button>
       </div>
       {tab !== 'medias' ? (
@@ -282,24 +290,24 @@ export function Sheet({
         </div>
       ) : null}
 
-      <div className="tabs" role="tablist" aria-label="Sections de la fiche" data-own-arrows="" onKeyDown={onTabsKey}>
-        {TABS.map((t) => (
+      <div className="tabs" role="tablist" aria-label={t('sheet.sections')} data-own-arrows="" onKeyDown={onTabsKey}>
+        {TABS.map((id) => (
           <button
-            key={t.id}
+            key={id}
             type="button"
             role="tab"
-            id={`tab-${t.id}`}
+            id={`tab-${id}`}
             className="tab"
-            aria-selected={tab === t.id}
+            aria-selected={tab === id}
             aria-controls="sheet-panel"
-            tabIndex={tab === t.id ? 0 : -1}
+            tabIndex={tab === id ? 0 : -1}
             onClick={() => {
-              if (tab !== t.id) g.effect('tick');
-              g.setTab(t.id);
+              if (tab !== id) g.effect('tick');
+              g.setTab(id);
             }}
           >
-            {t.label}
-            {counts[t.id] != null ? <span className="count">{counts[t.id]}</span> : null}
+            {t(`tabs.${id}`)}
+            {counts[id] != null ? <span className="count">{counts[id]}</span> : null}
           </button>
         ))}
       </div>
@@ -323,16 +331,16 @@ export function Sheet({
           )
         ) : fileError ? (
           <div className="empty" role="alert">
-            <b>La fiche n’a pas pu être chargée</b>
+            <b>{t('sheet.loadFailed')}</b>
             <span>{fileError}</span>
             <button type="button" className="btn btn-soft g-btn-sm" onClick={onRetry}>
-              Réessayer
+              {tc('actions.retry')}
             </button>
           </div>
         ) : (
           <div className="g-sheet-loading" role="status">
             <span className="g-spinner" aria-hidden="true" />
-            Ouverture du carnet de {machine.code}…
+            {t('sheet.opening', { code: machine.code })}
           </div>
         )}
       </div>

@@ -419,7 +419,16 @@ export class Engine implements Showroom {
     this.dims = dims;
     if (hallChanged) {
       this.hall?.dispose();
-      this.hall = new Hall(this.bank, this.rig, { dims, slots, signage: this.o.signage ?? '' });
+      // Textes de l'enseigne dans la langue de l'interface : attributs data-signage-sub et data-signage-fallback du
+      // canvas (posés par l'interface, le contrat types.ts reste inchangé) ; à défaut, le français.
+      const text = this.canvas.dataset;
+      this.hall = new Hall(this.bank, this.rig, {
+        dims,
+        slots,
+        signage: this.o.signage ?? '',
+        signageSub: text.signageSub,
+        signageFallback: text.signageFallback,
+      });
       this.scene.add(this.hall.group);
       this.hall.floor.setReflection(QUALITY[this.quality].reflection, this.cssW * this.pr, this.cssH * this.pr);
       const length = dims.zFront - dims.zBack;

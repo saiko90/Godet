@@ -5,6 +5,8 @@ import { SiteIcon } from './SiteIcons';
 
 interface Props {
   id: string;
+  /** Libellé du bouton « afficher » (traduit par le formulaire). */
+  showLabel: string;
   name: string;
   autoComplete: 'current-password' | 'new-password';
   value?: string;
@@ -20,6 +22,7 @@ interface Props {
 /** Champ mot de passe avec bouton « afficher / masquer » (libellé fixe + aria-pressed). */
 export function PasswordInput({
   id,
+  showLabel,
   name,
   autoComplete,
   value,
@@ -55,7 +58,7 @@ export function PasswordInput({
       <button
         type="button"
         className="s-password-toggle"
-        aria-label="Afficher le mot de passe"
+        aria-label={showLabel}
         aria-pressed={visible}
         aria-controls={id}
         onClick={() => setVisible((v) => !v)}

@@ -1,5 +1,9 @@
+'use client';
+
+import { useTranslations } from 'next-intl';
 import { Loader } from '@/components/Loader';
 
 export default function Loading() {
-  return <Loader label="Ouverture du garage de démonstration…" />;
+  const t = useTranslations('demo');
+  return <Loader label={t('loading')} />;
 }

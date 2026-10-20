@@ -1,43 +1,59 @@
 import type { Metadata } from 'next';
-import { redirect } from 'next/navigation';
-import { getSession } from '@/lib/session';
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
+import { cookies } from 'next/headers';
 import { ConnexionForm } from '@/components/site/ConnexionForm';
+import { firstParam, isRefCode, looksLikeEmail, REF_COOKIE, safePath, splitLocale } from '@/components/site/nav';
+import { checkLocale, metaLocale, type LocaleParams } from '@/components/site/seo';
 import { AuthShell } from '@/components/site/SiteChrome';
-import { firstParam, looksLikeEmail, safePath } from '@/components/site/nav';
+import { pickMessages, type AppMessages } from '@/i18n/messages';
+import { localizedAlternates } from '@/i18n/metadata';
+import { redirect } from '@/i18n/navigation';
+import { getSession } from '@/lib/session';
 
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
 
-export async function generateMetadata({ searchParams }: { searchParams: SearchParams }): Promise<Metadata> {
+export async function generateMetadata({ params, searchParams }: { params: LocaleParams; searchParams: SearchParams }): Promise<Metadata> {
+  const locale = metaLocale((await params).locale);
+  const t = await getTranslations({ locale, namespace: 'auth.meta' });
   const signup = firstParam((await searchParams).mode) === 'inscription';
   return {
-    title: signup ? 'Créer mon garage' : 'Connexion',
-    description: signup
-      ? 'Créez le garage de votre entreprise sur Godet : essai gratuit de 30 jours, sans carte de crédit.'
-      : 'Connectez-vous à Godet pour retrouver le carnet d’entretien de votre parc d’engins.',
-    alternates: { canonical: '/connexion' },
+    title: signup ? t('signupTitle') : t('loginTitle'),
+    description: signup ? t('signupDescription') : t('loginDescription'),
+    alternates: localizedAlternates('/connexion', locale),
   };
 }
 
-export default async function ConnexionPage({ searchParams }: { searchParams: SearchParams }) {
-  const params = await searchParams;
-  const suite = safePath(firstParam(params.suite), '');
+export default async function ConnexionPage({ params, searchParams }: { params: LocaleParams; searchParams: SearchParams }) {
+  const locale = checkLocale((await params).locale);
+  setRequestLocale(locale);
+  const query = await searchParams;
+  const suite = safePath(firstParam(query.suite), '');
 
-  // Déjà connecté : direction la suite prévue, le garage, ou la création de l'entreprise.
+  // Déjà connecté : direction la suite prévue (dans sa langue), le garage, ou la création de l'entreprise.
   const session = await getSession();
-  if (session.status === 'ok') redirect(suite || '/garage');
-  if (session.status === 'no-org') redirect(suite || '/bienvenue');
+  if (session.status !== 'anon') {
+    const planned = suite ? splitLocale(suite) : null;
+    const href = planned?.path ?? (session.status === 'ok' ? '/garage' : '/bienvenue');
+    return redirect({ href, locale: planned?.locale ?? locale });
+  }
 
-  const mode = firstParam(params.mode) === 'inscription' ? 'inscription' : 'connexion';
-  const email = (firstParam(params.email) ?? '').trim();
+  const mode = firstParam(query.mode) === 'inscription' ? 'inscription' : 'connexion';
+  const email = (firstParam(query.email) ?? '').trim();
+  const ref = (await cookies()).get(REF_COOKIE)?.value;
+  const messages = (await getMessages({ locale })) as unknown as AppMessages;
 
   return (
     <AuthShell>
-      <ConnexionForm
-        initialMode={mode}
-        suite={suite}
-        linkError={firstParam(params.erreur) === 'lien'}
-        initialEmail={looksLikeEmail(email) ? email : ''}
-      />
+      <NextIntlClientProvider locale={locale} messages={pickMessages(messages, ['common', 'auth'])}>
+        <ConnexionForm
+          initialMode={mode}
+          suite={suite}
+          linkError={firstParam(query.erreur) === 'lien'}
+          initialEmail={looksLikeEmail(email) ? email : ''}
+          refCode={isRefCode(ref) ? ref : null}
+        />
+      </NextIntlClientProvider>
     </AuthShell>
   );
 }

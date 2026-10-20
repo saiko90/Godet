@@ -1,1 +1,145 @@
-{}
+{
+  "meta": {
+    "title": "Maintenance log",
+    "titleCode": "Log {code}"
+  },
+  "loading": "Preparing the log…",
+  "notFound": {
+    "title": "Log not found",
+    "text": "This machine does not exist, or it belongs to a company other than yours. Open the log from the machine’s record in your garage.",
+    "open": "Open my garage"
+  },
+  "bar": {
+    "skip": "Skip to the log",
+    "settings": "Settings",
+    "garage": "Garage",
+    "title": "Maintenance log · {code}",
+    "print": "Print / save as PDF",
+    "tip": "For a PDF file, choose “Save as PDF” as the printer."
+  },
+  "print": {
+    "margin": "{code} · {org} · Godet maintenance log",
+    "page": "Page"
+  },
+  "head": {
+    "label": "Maintenance log for {code}",
+    "brand": "Maintenance log",
+    "printedOn": "Issued on {date}"
+  },
+  "identity": {
+    "label": "Machine details",
+    "meterOn": "Hour meter read on {date}",
+    "brand": "Make",
+    "model": "Model",
+    "year": "Year",
+    "status": "Status",
+    "archivedOn": "Archived on {date}",
+    "inService": "In service",
+    "serial": "Serial number",
+    "plate": "Registration",
+    "since": "In Godet since",
+    "media": "Archived media",
+    "photos": "{count, plural, one {{n} photo} other {{n} photos}}",
+    "videos": "{count, plural, one {{n} video} other {{n} videos}}",
+    "documents": "{count, plural, one {{n} document} other {{n} documents}}",
+    "noMedia": "None"
+  },
+  "kpis": {
+    "entries": "Entries",
+    "removed": "{count, plural, one {+ {n} withdrawn} other {+ {n} withdrawn}}",
+    "recorded": "recorded",
+    "keptSince": "Log kept since",
+    "lastEntry": "last entry on {date}",
+    "noEntry": "no entries",
+    "totalCost": "Total cost",
+    "sinceStart": "since the start",
+    "last12": "Last 12\u00a0months",
+    "last12Hint": "maintenance, repairs, parts",
+    "downtime": "Downtime",
+    "downtimeHint": "for repairs"
+  },
+  "dues": {
+    "title": "Upcoming due dates",
+    "asOf": "as of {date}",
+    "due": "Due item",
+    "rhythm": "Interval",
+    "last": "Last done",
+    "planned": "Due",
+    "state": "Status",
+    "around": "around {date}",
+    "asap": "as soon as possible",
+    "empty": "No active due dates for this machine.",
+    "states": {
+      "ok": "Up to date",
+      "warn": "Due soon",
+      "bad": "Overdue"
+    },
+    "every": {
+      "hours": "Every {hours}",
+      "once": "Once",
+      "years": "{count, plural, one {Every year} other {Every {count} years}}",
+      "months": "{count, plural, one {Every month} other {Every {count} months}}",
+      "days": "{count, plural, one {Every day} other {Every {count} days}}"
+    }
+  },
+  "timeline": {
+    "title": "Complete history",
+    "order": "oldest to newest",
+    "date": "Date",
+    "meter": "Hours",
+    "type": "Type",
+    "work": "Work",
+    "by": "Done by",
+    "cost": "Cost",
+    "empty": "No work recorded yet.",
+    "ref": "Ref. {ref}",
+    "qty": "Qty {qty}",
+    "warrantyUntil": "warranty until {date}",
+    "downtime": "downtime {hours}",
+    "removedTag": "Withdrawn",
+    "removedOn": "on {date}",
+    "removedBy": "by {name}",
+    "reason": "Reason: {reason}.",
+    "noReason": "not given",
+    "split": "parts {parts} · labour {labour}"
+  },
+  "repairs": {
+    "title": "Repairs",
+    "count": "{count, plural, =0 {no repairs} one {{n} repair} other {{n} repairs}}",
+    "date": "Date",
+    "meter": "Hours",
+    "repair": "Repair",
+    "state": "Status",
+    "downtime": "Downtime",
+    "cost": "Cost",
+    "empty": "No repairs recorded."
+  },
+  "parts": {
+    "title": "Parts",
+    "count": "{count, plural, =0 {no parts} one {{n} part or kit} other {{n} parts or kits}}",
+    "date": "Date",
+    "part": "Part",
+    "ref": "Reference",
+    "qty": "Qty",
+    "supplier": "Supplier",
+    "warranty": "Warranty",
+    "until": "until {date}",
+    "cost": "Cost",
+    "empty": "No parts recorded."
+  },
+  "totals": {
+    "title": "Totals",
+    "note": "withdrawn entries not counted",
+    "category": "Category",
+    "last12": "Last 12\u00a0months",
+    "sinceStart": "Since the log began",
+    "maintenanceHint": "services, safety checks, walk-arounds, notes",
+    "total": "Total"
+  },
+  "notes": "Notes on the machine",
+  "law": {
+    "swiss": "<b>Art. 32b OPA</b> (Swiss accident prevention ordinance, unofficial translation): “The results of maintenance work must be recorded.” This log never deletes an entry: a withdrawn entry remains visible, with its date, author and reason.",
+    "general": "This log never deletes an entry: a withdrawn entry remains visible, with its date, author and reason."
+  },
+  "foot": "<b>Log kept with Godet</b> — printed on {date}"
+}

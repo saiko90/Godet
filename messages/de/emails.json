@@ -1,1 +1,57 @@
-{}
+{
+  "layout": {
+    "tagline": "Das Wartungsheft Ihrer Baumaschinen",
+    "signature": "Godet · eine Anwendung von Swiss Digital Studio",
+    "automatic": "Diese E-Mail wurde automatisch versendet. Bitte antworten Sie nicht darauf."
+  },
+  "rappels": {
+    "subject": {
+      "one": "Godet — {summary} bei {org}",
+      "many": "Godet — {summary} in {orgs, plural, one {# Unternehmen} other {# Unternehmen}}"
+    },
+    "summary": {
+      "dues": "{count, plural, one {# anstehender Termin} other {# anstehende Termine}}",
+      "duesOverdue": "{count, plural, one {# anstehender Termin} other {# anstehende Termine}} (davon {overdue, plural, one {# überfällig} other {# überfällig}})",
+      "repairs": "{count, plural, one {# offene Reparatur} other {# offene Reparaturen}}",
+      "both": "{dues} und {repairs}"
+    },
+    "title": "{frequency, select, quotidien {Ihre tägliche Erinnerung} other {Ihre wöchentliche Erinnerung}}",
+    "greeting": "Guten Tag {name}",
+    "greetingAnonymous": "Guten Tag",
+    "intro": "Folgendes braucht Ihre Aufmerksamkeit: {summary}.",
+    "sections": {
+      "dues": "Termine",
+      "repairs": "Offene Reparaturen"
+    },
+    "state": {
+      "overdue": "Überfällig",
+      "soon": "Anstehend"
+    },
+    "item": {
+      "plannedOn": "fällig am {date}",
+      "counter": "Betriebsstunden: {hours}",
+      "reported": "gemeldet am {date}",
+      "cost": "bisherige Kosten: {amount}"
+    },
+    "more": "{count, plural, one {Und # weiterer Punkt in der Garage.} other {Und # weitere Punkte in der Garage.}}",
+    "cta": "Garage öffnen",
+    "why": "{frequency, select, quotidien {Sie erhalten diese Erinnerung jeden Morgen, aber nur, wenn es etwas zu melden gibt.} other {Sie erhalten diese Erinnerung am Montagmorgen, aber nur, wenn es etwas zu melden gibt.}}",
+    "thresholds": "Termine werden {days, plural, one {# Tag} other {# Tage}} im Voraus gemeldet, Termine nach Betriebsstunden {hours} im Voraus.",
+    "settings": "Erinnerungen ändern oder ausschalten"
+  },
+  "invitation": {
+    "subject": "{inviter} lädt Sie ein, {org} auf Godet beizutreten",
+    "subjectAnonymous": "Einladung: {org} auf Godet beitreten",
+    "title": "Treten Sie {org} auf Godet bei",
+    "greeting": "Guten Tag",
+    "intro": "{inviter} lädt Sie ein, der Garage von {org} auf Godet beizutreten, dem digitalen Wartungsheft für Baumaschinen.",
+    "introAnonymous": "Eine Einladung wartet auf Sie: Treten Sie der Garage von {org} auf Godet bei, dem digitalen Wartungsheft für Baumaschinen.",
+    "role": "Ihre Rolle: {role}. {hint}",
+    "cta": "Einladung annehmen",
+    "expires": "Der Link ist bis am {date} gültig.",
+    "expiresDefault": "Der Link ist 14 Tage gültig.",
+    "account": "Noch kein Konto? Sie erstellen es in wenigen Sekunden mit dieser E-Mail-Adresse.",
+    "linkHelp": "Falls die Schaltfläche nicht funktioniert, kopieren Sie diesen Link in Ihren Browser:",
+    "ignore": "Sie haben diese Einladung nicht erwartet? Dann ignorieren Sie diese E-Mail einfach."
+  }
+}

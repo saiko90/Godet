@@ -1,34 +1,14 @@
-// Outils d'affichage du garage : libellés, statistiques d'une machine, droits sur une saisie ou un média.
-import {
-  availability,
-  can,
-  costTotals,
-  entryCost,
-  hoursSince,
-  MACHINE_KINDS,
-  machineMakeModel,
-  monthlyCosts,
-  type DueInfo,
-  type DueState,
-} from '@/lib/domain';
-import { dateCH, grp, hrs } from '@/lib/format';
-import type { Entry, EntryKind, Machine, MachineFile, MachineKind, MediaItem, MemberRole, Schedule } from '@/lib/types';
+// Outils du garage sans texte : onglets, codes des machines, statistiques d'une machine, droits sur une saisie ou un média.
+// (Textes composés : text.ts ; messages d'erreur : errors.ts.)
+import { availability, can, costTotals, entryCost, hoursSince, monthlyCosts, type DueInfo } from '@/lib/domain';
+import type { Entry, EntryKind, Machine, MachineFile, MachineKind, MediaItem, MemberRole } from '@/lib/types';
 
 export type SheetTab = 'apercu' | 'carnet' | 'reparations' | 'pieces' | 'couts' | 'medias' | 'echeances';
 
-export const TABS: { id: SheetTab; label: string }[] = [
-  { id: 'apercu', label: 'Aperçu' },
-  { id: 'carnet', label: 'Carnet' },
-  { id: 'reparations', label: 'Réparations' },
-  { id: 'pieces', label: 'Pièces' },
-  { id: 'couts', label: 'Coûts' },
-  { id: 'medias', label: 'Médias' },
-  { id: 'echeances', label: 'Échéances' },
-];
+/** Onglets de la fiche, dans l'ordre (libellés : garage.tabs.*). */
+export const TABS: readonly SheetTab[] = ['apercu', 'carnet', 'reparations', 'pieces', 'couts', 'medias', 'echeances'];
 
-export const STATE_LABEL: Record<DueState, string> = { ok: 'À jour', warn: 'À surveiller', bad: 'En retard' };
-
-/** Préfixe proposé pour le code d'une nouvelle machine (« PE-07 »). */
+/** Préfixe proposé pour le code d'une nouvelle machine (« PE-07 ») ; l'interface prend ceux de sa langue (garage.codePrefix). */
 export const KIND_PREFIX: Record<MachineKind, string> = {
   pelle: 'PE',
   mini_pelle: 'MP',
@@ -40,20 +20,9 @@ export const KIND_PREFIX: Record<MachineKind, string> = {
   autre: 'EN',
 };
 
-export const PAINT_NAMES: Record<string, string> = {
-  '#f3b71b': 'Jaune engin',
-  '#e8792b': 'Orange',
-  '#d8362f': 'Rouge',
-  '#2f6fd8': 'Bleu',
-  '#3c9a5f': 'Vert',
-  '#e9e4d8': 'Blanc',
-  '#5b6068': 'Gris anthracite',
-  '#1d1f24': 'Noir',
-};
-
 /** Prochain code libre pour un type de machine : PE-01, PE-02… (numéro suivant le plus grand du parc). */
-export function nextCode(kind: MachineKind, machines: Pick<Machine, 'code'>[]): string {
-  const prefix = KIND_PREFIX[kind];
+export function nextCode(kind: MachineKind, machines: Pick<Machine, 'code'>[], prefixes: Record<MachineKind, string> = KIND_PREFIX): string {
+  const prefix = prefixes[kind] || KIND_PREFIX[kind];
   const used = new Set(machines.map((m) => m.code.toUpperCase()));
   const highest = machines.reduce((max, m) => {
     const n = Number(/-(\d+)$/.exec(m.code)?.[1] ?? 0);
@@ -66,38 +35,27 @@ export function nextCode(kind: MachineKind, machines: Pick<Machine, 'code'>[]): 
   return `${prefix}-${String(highest + 1).padStart(2, '0')}`;
 }
 
-/** « Pelle sur chenilles · 21 t ». */
-export function machineEyebrow(m: Pick<Machine, 'kind' | 'weight_t'>): string {
-  const kind = MACHINE_KINDS[m.kind]?.label ?? 'Engin';
-  return m.weight_t ? `${kind} · ${grp(Number(m.weight_t), Number.isInteger(Number(m.weight_t)) ? 0 : 1)} t` : kind;
-}
-
-/** « Liebherr · L 550 · 2021 · N° L550-2105-1187 · VS 287 514 ». */
-export function machineDetails(m: Machine): string {
-  return [machineMakeModel(m), m.serial ? `N°\u00a0${m.serial}` : null, m.plate].filter(Boolean).join(' · ');
-}
-
-/** « à 7’000 h » ou « le 15.02.2027 ». */
-export function scheduleTarget(s: Schedule): string {
-  return s.basis === 'heures' ? `à ${hrs(Number(s.due_hours))}` : `le ${dateCH(s.due_date)}`;
-}
-
-/** « toutes les 500 h », « tous les ans », « tous les 6 mois », « une seule fois ». */
-export function intervalText(s: Pick<Schedule, 'basis' | 'interval_hours' | 'interval_days'>): string {
-  if (s.basis === 'heures') return s.interval_hours ? `toutes les ${hrs(Number(s.interval_hours))}` : 'une seule fois';
-  const d = s.interval_days;
-  if (!d) return 'une seule fois';
-  if (d % 365 === 0) return d === 365 ? 'tous les ans' : `tous les ${d / 365} ans`;
-  const months = Math.round(d / 30.44);
-  if (months >= 1 && Math.abs(months * 30.44 - d) <= 2) return months === 1 ? 'tous les mois' : `tous les ${months} mois`;
-  return `tous les ${d} jours`;
-}
-
-/** Type de saisie le plus probable pour accomplir une échéance (« Contrôle annuel » → contrôle). */
+/**
+ * Type de saisie le plus probable pour accomplir une échéance (« Contrôle annuel » → contrôle).
+ * Les libellés sont saisis librement, dans n'importe laquelle des quatre langues : on reconnaît les quatre.
+ */
 export function kindForSchedule(label: string): EntryKind {
-  if (/contr[ôo]le|expertise|tachygraphe|extincteur|s[ée]curit[ée]/i.test(label)) return 'controle';
-  if (/inspection|usure|hivernage|nettoyage/i.test(label)) return 'inspection';
+  if (
+    /contr[ôo]le|expertise|tachygraphe|extincteur|s[ée]curit[ée]|kontrolle|pr[üu]fung|sicherheit|feuerl[öo]scher|fahrtschreiber|\bmfk\b|controllo|collaudo|revisione|sicurezza|estintore|tachigrafo|\bcheck|safety|extinguisher|tachograph|roadworth|vehicle inspection/i.test(
+      label,
+    )
+  ) {
+    return 'controle';
+  }
+  if (/inspection|usure|hivernage|nettoyage|inspektion|verschlei|einwinter|reinigung|ispezione|usura|rimessaggio|pulizia|wear|winteri[sz]|cleaning/i.test(label)) {
+    return 'inspection';
+  }
   return 'service';
+}
+
+/** L'échéance « Service » (toutes les N heures), quelle que soit la langue de son libellé. */
+export function isServiceLabel(label: string): boolean {
+  return /^(service|wartung|manutenzione)$/i.test(label.trim());
 }
 
 /** Premier jour de la fenêtre des coûts (12 mois, mois courant compris). */
@@ -150,20 +108,9 @@ export function canDeleteMedia(role: MemberRole, userId: string, m: Pick<MediaIt
   return can.deleteAnyMedia(role) || m.created_by === userId;
 }
 
-/** Message d'une erreur attrapée, prêt à afficher. */
-export function errorText(e: unknown, fallback: string): string {
-  if (e instanceof Error && e.message) return e.message;
-  return fallback;
-}
-
 /** La plus urgente des échéances non à jour, sinon la plus proche. */
 export function nextDue(dues: DueInfo[]): DueInfo | null {
   return dues[0] ?? null;
-}
-
-/** Pluriel simple : « 1 photo », « 3 photos ». */
-export function plural(n: number, one: string, many = `${one}s`): string {
-  return `${grp(n)} ${n > 1 ? many : one}`;
 }
 
 /** Saisie avec un compteur au moment de l'intervention ? */

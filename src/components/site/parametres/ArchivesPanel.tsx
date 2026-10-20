@@ -1,14 +1,17 @@
 'use client';
 
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { useId } from 'react';
+import { useFormat } from '@/components/FormatProvider';
 import { Icon } from '@/components/Icons';
 import { restaurerMachine } from '@/app/[locale]/parametres/actions';
-import { dateCH } from '@/lib/format';
+import { Link } from '@/i18n/navigation';
 import type { ArchivedMachine } from '../types';
 import { useServerAction } from './useServerAction';
 
 function ArchiveRow({ machine, canRestore }: { machine: ArchivedMachine; canRestore: boolean }) {
+  const t = useTranslations('settings.archives');
+  const f = useFormat();
   const restore = useServerAction(restaurerMachine);
   return (
     <li className="s-archive">
@@ -18,22 +21,22 @@ function ArchiveRow({ machine, canRestore }: { machine: ArchivedMachine; canRest
           {machine.title}
           {machine.makeModel ? ` · ${machine.makeModel}` : ''}
         </span>
-        <span>Archivée le {dateCH(machine.archivedAt)}</span>
+        <span>{t('archivedOn', { date: f.date(machine.archivedAt) })}</span>
       </div>
       <div className="s-archive-actions">
         <Link className="btn btn-ghost s-btn-sm" href={`/carnet/${machine.id}`}>
           <Icon name="print" />
-          Carnet
+          {t('log')}
         </Link>
         {canRestore && machine.codeFree ? (
           <button type="button" className="btn btn-soft s-btn-sm" onClick={() => restore.run(machine.id)} disabled={restore.pending}>
             <Icon name="garage" />
-            {restore.pending ? 'Restauration…' : 'Remettre au garage'}
+            {restore.pending ? t('restoring') : t('restore')}
           </button>
         ) : null}
         {canRestore && !machine.codeFree ? (
-          <span className="pill warn" title="Une machine du garage porte déjà ce code.">
-            Code déjà utilisé au garage
+          <span className="pill warn" title={t('codeTakenTitle')}>
+            {t('codeTaken')}
           </span>
         ) : null}
         {restore.result ? (
@@ -55,21 +58,19 @@ export function ArchivesPanel({
   loadError: boolean;
   canRestore: boolean;
 }) {
+  const t = useTranslations('settings.archives');
   const uid = useId();
   return (
     <section id="archives" className="s-panel" aria-labelledby={`${uid}-titre`}>
       <div className="s-panel-head">
         <h2 id={`${uid}-titre`}>
           <Icon name="archive" />
-          Machines archivées
+          {t('title')}
         </h2>
-        <p>
-          Une machine archivée quitte le showroom. Son carnet reste consultable et imprimable
-          {canRestore ? ', et vous pouvez la remettre au garage.' : '.'}
-        </p>
+        <p>{canRestore ? t('textRestore') : t('text')}</p>
       </div>
       {loadError ? (
-        <p className="s-status s-is-bad">Les machines archivées n’ont pas pu être chargées. Rechargez la page.</p>
+        <p className="s-status s-is-bad">{t('loadError')}</p>
       ) : machines.length ? (
         <ul className="s-archives">
           {machines.map((m) => (
@@ -79,8 +80,8 @@ export function ArchivesPanel({
       ) : (
         <div className="empty">
           <Icon name="archive" />
-          <b>Aucune machine archivée</b>
-          <span>Les machines vendues ou hors service apparaîtront ici, avec leur carnet complet.</span>
+          <b>{t('emptyTitle')}</b>
+          <span>{t('emptyText')}</span>
         </div>
       )}
     </section>

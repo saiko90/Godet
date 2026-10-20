@@ -1,1 +1,145 @@
-{}
+{
+  "meta": {
+    "title": "Carnet d’entretien",
+    "titleCode": "Carnet {code}"
+  },
+  "loading": "Préparation du carnet…",
+  "notFound": {
+    "title": "Carnet introuvable",
+    "text": "Cette machine n’existe pas, ou elle appartient à une autre entreprise que la vôtre. Ouvrez le carnet depuis la fiche de la machine, dans votre garage.",
+    "open": "Ouvrir mon garage"
+  },
+  "bar": {
+    "skip": "Aller au carnet",
+    "settings": "Paramètres",
+    "garage": "Garage",
+    "title": "Carnet d’entretien · {code}",
+    "print": "Imprimer / enregistrer en PDF",
+    "tip": "Pour un fichier PDF, choisissez «\u00a0Enregistrer au format PDF\u00a0» comme imprimante."
+  },
+  "print": {
+    "margin": "{code} · {org} · Carnet d’entretien Godet",
+    "page": "Page"
+  },
+  "head": {
+    "label": "Carnet d’entretien de {code}",
+    "brand": "Carnet d’entretien",
+    "printedOn": "Édité le {date}"
+  },
+  "identity": {
+    "label": "Identité de la machine",
+    "meterOn": "Compteur relevé le {date}",
+    "brand": "Marque",
+    "model": "Modèle",
+    "year": "Année",
+    "status": "Statut",
+    "archivedOn": "Archivée le {date}",
+    "inService": "En service",
+    "serial": "N° de série",
+    "plate": "Plaque",
+    "since": "Dans Godet depuis",
+    "media": "Médias archivés",
+    "photos": "{count, plural, one {{n} photo} other {{n} photos}}",
+    "videos": "{count, plural, one {{n} vidéo} other {{n} vidéos}}",
+    "documents": "{count, plural, one {{n} document} other {{n} documents}}",
+    "noMedia": "Aucun"
+  },
+  "kpis": {
+    "entries": "Interventions",
+    "removed": "{count, plural, one {+ {n} retirée} other {+ {n} retirées}}",
+    "recorded": "consignées",
+    "keptSince": "Carnet tenu depuis",
+    "lastEntry": "dernière saisie le {date}",
+    "noEntry": "aucune saisie",
+    "totalCost": "Coût total",
+    "sinceStart": "depuis le début",
+    "last12": "12 derniers mois",
+    "last12Hint": "entretien, réparations, pièces",
+    "downtime": "Immobilisation",
+    "downtimeHint": "pour réparations"
+  },
+  "dues": {
+    "title": "Prochaines échéances",
+    "asOf": "au {date}",
+    "due": "Échéance",
+    "rhythm": "Rythme",
+    "last": "Dernière fois",
+    "planned": "Prévue",
+    "state": "État",
+    "around": "vers le {date}",
+    "asap": "à faire dès que possible",
+    "empty": "Aucune échéance active pour cette machine.",
+    "states": {
+      "ok": "À jour",
+      "warn": "Bientôt",
+      "bad": "En retard"
+    },
+    "every": {
+      "hours": "Toutes les {hours}",
+      "once": "Une fois",
+      "years": "{count, plural, one {Chaque année} other {Tous les {count} ans}}",
+      "months": "{count, plural, one {Chaque mois} other {Tous les {count} mois}}",
+      "days": "{count, plural, one {Chaque jour} other {Tous les {count} jours}}"
+    }
+  },
+  "timeline": {
+    "title": "Chronologie complète",
+    "order": "de la plus ancienne à la plus récente",
+    "date": "Date",
+    "meter": "Compteur",
+    "type": "Type",
+    "work": "Intervention",
+    "by": "Fait par",
+    "cost": "Coût",
+    "empty": "Aucune intervention consignée pour le moment.",
+    "ref": "Réf. {ref}",
+    "qty": "Qté {qty}",
+    "warrantyUntil": "garantie jusqu’au {date}",
+    "downtime": "immobilisation {hours}",
+    "removedTag": "Retirée",
+    "removedOn": "le {date}",
+    "removedBy": "par {name}",
+    "reason": "Motif\u00a0: {reason}.",
+    "noReason": "non précisé",
+    "split": "pièces {parts} · m.-o. {labour}"
+  },
+  "repairs": {
+    "title": "Réparations",
+    "count": "{count, plural, =0 {aucune réparation} one {{n} réparation} other {{n} réparations}}",
+    "date": "Date",
+    "meter": "Compteur",
+    "repair": "Réparation",
+    "state": "État",
+    "downtime": "Immobilisation",
+    "cost": "Coût",
+    "empty": "Aucune réparation consignée."
+  },
+  "parts": {
+    "title": "Pièces",
+    "count": "{count, plural, =0 {aucune pièce} one {{n} pièce ou lot} other {{n} pièces ou lots}}",
+    "date": "Date",
+    "part": "Pièce",
+    "ref": "Référence",
+    "qty": "Qté",
+    "supplier": "Fournisseur",
+    "warranty": "Garantie",
+    "until": "jusqu’au {date}",
+    "cost": "Coût",
+    "empty": "Aucune pièce consignée."
+  },
+  "totals": {
+    "title": "Totaux",
+    "note": "saisies retirées non comptées",
+    "category": "Catégorie",
+    "last12": "12 derniers mois",
+    "sinceStart": "Depuis le début du carnet",
+    "maintenanceHint": "services, contrôles, inspections, notes",
+    "total": "Total"
+  },
+  "notes": "Notes sur la machine",
+  "law": {
+    "swiss": "<b>Art. 32b OPA</b>\u00a0: «\u00a0Les résultats des opérations d’entretien doivent être consignés.\u00a0» Ce carnet n’efface aucune saisie\u00a0: une saisie retirée reste visible, avec sa date, son auteur et son motif.",
+    "general": "Ce carnet n’efface aucune saisie\u00a0: une saisie retirée reste visible, avec sa date, son auteur et son motif."
+  },
+  "foot": "<b>Carnet tenu avec Godet</b> — imprimé le {date}"
+}

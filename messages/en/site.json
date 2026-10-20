@@ -1,1 +1,270 @@
-{}
+{
+  "meta": {
+    "title": "Godet — the garage for your equipment fleet",
+    "description": "The digital maintenance log for construction machinery: services, repairs, parts, costs, photos, videos and due dates. Free 30-day trial, no credit card required.",
+    "ogDescription": "Every machine gets its complete log. No more missed inspections, and clear costs for every machine.",
+    "ogImageAlt": "Godet’s 3D showroom"
+  },
+  "chrome": {
+    "skip": "Skip to content",
+    "logoHome": "Godet, home",
+    "logoBack": "Godet, back to home",
+    "mainNav": "Main navigation",
+    "anchors": {
+      "features": "Features",
+      "compliance": "Compliance",
+      "pricing": "Pricing",
+      "questions": "FAQ"
+    },
+    "demo": "3D demo",
+    "contact": "Contact",
+    "login": "Sign in",
+    "signup": "Create my garage",
+    "footer": {
+      "tagline": "The digital maintenance log for construction machinery, designed in Switzerland for construction companies.",
+      "studio": "An application by <link>Swiss Digital Studio</link>, in Valais, Switzerland.",
+      "godet": "Godet",
+      "info": "Information",
+      "demo": "3D demo, no account needed",
+      "signup": "Create my garage",
+      "login": "Sign in",
+      "contact": "Contact",
+      "ideas": "Ideas box",
+      "privacy": "Privacy policy",
+      "copyright": "© {year} Swiss Digital Studio · Valais, Switzerland",
+      "hosting": "Data hosted in the EU (Ireland)"
+    },
+    "auth": {
+      "demo": "3D demo",
+      "home": "Home",
+      "contact": "Contact",
+      "privacy": "Privacy"
+    },
+    "app": {
+      "garageOf": "Garage: {org}",
+      "backToGarage": "Back to the garage"
+    }
+  },
+  "home": {
+    "hero": {
+      "kicker": "Maintenance log for construction machinery",
+      "title": "The garage for your <em>equipment fleet</em>",
+      "lead": "Every machine gets its complete log: services, repairs, parts, costs, photos, videos and due dates. Inspections are no longer forgotten. And at last you know what each machine really costs.",
+      "demo": "Try the 3D demo",
+      "signup": "Create my garage",
+      "hasAccount": "Already have an account?",
+      "login": "Sign in",
+      "assure": {
+        "trial": "Free 30-day trial",
+        "card": "No credit card required",
+        "hosting": "Data hosted in the EU"
+      }
+    },
+    "stage": {
+      "line": "Equipment fleet · showroom",
+      "alt": "Godet’s 3D showroom: an excavator on its illuminated platform, with its maintenance record.",
+      "cta": "Enter the showroom · no account needed"
+    },
+    "problem": {
+      "eyebrow": "The problem",
+      "title": "Paper logbooks can no longer keep up with the site",
+      "text": "Five, twenty or fifty machines, several sites, a team that rotates. Along the way, information gets lost.",
+      "items": {
+        "paper": {
+          "title": "Paper logbooks",
+          "text": "They stay in the cab, get dirty and go missing. Nobody really knows where a machine stands."
+        },
+        "invoices": {
+          "title": "Scattered invoices",
+          "text": "Between the binder, the inbox and the van, a machine’s history becomes impossible to find."
+        },
+        "checks": {
+          "title": "Forgotten inspections",
+          "text": "The 500-hour service or the annual safety inspection slips through the cracks. You find out too late."
+        },
+        "costs": {
+          "title": "Unclear costs",
+          "text": "Nobody can say what a machine cost this year, or whether it is time to replace it."
+        }
+      }
+    },
+    "features": {
+      "eyebrow": "What Godet does",
+      "title": "All your fleet maintenance in one place",
+      "text": "The history, due dates and costs of every machine, together in a single garage. On computer, tablet and phone.",
+      "items": {
+        "log": {
+          "title": "The complete log",
+          "text": "Services, safety checks, repairs, parts and notes. Every entry keeps its date, the hour meter reading, who did the work and what it cost."
+        },
+        "dues": {
+          "title": "Due dates by hours or by date",
+          "text": "Service every 500\u00a0h, annual safety inspection: Godet follows each machine’s actual usage and reminds you before anything falls due."
+        },
+        "costs": {
+          "title": "Costs per machine",
+          "text": "Parts, labour, downtime: what each machine has cost over twelve months, month by month."
+        },
+        "media": {
+          "title": "Photos, videos, documents",
+          "text": "Photograph a leak, film a suspicious noise, upload the invoice as a PDF. Everything stays attached to the machine."
+        },
+        "team": {
+          "title": "Team and roles",
+          "text": "Owner, administrator, mechanic, operator: everyone sees the fleet according to their role."
+        },
+        "workshop": {
+          "title": "Workshop mode, without 3D",
+          "text": "A fast list view on any device, to log hours and work without detours."
+        },
+        "print": {
+          "title": "The printed log",
+          "text": "A machine’s log can be printed or saved as a PDF: for an inspection, an appraisal or a resale."
+        },
+        "showroom": {
+          "title": "A showroom for your fleet",
+          "text": "Every machine on its platform, its condition visible at a glance: green, orange or red."
+        }
+      }
+    },
+    "compliance": {
+      "eyebrow": "Compliance",
+      "title": "A log that stands up to an inspection",
+      "lawMark": "ART. 32B OPA",
+      "quoteOpen": "“",
+      "quote": "The results of maintenance work must be recorded.",
+      "quoteClose": "”",
+      "caption": "Swiss Ordinance on the Prevention of Accidents and Occupational Diseases (OPA, SR 832.30), Art. 32b (unofficial translation). Godet records every job with its date, who did it and what it cost. Wherever you work, a complete log is your evidence during an inspection.",
+      "proofs": {
+        "kept": {
+          "title": "Nothing is erased",
+          "text": "An incorrect entry is withdrawn with a reason. It stays visible, struck through, in the history."
+        },
+        "journal": {
+          "title": "Every change is logged",
+          "text": "Who entered, edited or withdrew what, and when."
+        },
+        "archive": {
+          "title": "Machines are archived",
+          "text": "A sold or decommissioned machine leaves the showroom. Its log remains available and printable."
+        }
+      },
+      "note": "Godet makes it easier to keep the log. Maintaining work equipment remains the employer’s responsibility."
+    },
+    "local": {
+      "eyebrow": "Made in Switzerland",
+      "title": "Designed in Valais, for construction companies everywhere",
+      "text": "Godet speaks the language of the site and fits the way you work.",
+      "formatsLabel": "Format examples",
+      "items": {
+        "formats": {
+          "title": "Your own formats",
+          "text": "Hours, amounts and dates appear the way you write them, in Swiss francs, euros or pounds."
+        },
+        "language": {
+          "title": "In everyone’s language",
+          "text": "English, French, German or Italian: everyone chooses their own language. Service every 500\u00a0h, hour meter, annual inspection: the vocabulary of the workshop."
+        },
+        "hosting": {
+          "title": "Data hosted in the EU",
+          "text": "The database and files are hosted in Ireland, in the European Union."
+        },
+        "access": {
+          "title": "Access for your company only",
+          "text": "Each company sees only its own data. Access rules are enforced by the database itself."
+        }
+      }
+    },
+    "pricing": {
+      "eyebrow": "Pricing",
+      "title": "Free 30-day trial",
+      "text": "No credit card required. Pricing will be announced before your trial ends.",
+      "small": "All features are available during the trial."
+    },
+    "faq": {
+      "eyebrow": "Questions",
+      "title": "Frequently asked questions",
+      "items": {
+        "install": {
+          "q": "Do I need to install anything?",
+          "a": "No. Godet runs in the browser, on a computer, tablet or phone. You can add it to your home screen like an app."
+        },
+        "threeD": {
+          "q": "Is the 3D view required?",
+          "a": "No. Workshop mode shows the fleet as a list, without 3D. It suits modest devices and quick data entry."
+        },
+        "data": {
+          "q": "Who can see our data?",
+          "a": "Only the people you invite to your company, according to their role. The data is hosted in the EU, in Ireland."
+        },
+        "erase": {
+          "q": "Can an entry be deleted?",
+          "a": "It can be withdrawn, with a reason. It stays visible in the history: that is what gives the log its value during an inspection."
+        },
+        "export": {
+          "q": "Can we take the log out of Godet?",
+          "a": "Yes. Every log can be printed or saved as a PDF, with all work, repairs, parts and costs."
+        },
+        "languages": {
+          "q": "Is Godet available in other languages?",
+          "a": "Yes: in English, French, German and Italian. Everyone chooses their language, and amounts are shown in your company’s currency."
+        },
+        "trial": {
+          "q": "What happens after the trial?",
+          "a": "Pricing will be announced before the 30\u00a0days are up. No credit card is needed to try Godet."
+        }
+      }
+    },
+    "final": {
+      "title": "Open your garage",
+      "text": "Visit the demo without an account, or create your garage and add your first machine.",
+      "contact": "A question, or a demo for your team? <link>Write to us</link>."
+    }
+  },
+  "notFound": {
+    "metaTitle": "Page not found",
+    "title": "This page does not exist",
+    "text": "The link may be incomplete, or the page has moved. Your garage, however, is right where you left it.",
+    "home": "Back to home",
+    "garage": "Open my garage"
+  },
+  "error": {
+    "metaTitle": "Error",
+    "title": "Something went wrong",
+    "text": "The page could not be displayed. Nothing you had already saved is lost: try again, or come back in a moment.",
+    "home": "Back to home",
+    "reference": "Error reference: {digest}"
+  },
+  "cantons": {
+    "AG": "Aargau",
+    "AI": "Appenzell Innerrhoden",
+    "AR": "Appenzell Ausserrhoden",
+    "BE": "Bern",
+    "BL": "Basel-Landschaft",
+    "BS": "Basel-Stadt",
+    "FR": "Fribourg",
+    "GE": "Geneva",
+    "GL": "Glarus",
+    "GR": "Graubünden",
+    "JU": "Jura",
+    "LU": "Lucerne",
+    "NE": "Neuchâtel",
+    "NW": "Nidwalden",
+    "OW": "Obwalden",
+    "SG": "St. Gallen",
+    "SH": "Schaffhausen",
+    "SO": "Solothurn",
+    "SZ": "Schwyz",
+    "TG": "Thurgau",
+    "TI": "Ticino",
+    "UR": "Uri",
+    "VD": "Vaud",
+    "VS": "Valais",
+    "ZG": "Zug",
+    "ZH": "Zurich"
+  },
+  "manifest": {
+    "name": "Godet — the garage for your equipment fleet",
+    "description": "Maintenance log for construction machinery: services, repairs, parts, costs, photos and videos."
+  }
+}

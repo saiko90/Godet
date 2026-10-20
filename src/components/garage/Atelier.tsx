@@ -2,23 +2,25 @@
 
 // Mode atelier : tout le parc en cartes, sans 3D (gros boutons, utilisable avec des gants), recherche et filtre
 // par état. Ouvre la même fiche que le garage. C'est aussi le repli quand la 3D ne peut pas s'afficher.
+import { useTranslations } from 'next-intl';
 import { useMemo, useState } from 'react';
+import { useFormat } from '@/components/FormatProvider';
 import { Icon } from '@/components/Icons';
-import { can, MACHINE_KINDS, type DueState } from '@/lib/domain';
-import { chf, dateCH, grp, hrs } from '@/lib/format';
+import { can, type DueState } from '@/lib/domain';
+import { useDomainText } from '@/lib/use-domain-text';
 import { useGarage } from './context';
-import { machineCost12, machineEyebrow, plural, STATE_LABEL } from './helpers';
+import { machineCost12 } from './helpers';
 import { KindIcon } from './KindIcon';
+import { useGarageText } from './text';
 import type { EngineFailure } from './useShowroom';
 
 type Filter = 'tous' | DueState;
 
-const FAILURE_TEXT: Record<EngineFailure, string> = {
-  'no-webgl': 'Cet appareil ou ce navigateur n’affiche pas la 3D (WebGL 2). Toutes les fiches restent accessibles ici.',
-  load: 'La 3D n’a pas pu être téléchargée. Vérifiez la connexion ; toutes les fiches restent accessibles ici.',
-  start: 'La 3D n’a pas pu démarrer sur cet appareil. Toutes les fiches restent accessibles ici.',
-  'context-lost': 'La 3D s’est arrêtée (mémoire graphique saturée). Toutes les fiches restent accessibles ici.',
-};
+/** Message affiché quand la 3D ne peut pas s'afficher (garage.atelier.failure.*). */
+const FAILURE_KEY = { 'no-webgl': 'noWebgl', load: 'load', start: 'start', 'context-lost': 'contextLost' } as const satisfies Record<
+  EngineFailure,
+  string
+>;
 
 const norm = (s: string) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
 
@@ -39,6 +41,10 @@ export function Atelier({
   onOpen: (id: string) => void;
   onAdd: () => void;
 }) {
+  const t = useTranslations('garage');
+  const f = useFormat();
+  const dt = useDomainText();
+  const gt = useGarageText();
   const { fleet, health, today, role, openModal } = useGarage();
   const [query, setQuery] = useState('');
   const [filter, setFilter] = useState<Filter>('tous');
@@ -61,16 +67,16 @@ export function Atelier({
     if (filter !== 'tous' && (health.get(m.id)?.state ?? 'ok') !== filter) return false;
     if (!q) return true;
     const hay = norm(
-      [m.code, MACHINE_KINDS[m.kind]?.label, m.brand, m.model, m.serial, m.plate, m.year ? String(m.year) : ''].filter(Boolean).join(' '),
+      [m.code, dt.kind(m.kind), m.brand, m.model, m.serial, m.plate, m.year ? String(m.year) : ''].filter(Boolean).join(' '),
     );
     return hay.includes(q);
   });
 
   const filters: { id: Filter; label: string; n: number }[] = [
-    { id: 'tous', label: 'Tous', n: fleet.machines.length },
-    { id: 'bad', label: 'En retard', n: counts.bad },
-    { id: 'warn', label: 'À surveiller', n: counts.warn },
-    { id: 'ok', label: 'À jour', n: counts.ok },
+    { id: 'tous', label: t('atelier.all'), n: fleet.machines.length },
+    { id: 'bad', label: gt.state('bad'), n: counts.bad },
+    { id: 'warn', label: gt.state('warn'), n: counts.warn },
+    { id: 'ok', label: gt.state('ok'), n: counts.ok },
   ];
 
   return (
@@ -79,21 +85,21 @@ export function Atelier({
         {failure ? (
           <div className="g-notice" role="status">
             <Icon name="alert" />
-            <p>{FAILURE_TEXT[failure]}</p>
+            <p>{t(`atelier.failure.${FAILURE_KEY[failure]}`)}</p>
             {failure !== 'no-webgl' ? (
               <button type="button" className="btn btn-ghost g-btn-sm" onClick={onRetry}>
-                Réessayer la 3D
+                {t('atelier.retry3d')}
               </button>
             ) : null}
           </div>
         ) : null}
 
         <div className="g-atelier-head">
-          <p className="eyebrow">Mode atelier</p>
-          <h2 id="atelier-title">Le parc en un coup d’œil</h2>
+          <p className="eyebrow">{t('atelier.eyebrow')}</p>
+          <h2 id="atelier-title">{t('atelier.title')}</h2>
           <p className="muted">
-            Les mêmes fiches, sans 3D : de gros boutons pour saisir une intervention ou relever un compteur en quelques secondes, même avec
-            des gants.{canReturn ? ' La 3D est en pause pour économiser la batterie.' : ''}
+            {t('atelier.text')}
+            {canReturn ? ` ${t('atelier.paused')}` : ''}
           </p>
         </div>
 
@@ -101,7 +107,7 @@ export function Atelier({
           <div className="g-atelier-tools">
             <div className="field g-search">
               <label htmlFor="atelier-q" className="g-sr">
-                Rechercher une machine
+                {t('atelier.search')}
               </label>
               <span className="g-search-icon" aria-hidden="true">
                 <Icon name="search" />
@@ -110,12 +116,12 @@ export function Atelier({
                 id="atelier-q"
                 type="search"
                 value={query}
-                placeholder="Code, type, marque, n° de série…"
+                placeholder={t('atelier.searchPlaceholder')}
                 autoComplete="off"
                 onChange={(e) => setQuery(e.target.value)}
               />
             </div>
-            <div className="seg g-filter" role="group" aria-label="Filtrer par état">
+            <div className="seg g-filter" role="group" aria-label={t('atelier.filter')}>
               {filters.map((f) => (
                 <button key={f.id} type="button" aria-pressed={filter === f.id} onClick={() => setFilter(f.id)}>
                   {f.id !== 'tous' ? <i className={`dot ${f.id}`} aria-hidden="true" /> : null}
@@ -127,7 +133,7 @@ export function Atelier({
         ) : null}
 
         <p className="g-sr" aria-live="polite">
-          {fleet.machines.length ? `${plural(list.length, 'machine affichée', 'machines affichées')}` : ''}
+          {fleet.machines.length ? t('atelier.shown', { count: list.length, n: f.num(list.length) }) : ''}
         </p>
 
         {list.length ? (
@@ -147,57 +153,57 @@ export function Atelier({
                         <KindIcon kind={m.kind} />
                       </span>
                       <div>
-                        <p className="eyebrow">{machineEyebrow(m)}</p>
+                        <p className="eyebrow">{gt.eyebrow(m)}</p>
                         <h3>{m.code}</h3>
                         {m.brand || m.model ? <p className="g-acard-sub">{[m.brand, m.model].filter(Boolean).join(' ')}</p> : null}
                       </div>
                     </div>
                     <span className={`pill ${state === 'ok' ? '' : state}`}>
                       <i className={`dot ${state}`} aria-hidden="true" />
-                      {STATE_LABEL[state]}
+                      {gt.state(state)}
                     </span>
                   </div>
                   <dl className="a-meta g-ameta">
                     <div>
-                      <dt>Compteur</dt>
-                      <dd>{hrs(Number(m.hours))}</dd>
+                      <dt>{t('atelier.meter')}</dt>
+                      <dd>{f.hours(Number(m.hours))}</dd>
                     </div>
                     {next ? (
                       <div>
                         <dt>{next.schedule.label}</dt>
-                        <dd className={next.state === 'ok' ? undefined : `is-${next.state}`}>{next.text}</dd>
+                        <dd className={next.state === 'ok' ? undefined : `is-${next.state}`}>{dt.dueText(next)}</dd>
                       </div>
                     ) : null}
                     <div>
-                      <dt>Coûts 12 mois</dt>
-                      <dd>{chf(cost)}</dd>
+                      <dt>{t('atelier.cost12')}</dt>
+                      <dd>{f.money(cost)}</dd>
                     </div>
                     {open ? (
                       <div>
-                        <dt>Réparations</dt>
-                        <dd className="is-warn">{open > 1 ? `${grp(open)} ouvertes` : '1 ouverte'}</dd>
+                        <dt>{t('atelier.repairs')}</dt>
+                        <dd className="is-warn">{t('atelier.openCount', { count: open, n: f.num(open) })}</dd>
                       </div>
                     ) : last ? (
                       <div>
-                        <dt>Dernière saisie</dt>
-                        <dd>{dateCH(last)}</dd>
+                        <dt>{t('atelier.lastEntry')}</dt>
+                        <dd>{f.date(last)}</dd>
                       </div>
                     ) : null}
                   </dl>
                   <div className="a-btns g-abtns">
                     <button type="button" className="btn btn-primary" onClick={() => openModal({ type: 'entry', machineId: m.id })}>
                       <Icon name="plus" />
-                      Intervention
-                      <span className="g-sr"> sur {m.code}</span>
+                      {t('atelier.work')}
+                      <span className="g-sr">{t('atelier.workSr', { code: m.code })}</span>
                     </button>
                     <button type="button" className="btn btn-soft" onClick={() => openModal({ type: 'hours', machineId: m.id })}>
                       <Icon name="clock" />
-                      Compteur
-                      <span className="g-sr"> de {m.code}</span>
+                      {t('atelier.meterButton')}
+                      <span className="g-sr">{t('atelier.meterSr', { code: m.code })}</span>
                     </button>
                     <button type="button" className="btn btn-soft" data-fiche={m.id} onClick={() => onOpen(m.id)}>
-                      Fiche
-                      <span className="g-sr"> de {m.code}</span>
+                      {t('atelier.file')}
+                      <span className="g-sr">{t('atelier.fileSr', { code: m.code })}</span>
                       <Icon name="chevron-right" />
                     </button>
                   </div>
@@ -207,8 +213,8 @@ export function Atelier({
           </ul>
         ) : fleet.machines.length ? (
           <div className="empty">
-            <b>Aucune machine ne correspond</b>
-            <span>Essayez un autre mot ou retirez le filtre.</span>
+            <b>{t('atelier.noMatchTitle')}</b>
+            <span>{t('atelier.noMatchText')}</span>
             <button
               type="button"
               className="btn btn-soft g-btn-sm"
@@ -217,17 +223,13 @@ export function Atelier({
                 setFilter('tous');
               }}
             >
-              Tout afficher
+              {t('atelier.showAll')}
             </button>
           </div>
         ) : (
           <div className="empty">
-            <b>Le parc est vide</b>
-            <span>
-              {can.manageFleet(role)
-                ? 'Ajoutez votre première machine : son carnet, ses échéances et ses coûts se rempliront au fil des interventions.'
-                : 'Aucune machine pour l’instant. Un responsable du parc peut les ajouter.'}
-            </span>
+            <b>{t('atelier.emptyTitle')}</b>
+            <span>{can.manageFleet(role) ? t('welcome.copyEmpty') : t('app.emptyRead')}</span>
           </div>
         )}
 
@@ -235,13 +237,13 @@ export function Atelier({
           {can.manageFleet(role) ? (
             <button type="button" className="btn btn-primary" onClick={onAdd}>
               <Icon name="plus" />
-              Ajouter une machine
+              {t('app.addMachine')}
             </button>
           ) : null}
           {canReturn ? (
             <button type="button" className="btn btn-ghost" onClick={onReturn}>
               <Icon name="garage" />
-              Retour au garage 3D
+              {t('atelier.back')}
             </button>
           ) : null}
         </div>

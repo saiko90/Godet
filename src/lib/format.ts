@@ -143,7 +143,7 @@ export interface Format {
   readonly currency: string;
   /** Abréviation du jour : « j », « T », « g », « d ». */
   readonly daysShort: string;
-  /** Nombre groupé : 6’842 (Suisse), 6.842 (Allemagne, Italie), 6 842 (France), 6,842 (anglais hors Suisse). */
+  /** Nombre groupé selon le pays : 6’842 (Suisse), 6.842 (Allemagne, Italie), 6 842 (France), 6,842 (Royaume-Uni). */
   num(n: number | null | undefined, decimals?: number): string;
   /** Compteur : « 6’842 h » (une décimale si nécessaire). */
   hours(n: number | null | undefined): string;
@@ -165,6 +165,21 @@ export interface Format {
 
 const SWISS = new Set(['CH', 'LI']);
 const DAYS_SHORT: Record<FormatLocale, string> = { fr: 'j', de: 'T', it: 'g', en: 'd' };
+
+/**
+ * Chiffres et montants hors de Suisse : les conventions du pays de l'entreprise, dans toutes les langues (comme
+ * « 6’842 h » en Suisse) : « 6.842 h » et « 1.240 € » pour une entreprise allemande, que l'interface soit en
+ * allemand, en français ou en anglais. Sans cela, « en-DE » mélangeait « 1.240,50 » et « €1,240.50 » sur une même
+ * page. Pays absents de la liste : langue de l'interface + pays.
+ */
+const NUMBER_LOCALE: Record<string, string> = {
+  DE: 'de-DE',
+  AT: 'de-AT',
+  IT: 'it-IT',
+  FR: 'fr-FR',
+  GB: 'en-GB',
+  US: 'en-US',
+};
 const NBSP = ' ';
 
 function swissGroup(n: number, decimals: number): string {
@@ -181,18 +196,24 @@ export function makeFormat(settings: FormatSettings): Format {
   const currency = (settings.currency || (SWISS.has(country) ? 'CHF' : 'EUR')).toUpperCase();
   const tag = `${locale}-${country === 'OTHER' ? 'CH' : country}`;
   const swiss = SWISS.has(country);
+  // Langue des chiffres (voir NUMBER_LOCALE). Groupes de milliers dès 1’000 dans toutes les langues : sans
+  // « always », l'italien de Node écrit « 6842 » et celui des navigateurs « 6.842 » (écart d'hydratation React).
+  const numTag = NUMBER_LOCALE[country] ?? tag;
+  const grouping = 'always' as const;
 
   const numCache = new Map<number, Intl.NumberFormat>();
   const nf = (d: number) => {
     let f = numCache.get(d);
     if (!f) {
-      f = new Intl.NumberFormat(tag, { minimumFractionDigits: d, maximumFractionDigits: d });
+      f = new Intl.NumberFormat(numTag, { minimumFractionDigits: d, maximumFractionDigits: d, useGrouping: grouping });
       numCache.set(d, f);
     }
     return f;
   };
   const moneyFmt = (d: number) =>
-    new Intl.NumberFormat(tag, { style: 'currency', currency, minimumFractionDigits: d, maximumFractionDigits: d });
+    new Intl.NumberFormat(numTag, {
+      style: 'currency', currency, minimumFractionDigits: d, maximumFractionDigits: d, useGrouping: grouping,
+    });
   const money0 = swiss ? null : moneyFmt(0);
   const money2f = swiss ? null : moneyFmt(2);
 
@@ -261,8 +282,8 @@ export function makeFormat(settings: FormatSettings): Format {
       if (bytes == null) return '—';
       const u = locale === 'fr' ? ['o', 'ko', 'Mo'] : ['B', 'KB', 'MB'];
       if (bytes < 1024) return `${bytes}${NBSP}${u[0]}`;
-      if (bytes < 1024 * 1024) return `${new Intl.NumberFormat(tag, { maximumFractionDigits: 0 }).format(bytes / 1024)}${NBSP}${u[1]}`;
-      return `${new Intl.NumberFormat(tag, { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(bytes / 1024 / 1024)}${NBSP}${u[2]}`;
+      if (bytes < 1024 * 1024) return `${new Intl.NumberFormat(numTag, { maximumFractionDigits: 0 }).format(bytes / 1024)}${NBSP}${u[1]}`;
+      return `${new Intl.NumberFormat(numTag, { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(bytes / 1024 / 1024)}${NBSP}${u[2]}`;
     },
   };
 }

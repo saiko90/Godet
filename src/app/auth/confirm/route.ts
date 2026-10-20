@@ -1,14 +1,14 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import type { EmailOtpType } from '@supabase/supabase-js';
+import { linkErrorPath, LOCALE_COOKIE, localeOr, localizePath, safePath } from '@/components/site/nav';
 import { supabaseServer } from '@/lib/supabase/server';
-import { linkErrorPath, safePath } from '@/components/site/nav';
 
 /**
  * Vérification d'un lien d'e-mail personnalisé (modèles Supabase « token_hash »), valable dans n'importe quel
- * navigateur. Exemple de modèle « Confirm signup » :
- *   {{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email&suite=/bienvenue
+ * navigateur. Exemple de modèle « Confirm signup » (la suite garde la langue de l'inscription) :
+ *   {{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email&suite={{ .RedirectTo }}
  * et « Reset password » :
- *   {{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=recovery&suite=/mot-de-passe
+ *   {{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=recovery&suite={{ .RedirectTo }}
  */
 const TYPES = ['signup', 'invite', 'magiclink', 'recovery', 'email_change', 'email'] as const satisfies readonly EmailOtpType[];
 type OtpType = (typeof TYPES)[number];
@@ -35,7 +35,7 @@ function resolveSuite(raw: string | null, request: NextRequest, fallback: string
       return fallback;
     }
   }
-  // Adresse de retour prévue pour /auth/callback : on reprend la suite qu'elle contient.
+  // Adresse de retour prévue pour /auth/callback : on reprend la suite (localisée) qu'elle contient.
   if (candidate.startsWith('/auth/callback')) {
     const inner = new URL(candidate, request.url).searchParams.get('suite');
     return safePath(inner, fallback);
@@ -45,10 +45,11 @@ function resolveSuite(raw: string | null, request: NextRequest, fallback: string
 
 export async function GET(request: NextRequest) {
   const params = request.nextUrl.searchParams;
+  const locale = localeOr(request.cookies.get(LOCALE_COOKIE)?.value);
   const tokenHash = params.get('token_hash');
   const typeParam = params.get('type');
   const type = TYPES.find((t) => t === typeParam);
-  const fallback = type ? DEFAULT_NEXT[type] : '/garage';
+  const fallback = localizePath(type ? DEFAULT_NEXT[type] : '/garage', locale);
   const suite = resolveSuite(params.get('suite') ?? params.get('next') ?? params.get('redirect_to'), request, fallback);
 
   if (tokenHash && type) {
@@ -58,5 +59,5 @@ export async function GET(request: NextRequest) {
     console.warn('[auth/confirm] lien refusé :', error.code ?? error.message);
   }
 
-  return NextResponse.redirect(new URL(linkErrorPath(suite), request.url));
+  return NextResponse.redirect(new URL(linkErrorPath(suite, locale), request.url));
 }

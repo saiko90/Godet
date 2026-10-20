@@ -1,1 +1,57 @@
-{}
+{
+  "layout": {
+    "tagline": "Le carnet d’entretien de vos machines de chantier",
+    "signature": "Godet · une application de Swiss Digital Studio",
+    "automatic": "Cet e-mail a été envoyé automatiquement, merci de ne pas y répondre."
+  },
+  "rappels": {
+    "subject": {
+      "one": "Godet — {summary} chez {org}",
+      "many": "Godet — {summary} dans {orgs, plural, one {# entreprise} other {# entreprises}}"
+    },
+    "summary": {
+      "dues": "{count, plural, one {# échéance à prévoir} other {# échéances à prévoir}}",
+      "duesOverdue": "{count, plural, one {# échéance à prévoir} other {# échéances à prévoir}} (dont {overdue, plural, one {# dépassée} other {# dépassées}})",
+      "repairs": "{count, plural, one {# réparation ouverte} other {# réparations ouvertes}}",
+      "both": "{dues} et {repairs}"
+    },
+    "title": "{frequency, select, quotidien {Votre rappel du jour} other {Votre rappel de la semaine}}",
+    "greeting": "Bonjour {name},",
+    "greetingAnonymous": "Bonjour,",
+    "intro": "Voici ce qui demande votre attention : {summary}.",
+    "sections": {
+      "dues": "Échéances",
+      "repairs": "Réparations ouvertes"
+    },
+    "state": {
+      "overdue": "En retard",
+      "soon": "À prévoir"
+    },
+    "item": {
+      "plannedOn": "prévue le {date}",
+      "counter": "compteur : {hours}",
+      "reported": "signalée le {date}",
+      "cost": "coût à ce jour : {amount}"
+    },
+    "more": "{count, plural, one {Et # autre point à voir dans le garage.} other {Et # autres points à voir dans le garage.}}",
+    "cta": "Ouvrir le garage",
+    "why": "{frequency, select, quotidien {Vous recevez ce rappel chaque matin, seulement s’il y a quelque chose à signaler.} other {Vous recevez ce rappel le lundi matin, seulement s’il y a quelque chose à signaler.}}",
+    "thresholds": "Échéances signalées {days, plural, one {# jour} other {# jours}} à l’avance pour les dates et {hours} à l’avance pour les compteurs d’heures.",
+    "settings": "Modifier ou désactiver les rappels"
+  },
+  "invitation": {
+    "subject": "{inviter} vous invite à rejoindre {org} sur Godet",
+    "subjectAnonymous": "Invitation à rejoindre {org} sur Godet",
+    "title": "Rejoignez {org} sur Godet",
+    "greeting": "Bonjour,",
+    "intro": "{inviter} vous invite à rejoindre {org} sur Godet, le carnet d’entretien numérique des machines de chantier.",
+    "introAnonymous": "Une invitation vous attend pour rejoindre {org} sur Godet, le carnet d’entretien numérique des machines de chantier.",
+    "role": "Votre rôle : {role}. {hint}",
+    "cta": "Accepter l’invitation",
+    "expires": "Le lien est valable jusqu’au {date}.",
+    "expiresDefault": "Le lien est valable 14 jours.",
+    "account": "Pas encore de compte ? Vous le créerez en quelques secondes avec cette adresse e-mail.",
+    "linkHelp": "Si le bouton ne fonctionne pas, copiez ce lien dans votre navigateur :",
+    "ignore": "Vous ne vous attendiez pas à cette invitation ? Ignorez simplement cet e-mail."
+  }
+}

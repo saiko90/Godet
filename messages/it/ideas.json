@@ -1,1 +1,76 @@
-{}
+{
+  "meta": {
+    "title": "Cassetta delle idee",
+    "description": "Proponga un’idea per migliorare Godet, il libretto di manutenzione delle macchine edili, e segua le risposte del team."
+  },
+  "eyebrow": "Cassetta delle idee",
+  "title": "Miglioriamo Godet insieme",
+  "lead": "Le manca una funzione, un dettaglio La ostacola nel lavoro di tutti i giorni? Descriva la Sua idea. Leggiamo ogni proposta e Le diciamo cosa ne facciamo.",
+  "how": {
+    "title": "Come funziona",
+    "send": "Descrive la Sua idea, in una frase o nei dettagli.",
+    "review": "Il team la esamina e le assegna uno stato: in esame, prevista, realizzata o scartata, con una risposta se necessario.",
+    "follow": "Dopo l’accesso al Suo account, segue le Sue idee e le nostre risposte su questa pagina."
+  },
+  "form": {
+    "title": "La Sua idea",
+    "required": "obbligatorio",
+    "ideaTitle": "La Sua idea in una frase",
+    "ideaTitleHint": "Per esempio: «Leggere il contaore con lo smartphone».",
+    "category": "Ambito",
+    "categories": {
+      "3d": "Showroom 3D",
+      "carnet": "Libretto di manutenzione",
+      "echeances": "Scadenze",
+      "couts": "Costi",
+      "medias": "Foto, video, documenti",
+      "equipe": "Squadra e ruoli",
+      "notifications": "Promemoria ed e-mail",
+      "mobile": "Smartphone e tablet",
+      "autre": "Altro"
+    },
+    "details": "Dettagli",
+    "detailsHint": "La situazione in cantiere, il problema riscontrato, cosa La aiuterebbe… Al massimo 4000\u00a0caratteri.",
+    "email": "Indirizzo e-mail",
+    "emailHint": "Per poterLe rispondere. Ha un account? <link>Acceda</link> per seguire le Sue idee.",
+    "signedInAs": "Accesso effettuato come <b>{email}</b>: la Sua idea sarà collegata al Suo account.",
+    "trap": "Non compilare questo campo",
+    "submit": "Invia la mia idea",
+    "pending": "Invio…",
+    "privacy": "I Suoi dati servono a gestire la Sua idea. Veda la nostra <link>informativa sulla privacy</link>."
+  },
+  "sent": {
+    "title": "Grazie per la Sua idea!",
+    "text": "È arrivata a destinazione. La esamineremo e, se necessario, Le risponderemo per e-mail.",
+    "textSignedIn": "È arrivata a destinazione e ora figura in «Le mie idee», dove vedrà le nostre risposte.",
+    "again": "Proponi un’altra idea"
+  },
+  "mine": {
+    "title": "Le mie idee",
+    "count": "{count, plural, =0 {Nessuna idea per ora} one {# idea} other {# idee}}",
+    "empty": "Non ha ancora proposto idee. La prima potrebbe essere quella giusta!",
+    "loadError": "Non è stato possibile caricare le Sue idee. Ricarichi la pagina.",
+    "sentOn": "Inviata il {date}",
+    "updatedOn": "aggiornata il {date}",
+    "answer": "Risposta del team",
+    "anonymous": "<link>Acceda</link> per ritrovare le Sue idee e le risposte del team."
+  },
+  "status": {
+    "nouvelle": "Ricevuta",
+    "a_l_etude": "In esame",
+    "prevue": "Prevista",
+    "faite": "Realizzata",
+    "refusee": "Scartata"
+  },
+  "errors": {
+    "checkFields": "Verifichi i campi segnalati.",
+    "titleShort": "Descriva la Sua idea in poche parole (almeno 3\u00a0caratteri).",
+    "titleLong": "Al massimo 120\u00a0caratteri.",
+    "detailsLong": "Al massimo 4000\u00a0caratteri.",
+    "emailRequired": "Indichi il Suo indirizzo e-mail, così potremo risponderLe.",
+    "emailInvalid": "Indirizzo incompleto. Esempio: nome@impresa.ch",
+    "rateLimited": "Oggi ha già inviato molte idee: grazie! Riprovi domani.",
+    "busy": "Il servizio è molto richiesto. Riprovi tra qualche minuto.",
+    "generic": "Non è stato possibile inviare l’idea. Riprovi tra un istante."
+  }
+}

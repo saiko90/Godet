@@ -1,1 +1,76 @@
-{}
+{
+  "meta": {
+    "title": "Ideenbox",
+    "description": "Schlagen Sie eine Idee vor, um Godet, das Wartungsheft für Baumaschinen, zu verbessern, und verfolgen Sie die Antworten des Teams."
+  },
+  "eyebrow": "Ideenbox",
+  "title": "Gemeinsam machen wir Godet besser",
+  "lead": "Fehlt Ihnen eine Funktion, stört Sie im Alltag ein Detail? Beschreiben Sie Ihre Idee. Wir lesen jeden Vorschlag und sagen Ihnen, was wir daraus machen.",
+  "how": {
+    "title": "So läuft es ab",
+    "send": "Sie beschreiben Ihre Idee – in einem Satz oder ausführlich.",
+    "review": "Das Team prüft sie und gibt ihr einen Status: in Prüfung, geplant, umgesetzt oder verworfen, bei Bedarf mit einer Antwort.",
+    "follow": "Wenn Sie angemeldet sind, verfolgen Sie Ihre Ideen und unsere Antworten auf dieser Seite."
+  },
+  "form": {
+    "title": "Ihre Idee",
+    "required": "Pflicht",
+    "ideaTitle": "Ihre Idee in einem Satz",
+    "ideaTitleHint": "Zum Beispiel: «Betriebsstunden mit dem Handy abfotografieren und erfassen».",
+    "category": "Bereich",
+    "categories": {
+      "3d": "3D-Showroom",
+      "carnet": "Wartungsheft",
+      "echeances": "Termine",
+      "couts": "Kosten",
+      "medias": "Fotos, Videos, Dokumente",
+      "equipe": "Team und Rollen",
+      "notifications": "Erinnerungen und E-Mails",
+      "mobile": "Handy und Tablet",
+      "autre": "Anderes"
+    },
+    "details": "Details",
+    "detailsHint": "Die Situation auf der Baustelle, das Problem, was Ihnen helfen würde… Höchstens 4000\u00a0Zeichen.",
+    "email": "E-Mail-Adresse",
+    "emailHint": "Damit wir Ihnen antworten können. Sie haben ein Konto? <link>Melden Sie sich an</link>, um Ihre Ideen zu verfolgen.",
+    "signedInAs": "Angemeldet als <b>{email}</b>: Ihre Idee wird mit Ihrem Konto verknüpft.",
+    "trap": "Dieses Feld bitte leer lassen",
+    "submit": "Idee senden",
+    "pending": "Wird gesendet…",
+    "privacy": "Ihre Daten dienen dazu, Ihre Idee zu bearbeiten. Siehe unsere <link>Datenschutzerklärung</link>."
+  },
+  "sent": {
+    "title": "Danke für Ihre Idee!",
+    "text": "Sie ist bei uns angekommen. Wir prüfen sie und antworten Ihnen bei Bedarf per E-Mail.",
+    "textSignedIn": "Sie ist bei uns angekommen und steht jetzt unter «Meine Ideen», wo Sie auch unsere Antworten sehen.",
+    "again": "Weitere Idee vorschlagen"
+  },
+  "mine": {
+    "title": "Meine Ideen",
+    "count": "{count, plural, =0 {Noch keine Idee} one {# Idee} other {# Ideen}}",
+    "empty": "Sie haben noch keine Idee vorgeschlagen. Vielleicht ist die erste gleich die beste!",
+    "loadError": "Ihre Ideen konnten nicht geladen werden. Bitte laden Sie die Seite neu.",
+    "sentOn": "Gesendet am {date}",
+    "updatedOn": "aktualisiert am {date}",
+    "answer": "Antwort des Teams",
+    "anonymous": "<link>Melden Sie sich an</link>, um Ihre Ideen und die Antworten des Teams zu sehen."
+  },
+  "status": {
+    "nouvelle": "Eingegangen",
+    "a_l_etude": "In Prüfung",
+    "prevue": "Geplant",
+    "faite": "Umgesetzt",
+    "refusee": "Verworfen"
+  },
+  "errors": {
+    "checkFields": "Bitte prüfen Sie die markierten Felder.",
+    "titleShort": "Beschreiben Sie Ihre Idee in wenigen Worten (mindestens 3\u00a0Zeichen).",
+    "titleLong": "Höchstens 120\u00a0Zeichen.",
+    "detailsLong": "Höchstens 4000\u00a0Zeichen.",
+    "emailRequired": "Bitte geben Sie Ihre E-Mail-Adresse an, damit wir Ihnen antworten können.",
+    "emailInvalid": "Adresse unvollständig. Beispiel: name@firma.ch",
+    "rateLimited": "Sie haben heute schon viele Ideen gesendet – vielen Dank! Bitte versuchen Sie es morgen wieder.",
+    "busy": "Der Dienst ist stark ausgelastet. Bitte versuchen Sie es in einigen Minuten erneut.",
+    "generic": "Die Idee konnte nicht gesendet werden. Bitte versuchen Sie es gleich noch einmal."
+  }
+}

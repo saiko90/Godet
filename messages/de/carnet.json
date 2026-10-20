@@ -1,1 +1,145 @@
-{}
+{
+  "meta": {
+    "title": "Wartungsheft",
+    "titleCode": "Wartungsheft {code}"
+  },
+  "loading": "Das Wartungsheft wird vorbereitet…",
+  "notFound": {
+    "title": "Wartungsheft nicht gefunden",
+    "text": "Diese Maschine existiert nicht, oder sie gehört zu einem anderen Unternehmen. Öffnen Sie das Wartungsheft über das Maschinenblatt in Ihrer Garage.",
+    "open": "Meine Garage öffnen"
+  },
+  "bar": {
+    "skip": "Zum Wartungsheft springen",
+    "settings": "Einstellungen",
+    "garage": "Garage",
+    "title": "Wartungsheft · {code}",
+    "print": "Drucken / als PDF speichern",
+    "tip": "Für eine PDF-Datei wählen Sie «Als PDF speichern» als Drucker."
+  },
+  "print": {
+    "margin": "{code} · {org} · Godet-Wartungsheft",
+    "page": "Seite"
+  },
+  "head": {
+    "label": "Wartungsheft von {code}",
+    "brand": "Wartungsheft",
+    "printedOn": "Erstellt am {date}"
+  },
+  "identity": {
+    "label": "Angaben zur Maschine",
+    "meterOn": "Betriebsstunden abgelesen am {date}",
+    "brand": "Marke",
+    "model": "Modell",
+    "year": "Baujahr",
+    "status": "Status",
+    "archivedOn": "Archiviert am {date}",
+    "inService": "Im Einsatz",
+    "serial": "Seriennummer",
+    "plate": "Kennzeichen",
+    "since": "In Godet seit",
+    "media": "Archivierte Medien",
+    "photos": "{count, plural, one {{n} Foto} other {{n} Fotos}}",
+    "videos": "{count, plural, one {{n} Video} other {{n} Videos}}",
+    "documents": "{count, plural, one {{n} Dokument} other {{n} Dokumente}}",
+    "noMedia": "Keine"
+  },
+  "kpis": {
+    "entries": "Einträge",
+    "removed": "{count, plural, one {+ {n} entfernt} other {+ {n} entfernt}}",
+    "recorded": "erfasst",
+    "keptSince": "Geführt seit",
+    "lastEntry": "letzter Eintrag am {date}",
+    "noEntry": "kein Eintrag",
+    "totalCost": "Gesamtkosten",
+    "sinceStart": "seit Beginn",
+    "last12": "Letzte 12\u00a0Monate",
+    "last12Hint": "Wartung, Reparaturen, Ersatzteile",
+    "downtime": "Stillstand",
+    "downtimeHint": "durch Reparaturen"
+  },
+  "dues": {
+    "title": "Nächste Termine",
+    "asOf": "Stand {date}",
+    "due": "Termin",
+    "rhythm": "Intervall",
+    "last": "Zuletzt",
+    "planned": "Geplant",
+    "state": "Status",
+    "around": "etwa am {date}",
+    "asap": "so bald wie möglich erledigen",
+    "empty": "Keine aktiven Termine für diese Maschine.",
+    "states": {
+      "ok": "Aktuell",
+      "warn": "Bald fällig",
+      "bad": "Überfällig"
+    },
+    "every": {
+      "hours": "Alle {hours}",
+      "once": "Einmalig",
+      "years": "{count, plural, one {Jährlich} other {Alle {count} Jahre}}",
+      "months": "{count, plural, one {Monatlich} other {Alle {count} Monate}}",
+      "days": "{count, plural, one {Täglich} other {Alle {count} Tage}}"
+    }
+  },
+  "timeline": {
+    "title": "Vollständiger Verlauf",
+    "order": "vom ältesten zum neuesten Eintrag",
+    "date": "Datum",
+    "meter": "Stunden",
+    "type": "Art",
+    "work": "Arbeit",
+    "by": "Ausgeführt von",
+    "cost": "Kosten",
+    "empty": "Noch keine Arbeiten erfasst.",
+    "ref": "Ref. {ref}",
+    "qty": "Menge {qty}",
+    "warrantyUntil": "Garantie bis {date}",
+    "downtime": "Stillstand {hours}",
+    "removedTag": "Entfernt",
+    "removedOn": "am {date}",
+    "removedBy": "von {name}",
+    "reason": "Grund: {reason}.",
+    "noReason": "nicht angegeben",
+    "split": "Teile {parts} · Arbeit {labour}"
+  },
+  "repairs": {
+    "title": "Reparaturen",
+    "count": "{count, plural, =0 {keine Reparatur} one {{n} Reparatur} other {{n} Reparaturen}}",
+    "date": "Datum",
+    "meter": "Stunden",
+    "repair": "Reparatur",
+    "state": "Status",
+    "downtime": "Stillstand",
+    "cost": "Kosten",
+    "empty": "Keine Reparaturen erfasst."
+  },
+  "parts": {
+    "title": "Ersatzteile",
+    "count": "{count, plural, =0 {kein Ersatzteil} one {{n} Teil oder Satz} other {{n} Teile oder Sätze}}",
+    "date": "Datum",
+    "part": "Teil",
+    "ref": "Referenz",
+    "qty": "Menge",
+    "supplier": "Lieferant",
+    "warranty": "Garantie",
+    "until": "bis {date}",
+    "cost": "Kosten",
+    "empty": "Keine Ersatzteile erfasst."
+  },
+  "totals": {
+    "title": "Summen",
+    "note": "entfernte Einträge nicht mitgezählt",
+    "category": "Kategorie",
+    "last12": "Letzte 12\u00a0Monate",
+    "sinceStart": "Seit Beginn des Wartungshefts",
+    "maintenanceHint": "Wartungen, Prüfungen, Inspektionen, Notizen",
+    "total": "Total"
+  },
+  "notes": "Notizen zur Maschine",
+  "law": {
+    "swiss": "<b>Art. 32b VUV</b>: «Die Instandhaltung ist zu dokumentieren.» Dieses Wartungsheft löscht keine Einträge: Ein entfernter Eintrag bleibt sichtbar, mit Datum, Verfasser und Grund.",
+    "general": "Dieses Wartungsheft löscht keine Einträge: Ein entfernter Eintrag bleibt sichtbar, mit Datum, Verfasser und Grund."
+  },
+  "foot": "<b>Wartungsheft geführt mit Godet</b> — gedruckt am {date}"
+}

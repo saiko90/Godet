@@ -1,1 +1,57 @@
-{}
+{
+  "layout": {
+    "tagline": "Il libretto di manutenzione delle Sue macchine edili",
+    "signature": "Godet · un’applicazione di Swiss Digital Studio",
+    "automatic": "Questa e-mail è stata inviata automaticamente. La preghiamo di non rispondere."
+  },
+  "rappels": {
+    "subject": {
+      "one": "Godet — {summary} presso {org}",
+      "many": "Godet — {summary} in {orgs, plural, one {# impresa} other {# imprese}}"
+    },
+    "summary": {
+      "dues": "{count, plural, one {# scadenza da pianificare} other {# scadenze da pianificare}}",
+      "duesOverdue": "{count, plural, one {# scadenza da pianificare} other {# scadenze da pianificare}} (di cui {overdue, plural, one {# superata} other {# superate}})",
+      "repairs": "{count, plural, one {# riparazione aperta} other {# riparazioni aperte}}",
+      "both": "{dues} e {repairs}"
+    },
+    "title": "{frequency, select, quotidien {Il Suo promemoria del giorno} other {Il Suo promemoria della settimana}}",
+    "greeting": "Buongiorno {name},",
+    "greetingAnonymous": "Buongiorno,",
+    "intro": "Ecco cosa richiede la Sua attenzione: {summary}.",
+    "sections": {
+      "dues": "Scadenze",
+      "repairs": "Riparazioni aperte"
+    },
+    "state": {
+      "overdue": "In ritardo",
+      "soon": "Da pianificare"
+    },
+    "item": {
+      "plannedOn": "prevista il {date}",
+      "counter": "contaore: {hours}",
+      "reported": "segnalata il {date}",
+      "cost": "costo finora: {amount}"
+    },
+    "more": "{count, plural, one {E # altro punto da vedere nel garage.} other {E altri # punti da vedere nel garage.}}",
+    "cta": "Apri il garage",
+    "why": "{frequency, select, quotidien {Riceve questo promemoria ogni mattina, solo se c’è qualcosa da segnalare.} other {Riceve questo promemoria il lunedì mattina, solo se c’è qualcosa da segnalare.}}",
+    "thresholds": "Le scadenze sono segnalate con {days, plural, one {# giorno} other {# giorni}} di anticipo per le date e con {hours} di anticipo per il contaore.",
+    "settings": "Modificare o disattivare i promemoria"
+  },
+  "invitation": {
+    "subject": "{inviter} La invita a unirsi a {org} su Godet",
+    "subjectAnonymous": "Invito a unirsi a {org} su Godet",
+    "title": "Si unisca a {org} su Godet",
+    "greeting": "Buongiorno,",
+    "intro": "{inviter} La invita a unirsi al garage di {org} su Godet, il libretto di manutenzione digitale delle macchine edili.",
+    "introAnonymous": "Un invito La aspetta: si unisca al garage di {org} su Godet, il libretto di manutenzione digitale delle macchine edili.",
+    "role": "Il Suo ruolo: {role}. {hint}",
+    "cta": "Accetta l’invito",
+    "expires": "Il link è valido fino al {date}.",
+    "expiresDefault": "Il link è valido 14 giorni.",
+    "account": "Non ha ancora un account? Lo crea in pochi secondi con questo indirizzo e-mail.",
+    "linkHelp": "Se il pulsante non funziona, copi questo link nel Suo browser:",
+    "ignore": "Non si aspettava questo invito? Ignori semplicemente questa e-mail."
+  }
+}

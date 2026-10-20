@@ -1,9 +1,13 @@
 import type { Metadata } from 'next';
-import { notFound, redirect } from 'next/navigation';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { notFound } from 'next/navigation';
 import { cache } from 'react';
 import { CarnetSheet, type CarnetData } from '@/components/site/carnet/CarnetSheet';
-import { isUuid } from '@/components/site/nav';
+import { isUuid, localizePath } from '@/components/site/nav';
+import { checkLocale, metaLocale, NO_INDEX } from '@/components/site/seo';
+import { redirect } from '@/i18n/navigation';
 import { todayISO } from '@/lib/format';
+import { localizeDefaultLabel } from '@/lib/repo/supabase';
 import { supabaseServer } from '@/lib/supabase/server';
 import type { Entry } from '@/lib/types';
 
@@ -55,7 +59,7 @@ const loadCarnet = cache(async (id: string): Promise<Loaded> => {
 
   const since = new Date(Date.now() - 150 * 86_400_000).toISOString();
   const [orgRes, entries, schedulesRes, readingsRes, photo, video, document] = await Promise.all([
-    supabase.from('organizations').select('name, canton').eq('id', machine.org_id).maybeSingle(),
+    supabase.from('organizations').select('name, canton, country, currency').eq('id', machine.org_id).maybeSingle(),
     allEntries(supabase, machine.id),
     supabase.from('schedules').select('*').eq('machine_id', machine.id).eq('active', true),
     supabase.from('hour_readings').select('*').eq('machine_id', machine.id).gte('read_at', since).order('read_at'),
@@ -79,6 +83,8 @@ const loadCarnet = cache(async (id: string): Promise<Loaded> => {
     data: {
       orgName: orgRes.data?.name ?? '',
       orgCanton: orgRes.data?.canton ?? null,
+      orgCountry: orgRes.data?.country ?? 'CH',
+      orgCurrency: orgRes.data?.currency ?? 'CHF',
       machine,
       entries,
       schedules: schedulesRes.data ?? [],
@@ -90,24 +96,37 @@ const loadCarnet = cache(async (id: string): Promise<Loaded> => {
   };
 });
 
-type Params = Promise<{ id: string }>;
+type Params = Promise<{ locale: string; id: string }>;
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
-  const { id } = await params;
-  let title = 'Carnet d’entretien';
+  const { locale: raw, id } = await params;
+  const locale = metaLocale(raw);
+  const t = await getTranslations({ locale, namespace: 'carnet.meta' });
+  let title = t('title');
   try {
     const loaded = await loadCarnet(id);
-    if (loaded.kind === 'ok') title = `Carnet ${loaded.data.machine.code}`;
+    if (loaded.kind === 'ok') title = t('titleCode', { code: loaded.data.machine.code });
   } catch {
     // La page affichera l'erreur.
   }
-  return { title, robots: { index: false, follow: false } };
+  return { title, robots: NO_INDEX };
 }
 
 export default async function CarnetPage({ params }: { params: Params }) {
-  const { id } = await params;
+  const { locale: raw, id } = await params;
+  const locale = checkLocale(raw);
+  setRequestLocale(locale);
   const loaded = await loadCarnet(id);
-  if (loaded.kind === 'anon') redirect(`/connexion?suite=${encodeURIComponent(`/carnet/${id}`)}`);
+  if (loaded.kind === 'anon') {
+    return redirect({ href: { pathname: '/connexion', query: { suite: localizePath(`/carnet/${id}`, locale) } }, locale });
+  }
   if (loaded.kind === 'missing') notFound();
-  return <CarnetSheet data={loaded.data} />;
+  // Échéances par défaut dans la langue de la page (comme au garage).
+  const td = await getTranslations({ locale, namespace: 'garage.schedules.defaults' });
+  const labels = { service: td('service'), safety: td('safety') };
+  const data = {
+    ...loaded.data,
+    schedules: loaded.data.schedules.map((s) => ({ ...s, label: localizeDefaultLabel(s.label, labels) })),
+  };
+  return <CarnetSheet data={data} locale={locale} />;
 }

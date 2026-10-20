@@ -1,1 +1,90 @@
-{}
+{
+  "meta": {
+    "title": "Privacy policy",
+    "description": "How Godet processes your data: controller, data processed, purposes, business prospecting, email reminders, processors, retention and your rights under the Swiss FADP and the GDPR."
+  },
+  "eyebrow": "Data protection",
+  "title": "Privacy policy",
+  "updated": "Last updated: {date}",
+  "intro": "Godet is the digital maintenance log for construction machinery. This page explains what data we process, why, where it is hosted and what your rights are. It is based on the Swiss Federal Act on Data Protection (FADP) and, for people located in the European Union, on the General Data Protection Regulation (GDPR).",
+  "controller": {
+    "title": "Controller",
+    "text": "<strong>Swiss Digital Studio</strong>, Valais, Switzerland, publisher of Godet. If you have any questions about your data, write to us using the <contact>contact form</contact> or via <studio>www.swissdigitalstudio.ch</studio>.",
+    "customer": "The data your company enters in Godet (fleet, work, media) belongs to your company: it decides what goes in, and we process it on its behalf."
+  },
+  "data": {
+    "title": "Data we process",
+    "items": {
+      "account": "<strong>Account</strong>: name, email address, password (never stored in plain text), chosen language, the companies you belong to and your role in each.",
+      "fleet": "<strong>Fleet data</strong>: machines, work, due dates, hour meter readings, costs and notes entered by your company, with the name of the person who made each entry.",
+      "media": "<strong>Uploaded media</strong>: photos, videos and documents (invoices, reports) added to machines.",
+      "journal": "<strong>Change log</strong>: who created, edited or withdrew what, and when.",
+      "contact": "<strong>Contact form</strong>: name, email address, company, phone, country, fleet size, subject and message, and whether you agree to be contacted again.",
+      "ideas": "<strong>Ideas box</strong>: your idea, its area and details, your email address or account, and our team’s replies.",
+      "reminders": "<strong>Email reminders</strong>: your preferences (on or off, frequency, lead times) and a record of what was sent.",
+      "prospects": "<strong>Business prospecting</strong>: business contact details of companies (name, address, website, business phone and email, line of business) taken from public sources, and the history of our contacts with them.",
+      "technical": "<strong>Technical data</strong>: information needed for operation and security, such as the IP address and browser type in server logs."
+    },
+    "demo": "The 3D demo works without an account: what you do there stays in your browser. If you arrive through a demo link carrying a tracking code, we count the visit (code, page, language, date), without any other data about you."
+  },
+  "purposes": {
+    "title": "Purposes and legal bases",
+    "items": {
+      "service": "Keeping your machines’ maintenance log, calculating due dates and costs, and managing your team’s accounts, invitations and access rights (contract).",
+      "emails": "Sending account-related emails (address confirmation, new password) and, if you keep them switched on, due-date reminders (contract).",
+      "contact": "Replying to your messages and ideas, and improving Godet (pre-contractual steps, legitimate interest).",
+      "prospecting": "Introducing Godet to companies that may need it (legitimate interest, see below).",
+      "security": "Keeping the service secure and preventing abuse (legitimate interest, legal obligations)."
+    },
+    "basis": "For people located in the EU, these legal bases correspond to Article 6(1)(b) (contract), (c) (legal obligation) and (f) (legitimate interest) GDPR. Your agreement to be contacted again is based on your consent (Article 6(1)(a)), which you can withdraw at any time.",
+    "noSale": "We do not sell your data and do not use it for advertising."
+  },
+  "prospecting": {
+    "title": "Prospecting with companies",
+    "text": "Swiss Digital Studio introduces Godet to construction, civil engineering and machinery hire companies by post, email, phone or LinkedIn. We only use publicly available business contact details (commercial registers, company websites, trade directories). Automated tools help us find these companies and prepare messages; every message is read and approved by a member of our team before it is sent.",
+    "object": "<strong>Right to object</strong>: you can object at any time, without giving a reason, to being contacted by us. Simply reply to our message or write to us using the <contact>contact form</contact>. We will then stop all contact and keep only the company name and the address concerned, so that we can respect your choice."
+  },
+  "reminders": {
+    "title": "Email reminders",
+    "text": "If you are a member of a company, Godet can email you the upcoming due dates for its fleet, in your language. You choose how often, or switch reminders off, under <reminders>Settings → Reminders</reminders>."
+  },
+  "cookies": {
+    "title": "Cookies and trackers",
+    "text": "Godet only uses technical cookies: one for your sign-in session, one that remembers the active company, one that keeps your chosen language (one year) and, if you arrive through a demo link, one for that link’s tracking code (30\u00a0days). Your browser also keeps a few garage preferences (sound, 3D quality) in its local storage. No advertising trackers and no third-party analytics."
+  },
+  "processors": {
+    "title": "Processors and hosting location",
+    "items": {
+      "supabase": "<strong>Supabase</strong>: database, authentication and file storage. Data is hosted in the European Union (Ireland).",
+      "vercel": "<strong>Vercel</strong>: hosting and delivery of the website.",
+      "email": "<strong>Email delivery provider</strong>: account emails and reminders."
+    },
+    "transfers": "These providers may be based outside Switzerland and the EU, for example in the United States. Where data is transferred there, we rely on an adequacy decision (by the Swiss Federal Council or the European Commission) or on recognised contractual safeguards such as the standard contractual clauses."
+  },
+  "security": {
+    "title": "Security",
+    "text": "All connections are encrypted (HTTPS). Each company sees only its own data: access rules are enforced by the database itself. Photos, videos and documents are kept in private storage and can only be opened through temporary links."
+  },
+  "retention": {
+    "title": "Retention",
+    "account": "Your account and company data is kept for as long as the account is active. The maintenance log serves as evidence: a withdrawn entry remains visible with its reason. When the contract ends, the data is deleted unless the law requires us to keep it. Before then, you can print each machine’s log or save it as a PDF.",
+    "messages": "Contact messages and ideas are kept for as long as needed to handle them, then for no more than two years after the last exchange. Prospecting data is deleted no later than two years after the last unanswered contact; if you object, we keep only what is needed to respect your objection."
+  },
+  "rights": {
+    "title": "Your rights",
+    "intro": "At any time, you can ask for:",
+    "items": {
+      "access": "access to the data concerning you;",
+      "rectify": "its correction if it is inaccurate;",
+      "erase": "its deletion, within the limits of legal obligations;",
+      "portability": "a copy in a commonly used format;",
+      "restrict": "restriction of its processing — or you can object to it, in particular to prospecting;",
+      "consent": "the withdrawal of your consent, with effect for the future."
+    },
+    "box": "You can change your name and language directly under <account>Settings → My account</account>. For any other request, write to us using the <contact>contact form</contact>. You can also contact the Swiss Federal Data Protection and Information Commissioner (FDPIC) or, if you are in the EU, the data protection authority in your country."
+  },
+  "changes": {
+    "title": "Changes",
+    "text": "We may update this policy, for example as the service evolves. The date of the last update is shown at the top of this page."
+  }
+}

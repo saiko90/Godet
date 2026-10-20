@@ -1,18 +1,12 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Icon } from '@/components/Icons';
 
 /** Copie un texte (lien d'invitation) dans le presse-papiers, avec confirmation visible et annoncée. */
-export function CopyButton({
-  text,
-  label = 'Copier le lien',
-  className = 'btn btn-soft s-btn-sm',
-}: {
-  text: string;
-  label?: string;
-  className?: string;
-}) {
+export function CopyButton({ text, className = 'btn btn-soft s-btn-sm' }: { text: string; className?: string }) {
+  const t = useTranslations('settings.copy');
   const [state, setState] = useState<'idle' | 'copied' | 'failed'>('idle');
 
   async function copy() {
@@ -43,9 +37,9 @@ export function CopyButton({
   return (
     <button type="button" className={className} onClick={copy}>
       <Icon name={state === 'copied' ? 'check' : 'copy'} />
-      <span>{state === 'copied' ? 'Copié' : state === 'failed' ? 'Copie impossible' : label}</span>
+      <span>{state === 'copied' ? t('copied') : state === 'failed' ? t('failed') : t('label')}</span>
       <span className="s-sr" aria-live="polite">
-        {state === 'copied' ? 'Lien copié dans le presse-papiers.' : state === 'failed' ? 'Copie impossible : sélectionnez le lien à la main.' : ''}
+        {state === 'copied' ? t('copiedSr') : state === 'failed' ? t('failedSr') : ''}
       </span>
     </button>
   );

@@ -1,12 +1,14 @@
 // Dépôt de démonstration : le parc d'exemple vit en mémoire le temps de la visite (rien n'est envoyé).
 // Il reproduit les règles de la base : relevé créé par une saisie avec compteur, compteur qui n'avance que vers
 // le haut, échéance renouvelée par une saisie liée, échéances par défaut d'une nouvelle machine, retrait sans effacement.
-import { addDays, dateCH, hrs, todayISO } from '@/lib/format';
+// Textes dans la langue de la visite (messages/<langue>/demo.json) ; erreurs en codes, comme le dépôt Supabase.
+import type { DemoTexts } from '@/lib/demo-content/fleet';
+import { addDays, todayISO } from '@/lib/format';
 import { extForMime, type UploadProgressOptions } from '@/lib/media';
 import type { GarageRepo, NewEntry, NewMachine, NewSchedule } from '@/lib/repo/types';
 import type { Entry, FleetSnapshot, HourReading, Machine, MachineFile, MediaItem, Schedule } from '@/lib/types';
 import { buildDemoSeed, zurichISO, type DemoSeed } from './demo-data';
-import { fleetSince, readingsSince } from './supabase';
+import { fleetSince, GarageError, readingsSince, type GarageErrorCode, type GarageErrorParams } from './supabase';
 
 /** Petit délai pour que les états d'envoi restent visibles, comme avec un vrai serveur. */
 const LATENCY = 160;
@@ -18,8 +20,12 @@ const clean = (s: string | null | undefined) => {
   const t = (s ?? '').trim();
   return t ? t : null;
 };
-function check(ok: boolean, message: string): asserts ok {
-  if (!ok) throw new Error(message);
+function check(ok: boolean, code: GarageErrorCode, params?: GarageErrorParams): asserts ok {
+  if (!ok) throw new GarageError(code, params);
+}
+/** Même message que la contrainte de la base du même nom. */
+function checkConstraint(ok: boolean, constraint: string): asserts ok {
+  if (!ok) throw new GarageError('check', { constraint });
 }
 const newId = () =>
   typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
@@ -28,15 +34,24 @@ const newId = () =>
 
 const byEntryOrder = (a: Entry, b: Entry) => b.date.localeCompare(a.date) || b.created_at.localeCompare(a.created_at);
 
-/** Crée le dépôt de démonstration (par défaut : le parc d'exemple du jour). */
-export function createDemoRepo(seed?: DemoSeed): GarageRepo {
+export interface DemoRepoOptions {
+  /** Textes du parc d'exemple dans la langue de la visite (messages/<langue>/demo.json). */
+  texts: DemoTexts;
+  /** Libellés des deux échéances ajoutées à une nouvelle machine, dans la même langue. */
+  defaultSchedules: { service: string; safety: string };
+  /** Parc de départ (par défaut : le parc d'exemple du jour). */
+  seed?: DemoSeed;
+}
+
+/** Crée le dépôt de démonstration dans une langue (textes du parc et échéances par défaut). */
+export function createDemoRepo({ texts, defaultSchedules, seed }: DemoRepoOptions): GarageRepo {
   const today = seed?.today ?? todayISO();
-  const db: DemoSeed = clone(seed ?? buildDemoSeed(today));
+  const db: DemoSeed = clone(seed ?? buildDemoSeed(today, texts));
   let nextReadingId = db.readings.reduce((m, r) => Math.max(m, r.id), 0) + 1;
 
   const machineById = (id: string): Machine => {
     const m = db.machines.find((x) => x.id === id && !x.archived_at);
-    check(Boolean(m), 'Cette machine n’existe plus ou a été archivée.');
+    check(Boolean(m), 'machineGone');
     return m as Machine;
   };
 
@@ -57,42 +72,43 @@ export function createDemoRepo(seed?: DemoSeed): GarageRepo {
   const validateMachine = (input: Partial<NewMachine>, exceptId?: string) => {
     if (input.code !== undefined) {
       const code = input.code.trim().toUpperCase();
-      check(code.length >= 1 && code.length <= 16, 'Le code de la machine doit contenir entre 1 et 16 caractères.');
+      checkConstraint(code.length >= 1 && code.length <= 16, 'machines_code_check');
       const taken = db.machines.some((m) => !m.archived_at && m.id !== exceptId && m.code.toLowerCase() === code.toLowerCase());
-      check(!taken, `Le code ${code} est déjà utilisé par une autre machine du parc. Choisissez-en un autre.`);
+      check(!taken, 'codeTaken', { code });
     }
-    check((input.brand ?? '').length <= 40 && (input.model ?? '').length <= 40, 'La marque et le modèle font 40 caractères au plus.');
-    check(input.year == null || (input.year >= 1950 && input.year <= 2100), 'L’année doit être comprise entre 1950 et 2100.');
-    check((input.serial ?? '').length <= 40, 'Le numéro de série fait 40 caractères au plus.');
-    check((input.plate ?? '').length <= 20, 'La plaque fait 20 caractères au plus.');
-    check(input.weightT == null || (input.weightT > 0 && input.weightT < 1000), 'Le poids doit être compris entre 0,1 et 999 t.');
-    check(input.color === undefined || /^#[0-9a-f]{6}$/i.test(input.color), 'Couleur de peinture invalide.');
-    check(input.hours == null || (input.hours >= 0 && input.hours < 10_000_000), 'Le compteur doit être un nombre d’heures positif.');
-    check((input.notes ?? '').length <= 2000, 'Les remarques font 2’000 caractères au plus.');
+    checkConstraint((input.brand ?? '').length <= 40, 'machines_brand_check');
+    checkConstraint((input.model ?? '').length <= 40, 'machines_model_check');
+    checkConstraint(input.year == null || (input.year >= 1950 && input.year <= 2100), 'machines_year_check');
+    checkConstraint((input.serial ?? '').length <= 40, 'machines_serial_check');
+    checkConstraint((input.plate ?? '').length <= 20, 'machines_plate_check');
+    checkConstraint(input.weightT == null || (input.weightT > 0 && input.weightT < 1000), 'machines_weight_t_check');
+    checkConstraint(input.color === undefined || /^#[0-9a-f]{6}$/i.test(input.color), 'machines_color_check');
+    check(input.hours == null || (input.hours >= 0 && input.hours < 10_000_000), 'hoursInvalid');
+    checkConstraint((input.notes ?? '').length <= 2000, 'machines_notes_check');
   };
 
   const validateEntry = (input: Partial<Omit<NewEntry, 'machineId'>>) => {
     if (input.title !== undefined) {
       const t = input.title.trim();
-      check(t.length >= 1 && t.length <= 120, 'Le titre doit contenir entre 1 et 120 caractères.');
+      checkConstraint(t.length >= 1 && t.length <= 120, 'entries_title_check');
     }
-    check((input.details ?? '').length <= 4000, 'Les détails font 4’000 caractères au plus.');
-    check((input.performedBy ?? '').length <= 80, '« Fait par » fait 80 caractères au plus.');
-    check(input.hours == null || input.hours >= 0, 'Le compteur ne peut pas être négatif.');
-    check((input.costParts ?? 0) >= 0 && (input.costLabour ?? 0) >= 0, 'Les coûts ne peuvent pas être négatifs.');
-    check(input.downtimeHours == null || input.downtimeHours >= 0, 'L’immobilisation ne peut pas être négative.');
-    check((input.partRef ?? '').length <= 40, 'La référence fait 40 caractères au plus.');
-    check(input.partQty == null || input.partQty > 0, 'La quantité doit être supérieure à zéro.');
-    check((input.supplier ?? '').length <= 80, 'Le fournisseur fait 80 caractères au plus.');
+    checkConstraint((input.details ?? '').length <= 4000, 'entries_details_check');
+    checkConstraint((input.performedBy ?? '').length <= 80, 'entries_performed_by_check');
+    checkConstraint(input.hours == null || input.hours >= 0, 'entries_hours_check');
+    checkConstraint((input.costParts ?? 0) >= 0 && (input.costLabour ?? 0) >= 0, 'entries_cost_parts_check');
+    checkConstraint(input.downtimeHours == null || input.downtimeHours >= 0, 'entries_downtime_hours_check');
+    checkConstraint((input.partRef ?? '').length <= 40, 'entries_part_ref_check');
+    checkConstraint(input.partQty == null || input.partQty > 0, 'entries_part_qty_check');
+    checkConstraint((input.supplier ?? '').length <= 80, 'entries_supplier_check');
   };
 
   const validateSchedule = (s: Schedule) => {
     const label = s.label.trim();
-    check(label.length >= 1 && label.length <= 80, 'Le libellé doit contenir entre 1 et 80 caractères.');
-    check(s.basis !== 'heures' || s.due_hours != null, 'Indiquez à combien d’heures tombe la prochaine échéance.');
-    check(s.basis !== 'date' || s.due_date != null, 'Indiquez la date de la prochaine échéance.');
-    check(s.interval_hours == null || s.interval_hours > 0, 'L’intervalle doit être supérieur à zéro.');
-    check(s.interval_days == null || s.interval_days > 0, 'L’intervalle doit être supérieur à zéro.');
+    checkConstraint(label.length >= 1 && label.length <= 80, 'schedules_label_check');
+    check(s.basis !== 'heures' || s.due_hours != null, 'dueHoursRequired');
+    check(s.basis !== 'date' || s.due_date != null, 'dueDateRequired');
+    checkConstraint(s.interval_hours == null || s.interval_hours > 0, 'schedules_interval_hours_check');
+    checkConstraint(s.interval_days == null || s.interval_days > 0, 'schedules_interval_days_check');
   };
 
   const repo: GarageRepo = {
@@ -163,7 +179,7 @@ export function createDemoRepo(seed?: DemoSeed): GarageRepo {
           id: newId(),
           org_id: db.org.id,
           machine_id: m.id,
-          label: 'Service',
+          label: defaultSchedules.service,
           basis: 'heures',
           interval_hours: 500,
           interval_days: null,
@@ -178,7 +194,7 @@ export function createDemoRepo(seed?: DemoSeed): GarageRepo {
           id: newId(),
           org_id: db.org.id,
           machine_id: m.id,
-          label: 'Contrôle annuel de sécurité',
+          label: defaultSchedules.safety,
           basis: 'date',
           interval_hours: null,
           interval_days: 365,
@@ -235,7 +251,7 @@ export function createDemoRepo(seed?: DemoSeed): GarageRepo {
       const date = input.date ?? today;
       const at = nowISO();
       const schedule = input.scheduleId ? db.schedules.find((s) => s.id === input.scheduleId && s.machine_id === m.id) : null;
-      check(!input.scheduleId || Boolean(schedule), 'Cette échéance n’existe plus.');
+      check(!input.scheduleId || Boolean(schedule), 'scheduleGone');
       const e: Entry = {
         id: newId(),
         org_id: db.org.id,
@@ -284,9 +300,9 @@ export function createDemoRepo(seed?: DemoSeed): GarageRepo {
     async updateEntry(id, patch): Promise<Entry> {
       await wait(LATENCY);
       const e = db.entries.find((x) => x.id === id);
-      check(Boolean(e), 'Cette saisie n’existe plus.');
+      check(Boolean(e), 'entryGone');
       const entry = e as Entry;
-      check(!entry.deleted_at, 'Cette saisie a été retirée : elle ne peut plus être modifiée.');
+      check(!entry.deleted_at, 'entryRemoved');
       validateEntry(patch);
       if (patch.kind !== undefined) entry.kind = patch.kind;
       if (patch.date !== undefined) entry.date = patch.date;
@@ -312,11 +328,11 @@ export function createDemoRepo(seed?: DemoSeed): GarageRepo {
     async removeEntry(id: string, reason: string): Promise<void> {
       await wait(LATENCY);
       const e = db.entries.find((x) => x.id === id);
-      check(Boolean(e), 'Cette saisie n’existe plus.');
+      check(Boolean(e), 'entryGone');
       const entry = e as Entry;
-      check(!entry.deleted_at, 'Cette saisie a déjà été retirée.');
+      check(!entry.deleted_at, 'entryAlreadyRemoved');
       const why = reason.trim();
-      check(why.length >= 1 && why.length <= 300, 'Indiquez le motif du retrait (300 caractères au plus).');
+      check(why.length >= 1 && why.length <= 300, 'reasonInvalid');
       entry.deleted_at = nowISO();
       entry.deleted_by = db.userId;
       entry.delete_reason = why;
@@ -326,11 +342,8 @@ export function createDemoRepo(seed?: DemoSeed): GarageRepo {
     async addReading(machineId: string, hours: number): Promise<void> {
       await wait(LATENCY);
       const m = machineById(machineId);
-      check(Number.isFinite(hours) && hours >= 0, 'Le compteur doit être un nombre d’heures positif.');
-      check(
-        hours >= Number(m.hours),
-        `Le compteur ne peut pas reculer : le dernier relevé est de ${hrs(Number(m.hours))} (${dateCH(m.hours_at)}).`,
-      );
+      check(Number.isFinite(hours) && hours >= 0, 'hoursInvalid');
+      check(hours >= Number(m.hours), 'hoursBackwards', { hours: Number(m.hours), at: m.hours_at });
       addReadingRow(m, hours, nowISO(), 'saisie');
     },
 
@@ -360,7 +373,7 @@ export function createDemoRepo(seed?: DemoSeed): GarageRepo {
     async updateSchedule(id, patch): Promise<Schedule> {
       await wait(LATENCY);
       const s = db.schedules.find((x) => x.id === id);
-      check(Boolean(s), 'Cette échéance n’existe plus.');
+      check(Boolean(s), 'scheduleGone');
       const next: Schedule = { ...(s as Schedule) };
       if (patch.label !== undefined) next.label = patch.label.trim();
       if (patch.basis !== undefined) next.basis = patch.basis;
@@ -386,7 +399,7 @@ export function createDemoRepo(seed?: DemoSeed): GarageRepo {
     async deleteSchedule(id: string): Promise<void> {
       await wait(LATENCY);
       const i = db.schedules.findIndex((x) => x.id === id);
-      check(i >= 0, 'Cette échéance n’existe plus.');
+      check(i >= 0, 'scheduleGone');
       db.schedules.splice(i, 1);
       // « on delete set null » sur les saisies liées.
       db.entries.forEach((e) => {
@@ -396,7 +409,7 @@ export function createDemoRepo(seed?: DemoSeed): GarageRepo {
 
     async uploadMedia(machineId: string, file: Blob, opts: UploadProgressOptions): Promise<MediaItem> {
       const m = machineById(machineId);
-      check(!opts.entryId || db.entries.some((e) => e.id === opts.entryId), 'La saisie liée n’existe plus.');
+      check(!opts.entryId || db.entries.some((e) => e.id === opts.entryId), 'linkedEntryGone');
       // Rien ne part : on simule un envoi rapide pour garder le même retour visuel.
       for (const f of [0.2, 0.55, 0.85, 1]) {
         await wait(70);
@@ -427,7 +440,7 @@ export function createDemoRepo(seed?: DemoSeed): GarageRepo {
     async deleteMedia(id: string): Promise<void> {
       await wait(LATENCY);
       const i = db.media.findIndex((x) => x.id === id);
-      check(i >= 0, 'Ce fichier n’existe plus.');
+      check(i >= 0, 'fileGone');
       const [item] = db.media.splice(i, 1);
       if (item.url) URL.revokeObjectURL(item.url);
     },

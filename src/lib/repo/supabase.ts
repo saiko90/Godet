@@ -2,10 +2,11 @@
 // Utilisable côté serveur (composant serveur : `loadFleet`) comme dans le navigateur (`createSupabaseRepo`).
 // Règles respectées : saisies retirées = `deleted_at` (jamais effacées), machines archivées exclues, médias dans le
 // bucket privé « medias » au chemin <org_id>/<machine_id>/<uuid>.<ext>, lecture par liens signés d'une heure.
+// Les erreurs sont des codes (GarageError) : l'interface les traduit dans la langue de la personne.
 import type { PostgrestError, SupabaseClient } from '@supabase/supabase-js';
 import type { Database, TablesInsert, TablesUpdate } from '@/lib/database.types';
 import { MEDIA_BUCKET, SUPABASE_PUBLISHABLE_KEY, SUPABASE_URL } from '@/lib/env';
-import { addDays, dateCH, hrs, todayISO } from '@/lib/format';
+import { addDays, todayISO } from '@/lib/format';
 import { extForMime, type UploadProgressOptions } from '@/lib/media';
 import type { GarageRepo, NewEntry, NewMachine, NewSchedule } from '@/lib/repo/types';
 import type { Entry, FleetSnapshot, HourReading, Machine, MachineFile, MediaItem, MediaRow, MemberRole, Org, Schedule } from '@/lib/types';
@@ -43,45 +44,135 @@ function fileReadingsSince(today: string): string {
   return `${addDays(today, -400)}T00:00:00Z`;
 }
 
-// ------------------------------------------------------------------ messages d'erreur en français
+// ------------------------------------------------------------------ erreurs (codes traduits par l'interface)
 
-const NETWORK = 'Pas de connexion au serveur. Vérifiez le réseau, puis réessayez.';
-const RIGHTS = 'Votre rôle ne permet pas cette action. Demandez à un responsable du parc.';
-const SESSION = 'Votre session a expiré. Rechargez la page pour vous reconnecter.';
-const TOO_BIG = 'Le fichier est trop gros : 50 Mo au maximum.';
-const BAD_TYPE = 'Ce type de fichier n’est pas accepté : photos JPEG, PNG, WebP ou HEIC, vidéos MP4, MOV ou WebM, documents PDF.';
+/** Ce qui a échoué : sert de message quand l'erreur n'a pas de cause plus précise. */
+export type RepoAction =
+  | 'loadFleet'
+  | 'loadFile'
+  | 'loadMachine'
+  | 'addMachine'
+  | 'updateMachine'
+  | 'archiveMachine'
+  | 'addEntry'
+  | 'updateEntry'
+  | 'removeEntry'
+  | 'addReading'
+  | 'addSchedule'
+  | 'updateSchedule'
+  | 'deleteSchedule'
+  | 'upload'
+  | 'deleteMedia';
 
-/** Contraintes de la base (nommées par Postgres « <table>_<colonne>_check ») → explication. */
-const CHECKS: Record<string, string> = {
-  machines_code_check: 'Le code de la machine doit contenir entre 1 et 16 caractères.',
-  machines_brand_check: 'La marque fait 40 caractères au plus.',
-  machines_model_check: 'Le modèle fait 40 caractères au plus.',
-  machines_year_check: 'L’année doit être comprise entre 1950 et 2100.',
-  machines_serial_check: 'Le numéro de série fait 40 caractères au plus.',
-  machines_plate_check: 'La plaque fait 20 caractères au plus.',
-  machines_weight_t_check: 'Le poids doit être compris entre 0,1 et 999 t.',
-  machines_color_check: 'Couleur de peinture invalide.',
-  machines_hours_check: 'Le compteur ne peut pas être négatif.',
-  machines_notes_check: 'Les remarques font 2’000 caractères au plus.',
-  entries_title_check: 'Le titre doit contenir entre 1 et 120 caractères.',
-  entries_details_check: 'Les détails font 4’000 caractères au plus.',
-  entries_performed_by_check: '« Fait par » fait 80 caractères au plus.',
-  entries_hours_check: 'Le compteur ne peut pas être négatif.',
-  entries_cost_parts_check: 'Les coûts ne peuvent pas être négatifs.',
-  entries_cost_labour_check: 'Les coûts ne peuvent pas être négatifs.',
-  entries_downtime_hours_check: 'L’immobilisation ne peut pas être négative.',
-  entries_part_ref_check: 'La référence fait 40 caractères au plus.',
-  entries_part_qty_check: 'La quantité doit être supérieure à zéro.',
-  entries_supplier_check: 'Le fournisseur fait 80 caractères au plus.',
-  entries_delete_reason_check: 'Le motif fait 300 caractères au plus.',
-  schedules_label_check: 'Le libellé doit contenir entre 1 et 80 caractères.',
-  schedules_interval_hours_check: 'L’intervalle doit être supérieur à zéro.',
-  schedules_interval_days_check: 'L’intervalle doit être supérieur à zéro.',
-  schedules_check: 'Indiquez la prochaine échéance : un nombre d’heures ou une date.',
-  hour_readings_hours_check: 'Le compteur ne peut pas être négatif.',
-  media_caption_check: 'La légende fait 200 caractères au plus.',
-  media_mime_check: BAD_TYPE,
-};
+/** Contraintes de la base (nommées par Postgres « <table>_<colonne>_check ») expliquées à la personne. */
+export const CHECK_CONSTRAINTS = [
+  'machines_code_check',
+  'machines_brand_check',
+  'machines_model_check',
+  'machines_year_check',
+  'machines_serial_check',
+  'machines_plate_check',
+  'machines_weight_t_check',
+  'machines_color_check',
+  'machines_hours_check',
+  'machines_notes_check',
+  'entries_title_check',
+  'entries_details_check',
+  'entries_performed_by_check',
+  'entries_hours_check',
+  'entries_cost_parts_check',
+  'entries_cost_labour_check',
+  'entries_downtime_hours_check',
+  'entries_part_ref_check',
+  'entries_part_qty_check',
+  'entries_supplier_check',
+  'entries_delete_reason_check',
+  'schedules_label_check',
+  'schedules_interval_hours_check',
+  'schedules_interval_days_check',
+  'schedules_check',
+  'hour_readings_hours_check',
+  'media_caption_check',
+  'media_mime_check',
+] as const;
+export type CheckConstraint = (typeof CHECK_CONSTRAINTS)[number];
+
+export type GarageErrorCode =
+  /** Réseau indisponible. */
+  | 'network'
+  /** Le rôle ne permet pas l'action. */
+  | 'forbidden'
+  /** Session expirée ou fermée. */
+  | 'session'
+  /** Fichier de plus de 50 Mo. */
+  | 'tooBig'
+  /** Type de fichier refusé par le stockage. */
+  | 'badType'
+  /** Code de machine déjà pris ; `params.code` si connu. */
+  | 'codeTaken'
+  | 'fileExists'
+  | 'duplicate'
+  /** Contrainte de la base ; `params.constraint` (voir CHECK_CONSTRAINTS). */
+  | 'check'
+  | 'invalidValue'
+  | 'notFound'
+  | 'required'
+  | 'textTooLong'
+  | 'numberTooBig'
+  | 'badFormat'
+  | 'notFoundOrRights'
+  /** Exception levée par une fonction de la base ; `params.message` (code ou texte). */
+  | 'server'
+  | 'aborted'
+  | 'machineGone'
+  | 'otherOrg'
+  | 'entryNotEditable'
+  | 'entryNotRemovable'
+  | 'reasonRequired'
+  | 'reasonInvalid'
+  | 'hoursInvalid'
+  /** Le compteur reculerait ; `params.hours` (dernier relevé) et `params.at` (sa date). */
+  | 'hoursBackwards'
+  | 'mediaNotOwn'
+  | 'scheduleGone'
+  | 'dueHoursRequired'
+  | 'dueDateRequired'
+  | 'entryGone'
+  | 'entryRemoved'
+  | 'entryAlreadyRemoved'
+  | 'linkedEntryGone'
+  | 'fileGone'
+  /** Échec sans cause précise ; `params.action` dit ce qui a échoué. */
+  | 'failed';
+
+export type GarageErrorParams = Partial<{
+  action: RepoAction;
+  constraint: string;
+  code: string;
+  message: string;
+  hours: number;
+  at: string;
+}>;
+
+/**
+ * Erreur du dépôt (cloud ou démo) : un code et ses paramètres, jamais une phrase.
+ * L'interface la traduit (src/components/garage/errors.ts, messages garage.errors.*).
+ */
+export class GarageError extends Error {
+  readonly code: GarageErrorCode;
+  readonly params: GarageErrorParams;
+
+  constructor(code: GarageErrorCode, params: GarageErrorParams = {}) {
+    super(params.action ? `${code}:${params.action}` : code);
+    this.name = 'GarageError';
+    this.code = code;
+    this.params = params;
+  }
+}
+
+export function isGarageError(e: unknown): e is GarageError {
+  return e instanceof GarageError;
+}
 
 interface ErrorLike {
   message?: string;
@@ -94,51 +185,42 @@ interface ErrorLike {
 const isNetwork = (msg: string) => /failed to fetch|networkerror|network request failed|load failed|fetch failed/i.test(msg);
 
 /**
- * Traduit une erreur Postgres, PostgREST, Storage ou réseau en message clair pour la personne.
- * `fallback` décrit ce qui a échoué (« La saisie n’a pas pu être enregistrée. »).
+ * Convertit une erreur Postgres, PostgREST, Storage ou réseau en erreur du dépôt (code + paramètres).
+ * `action` dit ce qui a échoué (« addEntry »…), pour le message par défaut.
  */
-export function frenchError(err: unknown, fallback: string): Error {
-  if (err instanceof Error && err.name === 'GarageError') return err;
+export function repoError(err: unknown, action: RepoAction): GarageError {
+  if (isGarageError(err)) return err;
   const e: ErrorLike = typeof err === 'object' && err !== null ? (err as ErrorLike) : { message: String(err ?? '') };
   const msg = String(e.message ?? '');
   const code = String(e.code ?? '');
   const status = typeof e.status === 'number' ? e.status : Number(e.statusCode) || 0;
-  let text = fallback;
 
-  if (isNetwork(msg)) text = NETWORK;
-  else if (code === '23505') {
-    text = /machines_code_unique/.test(msg)
-      ? 'Ce code est déjà utilisé par une autre machine du parc. Choisissez-en un autre.'
-      : /path/.test(msg + (e.details ?? ''))
-        ? 'Un fichier du même nom existe déjà.'
-        : 'Cette valeur existe déjà.';
-  } else if (code === '42501' || /row-level security|permission denied/i.test(msg)) text = RIGHTS;
-  else if (code === '23514') {
-    const name = /constraint "([^"]+)"/.exec(msg)?.[1] ?? '';
-    text = CHECKS[name] ?? 'Une valeur saisie n’est pas acceptée. Vérifiez les champs du formulaire.';
-  } else if (code === '23503') text = 'Élément introuvable : il a peut-être été supprimé entre-temps. Rechargez la page.';
-  else if (code === '23502') text = 'Un champ obligatoire est vide.';
-  else if (code === '22001') text = 'Un texte saisi est trop long.';
-  else if (code === '22003') text = 'Un nombre saisi est trop grand.';
-  else if (code === '22P02' || code === '22007' || code === '22008') text = 'Une valeur saisie n’a pas le bon format (nombre ou date).';
-  else if (code === 'PGRST116') text = 'Élément introuvable, ou vos droits ne permettent pas cette action.';
-  else if (code === 'PGRST301' || code === 'PGRST303' || /jwt expired/i.test(msg) || status === 401) text = SESSION;
-  else if (code === 'P0001' && msg)
-    text = msg; // exceptions levées par nos fonctions : déjà en français
-  else if (status === 413 || /maximum allowed size|too large/i.test(msg)) text = TOO_BIG;
-  else if (status === 415 || /mime type|invalid_mime_type/i.test(msg)) text = BAD_TYPE;
-  else if (status === 403) text = RIGHTS;
-  else if (status === 409 || /already exists|duplicate/i.test(msg)) text = 'Un fichier du même nom existe déjà.';
-
-  const out = new Error(text);
-  out.name = 'GarageError';
-  return out;
-}
-
-function fail(message: string): Error {
-  const out = new Error(message);
-  out.name = 'GarageError';
-  return out;
+  if (isNetwork(msg)) return new GarageError('network');
+  if (code === '23505') {
+    if (/machines_code_unique/.test(msg)) return new GarageError('codeTaken');
+    return new GarageError(/path/.test(msg + (e.details ?? '')) ? 'fileExists' : 'duplicate');
+  }
+  if (code === '42501' || /row-level security|permission denied/i.test(msg)) return new GarageError('forbidden');
+  if (code === '23514') {
+    const constraint = /constraint "([^"]+)"/.exec(msg)?.[1] ?? '';
+    return (CHECK_CONSTRAINTS as readonly string[]).includes(constraint)
+      ? new GarageError('check', { constraint })
+      : new GarageError('invalidValue');
+  }
+  if (code === '23503') return new GarageError('notFound');
+  if (code === '23502') return new GarageError('required');
+  if (code === '22001') return new GarageError('textTooLong');
+  if (code === '22003') return new GarageError('numberTooBig');
+  if (code === '22P02' || code === '22007' || code === '22008') return new GarageError('badFormat');
+  if (code === 'PGRST116') return new GarageError('notFoundOrRights');
+  if (code === 'PGRST301' || code === 'PGRST303' || /jwt expired/i.test(msg) || status === 401) return new GarageError('session');
+  // Exceptions levées par nos fonctions (codes comme « forbidden », ou anciens messages) : l'interface les traduit.
+  if (code === 'P0001' && msg) return new GarageError('server', { message: msg });
+  if (status === 413 || /maximum allowed size|too large/i.test(msg)) return new GarageError('tooBig');
+  if (status === 415 || /mime type|invalid_mime_type/i.test(msg)) return new GarageError('badType');
+  if (status === 403) return new GarageError('forbidden');
+  if (status === 409 || /already exists|duplicate/i.test(msg)) return new GarageError('fileExists');
+  return new GarageError('failed', { action });
 }
 
 // ------------------------------------------------------------------ outils de requête
@@ -146,11 +228,11 @@ function fail(message: string): Error {
 type PageResult<T> = PromiseLike<{ data: T[] | null; error: PostgrestError | null }>;
 
 /** Lit toutes les lignes, page par page (une requête PostgREST est limitée à 1’000 lignes). */
-async function fetchAll<T>(page: (from: number, to: number) => PageResult<T>, fallback: string): Promise<T[]> {
+async function fetchAll<T>(page: (from: number, to: number) => PageResult<T>, action: RepoAction): Promise<T[]> {
   const out: T[] = [];
   for (let from = 0; ; from += PAGE) {
     const { data, error } = await page(from, from + PAGE - 1);
-    if (error) throw frenchError(error, fallback);
+    if (error) throw repoError(error, action);
     const rows = data ?? [];
     out.push(...rows);
     if (rows.length < PAGE) return out;
@@ -185,12 +267,12 @@ async function withUrls(client: GarageClient, rows: MediaRow[]): Promise<MediaIt
 // ------------------------------------------------------------------ lecture du parc
 
 /** Vue d'ensemble du parc de l'entreprise active (composant serveur ou navigateur). */
-export async function loadFleet(client: GarageClient, ctx: RepoContext): Promise<FleetSnapshot> {
+export async function loadFleet(client: GarageClient, ctx: RepoContext, labels?: DefaultScheduleLabels): Promise<FleetSnapshot> {
   const orgId = ctx.org.id;
   const today = todayISO();
   const since = fleetSince(today);
   const readSince = readingsSince(today);
-  const why = 'Le parc n’a pas pu être chargé.';
+  const why: RepoAction = 'loadFleet';
 
   const [machines, schedules, recent, open, readings] = await Promise.all([
     fetchAll(
@@ -251,7 +333,7 @@ export async function loadFleet(client: GarageClient, ctx: RepoContext): Promise
     role: ctx.role,
     userId: ctx.userId,
     machines,
-    schedules: schedules.filter((s) => ids.has(s.machine_id)),
+    schedules: schedules.filter((s) => ids.has(s.machine_id)).map((s) => localizeSchedule(s, labels)),
     recentEntries: recent.filter((e) => ids.has(e.machine_id)),
     openRepairs: open.filter((e) => ids.has(e.machine_id)),
     readings: readings.filter((r) => ids.has(r.machine_id)),
@@ -270,7 +352,7 @@ async function uploadWithProgress(
 ): Promise<void> {
   const { data } = await client.auth.getSession();
   const token = data.session?.access_token;
-  if (!token) throw fail(SESSION);
+  if (!token) throw new GarageError('session');
   const body = new FormData();
   body.append('cacheControl', '3600');
   body.append('', blob, fileName);
@@ -300,18 +382,57 @@ async function uploadWithProgress(
       } catch {
         message = xhr.statusText;
       }
-      reject(frenchError({ message, status: Number(statusCode) || xhr.status }, 'Le fichier n’a pas pu être envoyé.'));
+      reject(repoError({ message, status: Number(statusCode) || xhr.status }, 'upload'));
     };
-    xhr.onerror = () => reject(fail(NETWORK));
-    xhr.onabort = () => reject(fail('Envoi interrompu.'));
+    xhr.onerror = () => reject(new GarageError('network'));
+    xhr.onabort = () => reject(new GarageError('aborted'));
     xhr.send(body);
   });
 }
 
 // ------------------------------------------------------------------ dépôt
 
+/**
+ * Libellés possibles des deux échéances créées avec chaque machine par le déclencheur de la base : il les écrit dans
+ * la langue du profil de la personne (profiles.locale), en français par défaut.
+ */
+const DB_DEFAULT_SCHEDULES = {
+  service: ['Service', 'Wartung', 'Manutenzione'],
+  safety: ['Contrôle annuel de sécurité', 'Jährliche Sicherheitskontrolle', 'Controllo annuale di sicurezza', 'Annual safety inspection'],
+} as const;
+
+/** Libellés des échéances par défaut dans la langue de la page. */
+export type DefaultScheduleLabels = { service: string; safety: string };
+
+/**
+ * Libellé affiché d'une échéance : une échéance par défaut (libellé d'origine, dans n'importe quelle langue) prend
+ * le libellé de la page ; un libellé choisi par l'entreprise reste tel quel. Une équipe bilingue voit ainsi
+ * « Wartung » en allemand et « Service » en français pour la même échéance.
+ */
+export function localizeDefaultLabel(label: string, wanted?: DefaultScheduleLabels): string {
+  if (!wanted) return label;
+  const l = label.trim();
+  for (const k of Object.keys(DB_DEFAULT_SCHEDULES) as (keyof typeof DB_DEFAULT_SCHEDULES)[]) {
+    if ((DB_DEFAULT_SCHEDULES[k] as readonly string[]).includes(l)) return wanted[k] || label;
+  }
+  return label;
+}
+
+function localizeSchedule<T extends { label: string }>(s: T, wanted?: DefaultScheduleLabels): T {
+  const label = localizeDefaultLabel(s.label, wanted);
+  return label === s.label ? s : { ...s, label };
+}
+
+export interface SupabaseRepoOptions {
+  /**
+   * Libellés des échéances par défaut dans la langue de la page : le déclencheur de la base les crée dans la langue
+   * du profil ; si la page est dans une autre langue, le dépôt les renomme aussitôt après l'ajout d'une machine.
+   */
+  defaultSchedules?: { service: string; safety: string };
+}
+
 /** Dépôt des données réelles de l'entreprise `ctx.org` pour la personne `ctx.userId`. */
-export function createSupabaseRepo(client: GarageClient, ctx: RepoContext): GarageRepo {
+export function createSupabaseRepo(client: GarageClient, ctx: RepoContext, options: SupabaseRepoOptions = {}): GarageRepo {
   const orgId = ctx.org.id;
 
   /**
@@ -321,15 +442,33 @@ export function createSupabaseRepo(client: GarageClient, ctx: RepoContext): Gara
    */
   async function ensureSession(): Promise<void> {
     const { data } = await client.auth.getSession();
-    if (!data.session) throw fail(SESSION);
+    if (!data.session) throw new GarageError('session');
   }
 
   async function currentMachine(id: string): Promise<Machine> {
     const { data, error } = await client.from('machines').select('*').eq('id', id).maybeSingle();
-    if (error) throw frenchError(error, 'La machine n’a pas pu être chargée.');
-    if (!data || data.archived_at) throw fail('Cette machine n’existe plus ou a été archivée.');
-    if (data.org_id !== orgId) throw fail('Cette machine appartient à une autre entreprise.');
+    if (error) throw repoError(error, 'loadMachine');
+    if (!data || data.archived_at) throw new GarageError('machineGone');
+    if (data.org_id !== orgId) throw new GarageError('otherOrg');
     return data;
+  }
+
+  /** Échéances par défaut d'une nouvelle machine dans la langue de la personne (facultatif : ignoré en cas d'échec). */
+  async function relabelDefaults(machineId: string): Promise<void> {
+    const wanted = options.defaultSchedules;
+    if (!wanted) return;
+    const pairs = (Object.keys(DB_DEFAULT_SCHEDULES) as (keyof typeof DB_DEFAULT_SCHEDULES)[])
+      .map((k) => [DB_DEFAULT_SCHEDULES[k].filter((label) => label !== wanted[k].trim()), wanted[k].trim().slice(0, 80)] as const)
+      .filter(([from, to]) => to && from.length > 0);
+    await Promise.all(
+      pairs.map(async ([from, to]) => {
+        try {
+          await client.from('schedules').update({ label: to }).eq('machine_id', machineId).in('label', [...from]);
+        } catch {
+          // Le libellé reste celui de la base : sans conséquence.
+        }
+      }),
+    );
   }
 
   function entryInsert(input: NewEntry): TablesInsert<'entries'> {
@@ -396,14 +535,14 @@ export function createSupabaseRepo(client: GarageClient, ctx: RepoContext): Gara
 
     async loadFleet(): Promise<FleetSnapshot> {
       await ensureSession();
-      return loadFleet(client, ctx);
+      return loadFleet(client, ctx, options.defaultSchedules);
     },
 
     async loadMachineFile(machineId: string): Promise<MachineFile> {
       await ensureSession();
       const today = todayISO();
       const since = fileReadingsSince(today);
-      const why = 'La fiche de la machine n’a pas pu être chargée.';
+      const why: RepoAction = 'loadFile';
       const [machine, entries, schedules, recentReadings, older, mediaRows] = await Promise.all([
         currentMachine(machineId),
         fetchAll(
@@ -448,14 +587,20 @@ export function createSupabaseRepo(client: GarageClient, ctx: RepoContext): Gara
           why,
         ),
       ]);
-      if (older.error) throw frenchError(older.error, why);
+      if (older.error) throw repoError(older.error, why);
       const readings: HourReading[] = [...(older.data ?? []), ...recentReadings];
-      return { machine, entries, schedules, readings, media: await withUrls(client, mediaRows) };
+      return {
+        machine,
+        entries,
+        schedules: schedules.map((s) => localizeSchedule(s, options.defaultSchedules)),
+        readings,
+        media: await withUrls(client, mediaRows),
+      };
     },
 
     async addMachine(input: NewMachine): Promise<Machine> {
       await ensureSession();
-      const why = 'La machine n’a pas pu être ajoutée.';
+      const why: RepoAction = 'addMachine';
       const last = await client
         .from('machines')
         .select('position')
@@ -463,7 +608,7 @@ export function createSupabaseRepo(client: GarageClient, ctx: RepoContext): Gara
         .is('archived_at', null)
         .order('position', { ascending: false })
         .limit(1);
-      if (last.error) throw frenchError(last.error, why);
+      if (last.error) throw repoError(last.error, why);
       const row: TablesInsert<'machines'> = {
         org_id: orgId,
         code: input.code.trim().toUpperCase(),
@@ -480,13 +625,14 @@ export function createSupabaseRepo(client: GarageClient, ctx: RepoContext): Gara
         position: (last.data?.[0]?.position ?? -1) + 1,
       };
       const { data, error } = await client.from('machines').insert(row).select('*').single();
-      if (error) throw frenchError(error, why);
+      if (error) throw repoError(error, why);
+      await relabelDefaults(data.id);
       return data;
     },
 
     async updateMachine(id, patch): Promise<Machine> {
       await ensureSession();
-      const why = 'La machine n’a pas pu être modifiée.';
+      const why: RepoAction = 'updateMachine';
       const current = await currentMachine(id);
       const fields = machineFields(patch);
       if (patch.hours != null && patch.hours !== Number(current.hours)) {
@@ -495,7 +641,7 @@ export function createSupabaseRepo(client: GarageClient, ctx: RepoContext): Gara
           const { error } = await client
             .from('hour_readings')
             .insert({ org_id: orgId, machine_id: id, hours: patch.hours, source: 'saisie' });
-          if (error) throw frenchError(error, why);
+          if (error) throw repoError(error, why);
         } else {
           // Correction d'une erreur de saisie : seul cas où le compteur redescend.
           fields.hours = patch.hours;
@@ -504,7 +650,7 @@ export function createSupabaseRepo(client: GarageClient, ctx: RepoContext): Gara
       }
       if (Object.keys(fields).length) {
         const { data, error } = await client.from('machines').update(fields).eq('id', id).select('*').single();
-        if (error) throw frenchError(error, why);
+        if (error) throw repoError(error, why);
         return data;
       }
       return currentMachine(id);
@@ -519,13 +665,13 @@ export function createSupabaseRepo(client: GarageClient, ctx: RepoContext): Gara
         .is('archived_at', null)
         .select('id')
         .single();
-      if (error) throw frenchError(error, 'La machine n’a pas pu être archivée.');
+      if (error) throw repoError(error, 'archiveMachine');
     },
 
     async addEntry(input: NewEntry): Promise<Entry> {
       await ensureSession();
       const { data, error } = await client.from('entries').insert(entryInsert(input)).select('*').single();
-      if (error) throw frenchError(error, 'La saisie n’a pas pu être enregistrée.');
+      if (error) throw repoError(error, 'addEntry');
       return data;
     },
 
@@ -539,9 +685,7 @@ export function createSupabaseRepo(client: GarageClient, ctx: RepoContext): Gara
         .select('*')
         .single();
       if (error) {
-        throw error.code === 'PGRST116'
-          ? fail('Cette saisie a été retirée, ou vous ne pouvez modifier que vos propres saisies.')
-          : frenchError(error, 'La saisie n’a pas pu être modifiée.');
+        throw error.code === 'PGRST116' ? new GarageError('entryNotEditable') : repoError(error, 'updateEntry');
       }
       return data;
     },
@@ -549,7 +693,7 @@ export function createSupabaseRepo(client: GarageClient, ctx: RepoContext): Gara
     async removeEntry(id: string, reason: string): Promise<void> {
       await ensureSession();
       const why = reason.trim();
-      if (!why) throw fail('Indiquez le motif du retrait.');
+      if (!why) throw new GarageError('reasonRequired');
       const { error } = await client
         .from('entries')
         .update({ deleted_at: new Date().toISOString(), deleted_by: ctx.userId, delete_reason: why })
@@ -558,21 +702,17 @@ export function createSupabaseRepo(client: GarageClient, ctx: RepoContext): Gara
         .select('id')
         .single();
       if (error) {
-        throw error.code === 'PGRST116'
-          ? fail('Cette saisie est déjà retirée, ou vous ne pouvez retirer que vos propres saisies.')
-          : frenchError(error, 'La saisie n’a pas pu être retirée.');
+        throw error.code === 'PGRST116' ? new GarageError('entryNotRemovable') : repoError(error, 'removeEntry');
       }
     },
 
     async addReading(machineId: string, hours: number): Promise<void> {
       await ensureSession();
-      if (!Number.isFinite(hours) || hours < 0) throw fail('Le compteur doit être un nombre d’heures positif.');
+      if (!Number.isFinite(hours) || hours < 0) throw new GarageError('hoursInvalid');
       const m = await currentMachine(machineId);
-      if (hours < Number(m.hours)) {
-        throw fail(`Le compteur ne peut pas reculer : le dernier relevé est de ${hrs(Number(m.hours))} (${dateCH(m.hours_at)}).`);
-      }
+      if (hours < Number(m.hours)) throw new GarageError('hoursBackwards', { hours: Number(m.hours), at: m.hours_at });
       const { error } = await client.from('hour_readings').insert({ org_id: orgId, machine_id: machineId, hours, source: 'saisie' });
-      if (error) throw frenchError(error, 'Le relevé n’a pas pu être enregistré.');
+      if (error) throw repoError(error, 'addReading');
     },
 
     async addSchedule(input: NewSchedule): Promise<Schedule> {
@@ -590,7 +730,7 @@ export function createSupabaseRepo(client: GarageClient, ctx: RepoContext): Gara
         due_date: input.basis === 'date' ? (input.dueDate ?? null) : null,
       };
       const { data, error } = await client.from('schedules').insert(row).select('*').single();
-      if (error) throw frenchError(error, 'L’échéance n’a pas pu être ajoutée.');
+      if (error) throw repoError(error, 'addSchedule');
       return data;
     },
 
@@ -614,19 +754,19 @@ export function createSupabaseRepo(client: GarageClient, ctx: RepoContext): Gara
         u.due_hours = null;
       }
       const { data, error } = await client.from('schedules').update(u).eq('id', id).select('*').single();
-      if (error) throw frenchError(error, 'L’échéance n’a pas pu être modifiée.');
+      if (error) throw repoError(error, 'updateSchedule');
       return data;
     },
 
     async deleteSchedule(id: string): Promise<void> {
       await ensureSession();
       const { error } = await client.from('schedules').delete().eq('id', id).select('id').single();
-      if (error) throw frenchError(error, 'L’échéance n’a pas pu être supprimée.');
+      if (error) throw repoError(error, 'deleteSchedule');
     },
 
     async uploadMedia(machineId: string, file: Blob, opts: UploadProgressOptions): Promise<MediaItem> {
       await ensureSession();
-      const why = 'Le fichier n’a pas pu être envoyé.';
+      const why: RepoAction = 'upload';
       const mime = file.type || 'application/octet-stream';
       const id =
         typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
@@ -640,7 +780,7 @@ export function createSupabaseRepo(client: GarageClient, ctx: RepoContext): Gara
         const { error } = await client.storage
           .from(MEDIA_BUCKET)
           .upload(path, file, { contentType: mime, upsert: false, cacheControl: '3600' });
-        if (error) throw frenchError(error, why);
+        if (error) throw repoError(error, why);
       }
 
       const row: TablesInsert<'media'> = {
@@ -662,7 +802,7 @@ export function createSupabaseRepo(client: GarageClient, ctx: RepoContext): Gara
         } catch {
           // Rien de plus à faire.
         }
-        throw frenchError(error, why);
+        throw repoError(error, why);
       }
       const [item] = await withUrls(client, [data]);
       return item;
@@ -672,9 +812,7 @@ export function createSupabaseRepo(client: GarageClient, ctx: RepoContext): Gara
       await ensureSession();
       const { data, error } = await client.from('media').delete().eq('id', id).select('path').single();
       if (error) {
-        throw error.code === 'PGRST116'
-          ? fail('Vous ne pouvez supprimer que les fichiers que vous avez déposés.')
-          : frenchError(error, 'Le fichier n’a pas pu être supprimé.');
+        throw error.code === 'PGRST116' ? new GarageError('mediaNotOwn') : repoError(error, 'deleteMedia');
       }
       try {
         await client.storage.from(MEDIA_BUCKET).remove([data.path]);

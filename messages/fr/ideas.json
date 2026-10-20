@@ -1,1 +1,76 @@
-{}
+{
+  "meta": {
+    "title": "Boîte à idées",
+    "description": "Proposez une idée pour améliorer Godet, le carnet d’entretien des machines de chantier, et suivez les réponses de l’équipe."
+  },
+  "eyebrow": "Boîte à idées",
+  "title": "Améliorons Godet ensemble",
+  "lead": "Une fonction vous manque, un détail vous gêne au quotidien\u00a0? Décrivez votre idée. Nous lisons chaque proposition et vous disons ce que nous en faisons.",
+  "how": {
+    "title": "Comment ça se passe",
+    "send": "Vous décrivez votre idée, en une phrase ou en détail.",
+    "review": "L’équipe l’étudie et lui donne un statut\u00a0: à l’étude, prévue, réalisée ou écartée, avec une réponse si besoin.",
+    "follow": "Connecté à votre compte, vous suivez vos idées et nos réponses sur cette page."
+  },
+  "form": {
+    "title": "Votre idée",
+    "required": "obligatoire",
+    "ideaTitle": "Votre idée en une phrase",
+    "ideaTitleHint": "Par exemple\u00a0: «\u00a0Pouvoir scanner le compteur d’heures avec le téléphone\u00a0».",
+    "category": "Domaine",
+    "categories": {
+      "3d": "Showroom 3D",
+      "carnet": "Carnet d’entretien",
+      "echeances": "Échéances",
+      "couts": "Coûts",
+      "medias": "Photos, vidéos, documents",
+      "equipe": "Équipe et rôles",
+      "notifications": "Rappels et e-mails",
+      "mobile": "Téléphone et tablette",
+      "autre": "Autre"
+    },
+    "details": "Détails",
+    "detailsHint": "La situation sur le chantier, le problème rencontré, ce qui vous aiderait… 4000\u00a0caractères au maximum.",
+    "email": "Adresse e-mail",
+    "emailHint": "Pour vous répondre. Vous avez un compte\u00a0? <link>Connectez-vous</link> pour suivre vos idées.",
+    "signedInAs": "Connecté avec <b>{email}</b>\u00a0: votre idée sera liée à votre compte.",
+    "trap": "Ne pas remplir ce champ",
+    "submit": "Envoyer mon idée",
+    "pending": "Envoi…",
+    "privacy": "Vos données servent à traiter votre idée. Voir notre <link>politique de confidentialité</link>."
+  },
+  "sent": {
+    "title": "Merci pour votre idée\u00a0!",
+    "text": "Elle est bien arrivée. Nous l’étudions et vous répondrons par e-mail si nécessaire.",
+    "textSignedIn": "Elle est bien arrivée et figure maintenant dans «\u00a0Mes idées\u00a0», où vous verrez nos réponses.",
+    "again": "Proposer une autre idée"
+  },
+  "mine": {
+    "title": "Mes idées",
+    "count": "{count, plural, =0 {Aucune idée pour le moment} one {# idée} other {# idées}}",
+    "empty": "Vous n’avez pas encore proposé d’idée. La première est peut-être la bonne\u00a0!",
+    "loadError": "Vos idées n’ont pas pu être chargées. Rechargez la page.",
+    "sentOn": "Envoyée le {date}",
+    "updatedOn": "mise à jour le {date}",
+    "answer": "Réponse de l’équipe",
+    "anonymous": "<link>Connectez-vous</link> pour retrouver vos idées et les réponses de l’équipe."
+  },
+  "status": {
+    "nouvelle": "Reçue",
+    "a_l_etude": "À l’étude",
+    "prevue": "Prévue",
+    "faite": "Réalisée",
+    "refusee": "Écartée"
+  },
+  "errors": {
+    "checkFields": "Vérifiez les champs signalés.",
+    "titleShort": "Décrivez votre idée en quelques mots (3\u00a0caractères au moins).",
+    "titleLong": "120\u00a0caractères au maximum.",
+    "detailsLong": "4000\u00a0caractères au maximum.",
+    "emailRequired": "Indiquez votre adresse e-mail, pour que nous puissions vous répondre.",
+    "emailInvalid": "Adresse incomplète. Exemple\u00a0: nom@entreprise.ch",
+    "rateLimited": "Vous avez déjà envoyé beaucoup d’idées aujourd’hui. Merci\u00a0! Réessayez demain.",
+    "busy": "Le service est très sollicité. Réessayez dans quelques minutes.",
+    "generic": "L’idée n’a pas pu être envoyée. Réessayez dans un instant."
+  }
+}

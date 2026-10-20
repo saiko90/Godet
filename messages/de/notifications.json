@@ -1,1 +1,56 @@
-{}
+{
+  "title": "Erinnerungen per E-Mail",
+  "intro": "Godet schreibt Ihnen, wenn ein Termin näher rückt oder überschritten ist, und solange eine Reparatur offen ist – in jedem Ihrer Unternehmen.",
+  "loading": "Ihre Einstellungen werden geladen…",
+  "loadError": "Ihre Einstellungen für Erinnerungen konnten nicht geladen werden.",
+  "retry": "Erneut versuchen",
+  "signedOut": "Melden Sie sich an, um Ihre Erinnerungen einzustellen.",
+  "enabled": {
+    "label": "Erinnerungen per E-Mail erhalten",
+    "hint": "Sie gehen an die E-Mail-Adresse Ihres Kontos."
+  },
+  "operator": "{operatorOnly, select, true {Als Maschinist erhalten Sie Erinnerungen nur, wenn Sie sie hier einschalten und speichern.} other {In Unternehmen, in denen Sie Maschinist sind, werden Erinnerungen erst nach dem Speichern dieser Einstellungen versendet.}}",
+  "frequency": {
+    "legend": "Häufigkeit",
+    "quotidien": {
+      "label": "Täglich",
+      "hint": "Eine E-Mail am Morgen, nur wenn es etwas zu melden gibt."
+    },
+    "hebdo": {
+      "label": "Wöchentlich",
+      "hint": "Eine Übersicht am Montagmorgen, nur wenn es etwas zu melden gibt."
+    },
+    "jamais": {
+      "label": "Nie",
+      "hint": "Keine Erinnerungen per E-Mail."
+    }
+  },
+  "lead": {
+    "legend": "Vorlaufzeit",
+    "hint": "Ein Termin erscheint in der Erinnerung, sobald er in diese Frist fällt, und bleibt drin, bis er erledigt ist.",
+    "days": {
+      "label": "Termine nach Datum",
+      "unit": "Tage vorher",
+      "hint": "1 bis 90 Tage.",
+      "error": "Geben Sie eine ganze Zahl von 1 bis 90 Tagen ein."
+    },
+    "hours": {
+      "label": "Termine nach Betriebsstunden",
+      "unit": "Stunden vorher",
+      "hint": "5 bis 500 Stunden. Beim aktuellen Einsatz der Maschine kann ein Termin auch früher erscheinen, wenn er in die Frist in Tagen fällt.",
+      "error": "Geben Sie eine ganze Zahl von 5 bis 500 Stunden ein."
+    }
+  },
+  "save": "Erinnerungen speichern",
+  "saving": "Wird gespeichert…",
+  "saved": "Einstellungen für Erinnerungen gespeichert.",
+  "unsaved": "Änderungen nicht gespeichert.",
+  "errors": {
+    "invalid": "Bitte prüfen Sie die markierten Felder.",
+    "network": "Keine Verbindung. Bitte prüfen Sie Ihr Netzwerk und versuchen Sie es erneut.",
+    "session": "Ihre Sitzung ist abgelaufen. Laden Sie die Seite neu, um sich wieder anzumelden.",
+    "generic": "Das Speichern ist fehlgeschlagen. Bitte versuchen Sie es gleich noch einmal."
+  },
+  "lastSent": "Letzte Erinnerung versendet am {date}.",
+  "neverSent": "Bisher wurde keine Erinnerung versendet."
+}

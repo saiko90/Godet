@@ -3,9 +3,11 @@
 // Coûts par mois sur 12 mois, en colonnes empilées (entretien, réparations, pièces).
 // Colonnes fines à bout arrondi, 2 px d'écart entre les segments, grille discrète, légende, infobulle au survol
 // et au clavier (flèches gauche/droite), et le tableau des chiffres pour qui ne lit pas le graphique.
+import { useTranslations } from 'next-intl';
 import { useId, useState, type KeyboardEvent } from 'react';
+import { useFormat } from '@/components/FormatProvider';
 import { COST_CATEGORIES, type CostCategory, type MonthCost } from '@/lib/domain';
-import { chf, grp, monthLabel } from '@/lib/format';
+import { useDomainText } from '@/lib/use-domain-text';
 
 const W = 440;
 const H = 220;
@@ -27,6 +29,9 @@ function capPath(x: number, y: number, w: number, h: number, r: number): string 
 }
 
 export function CostChart({ months, title }: { months: MonthCost[]; title: string }) {
+  const t = useTranslations('garage.chart');
+  const f = useFormat();
+  const dt = useDomainText();
   const uid = useId().replace(/:/g, '');
   const [active, setActive] = useState<number | null>(null);
   const max = niceMax(Math.max(...months.map((m) => m.total)));
@@ -39,7 +44,8 @@ export function CostChart({ months, title }: { months: MonthCost[]; title: strin
   const peak = months.reduce((best, m, i) => (m.total > months[best].total ? i : best), 0);
   const first = months[0];
   const last = months[months.length - 1];
-  const range = `de ${monthLabel(first.ym, true)} à ${monthLabel(last.ym, true)}`;
+  const range = t('range', { from: f.month(first.ym, true), to: f.month(last.ym, true) });
+  const currency = t('currency', { currency: f.currency });
 
   function onKey(e: KeyboardEvent<SVGSVGElement>) {
     if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight' && e.key !== 'Home' && e.key !== 'End') return;
@@ -67,7 +73,7 @@ export function CostChart({ months, title }: { months: MonthCost[]; title: strin
         <svg
           viewBox={`0 0 ${W} ${H}`}
           role="img"
-          aria-label={`Coûts mensuels ${range}, en francs suisses. Le détail est dans le tableau ci-dessous. Flèches gauche et droite pour parcourir les mois.`}
+          aria-label={t('aria', { range, currency })}
           tabIndex={0}
           data-own-arrows=""
           onKeyDown={onKey}
@@ -79,7 +85,7 @@ export function CostChart({ months, title }: { months: MonthCost[]; title: strin
             <g key={v}>
               <line className="grid" x1={M.l} x2={W - M.r} y1={y(v)} y2={y(v)} />
               <text className="ax" x={M.l - 8} y={y(v) + 3.5} textAnchor="end">
-                {grp(v)}
+                {f.num(v)}
               </text>
             </g>
           ))}
@@ -110,11 +116,11 @@ export function CostChart({ months, title }: { months: MonthCost[]; title: strin
                   );
                 })}
                 <text className="ax" x={x + bw / 2} y={H - 8} textAnchor="middle">
-                  {m.label}
+                  {f.month(m.ym)}
                 </text>
                 {i === peak && m.total > 0 ? (
                   <text className="g-chart-peak" x={x + bw / 2} y={y(m.total) - 6} textAnchor="middle">
-                    {grp(Math.round(m.total))}
+                    {f.num(Math.round(m.total))}
                   </text>
                 ) : null}
               </g>
@@ -124,19 +130,25 @@ export function CostChart({ months, title }: { months: MonthCost[]; title: strin
         </svg>
         {tip ? (
           <div className={`g-chart-tip${tipLeft > 62 ? ' is-left' : ''}`} style={{ left: `${tipLeft}%` }} aria-hidden="true">
-            <b>{chf(tip.total)}</b>
-            <span className="g-chart-tip-m">{monthLabel(tip.ym, true)}</span>
+            <b>{f.money(tip.total)}</b>
+            <span className="g-chart-tip-m">{f.month(tip.ym, true)}</span>
             {ORDER.map((k) => (
               <span key={k} className="g-chart-tip-row">
                 <i style={{ background: COST_CATEGORIES[k].color }} />
-                <b>{chf(tip[k])}</b> {COST_CATEGORIES[k].label}
+                <b>{f.money(tip[k])}</b> {dt.cost(k)}
               </span>
             ))}
           </div>
         ) : null}
         <p className="g-sr" aria-live="polite">
           {tip
-            ? `${monthLabel(tip.ym, true)} : ${chf(tip.total)}, dont entretien ${chf(tip.entretien)}, réparations ${chf(tip.reparations)}, pièces ${chf(tip.pieces)}.`
+            ? t('live', {
+                month: f.month(tip.ym, true),
+                total: f.money(tip.total),
+                maintenance: f.money(tip.entretien),
+                repairs: f.money(tip.reparations),
+                parts: f.money(tip.pieces),
+              })
             : ''}
         </p>
       </div>
@@ -144,25 +156,25 @@ export function CostChart({ months, title }: { months: MonthCost[]; title: strin
         {ORDER.map((k) => (
           <span key={k}>
             <i style={{ background: COST_CATEGORIES[k].color }} />
-            {COST_CATEGORIES[k].label}
+            {dt.cost(k)}
           </span>
         ))}
       </div>
       <details className="g-chart-table">
-        <summary>Voir les chiffres par mois</summary>
+        <summary>{t('showTable')}</summary>
         <div className="table-wrap">
           <table>
-            <caption className="g-sr">Coûts par mois {range}, en francs suisses</caption>
+            <caption className="g-sr">{t('caption', { range, currency })}</caption>
             <thead>
               <tr>
-                <th scope="col">Mois</th>
+                <th scope="col">{t('month')}</th>
                 {ORDER.map((k) => (
                   <th key={k} scope="col" className="r">
-                    {COST_CATEGORIES[k].label}
+                    {dt.cost(k)}
                   </th>
                 ))}
                 <th scope="col" className="r">
-                  Total
+                  {t('total')}
                 </th>
               </tr>
             </thead>
@@ -170,14 +182,14 @@ export function CostChart({ months, title }: { months: MonthCost[]; title: strin
               {months.map((m) => (
                 <tr key={m.ym}>
                   <th scope="row" className="g-th-row">
-                    {monthLabel(m.ym, true)}
+                    {f.month(m.ym, true)}
                   </th>
                   {ORDER.map((k) => (
                     <td key={k} className="r">
-                      {chf(m[k])}
+                      {f.money(m[k])}
                     </td>
                   ))}
-                  <td className="r">{chf(m.total)}</td>
+                  <td className="r">{f.money(m.total)}</td>
                 </tr>
               ))}
             </tbody>

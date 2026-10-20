@@ -1,171 +1,166 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { checkLocale, metaLocale, ogLocale, type LocaleParams } from '@/components/site/seo';
 import { SiteFooter, SiteHeader, SkipLink, STUDIO_URL } from '@/components/site/SiteChrome';
+import { localizedAlternates } from '@/i18n/metadata';
+import { Link } from '@/i18n/navigation';
+import { htmlLang } from '@/i18n/routing';
 
-export const metadata: Metadata = {
-  title: 'Politique de confidentialité',
-  description:
-    'Comment Godet traite vos données : responsable, données traitées, finalités, sous-traitants, durée de conservation et vos droits selon la nLPD.',
-  alternates: { canonical: '/confidentialite' },
-};
+export async function generateMetadata({ params }: { params: LocaleParams }): Promise<Metadata> {
+  const locale = metaLocale((await params).locale);
+  const t = await getTranslations({ locale, namespace: 'legal.meta' });
+  const alternates = localizedAlternates('/confidentialite', locale);
+  return {
+    title: t('title'),
+    description: t('description'),
+    alternates,
+    openGraph: { title: t('title'), description: t('description'), url: alternates.canonical, locale: ogLocale(locale), type: 'article', siteName: 'Godet' },
+  };
+}
 
-const UPDATED = '19.10.2026';
+/** Date de la dernière mise à jour de la politique (à changer avec le texte). */
+const UPDATED = '2026-10-19';
 
-export default function ConfidentialitePage() {
+const DATA = ['account', 'fleet', 'media', 'journal', 'contact', 'ideas', 'reminders', 'prospects', 'technical'] as const;
+const PURPOSES = ['service', 'emails', 'contact', 'prospecting', 'security'] as const;
+const PROCESSORS = ['supabase', 'vercel', 'email'] as const;
+const RIGHTS = ['access', 'rectify', 'erase', 'portability', 'restrict', 'consent'] as const;
+
+export default async function ConfidentialitePage({ params }: { params: LocaleParams }) {
+  const locale = checkLocale((await params).locale);
+  setRequestLocale(locale);
+  const t = await getTranslations({ locale, namespace: 'legal' });
+  const updated = new Intl.DateTimeFormat(htmlLang(locale), { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(
+    new Date(`${UPDATED}T12:00:00Z`),
+  );
+
+  // Balises des textes : mise en valeur et liens (formulaire de contact, site du studio, paramètres).
+  const tags = {
+    strong: (chunks: React.ReactNode) => <strong>{chunks}</strong>,
+    contact: (chunks: React.ReactNode) => (
+      <Link className="s-link" href="/contact">
+        {chunks}
+      </Link>
+    ),
+    studio: (chunks: React.ReactNode) => (
+      <a className="s-link" href={STUDIO_URL}>
+        {chunks}
+      </a>
+    ),
+    reminders: (chunks: React.ReactNode) => (
+      <Link className="s-link" href="/parametres#rappels">
+        {chunks}
+      </Link>
+    ),
+    account: (chunks: React.ReactNode) => (
+      <Link className="s-link" href="/parametres#compte">
+        {chunks}
+      </Link>
+    ),
+  };
+
+  let n = 0;
+  const num = () => String(++n).padStart(2, '0');
+
   return (
     <div className="s-page">
       <SkipLink />
-      <SiteHeader />
+      <SiteHeader current="confidentialite" />
       <main id="contenu" className="s-main s-legal">
         <div className="s-wrap">
           <article className="s-legal-inner">
-            <p className="eyebrow">Protection des données</p>
-            <h1>Politique de confidentialité</h1>
-            <p className="s-legal-date">Dernière mise à jour&nbsp;: {UPDATED}</p>
-            <p className="s-legal-intro">
-              Godet est le carnet d’entretien numérique des machines de chantier. Cette page explique quelles données
-              nous traitons, pourquoi, où elles sont hébergées et quels sont vos droits, conformément à la loi fédérale
-              sur la protection des données (nLPD).
-            </p>
+            <p className="eyebrow">{t('eyebrow')}</p>
+            <h1>{t('title')}</h1>
+            <p className="s-legal-date">{t('updated', { date: updated })}</p>
+            <p className="s-legal-intro">{t('intro')}</p>
 
             <h2>
-              <span>01</span> Responsable du traitement
+              <span>{num()}</span> {t('controller.title')}
             </h2>
-            <p>
-              <strong>Swiss Digital Studio</strong>, Valais, Suisse, éditeur de Godet. Pour toute question sur vos
-              données, contactez-nous via{' '}
-              <a className="s-link" href={STUDIO_URL}>
-                www.swissdigitalstudio.ch
-              </a>
-              .
-            </p>
-            <p>
-              Les données que votre entreprise saisit dans Godet (parc, interventions, médias) sont les siennes&nbsp;:
-              elle décide de leur contenu, et nous les traitons pour son compte.
-            </p>
+            <p>{t.rich('controller.text', tags)}</p>
+            <p>{t('controller.customer')}</p>
 
             <h2>
-              <span>02</span> Données traitées
+              <span>{num()}</span> {t('data.title')}
             </h2>
             <ul>
-              <li>
-                <strong>Compte</strong>&nbsp;: nom, adresse e-mail, mot de passe (jamais stocké en clair), entreprises
-                dont vous êtes membre et rôle dans chacune.
-              </li>
-              <li>
-                <strong>Données du parc</strong>&nbsp;: machines, interventions, échéances, relevés d’heures, coûts et
-                notes saisis par votre entreprise, avec le nom de la personne qui a fait chaque saisie.
-              </li>
-              <li>
-                <strong>Médias déposés</strong>&nbsp;: photos, vidéos et documents (factures, rapports) ajoutés aux
-                machines.
-              </li>
-              <li>
-                <strong>Journal des modifications</strong>&nbsp;: qui a créé, modifié ou retiré quoi, et quand.
-              </li>
-              <li>
-                <strong>Données techniques</strong>&nbsp;: informations nécessaires au fonctionnement et à la sécurité,
-                comme l’adresse IP et le type de navigateur dans les journaux des serveurs.
-              </li>
+              {DATA.map((key) => (
+                <li key={key}>{t.rich(`data.items.${key}`, tags)}</li>
+              ))}
             </ul>
-            <p>
-              La démo 3D fonctionne sans compte&nbsp;: ce que vous y faites reste dans votre navigateur.
-            </p>
+            <p>{t('data.demo')}</p>
 
             <h2>
-              <span>03</span> Finalités
+              <span>{num()}</span> {t('purposes.title')}
             </h2>
             <ul>
-              <li>Tenir le carnet d’entretien de vos machines, calculer les échéances et les coûts.</li>
-              <li>Gérer les comptes, les invitations et les droits d’accès de votre équipe.</li>
-              <li>Envoyer les e-mails liés au compte (confirmation d’adresse, nouveau mot de passe).</li>
-              <li>Assurer la sécurité du service et prévenir les abus.</li>
+              {PURPOSES.map((key) => (
+                <li key={key}>{t(`purposes.items.${key}`)}</li>
+              ))}
             </ul>
-            <p>
-              Nous ne vendons pas vos données et ne les utilisons pas à des fins publicitaires.
-            </p>
+            <p>{t('purposes.basis')}</p>
+            <p>{t('purposes.noSale')}</p>
 
-            <h2>
-              <span>04</span> Cookies et traceurs
+            <h2 id="prospection">
+              <span>{num()}</span> {t('prospecting.title')}
             </h2>
-            <p>
-              Godet utilise uniquement des cookies techniques&nbsp;: celui de votre session de connexion et celui qui
-              mémorise l’entreprise active. Aucun traceur publicitaire, aucun outil de mesure d’audience tiers.
-            </p>
-
-            <h2>
-              <span>05</span> Sous-traitants et lieu d’hébergement
-            </h2>
-            <ul>
-              <li>
-                <strong>Supabase</strong>&nbsp;: base de données, authentification et stockage des fichiers. Les
-                données sont hébergées dans l’Union européenne (Irlande).
-              </li>
-              <li>
-                <strong>Vercel</strong>&nbsp;: hébergement et diffusion du site.
-              </li>
-            </ul>
-            <p>
-              Ces prestataires peuvent être établis hors de Suisse. Lorsque des données y sont communiquées, nous nous
-              appuyons sur une décision d’adéquation du Conseil fédéral ou sur des garanties contractuelles reconnues,
-              comme les clauses contractuelles types.
-            </p>
-
-            <h2>
-              <span>06</span> Sécurité
-            </h2>
-            <p>
-              Les échanges sont chiffrés (HTTPS). Chaque entreprise ne voit que ses propres données&nbsp;: les règles
-              d’accès sont appliquées par la base de données elle-même. Les photos, vidéos et documents sont rangés
-              dans un espace privé et ne s’ouvrent que par des liens temporaires.
-            </p>
-
-            <h2>
-              <span>07</span> Durée de conservation
-            </h2>
-            <p>
-              Les données de votre compte et de votre entreprise sont conservées tant que le compte est actif. Le
-              carnet d’entretien sert de preuve&nbsp;: une saisie retirée y reste visible avec son motif. Après la fin
-              du contrat, les données sont supprimées, sauf obligation légale de conservation. Avant cela, vous pouvez
-              imprimer ou enregistrer en PDF le carnet de chaque machine.
-            </p>
-
-            <h2>
-              <span>08</span> Vos droits
-            </h2>
-            <p>Vous pouvez à tout moment demander&nbsp;:</p>
-            <ul>
-              <li>l’accès aux données qui vous concernent&nbsp;;</li>
-              <li>leur rectification si elles sont inexactes&nbsp;;</li>
-              <li>leur effacement, dans les limites des obligations légales&nbsp;;</li>
-              <li>leur remise dans un format courant.</li>
-            </ul>
+            <p>{t('prospecting.text')}</p>
             <div className="s-legal-box">
-              <p>
-                Votre nom se modifie directement dans{' '}
-                <Link className="s-link" href="/parametres#compte">
-                  Paramètres → Mon compte
-                </Link>
-                . Pour toute autre demande, écrivez-nous via{' '}
-                <a className="s-link" href={STUDIO_URL}>
-                  www.swissdigitalstudio.ch
-                </a>
-                . Vous pouvez aussi vous adresser au Préposé fédéral à la protection des données et à la transparence
-                (PFPDT).
-              </p>
+              <p>{t.rich('prospecting.object', tags)}</p>
             </div>
 
             <h2>
-              <span>09</span> Modifications
+              <span>{num()}</span> {t('reminders.title')}
             </h2>
-            <p>
-              Nous pouvons adapter cette politique, par exemple si le service évolue. La date de la dernière mise à
-              jour figure en haut de cette page.
-            </p>
+            <p>{t.rich('reminders.text', tags)}</p>
+
+            <h2>
+              <span>{num()}</span> {t('cookies.title')}
+            </h2>
+            <p>{t('cookies.text')}</p>
+
+            <h2>
+              <span>{num()}</span> {t('processors.title')}
+            </h2>
+            <ul>
+              {PROCESSORS.map((key) => (
+                <li key={key}>{t.rich(`processors.items.${key}`, tags)}</li>
+              ))}
+            </ul>
+            <p>{t('processors.transfers')}</p>
+
+            <h2>
+              <span>{num()}</span> {t('security.title')}
+            </h2>
+            <p>{t('security.text')}</p>
+
+            <h2>
+              <span>{num()}</span> {t('retention.title')}
+            </h2>
+            <p>{t('retention.account')}</p>
+            <p>{t('retention.messages')}</p>
+
+            <h2>
+              <span>{num()}</span> {t('rights.title')}
+            </h2>
+            <p>{t('rights.intro')}</p>
+            <ul>
+              {RIGHTS.map((key) => (
+                <li key={key}>{t(`rights.items.${key}`)}</li>
+              ))}
+            </ul>
+            <div className="s-legal-box">
+              <p>{t.rich('rights.box', tags)}</p>
+            </div>
+
+            <h2>
+              <span>{num()}</span> {t('changes.title')}
+            </h2>
+            <p>{t('changes.text')}</p>
           </article>
         </div>
       </main>
-      <SiteFooter />
+      <SiteFooter current="confidentialite" />
     </div>
   );
 }

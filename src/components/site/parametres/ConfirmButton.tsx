@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { useEffect, useRef, useState } from 'react';
 import { Icon, type IconName } from '@/components/Icons';
 
@@ -19,6 +20,7 @@ export function ConfirmButton({
   pending?: boolean;
   icon?: IconName;
 }) {
+  const t = useTranslations();
   const [asking, setAsking] = useState(false);
   const cancelRef = useRef<HTMLButtonElement>(null);
   const openRef = useRef<HTMLButtonElement>(null);
@@ -35,7 +37,7 @@ export function ConfirmButton({
     return (
       <button ref={openRef} type="button" className="btn btn-ghost s-btn-sm" onClick={() => setAsking(true)} disabled={pending}>
         <Icon name={icon} />
-        {pending ? 'Un instant…' : label}
+        {pending ? t('settings.confirm.pending') : label}
       </button>
     );
   }
@@ -53,7 +55,7 @@ export function ConfirmButton({
         {confirmLabel}
       </button>
       <button ref={cancelRef} type="button" className="btn btn-ghost s-btn-sm" onClick={() => setAsking(false)}>
-        Annuler
+        {t('common.actions.cancel')}
       </button>
     </span>
   );

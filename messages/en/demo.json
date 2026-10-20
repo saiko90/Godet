@@ -1,1 +1,415 @@
-{}
+{
+  "meta": {
+    "title": "3D garage demo",
+    "shareTitle": "Godet — 3D garage demo for your equipment fleet",
+    "description": "Visit a sample garage without signing up: six construction machines, twelve months of maintenance log, repairs, parts, costs and due dates. Try everything, nothing is saved.",
+    "keywords": "maintenance log, construction machinery, plant fleet, fleet management, excavator maintenance, Switzerland, demo"
+  },
+  "loading": "Opening the demo garage…",
+  "org": "Demo Construction Ltd",
+  "people": {
+    "workshop": "In-house workshop",
+    "foreman": "Workshop foreman",
+    "operator": "Operator",
+    "partner": "Partner garage",
+    "roadOffice": "Road Traffic Office"
+  },
+  "suppliers": {
+    "tpValais": "Valais Plant & Equipment Ltd",
+    "rhoneHydraulics": "Rhône Hydraulics Ltd",
+    "rhoneTyres": "Rhône Tyres Ltd",
+    "electroDiesel": "Sion Electro-Diesel Ltd",
+    "trucksMartigny": "Martigny Commercial Vehicles Ltd"
+  },
+  "reasons": {
+    "duplicate": "Duplicate entry"
+  },
+  "machines": {
+    "pe01": {
+      "brand": "Demo",
+      "model": "Crawler excavator 21 t",
+      "notes": "Demo machine: edit it, add to its log or archive it whenever you like.",
+      "entries": {
+        "e01": {
+          "title": "5’500 h service",
+          "details": "Engine oil and filters, hose check."
+        },
+        "e02": {
+          "title": "Inspection after trenching work",
+          "details": "Undercarriage cleaned, bucket checked for impact damage."
+        },
+        "e03": {
+          "title": "Central lubrication pump replaced",
+          "details": "Pump failed, replaced and bled."
+        },
+        "e04": {
+          "title": "Air conditioning receiver-drier"
+        },
+        "e05": {
+          "title": "Winter greasing",
+          "details": "Low-temperature grease on the slew ring and pins."
+        },
+        "e06": {
+          "title": "Bulbs and fuses"
+        },
+        "e07": {
+          "title": "Cold-weather preparation",
+          "details": "Battery tested, glow plugs checked, antifreeze checked."
+        },
+        "e08": {
+          "title": "Spare hoses (workshop stock)"
+        },
+        "e09": {
+          "title": "Right travel motor: leak",
+          "details": "Floating seal replaced, final drive oil changed."
+        },
+        "e10": {
+          "title": "LED work light"
+        },
+        "e11": {
+          "title": "Inspection and greasing",
+          "details": "Track tension adjusted, bucket pins greased, tooth wear measured."
+        },
+        "e12": {
+          "title": "Bucket teeth replaced",
+          "details": "Five worn teeth replaced."
+        },
+        "e13": {
+          "title": "Bucket cutting edge"
+        },
+        "e14": {
+          "title": "6’000 h service",
+          "details": "Engine oil and filters, travel gearbox oil, slew ring play checked."
+        },
+        "e15": {
+          "title": "Battery 12 V 140 Ah"
+        },
+        "e16": {
+          "title": "Undercarriage check",
+          "details": "Roller and sprocket wear measured, track tension adjusted."
+        },
+        "e17": {
+          "title": "Bucket cylinder resealed",
+          "details": "Weeping at the rod. Seal kit replaced, rod checked."
+        },
+        "e18": {
+          "title": "Centre swivel joint seal kit"
+        },
+        "e19": {
+          "title": "Cleaning and hose check",
+          "details": "Steam cleaned, visual check of all hoses and fittings."
+        },
+        "e20": {
+          "title": "Annual safety inspection",
+          "details": "Slew brake, cylinder safety valves, overload warning, lights, fire extinguisher. No defects."
+        },
+        "e21": {
+          "title": "Cab filters and wiper blades"
+        },
+        "e22": {
+          "title": "Air conditioning: service and recharge",
+          "details": "Receiver-drier, refrigerant recharge, leak test."
+        },
+        "e23": {
+          "title": "Bucket side cutters (pair)"
+        },
+        "e24": {
+          "title": "Left carrier roller replaced",
+          "details": "Roller noisy and seized. Replaced, track tension adjusted."
+        },
+        "e25": {
+          "title": "6’500 h service",
+          "details": "Engine oil; oil, fuel and air filters; hydraulic return filter; full greasing."
+        },
+        "e26": {
+          "title": "EP2 grease cartridges"
+        },
+        "e27": {
+          "title": "Dipper arm high-pressure hose replaced",
+          "details": "Leak on the dipper cylinder hose. Hose and seals replaced, oil topped up."
+        },
+        "e28": {
+          "title": "Fluid level check",
+          "details": "Engine oil, hydraulic oil and coolant checked, greasing."
+        },
+        "e29": {
+          "title": "Filter kit for the 7’000 h service"
+        },
+        "e30": {
+          "title": "Greasing and radiator cleaning",
+          "details": "Pins greased, radiator and oil cooler blown out."
+        },
+        "e31": {
+          "title": "Seat suspension to be replaced",
+          "details": "Seat damper has sagged. Part ordered, fitting planned at the 7’000 h service."
+        }
+      },
+      "schedules": {
+        "s1": "Service",
+        "s2": "Undercarriage inspection",
+        "s3": "Hydraulic oil change",
+        "s4": "Fire extinguisher check",
+        "s5": "Annual safety inspection"
+      }
+    },
+    "ch02": {
+      "notes": "3.2 m³ bucket and pallet forks. Front tyres replaced in the spring.",
+      "entries": {
+        "e01": {
+          "title": "Tyre and fluid level check",
+          "details": "Pressures adjusted, fluids topped up."
+        },
+        "e02": {
+          "title": "3’000 h service",
+          "details": "Engine oil and filters, axles and articulation joint checked, full greasing."
+        },
+        "e03": {
+          "title": "Lift cylinder: seals replaced",
+          "details": "Weeping at the left cylinder. Seal kit replaced, oil topped up."
+        },
+        "e04": {
+          "title": "Bucket teeth (set of 8)",
+          "details": "Fitted at the next service."
+        },
+        "e05": {
+          "title": "Annual safety inspection",
+          "details": "Brakes, steering, lights, reversing alarm, seat belt, fire extinguisher. No defects."
+        },
+        "e06": {
+          "title": "Greasing and articulation joint check",
+          "details": "Centre pivot play checked, greasing."
+        },
+        "e07": {
+          "title": "3’500 h service",
+          "details": "Engine oil and filters, air filter, greasing."
+        },
+        "e08": {
+          "title": "Front left tyre 23.5 R25",
+          "details": "Tyre torn on a demolition site."
+        },
+        "e09": {
+          "title": "Brake noise to monitor",
+          "details": "Squealing when reversing, especially when cold."
+        },
+        "e10": {
+          "title": "Brake discs replaced",
+          "details": "Service brake discs and linings replaced, circuit bled."
+        },
+        "e11": {
+          "title": "Brake discs replaced",
+          "details": "Service brake discs and linings replaced."
+        },
+        "e12": {
+          "title": "Inspection after earthmoving work",
+          "details": "Radiator and front frame cleaned, hoses checked."
+        },
+        "e13": {
+          "title": "4’000 h service",
+          "details": "Engine oil, oil and fuel filters, hydraulic oil checked, greasing."
+        },
+        "e14": {
+          "title": "Primary air filter"
+        },
+        "e15": {
+          "title": "Greasing and cleaning",
+          "details": "Pins greased, cab and windows cleaned."
+        }
+      },
+      "schedules": {
+        "s1": "Service",
+        "s2": "Axle oil change",
+        "s3": "Annual safety inspection",
+        "s4": "Tyre wear check"
+      }
+    },
+    "mp03": {
+      "notes": "Mechanical quick hitch. 300 and 600 mm digging buckets, 1’000 mm ditching bucket.",
+      "entries": {
+        "e01": {
+          "title": "Annual safety inspection",
+          "details": "Quick hitch, safety valves, horn, lights, fire extinguisher. No defects."
+        },
+        "e02": {
+          "title": "Track check",
+          "details": "Tension adjusted, roller wear within limits."
+        },
+        "e03": {
+          "title": "Ditching bucket 1’000 mm"
+        },
+        "e04": {
+          "title": "Dozer blade hose replaced",
+          "details": "Hose pinched against the frame, replaced and rerouted."
+        },
+        "e05": {
+          "title": "Greasing and fluid level check",
+          "details": "Fluids topped up, pins greased."
+        },
+        "e06": {
+          "title": "1’000 h service",
+          "details": "Engine oil and filters, hydraulic filter, full greasing."
+        },
+        "e07": {
+          "title": "Work light replaced",
+          "details": "Front light broken on site, replaced with an LED unit."
+        },
+        "e08": {
+          "title": "Greasing and fluid level check",
+          "details": "Fluid levels checked, pins and quick hitch greased."
+        },
+        "e09": {
+          "title": "Play in the bucket pin to monitor",
+          "details": "Slight play felt at the end of the stroke, to be checked at the next service."
+        },
+        "e10": {
+          "title": "Bucket teeth (set of 4)"
+        }
+      },
+      "schedules": {
+        "s1": "Service",
+        "s2": "Annual safety inspection",
+        "s3": "Quick hitch check"
+      }
+    },
+    "du04": {
+      "entries": {
+        "e01": {
+          "title": "2’500 h service",
+          "details": "Engine oil and filters, transmission oil checked, greasing."
+        },
+        "e02": {
+          "title": "Starter motor replaced",
+          "details": "Starter motor failed, replaced with an exchange unit."
+        },
+        "e03": {
+          "title": "Winter greasing",
+          "details": "Low-temperature grease on the articulation joint and the skip."
+        },
+        "e04": {
+          "title": "Annual safety inspection",
+          "details": "Brakes, steering, roll bar, seat belt, lights. No defects."
+        },
+        "e05": {
+          "title": "3’000 h service",
+          "details": "Engine oil and filters, air filter, full greasing."
+        },
+        "e06": {
+          "title": "Battery 12 V 110 Ah"
+        },
+        "e07": {
+          "title": "Centre pivot: bushes replaced",
+          "details": "Excessive play at the pivot. Bushes and pins replaced."
+        },
+        "e08": {
+          "title": "Tyre check",
+          "details": "Even wear, pressures adjusted."
+        },
+        "e09": {
+          "title": "3’500 h service to schedule",
+          "details": "Machine on the Fully site until the end of October: service to be done when it is back at the workshop."
+        },
+        "e10": {
+          "title": "Leak at the skip ram",
+          "details": "Weeping at the rod seal. Machine usable at reduced load, repair under way at the workshop."
+        }
+      },
+      "schedules": {
+        "s1": "Service",
+        "s2": "Brake check",
+        "s3": "Annual safety inspection"
+      }
+    },
+    "ro05": {
+      "notes": "Smooth drum. Drain the water spray system before the frost.",
+      "entries": {
+        "e01": {
+          "title": "1’500 h service",
+          "details": "Engine oil and filters, exciter oil checked, greasing."
+        },
+        "e02": {
+          "title": "Drum scrapers (set)"
+        },
+        "e03": {
+          "title": "Winterisation: water spray system drained",
+          "details": "Water spray system drained, tank rinsed."
+        },
+        "e04": {
+          "title": "Annual safety inspection",
+          "details": "Brakes, roll bar, reversing alarm, lights. No defects."
+        },
+        "e05": {
+          "title": "Spring recommissioning",
+          "details": "Spray system refilled, nozzles unblocked, fluid levels checked."
+        },
+        "e06": {
+          "title": "2’000 h service",
+          "details": "Engine oil and filters, exciter oil, air filter."
+        },
+        "e07": {
+          "title": "Water spray pump replaced",
+          "details": "Pump seized, replaced. Spray checked across the full width."
+        },
+        "e08": {
+          "title": "Scraper and spray system check",
+          "details": "Scrapers adjusted, nozzles cleaned."
+        }
+      },
+      "schedules": {
+        "s1": "Service",
+        "s2": "Spray system winterisation",
+        "s3": "Annual safety inspection"
+      }
+    },
+    "ca06": {
+      "notes": "Three-way tipper. Digital tachograph.",
+      "entries": {
+        "e01": {
+          "title": "Periodic vehicle inspection",
+          "details": "Vehicle presented for its periodic inspection. No defects, next inspection in 12 months."
+        },
+        "e02": {
+          "title": "Front axle tyres (2 × 385/65 R22.5)"
+        },
+        "e03": {
+          "title": "Tipper ram hose replaced",
+          "details": "Perished hose replaced, oil topped up."
+        },
+        "e04": {
+          "title": "7’400 h service",
+          "details": "Engine oil and filters, fuel filter, chassis greasing."
+        },
+        "e05": {
+          "title": "Rear axle brake pads"
+        },
+        "e06": {
+          "title": "8’000 h service",
+          "details": "Engine oil and filters, gearbox oil checked, greasing."
+        },
+        "e07": {
+          "title": "Clutch: release bearing and plate replaced",
+          "details": "Clutch slipping. Release bearing and clutch plate replaced, adjustment checked."
+        },
+        "e08": {
+          "title": "Lights and tyre check",
+          "details": "Bulbs replaced, pressures adjusted."
+        },
+        "e09": {
+          "title": "8’600 h service",
+          "details": "Engine oil and filters, air filter, chassis greasing."
+        },
+        "e10": {
+          "title": "Body cleaning and greasing",
+          "details": "Tipper body cleaned, pivots and tipping hinges greased."
+        },
+        "e11": {
+          "title": "NOx sensor to be replaced",
+          "details": "Engine warning light on, faulty NOx sensor. Part ordered from the dealer."
+        }
+      },
+      "schedules": {
+        "s1": "Service",
+        "s2": "Periodic vehicle inspection",
+        "s3": "Tachograph check"
+      }
+    }
+  }
+}

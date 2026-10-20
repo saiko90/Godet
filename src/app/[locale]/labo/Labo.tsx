@@ -11,12 +11,16 @@
 //   standby=1    (avec test=1) hall laissé éteint, avant l'allumage
 //   dt=0.066     (avec test=1) pas de temps fixe par image : filmer un vol image par image
 //   signage=…    nom sur l'enseigne
+import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useFormat } from '@/components/FormatProvider';
 import { Icon } from '@/components/Icons';
 import { Loader } from '@/components/Loader';
+import { weightText } from '@/components/garage/text';
+import { applyShowroomTexts, engineStep, type EngineStep } from '@/components/garage/useShowroom';
 import type { MachineKind } from '@/lib/types';
 import type { MachineState, Showroom, ShowroomEffect, ShowroomMachine, ShowroomQuality } from '@/engine/types';
-import { demoFleet } from './fleet';
+import { demoFleet, type LaboModel } from './fleet';
 import './labo.css';
 
 interface Params {
@@ -37,13 +41,12 @@ interface Params {
 
 const KINDS: MachineKind[] = ['pelle', 'mini_pelle', 'chargeuse', 'dumper', 'camion', 'grue', 'rouleau', 'autre'];
 const QUALITIES: (ShowroomQuality | 'auto')[] = ['auto', 'high', 'medium', 'low'];
-const QUALITY_LABEL: Record<ShowroomQuality | 'auto', string> = { auto: 'Qualité auto', high: 'Qualité haute', medium: 'Qualité moyenne', low: 'Qualité basse' };
 const EFFECTS: ShowroomEffect[] = ['save', 'open', 'close', 'alert', 'tick', 'photo', 'whoosh'];
 const COUNTS = [1, 3, 8, 20];
 const PAINTS = ['#f3b71b', '#f07c1a', '#e9e6df', '#3b4047', '#2f6f4e', '#a83a32'];
 const STATES: MachineState[] = ['ok', 'warn', 'bad'];
 
-function readParams(): Params {
+function readParams(defaultSignage: string): Params {
   const sp = new URLSearchParams(window.location.search);
   const num = (k: string) => {
     const v = sp.get(k);
@@ -67,7 +70,7 @@ function readParams(): Params {
     standby: sp.get('standby') === '1',
     dt: num('dt'),
     kinds: kinds.length ? kinds : undefined,
-    signage: sp.get('signage') ?? 'Entreprise Démo SA',
+    signage: sp.get('signage') ?? defaultSignage,
   };
 }
 
@@ -81,13 +84,22 @@ function sheetInsets(open: boolean): { top: number; right: number; bottom: numbe
 }
 
 export function Labo() {
+  const t = useTranslations('garage');
+  const f = useFormat();
+  const label = useCallback((name: LaboModel, weight: number) => t('labo.label', { name: t(`labo.models.${name}`), weight: weightText(f, weight) }), [t, f]);
+  const labelRef = useRef(label);
+  const tRef = useRef(t);
+  useEffect(() => {
+    labelRef.current = label;
+    tRef.current = t;
+  });
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const labelsRef = useRef<HTMLDivElement>(null);
   const showroomRef = useRef<Showroom | null>(null);
   const fleetRef = useRef<ShowroomMachine[]>([]);
   const sheetRef = useRef(false);
   const [progress, setProgress] = useState(0);
-  const [step, setStep] = useState('Chargement du moteur 3D');
+  const [step, setStep] = useState<EngineStep>('engine');
   const [ready, setReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [fleet, setFleet] = useState<ShowroomMachine[]>([]);
@@ -111,7 +123,7 @@ export function Labo() {
   useEffect(() => {
     let disposed = false;
     let instance: Showroom | null = null;
-    const p = readParams();
+    const p = readParams(tRef.current('labo.signage'));
     const run = async () => {
       if (p.test) {
         const { setEngineDebug } = await import('@/engine/debug');
@@ -120,12 +132,20 @@ export function Labo() {
       const engine = await import('@/engine');
       if (disposed) return;
       if (!engine.webglAvailable()) {
-        setError('Cet appareil n’affiche pas la 3D (WebGL 2 indisponible).');
+        setError(tRef.current('labo.noWebgl'));
         return;
       }
       const canvas = canvasRef.current;
       if (!canvas) return;
-      const machines = demoFleet(p.n, p.kinds);
+      const tt = tRef.current;
+      applyShowroomTexts(canvas, labelsRef.current, {
+        canvas: tt('labo.canvas'),
+        signageSub: tt('engine.signage'),
+        signageFallback: tt('engine.signageFallback'),
+        alertOne: tt('engine.alertOne'),
+        alertOther: tt('engine.alertOther'),
+      });
+      const machines = demoFleet(p.n, labelRef.current, p.kinds);
       fleetRef.current = machines;
       setFleet(machines);
       setQualityState(p.q);
@@ -138,10 +158,10 @@ export function Labo() {
         reducedMotion: p.reduced || window.matchMedia('(prefers-reduced-motion: reduce)').matches,
         sound: !p.test,
         signage: p.signage,
-        onProgress: (v, label) => {
+        onProgress: (v) => {
           if (disposed) return;
           setProgress(v);
-          setStep(label);
+          setStep(engineStep(v));
         },
         onSelect: (id) => {
           const sr = showroomRef.current;
@@ -157,7 +177,7 @@ export function Labo() {
         onFocus: (id) => setFocused(id),
         onHover: (id) => setHover(id),
         onQualityChange: (q) => setAutoLevel(q),
-        onContextLost: () => setError('Le contexte 3D a été perdu (pilote graphique ou mémoire).'),
+        onContextLost: () => setError(tRef.current('labo.contextLost')),
       });
       if (disposed) {
         s.dispose();
@@ -245,7 +265,7 @@ export function Labo() {
 
   return (
     <div className="labo">
-      <canvas ref={canvasRef} className="labo-canvas" aria-label="Showroom 3D du parc de machines" />
+      <canvas ref={canvasRef} className="labo-canvas" aria-label={t('labo.canvas')} />
       <div ref={labelsRef} className="labo-labels" />
 
       <header className={`labo-bar${tools ? ' open' : ''}`}>
@@ -260,15 +280,15 @@ export function Labo() {
             }}
           >
             <Icon name="menu" />
-            <span>Outils</span>
+            <span>{t('labo.tools')}</span>
           </button>
-          <button type="button" className="icon-btn" onClick={() => s()?.prev()} aria-label="Machine précédente">
+          <button type="button" className="icon-btn" onClick={() => s()?.prev()} aria-label={t('sheet.prev')}>
             <Icon name="chevron-left" />
           </button>
-          <button type="button" className="icon-btn" onClick={() => s()?.next()} aria-label="Machine suivante">
+          <button type="button" className="icon-btn" onClick={() => s()?.next()} aria-label={t('sheet.next')}>
             <Icon name="chevron-right" />
           </button>
-          <button type="button" className="icon-btn" aria-pressed={sheet} onClick={() => openSheet(!sheet)} aria-label="Fiche">
+          <button type="button" className="icon-btn" aria-pressed={sheet} onClick={() => openSheet(!sheet)} aria-label={t('labo.sheet')}>
             <Icon name="list" />
           </button>
         </div>
@@ -276,20 +296,20 @@ export function Labo() {
           {!lit ? (
             <button type="button" className="btn btn-primary" onClick={enter} disabled={!ready}>
               <Icon name="power" />
-              Allumer le hall
+              {t('labo.enter')}
             </button>
           ) : null}
-          <div className="seg" role="group" aria-label="Nombre de machines">
+          <div className="seg" role="group" aria-label={t('labo.count')}>
             {COUNTS.map((n) => (
-              <button key={n} type="button" aria-pressed={fleet.length === n} onClick={() => updateFleet(demoFleet(n))}>
+              <button key={n} type="button" aria-pressed={fleet.length === n} onClick={() => updateFleet(demoFleet(n, label))}>
                 {n}
               </button>
             ))}
           </div>
-          <button type="button" className="icon-btn" onClick={() => s()?.prev()} aria-label="Machine précédente">
+          <button type="button" className="icon-btn" onClick={() => s()?.prev()} aria-label={t('sheet.prev')}>
             <Icon name="chevron-left" />
           </button>
-          <button type="button" className="icon-btn" onClick={() => s()?.next()} aria-label="Machine suivante">
+          <button type="button" className="icon-btn" onClick={() => s()?.next()} aria-label={t('sheet.next')}>
             <Icon name="chevron-right" />
           </button>
           <button
@@ -301,11 +321,11 @@ export function Labo() {
             }}
           >
             <Icon name="garage" />
-            <span className="lbl">Vue d’ensemble</span>
+            <span className="lbl">{t('labo.overview')}</span>
           </button>
           <button type="button" className="icon-btn" aria-pressed={sheet} onClick={() => openSheet(!sheet)}>
             <Icon name="list" />
-            <span className="lbl">Fiche</span>
+            <span className="lbl">{t('labo.sheet')}</span>
           </button>
           <button
             type="button"
@@ -319,7 +339,7 @@ export function Labo() {
           >
             <Icon name="gauge" />
             <span className="lbl">
-              {QUALITY_LABEL[quality]}
+              {t(`quality.${quality}`)}
               {quality === 'auto' && autoLevel ? ` → ${autoLevel}` : ''}
             </span>
           </button>
@@ -327,7 +347,7 @@ export function Labo() {
             type="button"
             className="icon-btn"
             aria-pressed={sound}
-            aria-label={sound ? 'Couper le son' : 'Activer le son'}
+            aria-label={sound ? t('topbar.soundOff') : t('topbar.soundOn')}
             onClick={() => {
               s()?.unlockAudio();
               s()?.setSound(!sound);
@@ -346,16 +366,16 @@ export function Labo() {
               setPaused(!paused);
             }}
           >
-            <span className="lbl">{paused ? 'Reprendre' : 'Pause'}</span>
+            <span className="lbl">{paused ? t('labo.resume') : t('labo.pause')}</span>
           </button>
           <button type="button" className="icon-btn" onClick={capture}>
             <Icon name="camera" />
-            <span className="lbl">Capture</span>
+            <span className="lbl">{t('labo.capture')}</span>
           </button>
         </div>
         <div className="labo-row labo-tools">
           <label className="labo-select">
-            <span>Effet</span>
+            <span>{t('labo.effect')}</span>
             <select
               defaultValue=""
               onChange={(e) => {
@@ -364,7 +384,7 @@ export function Labo() {
                 e.target.value = '';
               }}
             >
-              <option value="">Choisir…</option>
+              <option value="">{t('labo.choose')}</option>
               {EFFECTS.map((x) => (
                 <option key={x} value={x}>
                   {x}
@@ -374,7 +394,7 @@ export function Labo() {
           </label>
           {(['wake', 'service', 'repair'] as const).map((a) => (
             <button key={a} type="button" className="btn btn-soft labo-small" disabled={!focused} onClick={() => focused && s()?.animate(focused, a)}>
-              {a === 'wake' ? 'Réveil' : a === 'service' ? 'Service' : 'Réparation'}
+              {t(`labo.${a}`)}
             </button>
           ))}
           <button
@@ -387,7 +407,7 @@ export function Labo() {
               updateFleet(fleetRef.current.map((m) => (m.id === current.id ? { ...m, color } : m)));
             }}
           >
-            Repeindre
+            {t('labo.repaint')}
           </button>
           <button
             type="button"
@@ -399,15 +419,15 @@ export function Labo() {
               updateFleet(fleetRef.current.map((m) => (m.id === current.id ? { ...m, state, alerts: state === 'ok' ? 0 : state === 'warn' ? 1 : 3 } : m)));
             }}
           >
-            État
+            {t('labo.state')}
           </button>
           <button
             type="button"
             className="btn btn-soft labo-small"
             disabled={fleet.length >= 30}
-            onClick={() => updateFleet(demoFleet(fleet.length + 1))}
+            onClick={() => updateFleet(demoFleet(fleet.length + 1, label))}
           >
-            + Machine
+            {t('labo.addMachine')}
           </button>
           <button
             type="button"
@@ -415,29 +435,33 @@ export function Labo() {
             disabled={fleet.length <= 1}
             onClick={() => updateFleet(fleetRef.current.slice(0, -1))}
           >
-            − Machine
+            {t('labo.removeMachine')}
           </button>
           <p className="labo-status" aria-live="polite">
-            {fleet.length} machine{fleet.length > 1 ? 's' : ''}
-            {current ? ` · visée : ${current.code}` : ' · vue d’ensemble'}
-            {hover ? ` · survol : ${fleet.find((m) => m.id === hover)?.code ?? ''}` : ''}
+            {[
+              t('labo.machines', { count: fleet.length, n: f.num(fleet.length) }),
+              current ? t('labo.aimed', { code: current.code }) : t('labo.overviewStatus'),
+              hover ? t('labo.hover', { code: fleet.find((m) => m.id === hover)?.code ?? '' }) : null,
+            ]
+              .filter(Boolean)
+              .join(' · ')}
           </p>
         </div>
       </header>
 
       {sheet ? (
-        <aside className="labo-sheet" aria-label="Fiche simulée">
-          <p className="eyebrow">Fiche simulée</p>
-          <h2>{current ? current.code : 'Aucune machine'}</h2>
-          <p className="muted">{current ? current.label : 'Touchez une machine pour la viser.'}</p>
-          <p className="muted">La machine visée reste centrée dans la partie visible de l’écran.</p>
+        <aside className="labo-sheet" aria-label={t('labo.sheetTitle')}>
+          <p className="eyebrow">{t('labo.sheetTitle')}</p>
+          <h2>{current ? current.code : t('labo.noMachine')}</h2>
+          <p className="muted">{current ? current.label : t('labo.touch')}</p>
+          <p className="muted">{t('labo.centered')}</p>
         </aside>
       ) : null}
 
       {shot ? (
-        <a className="labo-shot" href={shot} download="godet-showroom.png" title="Télécharger la capture">
+        <a className="labo-shot" href={shot} download="godet-showroom.png" title={t('labo.download')}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={shot} alt="Capture du showroom" />
+          <img src={shot} alt={t('labo.shotAlt')} />
         </a>
       ) : null}
 
@@ -447,7 +471,7 @@ export function Labo() {
         </div>
       ) : null}
 
-      <Loader progress={progress} label={step} done={ready || !!error} />
+      <Loader progress={progress} label={t(`loader.${step}`)} done={ready || !!error} />
     </div>
   );
 }

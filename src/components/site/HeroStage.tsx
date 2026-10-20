@@ -1,6 +1,7 @@
+import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
-import Link from 'next/link';
 import { Icon } from '@/components/Icons';
+import { Link } from '@/i18n/navigation';
 
 /** Le godet du logo, cadré au plus près (posé sur le plateau tant que la capture du showroom manque). */
 function Bucket({ className }: { className: string }) {
@@ -17,7 +18,8 @@ function Bucket({ className }: { className: string }) {
  * Grand visuel de l'accueil, au ratio fixe : la capture du showroom 3D (1600 × 900) posée sur un plateau lumineux
  * dessiné en CSS, qui reste seul tant que l'image manque. Le tout mène à la démo 3D.
  */
-export function HeroStage({ image }: { image: string | null }) {
+export async function HeroStage({ image }: { image: string | null }) {
+  const t = await getTranslations('site.home.stage');
   return (
     <div className="s-stage-wrap">
       <Link href="/demo" className="s-stage">
@@ -27,7 +29,7 @@ export function HeroStage({ image }: { image: string | null }) {
           GODET
         </span>
         <span className="s-stage-line" aria-hidden="true">
-          Parc d’engins · showroom
+          {t('line')}
         </span>
         <span className="s-stage-floor" aria-hidden="true" />
         <span className="s-stage-horizon" aria-hidden="true" />
@@ -40,7 +42,7 @@ export function HeroStage({ image }: { image: string | null }) {
           <Image
             className="s-stage-img"
             src={image}
-            alt="Le showroom 3D de Godet : une pelle sur son plateau lumineux, avec sa fiche d’entretien."
+            alt={t('alt')}
             fill
             sizes="(max-width: 1192px) calc(100vw - 32px), 1160px"
             loading="eager"
@@ -49,7 +51,7 @@ export function HeroStage({ image }: { image: string | null }) {
         ) : null}
         <span className="s-stage-cta">
           <Icon name="cube" />
-          Entrer dans le showroom · sans compte
+          {t('cta')}
         </span>
       </Link>
     </div>

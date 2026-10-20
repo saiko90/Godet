@@ -1,1 +1,56 @@
-{}
+{
+  "title": "Promemoria via e-mail",
+  "intro": "Godet Le scrive quando una scadenza si avvicina o è superata, e finché una riparazione resta aperta, in ciascuna delle Sue imprese.",
+  "loading": "Caricamento delle Sue impostazioni…",
+  "loadError": "Non è stato possibile caricare le impostazioni dei promemoria.",
+  "retry": "Riprova",
+  "signedOut": "Effettui l’accesso per impostare i promemoria.",
+  "enabled": {
+    "label": "Ricevere i promemoria via e-mail",
+    "hint": "Vengono inviati all’indirizzo e-mail del Suo account."
+  },
+  "operator": "{operatorOnly, select, true {In qualità di operatore, riceve i promemoria solo se li attiva e salva qui.} other {Nelle imprese in cui è operatore, i promemoria partono solo dopo il salvataggio di queste impostazioni.}}",
+  "frequency": {
+    "legend": "Frequenza",
+    "quotidien": {
+      "label": "Ogni giorno",
+      "hint": "Un’e-mail al mattino, solo se c’è qualcosa da segnalare."
+    },
+    "hebdo": {
+      "label": "Ogni settimana",
+      "hint": "Un riepilogo il lunedì mattina, solo se c’è qualcosa da segnalare."
+    },
+    "jamais": {
+      "label": "Mai",
+      "hint": "Nessun promemoria via e-mail."
+    }
+  },
+  "lead": {
+    "legend": "Anticipo",
+    "hint": "Una scadenza compare nel promemoria appena rientra in questi termini, e vi resta finché non è stata eseguita.",
+    "days": {
+      "label": "Scadenze a data",
+      "unit": "giorni prima",
+      "hint": "Da 1 a 90 giorni.",
+      "error": "Indichi un numero intero di giorni, da 1 a 90."
+    },
+    "hours": {
+      "label": "Scadenze a contaore",
+      "unit": "ore prima",
+      "hint": "Da 5 a 500 ore. Al ritmo di utilizzo della macchina, una scadenza può comparire anche prima se cade nel termine in giorni.",
+      "error": "Indichi un numero intero di ore, da 5 a 500."
+    }
+  },
+  "save": "Salva i promemoria",
+  "saving": "Salvataggio…",
+  "saved": "Impostazioni dei promemoria salvate.",
+  "unsaved": "Modifiche non salvate.",
+  "errors": {
+    "invalid": "Verifichi i campi segnalati.",
+    "network": "Connessione impossibile. Verifichi la rete, poi riprovi.",
+    "session": "La sessione è scaduta. Ricarichi la pagina per accedere di nuovo.",
+    "generic": "Il salvataggio non è riuscito. Riprovi tra un istante."
+  },
+  "lastSent": "Ultimo promemoria inviato il {date}.",
+  "neverSent": "Nessun promemoria inviato finora."
+}

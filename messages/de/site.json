@@ -1,1 +1,270 @@
-{}
+{
+  "meta": {
+    "title": "Godet — die Garage für Ihren Maschinenpark",
+    "description": "Das digitale Wartungsheft für Baumaschinen: Wartungen, Reparaturen, Ersatzteile, Kosten, Fotos, Videos und Termine. 30\u00a0Tage kostenlos testen, ohne Kreditkarte.",
+    "ogDescription": "Jede Maschine hat ihr vollständiges Wartungsheft. Keine Prüfung wird mehr vergessen, die Kosten pro Maschine sind klar.",
+    "ogImageAlt": "Der 3D-Showroom von Godet"
+  },
+  "chrome": {
+    "skip": "Zum Inhalt springen",
+    "logoHome": "Godet, Startseite",
+    "logoBack": "Godet, zurück zur Startseite",
+    "mainNav": "Hauptnavigation",
+    "anchors": {
+      "features": "Funktionen",
+      "compliance": "Konformität",
+      "pricing": "Preis",
+      "questions": "Fragen"
+    },
+    "demo": "3D-Demo",
+    "contact": "Kontakt",
+    "login": "Anmelden",
+    "signup": "Garage eröffnen",
+    "footer": {
+      "tagline": "Das digitale Wartungsheft für Baumaschinen – entwickelt in der Schweiz, für Bauunternehmen in der Schweiz, in Deutschland und Österreich.",
+      "studio": "Eine Anwendung von <link>Swiss Digital Studio</link> aus dem Wallis.",
+      "godet": "Godet",
+      "info": "Informationen",
+      "demo": "3D-Demo ohne Konto",
+      "signup": "Garage eröffnen",
+      "login": "Anmelden",
+      "contact": "Kontakt",
+      "ideas": "Ideenbox",
+      "privacy": "Datenschutzerklärung",
+      "copyright": "© {year} Swiss Digital Studio · Wallis, Schweiz",
+      "hosting": "Daten in der EU gespeichert (Irland)"
+    },
+    "auth": {
+      "demo": "3D-Demo",
+      "home": "Startseite",
+      "contact": "Kontakt",
+      "privacy": "Datenschutz"
+    },
+    "app": {
+      "garageOf": "Garage von {org}",
+      "backToGarage": "Zurück zur Garage"
+    }
+  },
+  "home": {
+    "hero": {
+      "kicker": "Wartungsheft für Baumaschinen",
+      "title": "Die Garage für Ihren <em>Maschinenpark</em>",
+      "lead": "Jede Maschine hat ihr vollständiges Wartungsheft: Wartungen, Reparaturen, Ersatzteile, Kosten, Fotos, Videos und Termine. Keine Prüfung wird mehr vergessen. Und Sie wissen endlich, was jede Maschine kostet.",
+      "demo": "3D-Demo ausprobieren",
+      "signup": "Garage eröffnen",
+      "hasAccount": "Schon ein Konto?",
+      "login": "Anmelden",
+      "assure": {
+        "trial": "30\u00a0Tage kostenlos testen",
+        "card": "Ohne Kreditkarte",
+        "hosting": "Daten in der EU gespeichert"
+      }
+    },
+    "stage": {
+      "line": "Maschinenpark · Showroom",
+      "alt": "Der 3D-Showroom von Godet: ein Bagger auf seiner beleuchteten Plattform, mit seinem Wartungsblatt.",
+      "cta": "Showroom betreten · ohne Konto"
+    },
+    "problem": {
+      "eyebrow": "Die Ausgangslage",
+      "title": "Das Wartungsheft auf Papier hält mit der Baustelle nicht mehr Schritt",
+      "text": "Fünf, zwanzig oder fünfzig Maschinen, mehrere Baustellen, ein Team, das wechselt. Unterwegs gehen Informationen verloren.",
+      "items": {
+        "paper": {
+          "title": "Wartungshefte auf Papier",
+          "text": "Sie liegen in der Kabine, werden schmutzig, gehen verloren. Niemand weiss genau, wie es um die Maschine steht."
+        },
+        "invoices": {
+          "title": "Verstreute Rechnungen",
+          "text": "Zwischen Ordner, E-Mail-Postfach und Lieferwagen ist die Geschichte einer Maschine kaum mehr auffindbar."
+        },
+        "checks": {
+          "title": "Vergessene Prüfungen",
+          "text": "Die Wartung nach 500\u00a0h oder die jährliche Sicherheitsprüfung fällt unter den Tisch. Man merkt es zu spät."
+        },
+        "costs": {
+          "title": "Unklare Kosten",
+          "text": "Niemand kann sagen, was eine Maschine dieses Jahr gekostet hat – oder ob es Zeit ist, sie zu ersetzen."
+        }
+      }
+    },
+    "features": {
+      "eyebrow": "Was Godet kann",
+      "title": "Die ganze Wartung Ihres Maschinenparks an einem Ort",
+      "text": "Verlauf, Termine und Kosten jeder Maschine, vereint in einer einzigen Garage. Am Computer, auf dem Tablet und auf dem Handy.",
+      "items": {
+        "log": {
+          "title": "Das vollständige Wartungsheft",
+          "text": "Wartungen, Prüfungen, Reparaturen, Ersatzteile und Notizen. Jeder Eintrag hält Datum, Betriebsstunden, ausführende Person und Kosten fest."
+        },
+        "dues": {
+          "title": "Termine nach Stunden oder Datum",
+          "text": "Wartung alle 500\u00a0h, jährliche Sicherheitsprüfung: Godet folgt dem tatsächlichen Einsatz jeder Maschine und erinnert Sie rechtzeitig."
+        },
+        "costs": {
+          "title": "Die Kosten pro Maschine",
+          "text": "Ersatzteile, Arbeitszeit, Stillstand: die Kosten jeder Maschine über zwölf Monate, Monat für Monat."
+        },
+        "media": {
+          "title": "Fotos, Videos, Dokumente",
+          "text": "Ein Foto vom Leck, ein Video vom verdächtigen Geräusch, die Rechnung als PDF: Alles bleibt bei der Maschine."
+        },
+        "team": {
+          "title": "Team und Rollen",
+          "text": "Inhaber, Administrator, Mechaniker, Maschinist: Jede Person sieht den Maschinenpark gemäss ihrer Rolle."
+        },
+        "workshop": {
+          "title": "Werkstattmodus, ohne 3D",
+          "text": "Eine schnelle Listenansicht auf allen Geräten, um Stunden und Arbeiten ohne Umweg zu erfassen."
+        },
+        "print": {
+          "title": "Das gedruckte Wartungsheft",
+          "text": "Das Wartungsheft einer Maschine lässt sich drucken oder als PDF speichern: für eine Prüfung, eine Expertise oder den Wiederverkauf."
+        },
+        "showroom": {
+          "title": "Ein Showroom für Ihren Maschinenpark",
+          "text": "Jede Maschine auf ihrer Plattform, ihr Zustand auf einen Blick: grün, orange oder rot."
+        }
+      }
+    },
+    "compliance": {
+      "eyebrow": "Konformität",
+      "title": "Ein Wartungsheft, das jeder Prüfung standhält",
+      "lawMark": "ART. 32B VUV",
+      "quoteOpen": "«",
+      "quote": "Die Instandhaltung ist zu dokumentieren.",
+      "quoteClose": "»",
+      "caption": "Verordnung über die Verhütung von Unfällen und Berufskrankheiten (VUV, SR 832.30), Art. 32b Abs. 1. Godet dokumentiert jede Arbeit mit Datum, ausführender Person und Kosten. Auch in Deutschland und Österreich ist ein lückenloses Wartungsheft Ihr Nachweis bei Prüfungen.",
+      "proofs": {
+        "kept": {
+          "title": "Nichts wird gelöscht",
+          "text": "Ein fehlerhafter Eintrag wird mit Begründung entfernt. Er bleibt durchgestrichen im Verlauf sichtbar."
+        },
+        "journal": {
+          "title": "Jede Änderung wird protokolliert",
+          "text": "Wer was erfasst, geändert oder entfernt hat – und wann."
+        },
+        "archive": {
+          "title": "Maschinen werden archiviert",
+          "text": "Eine verkaufte oder ausgemusterte Maschine verlässt den Showroom. Ihr Wartungsheft bleibt einsehbar und druckbar."
+        }
+      },
+      "note": "Godet erleichtert das Führen des Wartungshefts. Für die Instandhaltung der Arbeitsmittel bleibt der Arbeitgeber verantwortlich."
+    },
+    "local": {
+      "eyebrow": "Für die Schweiz entwickelt",
+      "title": "Aus dem Wallis, für Bauunternehmen in der Schweiz, in Deutschland und Österreich",
+      "text": "Godet spricht die Sprache der Baustelle und richtet sich nach Ihren Gewohnheiten.",
+      "formatsLabel": "Beispiele für Formate",
+      "items": {
+        "formats": {
+          "title": "Ihre gewohnten Formate",
+          "text": "Stunden, Beträge und Daten erscheinen so, wie Sie sie schreiben – in Franken oder in Euro."
+        },
+        "language": {
+          "title": "Jede Person in ihrer Sprache",
+          "text": "Deutsch, Französisch, Italienisch oder Englisch: Jede Person wählt ihre Sprache. Wartung alle 500\u00a0h, Betriebsstunden, jährliche Prüfung: das Vokabular der Werkstatt."
+        },
+        "hosting": {
+          "title": "Daten in der EU gespeichert",
+          "text": "Datenbank und Dateien liegen in Irland, in der Europäischen Union."
+        },
+        "access": {
+          "title": "Zugriff nur für Ihr Unternehmen",
+          "text": "Jedes Unternehmen sieht nur seine eigenen Daten. Die Zugriffsregeln setzt die Datenbank selbst durch."
+        }
+      }
+    },
+    "pricing": {
+      "eyebrow": "Preis",
+      "title": "30\u00a0Tage kostenlos testen",
+      "text": "Ohne Kreditkarte. Die Preise erfahren Sie vor Ende der Testphase.",
+      "small": "Während der Testphase stehen alle Funktionen zur Verfügung."
+    },
+    "faq": {
+      "eyebrow": "Fragen",
+      "title": "Häufige Fragen",
+      "items": {
+        "install": {
+          "q": "Muss ich etwas installieren?",
+          "a": "Nein. Godet läuft im Browser, am Computer, auf dem Tablet oder auf dem Handy. Sie können es wie eine App auf den Startbildschirm legen."
+        },
+        "threeD": {
+          "q": "Ist die 3D-Ansicht Pflicht?",
+          "a": "Nein. Der Werkstattmodus zeigt den Maschinenpark als Liste, ohne 3D. Er eignet sich für einfache Geräte und schnelle Eingaben."
+        },
+        "data": {
+          "q": "Wer sieht unsere Daten?",
+          "a": "Nur die Personen, die Sie in Ihr Unternehmen einladen, je nach Rolle. Die Daten werden in der EU gespeichert, in Irland."
+        },
+        "erase": {
+          "q": "Kann man einen Eintrag löschen?",
+          "a": "Man kann ihn mit Begründung entfernen. Er bleibt im Verlauf sichtbar: Genau das macht den Wert des Wartungshefts bei einer Prüfung aus."
+        },
+        "export": {
+          "q": "Lässt sich das Wartungsheft aus Godet mitnehmen?",
+          "a": "Ja. Jedes Wartungsheft lässt sich drucken oder als PDF speichern, mit allen Arbeiten, Reparaturen, Ersatzteilen und Kosten."
+        },
+        "languages": {
+          "q": "Gibt es Godet auch in anderen Sprachen?",
+          "a": "Ja: auf Deutsch, Französisch, Italienisch und Englisch. Jede Person wählt ihre Sprache, und Beträge erscheinen in der Währung Ihres Unternehmens."
+        },
+        "trial": {
+          "q": "Was passiert nach der Testphase?",
+          "a": "Die Preise erfahren Sie vor Ablauf der 30\u00a0Tage. Zum Testen ist keine Kreditkarte nötig."
+        }
+      }
+    },
+    "final": {
+      "title": "Eröffnen Sie Ihre Garage",
+      "text": "Besuchen Sie die Demo ohne Konto – oder eröffnen Sie Ihre Garage und erfassen Sie Ihre erste Maschine.",
+      "contact": "Eine Frage, eine Vorführung für Ihr Team? <link>Schreiben Sie uns</link>."
+    }
+  },
+  "notFound": {
+    "metaTitle": "Seite nicht gefunden",
+    "title": "Diese Seite gibt es nicht",
+    "text": "Vielleicht ist der Link unvollständig, oder die Seite ist umgezogen. Ihre Garage steht aber noch am selben Ort.",
+    "home": "Zur Startseite",
+    "garage": "Meine Garage öffnen"
+  },
+  "error": {
+    "metaTitle": "Fehler",
+    "title": "Es ist ein Fehler aufgetreten",
+    "text": "Die Seite konnte nicht angezeigt werden. Bereits Gespeichertes geht nicht verloren: Versuchen Sie es erneut oder kommen Sie gleich wieder.",
+    "home": "Zur Startseite",
+    "reference": "Fehlerreferenz: {digest}"
+  },
+  "cantons": {
+    "AG": "Aargau",
+    "AI": "Appenzell Innerrhoden",
+    "AR": "Appenzell Ausserrhoden",
+    "BE": "Bern",
+    "BL": "Basel-Landschaft",
+    "BS": "Basel-Stadt",
+    "FR": "Freiburg",
+    "GE": "Genf",
+    "GL": "Glarus",
+    "GR": "Graubünden",
+    "JU": "Jura",
+    "LU": "Luzern",
+    "NE": "Neuenburg",
+    "NW": "Nidwalden",
+    "OW": "Obwalden",
+    "SG": "St. Gallen",
+    "SH": "Schaffhausen",
+    "SO": "Solothurn",
+    "SZ": "Schwyz",
+    "TG": "Thurgau",
+    "TI": "Tessin",
+    "UR": "Uri",
+    "VD": "Waadt",
+    "VS": "Wallis",
+    "ZG": "Zug",
+    "ZH": "Zürich"
+  },
+  "manifest": {
+    "name": "Godet — die Garage für Ihren Maschinenpark",
+    "description": "Wartungsheft für Baumaschinen: Wartungen, Reparaturen, Ersatzteile, Kosten, Fotos und Videos."
+  }
+}

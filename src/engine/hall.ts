@@ -179,6 +179,9 @@ export interface HallOptions {
   dims: HallDims;
   slots: Slot[];
   signage: string;
+  /** Sous-titre de l'enseigne et nom affiché sans entreprise, dans la langue de l'interface (voir showroom.ts). */
+  signageSub?: string;
+  signageFallback?: string;
 }
 
 export class Hall {
@@ -295,7 +298,7 @@ export class Hall {
     });
 
     // ------------------------------------------------------------ enseigne et logo
-    this.buildSign(o.signage, dims);
+    this.buildSign(o.signage || o.signageFallback || 'Votre entreprise', o.signageSub || 'Parc d’engins · Godet', dims);
 
     // ------------------------------------------------------------ façade d'entrée vitrée
     {
@@ -458,7 +461,7 @@ export class Hall {
   }
 
   /** Enseigne : logo en relief lumineux, nom de l'entreprise, sous-titre et halo, au centre du mur du fond. */
-  private buildSign(signage: string, dims: HallDims): void {
+  private buildSign(signage: string, sub: string, dims: HallDims): void {
     const g = this.group;
     const zB = dims.zBack;
     // l'enseigne grandit avec la longueur du hall pour rester lisible au bout de l'allée
@@ -479,7 +482,7 @@ export class Hall {
     const hm = new THREE.Mesh(new THREE.PlaneGeometry(7 * k, 5 * k), haloMat);
     hm.position.set(0, y0 + 2.1 * k, zB + 0.48);
     g.add(hm);
-    const sign = signageTexture(signage || 'Votre entreprise', 'Parc d’engins · Godet');
+    const sign = signageTexture(signage, sub);
     this.textures.push(sign.texture);
     this.signDraw = sign.draw;
     this.signTex = sign.texture;

@@ -1,1 +1,145 @@
-{}
+{
+  "meta": {
+    "title": "Libretto di manutenzione",
+    "titleCode": "Libretto {code}"
+  },
+  "loading": "Preparazione del libretto…",
+  "notFound": {
+    "title": "Libretto non trovato",
+    "text": "Questa macchina non esiste, oppure appartiene a un’altra impresa. Apra il libretto dalla scheda della macchina, nel Suo garage.",
+    "open": "Apri il mio garage"
+  },
+  "bar": {
+    "skip": "Vai al libretto",
+    "settings": "Impostazioni",
+    "garage": "Garage",
+    "title": "Libretto di manutenzione · {code}",
+    "print": "Stampa / salva in PDF",
+    "tip": "Per ottenere un file PDF, scelga «Salva come PDF» come stampante."
+  },
+  "print": {
+    "margin": "{code} · {org} · Libretto di manutenzione Godet",
+    "page": "Pagina"
+  },
+  "head": {
+    "label": "Libretto di manutenzione di {code}",
+    "brand": "Libretto di manutenzione",
+    "printedOn": "Emesso il {date}"
+  },
+  "identity": {
+    "label": "Dati della macchina",
+    "meterOn": "Contaore letto il {date}",
+    "brand": "Marca",
+    "model": "Modello",
+    "year": "Anno",
+    "status": "Stato",
+    "archivedOn": "Archiviata il {date}",
+    "inService": "In servizio",
+    "serial": "N. di serie",
+    "plate": "Targa",
+    "since": "In Godet dal",
+    "media": "Media archiviati",
+    "photos": "{count, plural, one {{n} foto} other {{n} foto}}",
+    "videos": "{count, plural, one {{n} video} other {{n} video}}",
+    "documents": "{count, plural, one {{n} documento} other {{n} documenti}}",
+    "noMedia": "Nessuno"
+  },
+  "kpis": {
+    "entries": "Interventi",
+    "removed": "{count, plural, one {+ {n} ritirato} other {+ {n} ritirati}}",
+    "recorded": "registrati",
+    "keptSince": "Libretto tenuto dal",
+    "lastEntry": "ultima registrazione il {date}",
+    "noEntry": "nessuna registrazione",
+    "totalCost": "Costo totale",
+    "sinceStart": "dall’inizio",
+    "last12": "Ultimi 12\u00a0mesi",
+    "last12Hint": "manutenzione, riparazioni, ricambi",
+    "downtime": "Fermo macchina",
+    "downtimeHint": "per riparazioni"
+  },
+  "dues": {
+    "title": "Prossime scadenze",
+    "asOf": "al {date}",
+    "due": "Scadenza",
+    "rhythm": "Frequenza",
+    "last": "Ultima volta",
+    "planned": "Prevista",
+    "state": "Stato",
+    "around": "verso il {date}",
+    "asap": "da fare il prima possibile",
+    "empty": "Nessuna scadenza attiva per questa macchina.",
+    "states": {
+      "ok": "In regola",
+      "warn": "A breve",
+      "bad": "In ritardo"
+    },
+    "every": {
+      "hours": "Ogni {hours}",
+      "once": "Una volta",
+      "years": "{count, plural, one {Ogni anno} other {Ogni {count} anni}}",
+      "months": "{count, plural, one {Ogni mese} other {Ogni {count} mesi}}",
+      "days": "{count, plural, one {Ogni giorno} other {Ogni {count} giorni}}"
+    }
+  },
+  "timeline": {
+    "title": "Cronologia completa",
+    "order": "dalla più vecchia alla più recente",
+    "date": "Data",
+    "meter": "Contaore",
+    "type": "Tipo",
+    "work": "Intervento",
+    "by": "Eseguito da",
+    "cost": "Costo",
+    "empty": "Nessun intervento registrato per il momento.",
+    "ref": "Rif. {ref}",
+    "qty": "Qtà {qty}",
+    "warrantyUntil": "garanzia fino al {date}",
+    "downtime": "fermo {hours}",
+    "removedTag": "Ritirata",
+    "removedOn": "il {date}",
+    "removedBy": "da {name}",
+    "reason": "Motivo: {reason}.",
+    "noReason": "non indicato",
+    "split": "ricambi {parts} · manodopera {labour}"
+  },
+  "repairs": {
+    "title": "Riparazioni",
+    "count": "{count, plural, =0 {nessuna riparazione} one {{n} riparazione} other {{n} riparazioni}}",
+    "date": "Data",
+    "meter": "Contaore",
+    "repair": "Riparazione",
+    "state": "Stato",
+    "downtime": "Fermo macchina",
+    "cost": "Costo",
+    "empty": "Nessuna riparazione registrata."
+  },
+  "parts": {
+    "title": "Ricambi",
+    "count": "{count, plural, =0 {nessun ricambio} one {{n} ricambio o kit} other {{n} ricambi o kit}}",
+    "date": "Data",
+    "part": "Ricambio",
+    "ref": "Riferimento",
+    "qty": "Qtà",
+    "supplier": "Fornitore",
+    "warranty": "Garanzia",
+    "until": "fino al {date}",
+    "cost": "Costo",
+    "empty": "Nessun ricambio registrato."
+  },
+  "totals": {
+    "title": "Totali",
+    "note": "registrazioni ritirate escluse",
+    "category": "Categoria",
+    "last12": "Ultimi 12\u00a0mesi",
+    "sinceStart": "Dall’inizio del libretto",
+    "maintenanceHint": "manutenzioni, controlli, ispezioni, note",
+    "total": "Totale"
+  },
+  "notes": "Note sulla macchina",
+  "law": {
+    "swiss": "<b>Art. 32b OPI</b>: la manutenzione delle attrezzature di lavoro «deve essere documentata». Questo libretto non cancella nessuna registrazione: una registrazione ritirata resta visibile, con data, autore e motivo.",
+    "general": "Questo libretto non cancella nessuna registrazione: una registrazione ritirata resta visibile, con data, autore e motivo."
+  },
+  "foot": "<b>Libretto tenuto con Godet</b> — stampato il {date}"
+}

@@ -1,6 +1,6 @@
 // Préparation des photos, vidéos et documents avant l'envoi : type, taille, compression des images.
 // Utilisé par l'interface du garage ; les deux dépôts (cloud et démo) reçoivent un fichier déjà prêt.
-import { fileSize } from '@/lib/format';
+// Un refus est un code (UploadRejected) : l'interface le traduit dans la langue de la personne.
 import type { UploadOptions } from '@/lib/repo/types';
 import type { MediaKind } from '@/lib/types';
 
@@ -82,11 +82,23 @@ export function kindOfMime(mime: string): MediaKind | null {
   return null;
 }
 
-/** Refus d'un fichier, avec un message prêt à afficher. */
+/** Raison d'un refus : format vidéo, format d'image, ni photo ni vidéo ni PDF, trop lourd, préparation impossible. */
+export type UploadRejectReason = 'videoFormat' | 'imageFormat' | 'notMedia' | 'tooBig' | 'prepareFailed';
+
+/** Refus d'un fichier : une raison, le nom du fichier, et pour « tooBig » sa nature et son poids (octets). */
 export class UploadRejected extends Error {
-  constructor(message: string) {
-    super(message);
+  readonly reason: UploadRejectReason;
+  readonly fileName: string;
+  readonly kind: MediaKind | null;
+  readonly size: number | null;
+
+  constructor(reason: UploadRejectReason, fileName: string, extra: { kind?: MediaKind; size?: number } = {}) {
+    super(`${reason}: ${fileName}`);
     this.name = 'UploadRejected';
+    this.reason = reason;
+    this.fileName = fileName;
+    this.kind = extra.kind ?? null;
+    this.size = extra.size ?? null;
   }
 }
 
@@ -105,8 +117,8 @@ function renameTo(name: string, ext: string): string {
   return `${base}.${ext}`;
 }
 
-function tooBig(what: string, bytes: number): UploadRejected {
-  return new UploadRejected(`${what} pèse ${fileSize(bytes)} : la limite est de 50 Mo par fichier.`);
+function tooBig(kind: MediaKind, name: string, bytes: number): UploadRejected {
+  return new UploadRejected('tooBig', name, { kind, size: bytes });
 }
 
 /** Décode une image en respectant l'orientation de l'appareil photo (null si le navigateur ne sait pas la lire, ex. HEIC). */
@@ -141,28 +153,29 @@ function canvasToJpeg(bitmap: ImageBitmap, scale: number): Promise<Blob | null> 
  *   formats non acceptés par le stockage (GIF, BMP, AVIF…) convertis en JPEG ; HEIC illisible → envoyé tel quel ;
  * - vidéos : MP4, MOV ou WebM, 50 Mo au maximum ;
  * - documents : PDF, 50 Mo au maximum.
- * Lève `UploadRejected` avec un message clair si le fichier ne peut pas être envoyé.
+ * Lève `UploadRejected` (raison et nom du fichier) si le fichier ne peut pas être envoyé.
+ * `fallbackName` : nom affiché d'un fichier sans nom (dans la langue de l'interface).
  */
-export async function prepareUpload(file: File): Promise<PreparedUpload> {
-  const name = file.name || 'fichier';
+export async function prepareUpload(file: File, opts: { fallbackName?: string } = {}): Promise<PreparedUpload> {
+  const name = file.name || opts.fallbackName || 'file';
   const mime = mimeOf(file, name);
   const kind = kindOfMime(mime);
 
   if (kind === 'video') {
     if (!ACCEPTED_MIME.video.includes(mime)) {
-      throw new UploadRejected(`« ${name} » : format vidéo non accepté. Utilisez une vidéo MP4, MOV ou WebM.`);
+      throw new UploadRejected('videoFormat', name);
     }
-    if (file.size > MAX_UPLOAD_BYTES) throw tooBig(`La vidéo « ${name} »`, file.size);
+    if (file.size > MAX_UPLOAD_BYTES) throw tooBig('video', name, file.size);
     return { blob: retype(file, mime), name, kind, mime, compressed: false };
   }
 
   if (kind === 'document') {
-    if (file.size > MAX_UPLOAD_BYTES) throw tooBig(`Le document « ${name} »`, file.size);
+    if (file.size > MAX_UPLOAD_BYTES) throw tooBig('document', name, file.size);
     return { blob: retype(file, mime), name, kind, mime, compressed: false };
   }
 
   if (kind !== 'photo') {
-    throw new UploadRejected(`« ${name} » n’est ni une photo, ni une vidéo, ni un PDF.`);
+    throw new UploadRejected('notMedia', name);
   }
 
   const accepted = ACCEPTED_MIME.photo.includes(mime);
@@ -170,10 +183,10 @@ export async function prepareUpload(file: File): Promise<PreparedUpload> {
   if (!bitmap) {
     // HEIC sur un navigateur qui ne le décode pas : le stockage l'accepte tel quel.
     if (accepted) {
-      if (file.size > MAX_UPLOAD_BYTES) throw tooBig(`La photo « ${name} »`, file.size);
+      if (file.size > MAX_UPLOAD_BYTES) throw tooBig('photo', name, file.size);
       return { blob: retype(file, mime), name, kind, mime, compressed: false };
     }
-    throw new UploadRejected(`« ${name} » : format d’image non accepté. Utilisez une photo JPEG, PNG, WebP ou HEIC.`);
+    throw new UploadRejected('imageFormat', name);
   }
 
   try {
@@ -185,7 +198,7 @@ export async function prepareUpload(file: File): Promise<PreparedUpload> {
     const jpeg = await canvasToJpeg(bitmap, scale);
     if (!jpeg) {
       if (accepted && file.size <= MAX_UPLOAD_BYTES) return { blob: retype(file, mime), name, kind, mime, compressed: false };
-      throw new UploadRejected(`« ${name} » n’a pas pu être préparée sur cet appareil.`);
+      throw new UploadRejected('prepareFailed', name, { kind: 'photo' });
     }
     // Recompresser sans réduire ne sert à rien si le résultat est plus lourd.
     if (accepted && scale === 1 && jpeg.size >= file.size) {
@@ -202,6 +215,3 @@ function retype(file: Blob, mime: string): Blob {
   if (!mime || file.type === mime) return file;
   return new Blob([file], { type: mime });
 }
-
-/** Libellé court d'un média : « Photo », « Vidéo », « Document ». */
-export const MEDIA_LABEL: Record<MediaKind, string> = { photo: 'Photo', video: 'Vidéo', document: 'Document' };

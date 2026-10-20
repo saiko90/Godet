@@ -1,1 +1,415 @@
-{}
+{
+  "meta": {
+    "title": "Demo del garage 3D",
+    "shareTitle": "Godet — demo del garage 3D del Suo parco macchine",
+    "description": "Visiti un garage di esempio senza registrarsi: sei macchine edili, dodici mesi di libretto di manutenzione, riparazioni, ricambi, costi e scadenze. Provi tutto, non viene salvato nulla.",
+    "keywords": "libretto di manutenzione, macchine edili, parco macchine, gestione della flotta, manutenzione escavatore, Svizzera, demo"
+  },
+  "loading": "Apertura del garage dimostrativo…",
+  "org": "Impresa Demo SA",
+  "people": {
+    "workshop": "Officina interna",
+    "foreman": "Capo officina",
+    "operator": "Operatore",
+    "partner": "Officina partner",
+    "roadOffice": "Ufficio della circolazione"
+  },
+  "suppliers": {
+    "tpValais": "Macchine Edili Vallese SA",
+    "rhoneHydraulics": "Idraulica del Rodano SA",
+    "rhoneTyres": "Pneumatici del Rodano SA",
+    "electroDiesel": "Elettro-Diesel Sion SA",
+    "trucksMartigny": "Veicoli Pesanti Martigny SA"
+  },
+  "reasons": {
+    "duplicate": "Registrazione doppia"
+  },
+  "machines": {
+    "pe01": {
+      "brand": "Demo",
+      "model": "Escavatore cingolato 21 t",
+      "notes": "Macchina dimostrativa: può modificarla, completarne il libretto o archiviarla quando vuole.",
+      "entries": {
+        "e01": {
+          "title": "Manutenzione 5’500 h",
+          "details": "Olio motore e filtri, controllo dei tubi flessibili."
+        },
+        "e02": {
+          "title": "Controllo dopo lavori di scavo in trincea",
+          "details": "Pulizia del carro, controllo degli urti sulla benna."
+        },
+        "e03": {
+          "title": "Pompa di lubrificazione centralizzata sostituita",
+          "details": "Pompa fuori servizio, sostituita e spurgata."
+        },
+        "e04": {
+          "title": "Filtro disidratatore del climatizzatore"
+        },
+        "e05": {
+          "title": "Ingrassaggio invernale",
+          "details": "Grasso per basse temperature su ralla e perni."
+        },
+        "e06": {
+          "title": "Lampadine e fusibili"
+        },
+        "e07": {
+          "title": "Preparazione per il freddo",
+          "details": "Batteria testata, candelette controllate, antigelo verificato."
+        },
+        "e08": {
+          "title": "Tubi flessibili di ricambio (scorta officina)"
+        },
+        "e09": {
+          "title": "Motore di traslazione destro: perdita",
+          "details": "Tenuta flottante sostituita, olio del riduttore cambiato."
+        },
+        "e10": {
+          "title": "Faro da lavoro LED"
+        },
+        "e11": {
+          "title": "Ispezione e ingrassaggio",
+          "details": "Tensione dei cingoli regolata, perni della benna ingrassati, usura dei denti misurata."
+        },
+        "e12": {
+          "title": "Denti della benna sostituiti",
+          "details": "Cinque denti usurati sostituiti."
+        },
+        "e13": {
+          "title": "Lama d’usura della benna"
+        },
+        "e14": {
+          "title": "Manutenzione 6’000 h",
+          "details": "Olio motore e filtri, olio dei riduttori di traslazione, controllo del gioco della ralla."
+        },
+        "e15": {
+          "title": "Batteria 12 V 140 Ah"
+        },
+        "e16": {
+          "title": "Controllo del carro",
+          "details": "Usura di rulli e ruote motrici misurata, tensione dei cingoli regolata."
+        },
+        "e17": {
+          "title": "Cilindro della benna riguarnito",
+          "details": "Trafilamento sullo stelo. Kit guarnizioni sostituito, stelo controllato."
+        },
+        "e18": {
+          "title": "Kit guarnizioni del giunto rotante"
+        },
+        "e19": {
+          "title": "Pulizia e controllo dei tubi flessibili",
+          "details": "Pulizia a vapore, controllo visivo di tutti i tubi flessibili e dei raccordi."
+        },
+        "e20": {
+          "title": "Controllo annuale di sicurezza",
+          "details": "Freno di rotazione, valvole di sicurezza dei cilindri, avvisatore di sovraccarico, illuminazione, estintore. Nessun difetto."
+        },
+        "e21": {
+          "title": "Filtri cabina e spazzole tergicristallo"
+        },
+        "e22": {
+          "title": "Climatizzatore: manutenzione e ricarica",
+          "details": "Filtro disidratatore, ricarica del gas, prova di tenuta."
+        },
+        "e23": {
+          "title": "Lame laterali della benna (coppia)"
+        },
+        "e24": {
+          "title": "Rullo superiore sinistro sostituito",
+          "details": "Rullo rumoroso e grippato. Sostituito, tensione del cingolo regolata."
+        },
+        "e25": {
+          "title": "Manutenzione 6’500 h",
+          "details": "Olio motore, filtri olio, carburante e aria, filtro di ritorno idraulico, ingrassaggio completo."
+        },
+        "e26": {
+          "title": "Grasso EP2, cartucce"
+        },
+        "e27": {
+          "title": "Tubo alta pressione del bilanciere sostituito",
+          "details": "Perdita sul tubo del cilindro del bilanciere. Tubo e guarnizioni sostituiti, livello dell’olio rabboccato."
+        },
+        "e28": {
+          "title": "Controllo dei livelli",
+          "details": "Olio motore, olio idraulico e liquido di raffreddamento controllati, ingrassaggio."
+        },
+        "e29": {
+          "title": "Kit filtri per la manutenzione delle 7’000 h"
+        },
+        "e30": {
+          "title": "Ingrassaggio e pulizia del radiatore",
+          "details": "Perni ingrassati, radiatore e radiatore dell’olio puliti con aria compressa."
+        },
+        "e31": {
+          "title": "Sospensione del sedile da sostituire",
+          "details": "Ammortizzatore del sedile ceduto. Pezzo ordinato, montaggio previsto alla manutenzione delle 7’000 h."
+        }
+      },
+      "schedules": {
+        "s1": "Manutenzione",
+        "s2": "Ispezione del carro",
+        "s3": "Cambio dell’olio idraulico",
+        "s4": "Controllo dell’estintore",
+        "s5": "Controllo annuale di sicurezza"
+      }
+    },
+    "ch02": {
+      "notes": "Benna da 3,2 m³ e forche per pallet. Pneumatici anteriori sostituiti in primavera.",
+      "entries": {
+        "e01": {
+          "title": "Controllo di pneumatici e livelli",
+          "details": "Pressioni regolate, livelli rabboccati."
+        },
+        "e02": {
+          "title": "Manutenzione 3’000 h",
+          "details": "Olio motore e filtri, controllo dei ponti e dello snodo, ingrassaggio completo."
+        },
+        "e03": {
+          "title": "Cilindro di sollevamento: guarnizioni sostituite",
+          "details": "Trafilamento sul cilindro sinistro. Kit guarnizioni sostituito, olio rabboccato."
+        },
+        "e04": {
+          "title": "Denti della benna (set da 8)",
+          "details": "Montati alla manutenzione successiva."
+        },
+        "e05": {
+          "title": "Controllo annuale di sicurezza",
+          "details": "Freni, sterzo, illuminazione, cicalino di retromarcia, cintura, estintore. Nessun difetto."
+        },
+        "e06": {
+          "title": "Ingrassaggio e controllo dello snodo",
+          "details": "Gioco dello snodo centrale controllato, ingrassaggio."
+        },
+        "e07": {
+          "title": "Manutenzione 3’500 h",
+          "details": "Olio motore e filtri, filtro aria, ingrassaggio."
+        },
+        "e08": {
+          "title": "Pneumatico 23.5 R25 anteriore sinistro",
+          "details": "Pneumatico lacerato in un cantiere di demolizione."
+        },
+        "e09": {
+          "title": "Rumore in frenata da tenere d’occhio",
+          "details": "Cigolio in retromarcia, soprattutto a freddo."
+        },
+        "e10": {
+          "title": "Dischi dei freni sostituiti",
+          "details": "Dischi e guarnizioni del freno di servizio sostituiti, circuito spurgato."
+        },
+        "e11": {
+          "title": "Dischi dei freni sostituiti",
+          "details": "Dischi e guarnizioni del freno di servizio sostituiti."
+        },
+        "e12": {
+          "title": "Controllo dopo lavori di sterro",
+          "details": "Pulizia del radiatore e del telaio anteriore, controllo dei tubi flessibili."
+        },
+        "e13": {
+          "title": "Manutenzione 4’000 h",
+          "details": "Olio motore, filtri olio e carburante, olio idraulico controllato, ingrassaggio."
+        },
+        "e14": {
+          "title": "Filtro aria principale"
+        },
+        "e15": {
+          "title": "Ingrassaggio e pulizia",
+          "details": "Perni ingrassati, cabina e vetri puliti."
+        }
+      },
+      "schedules": {
+        "s1": "Manutenzione",
+        "s2": "Cambio dell’olio dei ponti",
+        "s3": "Controllo annuale di sicurezza",
+        "s4": "Controllo dell’usura dei pneumatici"
+      }
+    },
+    "mp03": {
+      "notes": "Attacco rapido meccanico. Benne da 300 e 600 mm, benna per la pulizia dei fossi da 1’000 mm.",
+      "entries": {
+        "e01": {
+          "title": "Controllo annuale di sicurezza",
+          "details": "Attacco rapido, valvole di sicurezza, avvisatore acustico, illuminazione, estintore. Nessun difetto."
+        },
+        "e02": {
+          "title": "Controllo dei cingoli",
+          "details": "Tensione regolata, usura dei rulli nella norma."
+        },
+        "e03": {
+          "title": "Benna per la pulizia dei fossi 1’000 mm"
+        },
+        "e04": {
+          "title": "Tubo flessibile della lama sostituito",
+          "details": "Tubo schiacciato contro il telaio, sostituito e riposizionato."
+        },
+        "e05": {
+          "title": "Ingrassaggio e controllo dei livelli",
+          "details": "Livelli rabboccati, perni ingrassati."
+        },
+        "e06": {
+          "title": "Manutenzione 1’000 h",
+          "details": "Olio motore e filtri, filtro idraulico, ingrassaggio completo."
+        },
+        "e07": {
+          "title": "Faro da lavoro sostituito",
+          "details": "Faro anteriore rotto in cantiere, sostituito con un modello LED."
+        },
+        "e08": {
+          "title": "Ingrassaggio e controllo dei livelli",
+          "details": "Livelli controllati, perni e attacco rapido ingrassati."
+        },
+        "e09": {
+          "title": "Gioco nel perno della benna da tenere d’occhio",
+          "details": "Leggero gioco percepito a fine corsa, da controllare alla prossima manutenzione."
+        },
+        "e10": {
+          "title": "Denti della benna (set da 4)"
+        }
+      },
+      "schedules": {
+        "s1": "Manutenzione",
+        "s2": "Controllo annuale di sicurezza",
+        "s3": "Controllo dell’attacco rapido"
+      }
+    },
+    "du04": {
+      "entries": {
+        "e01": {
+          "title": "Manutenzione 2’500 h",
+          "details": "Olio motore e filtri, olio della trasmissione controllato, ingrassaggio."
+        },
+        "e02": {
+          "title": "Motorino d’avviamento sostituito",
+          "details": "Motorino d’avviamento guasto, sostituito con un ricambio rigenerato."
+        },
+        "e03": {
+          "title": "Ingrassaggio invernale",
+          "details": "Grasso per basse temperature sullo snodo e sul cassone."
+        },
+        "e04": {
+          "title": "Controllo annuale di sicurezza",
+          "details": "Freni, sterzo, arco di protezione, cintura, illuminazione. Nessun difetto."
+        },
+        "e05": {
+          "title": "Manutenzione 3’000 h",
+          "details": "Olio motore e filtri, filtro aria, ingrassaggio completo."
+        },
+        "e06": {
+          "title": "Batteria 12 V 110 Ah"
+        },
+        "e07": {
+          "title": "Snodo centrale: boccole sostituite",
+          "details": "Gioco importante allo snodo. Boccole e perni sostituiti."
+        },
+        "e08": {
+          "title": "Controllo dei pneumatici",
+          "details": "Usura regolare, pressioni regolate."
+        },
+        "e09": {
+          "title": "Manutenzione delle 3’500 h da pianificare",
+          "details": "Macchina sul cantiere di Fully fino a fine ottobre: manutenzione da fare al rientro in officina."
+        },
+        "e10": {
+          "title": "Perdita al cilindro del cassone",
+          "details": "Trafilamento alla guarnizione dello stelo. Macchina utilizzabile a carico ridotto, riparazione in corso in officina."
+        }
+      },
+      "schedules": {
+        "s1": "Manutenzione",
+        "s2": "Controllo dei freni",
+        "s3": "Controllo annuale di sicurezza"
+      }
+    },
+    "ro05": {
+      "notes": "Tamburo liscio. Svuotare l’impianto di irrigazione prima del gelo.",
+      "entries": {
+        "e01": {
+          "title": "Manutenzione 1’500 h",
+          "details": "Olio motore e filtri, olio dei vibratori controllato, ingrassaggio."
+        },
+        "e02": {
+          "title": "Raschiatori del tamburo (set)"
+        },
+        "e03": {
+          "title": "Rimessaggio invernale: svuotamento dell’impianto di irrigazione",
+          "details": "Impianto di irrigazione svuotato, serbatoio risciacquato."
+        },
+        "e04": {
+          "title": "Controllo annuale di sicurezza",
+          "details": "Freni, arco di protezione, cicalino di retromarcia, illuminazione. Nessun difetto."
+        },
+        "e05": {
+          "title": "Rimessa in servizio primaverile",
+          "details": "Irrigazione rimessa in funzione, ugelli disostruiti, livelli controllati."
+        },
+        "e06": {
+          "title": "Manutenzione 2’000 h",
+          "details": "Olio motore e filtri, olio dei vibratori, filtro aria."
+        },
+        "e07": {
+          "title": "Pompa dell’irrigazione sostituita",
+          "details": "Pompa grippata, sostituita. Irrigazione controllata su tutta la larghezza."
+        },
+        "e08": {
+          "title": "Controllo dei raschiatori e dell’irrigazione",
+          "details": "Raschiatori regolati, ugelli puliti."
+        }
+      },
+      "schedules": {
+        "s1": "Manutenzione",
+        "s2": "Rimessaggio invernale dell’impianto di irrigazione",
+        "s3": "Controllo annuale di sicurezza"
+      }
+    },
+    "ca06": {
+      "notes": "Autocarro ribaltabile trilaterale. Tachigrafo digitale.",
+      "entries": {
+        "e01": {
+          "title": "Collaudo periodico",
+          "details": "Veicolo presentato al collaudo periodico. Nessun difetto, prossimo collaudo tra 12 mesi."
+        },
+        "e02": {
+          "title": "Pneumatici asse anteriore (2 × 385/65 R22.5)"
+        },
+        "e03": {
+          "title": "Tubo del cilindro di ribaltamento sostituito",
+          "details": "Tubo poroso sostituito, livello dell’olio rabboccato."
+        },
+        "e04": {
+          "title": "Manutenzione 7’400 h",
+          "details": "Olio motore e filtri, filtro carburante, ingrassaggio del telaio."
+        },
+        "e05": {
+          "title": "Pastiglie dei freni, asse posteriore"
+        },
+        "e06": {
+          "title": "Manutenzione 8’000 h",
+          "details": "Olio motore e filtri, olio del cambio controllato, ingrassaggio."
+        },
+        "e07": {
+          "title": "Frizione: reggispinta e disco sostituiti",
+          "details": "Frizione che slittava. Reggispinta e disco sostituiti, regolazione controllata."
+        },
+        "e08": {
+          "title": "Controllo dell’illuminazione e dei pneumatici",
+          "details": "Lampadine sostituite, pressioni regolate."
+        },
+        "e09": {
+          "title": "Manutenzione 8’600 h",
+          "details": "Olio motore e filtri, filtro aria, ingrassaggio del telaio."
+        },
+        "e10": {
+          "title": "Pulizia del cassone e ingrassaggio",
+          "details": "Cassone pulito, snodi e cerniere di ribaltamento ingrassati."
+        },
+        "e11": {
+          "title": "Sensore NOx da sostituire",
+          "details": "Spia motore accesa, sensore NOx difettoso. Pezzo ordinato presso il concessionario."
+        }
+      },
+      "schedules": {
+        "s1": "Manutenzione",
+        "s2": "Collaudo periodico",
+        "s3": "Controllo del tachigrafo"
+      }
+    }
+  }
+}

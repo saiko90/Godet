@@ -1,1 +1,57 @@
-{}
+{
+  "layout": {
+    "tagline": "The maintenance log for your construction machinery",
+    "signature": "Godet · an application by Swiss Digital Studio",
+    "automatic": "This email was sent automatically. Please do not reply to it."
+  },
+  "rappels": {
+    "subject": {
+      "one": "Godet — {summary} at {org}",
+      "many": "Godet — {summary} across {orgs, plural, one {# company} other {# companies}}"
+    },
+    "summary": {
+      "dues": "{count, plural, one {# due date to plan} other {# due dates to plan}}",
+      "duesOverdue": "{count, plural, one {# due date to plan} other {# due dates to plan}} ({overdue, plural, one {# overdue} other {# overdue}})",
+      "repairs": "{count, plural, one {# open repair} other {# open repairs}}",
+      "both": "{dues} and {repairs}"
+    },
+    "title": "{frequency, select, quotidien {Your daily reminder} other {Your weekly reminder}}",
+    "greeting": "Hello {name},",
+    "greetingAnonymous": "Hello,",
+    "intro": "Here is what needs your attention: {summary}.",
+    "sections": {
+      "dues": "Due dates",
+      "repairs": "Open repairs"
+    },
+    "state": {
+      "overdue": "Overdue",
+      "soon": "Coming up"
+    },
+    "item": {
+      "plannedOn": "due on {date}",
+      "counter": "hour meter: {hours}",
+      "reported": "reported on {date}",
+      "cost": "cost so far: {amount}"
+    },
+    "more": "{count, plural, one {And # more item to check in the garage.} other {And # more items to check in the garage.}}",
+    "cta": "Open the garage",
+    "why": "{frequency, select, quotidien {You receive this reminder every morning, only when there is something to report.} other {You receive this reminder on Monday mornings, only when there is something to report.}}",
+    "thresholds": "Due dates are flagged {days, plural, one {# day} other {# days}} ahead for calendar dates and {hours} ahead for hour meters.",
+    "settings": "Change or turn off reminders"
+  },
+  "invitation": {
+    "subject": "{inviter} has invited you to join {org} on Godet",
+    "subjectAnonymous": "Invitation to join {org} on Godet",
+    "title": "Join {org} on Godet",
+    "greeting": "Hello,",
+    "intro": "{inviter} has invited you to join the {org} garage on Godet, the digital maintenance log for construction machinery.",
+    "introAnonymous": "An invitation is waiting for you: join the {org} garage on Godet, the digital maintenance log for construction machinery.",
+    "role": "Your role: {role}. {hint}",
+    "cta": "Accept the invitation",
+    "expires": "The link is valid until {date}.",
+    "expiresDefault": "The link is valid for 14 days.",
+    "account": "No account yet? You can create one in a few seconds with this email address.",
+    "linkHelp": "If the button does not work, copy this link into your browser:",
+    "ignore": "Not expecting this invitation? Simply ignore this email."
+  }
+}

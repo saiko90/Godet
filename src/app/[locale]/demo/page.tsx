@@ -1,32 +1,57 @@
 import type { Metadata } from 'next';
+import { hasLocale } from 'next-intl';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { notFound } from 'next/navigation';
+import { FormatProvider } from '@/components/FormatProvider';
 import { DemoGarage } from '@/components/garage/DemoGarage';
+import { localizedAlternates } from '@/i18n/metadata';
+import { routing } from '@/i18n/routing';
 
-const TITLE = 'Démo du garage 3D';
-const SHARE_TITLE = 'Godet — démo du garage 3D de votre parc d’engins';
-const DESCRIPTION =
-  'Visitez un garage d’exemple sans inscription : six machines de chantier, douze mois de carnet d’entretien, réparations, pièces, coûts et échéances. Essayez tout, rien n’est enregistré.';
-
-export const metadata: Metadata = {
-  title: TITLE,
-  description: DESCRIPTION,
-  alternates: { canonical: '/demo' },
-  keywords: ['carnet d’entretien', 'machines de chantier', 'parc d’engins', 'gestion de flotte', 'entretien pelle', 'Suisse', 'démo'],
-  openGraph: {
-    title: SHARE_TITLE,
-    description: DESCRIPTION,
-    url: '/demo',
-    type: 'website',
-    locale: 'fr_CH',
-    siteName: 'Godet',
-  },
-  twitter: { card: 'summary', title: SHARE_TITLE, description: DESCRIPTION },
+type Props = {
+  params: Promise<{ locale: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 };
+
+export async function generateMetadata({ params }: Pick<Props, 'params'>): Promise<Metadata> {
+  const { locale: l } = await params;
+  const locale = hasLocale(routing.locales, l) ? l : routing.defaultLocale;
+  const t = await getTranslations({ locale, namespace: 'demo.meta' });
+  const alternates = localizedAlternates('/demo', locale);
+  const title = t('title');
+  const shareTitle = t('shareTitle');
+  const description = t('description');
+  return {
+    title,
+    description,
+    alternates,
+    keywords: t('keywords')
+      .split(',')
+      .map((k) => k.trim())
+      .filter(Boolean),
+    openGraph: {
+      title: shareTitle,
+      description,
+      url: alternates.canonical,
+      type: 'website',
+      locale: locale === 'en' ? 'en_GB' : `${locale}_CH`,
+      siteName: 'Godet',
+    },
+    twitter: { card: 'summary', title: shareTitle, description },
+  };
+}
 
 function machineParam(value: string | string[] | undefined): string | null {
   return typeof value === 'string' && /^[\w-]{1,64}$/.test(value) ? value : null;
 }
 
-export default async function DemoPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
-  const params = await searchParams;
-  return <DemoGarage machineId={machineParam(params.m)} />;
+export default async function DemoPage({ params, searchParams }: Props) {
+  const [{ locale }, query] = await Promise.all([params, searchParams]);
+  if (!hasLocale(routing.locales, locale)) notFound();
+  setRequestLocale(locale);
+  // Le parc d'exemple est une entreprise suisse : formats et devise suisses dans toutes les langues.
+  return (
+    <FormatProvider locale={locale} country="CH" currency="CHF">
+      <DemoGarage machineId={machineParam(query.m)} />
+    </FormatProvider>
+  );
 }

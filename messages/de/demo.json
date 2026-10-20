@@ -1,1 +1,415 @@
-{}
+{
+  "meta": {
+    "title": "Demo der 3D-Garage",
+    "shareTitle": "Godet — Demo der 3D-Garage für Ihren Maschinenpark",
+    "description": "Besuchen Sie eine Beispielgarage ohne Anmeldung: sechs Baumaschinen, zwölf Monate Wartungsheft, Reparaturen, Ersatzteile, Kosten und Termine. Probieren Sie alles aus, nichts wird gespeichert.",
+    "keywords": "Wartungsheft, Baumaschinen, Maschinenpark, Flottenmanagement, Baggerwartung, Schweiz, Demo"
+  },
+  "loading": "Die Demo-Garage wird geöffnet…",
+  "org": "Demo AG",
+  "people": {
+    "workshop": "Eigene Werkstatt",
+    "foreman": "Werkstattchef",
+    "operator": "Maschinist",
+    "partner": "Partnergarage",
+    "roadOffice": "Strassenverkehrsamt"
+  },
+  "suppliers": {
+    "tpValais": "Baumaschinen Wallis AG",
+    "rhoneHydraulics": "Rhone Hydraulik AG",
+    "rhoneTyres": "Rhone Reifen AG",
+    "electroDiesel": "Elektro-Diesel Sitten AG",
+    "trucksMartigny": "Nutzfahrzeuge Martigny AG"
+  },
+  "reasons": {
+    "duplicate": "Doppelter Eintrag"
+  },
+  "machines": {
+    "pe01": {
+      "brand": "Demo",
+      "model": "Raupenbagger 21 t",
+      "notes": "Demomaschine: Sie können sie jederzeit bearbeiten, ihr Wartungsheft ergänzen oder sie archivieren.",
+      "entries": {
+        "e01": {
+          "title": "Wartung 5’500 h",
+          "details": "Motoröl und Filter, Kontrolle der Hydraulikschläuche."
+        },
+        "e02": {
+          "title": "Kontrolle nach Grabenarbeiten",
+          "details": "Laufwerk gereinigt, Löffel auf Schlagschäden kontrolliert."
+        },
+        "e03": {
+          "title": "Zentralschmierpumpe ersetzt",
+          "details": "Pumpe defekt, ersetzt und entlüftet."
+        },
+        "e04": {
+          "title": "Filtertrockner der Klimaanlage"
+        },
+        "e05": {
+          "title": "Winterschmierung",
+          "details": "Kältefett auf Drehkranz und Bolzen."
+        },
+        "e06": {
+          "title": "Lampen und Sicherungen"
+        },
+        "e07": {
+          "title": "Wintervorbereitung",
+          "details": "Batterie getestet, Glühkerzen kontrolliert, Frostschutz geprüft."
+        },
+        "e08": {
+          "title": "Ersatzschläuche (Werkstattlager)"
+        },
+        "e09": {
+          "title": "Fahrmotor rechts: Leck",
+          "details": "Laufwerksdichtung ersetzt, Getriebeöl erneuert."
+        },
+        "e10": {
+          "title": "LED-Arbeitsscheinwerfer"
+        },
+        "e11": {
+          "title": "Inspektion und Schmierung",
+          "details": "Kettenspannung eingestellt, Löffelbolzen geschmiert, Zahnverschleiss gemessen."
+        },
+        "e12": {
+          "title": "Löffelzähne ersetzt",
+          "details": "Fünf verschlissene Zähne ersetzt."
+        },
+        "e13": {
+          "title": "Verschleissmesser für Löffel"
+        },
+        "e14": {
+          "title": "Wartung 6’000 h",
+          "details": "Motoröl und Filter, Öl der Fahrgetriebe, Spiel des Drehkranzes kontrolliert."
+        },
+        "e15": {
+          "title": "Batterie 12 V 140 Ah"
+        },
+        "e16": {
+          "title": "Laufwerkskontrolle",
+          "details": "Verschleiss von Laufrollen und Turas gemessen, Kettenspannung eingestellt."
+        },
+        "e17": {
+          "title": "Löffelzylinder neu abgedichtet",
+          "details": "Leichte Undichtheit an der Kolbenstange. Dichtungssatz ersetzt, Kolbenstange kontrolliert."
+        },
+        "e18": {
+          "title": "Dichtungssatz für die Drehdurchführung"
+        },
+        "e19": {
+          "title": "Reinigung und Kontrolle der Schläuche",
+          "details": "Dampfreinigung, Sichtkontrolle aller Schläuche und Verschraubungen."
+        },
+        "e20": {
+          "title": "Jährliche Sicherheitskontrolle",
+          "details": "Schwenkbremse, Rohrbruchsicherungen der Zylinder, Überlastwarnung, Beleuchtung, Feuerlöscher. Keine Mängel."
+        },
+        "e21": {
+          "title": "Kabinenfilter und Scheibenwischerblätter"
+        },
+        "e22": {
+          "title": "Klimaanlage: Wartung und Befüllung",
+          "details": "Filtertrockner, Kältemittel nachgefüllt, Dichtheitsprüfung."
+        },
+        "e23": {
+          "title": "Seitenmesser für Löffel (Paar)"
+        },
+        "e24": {
+          "title": "Tragrolle links ersetzt",
+          "details": "Rolle laut und festgefressen. Ersetzt, Kettenspannung eingestellt."
+        },
+        "e25": {
+          "title": "Wartung 6’500 h",
+          "details": "Motoröl, Öl-, Kraftstoff- und Luftfilter, Hydraulik-Rücklauffilter, komplette Schmierung."
+        },
+        "e26": {
+          "title": "Fett EP2, Kartuschen"
+        },
+        "e27": {
+          "title": "Hochdruckschlauch am Stiel ersetzt",
+          "details": "Leck am Schlauch des Stielzylinders. Schlauch und Dichtungen ersetzt, Öl nachgefüllt."
+        },
+        "e28": {
+          "title": "Kontrolle der Füllstände",
+          "details": "Motoröl, Hydrauliköl und Kühlmittel kontrolliert, Schmierung."
+        },
+        "e29": {
+          "title": "Filtersatz für die 7’000-h-Wartung"
+        },
+        "e30": {
+          "title": "Schmierung und Kühlerreinigung",
+          "details": "Bolzen geschmiert, Kühler und Ölkühler ausgeblasen."
+        },
+        "e31": {
+          "title": "Sitzfederung ersetzen",
+          "details": "Sitzdämpfer durchgesackt. Teil bestellt, Einbau bei der 7’000-h-Wartung geplant."
+        }
+      },
+      "schedules": {
+        "s1": "Wartung",
+        "s2": "Laufwerksinspektion",
+        "s3": "Hydraulikölwechsel",
+        "s4": "Feuerlöscherkontrolle",
+        "s5": "Jährliche Sicherheitskontrolle"
+      }
+    },
+    "ch02": {
+      "notes": "Schaufel 3,2 m³ und Palettengabel. Vorderreifen im Frühling gewechselt.",
+      "entries": {
+        "e01": {
+          "title": "Kontrolle von Reifen und Füllständen",
+          "details": "Reifendruck angepasst, Füllstände ergänzt."
+        },
+        "e02": {
+          "title": "Wartung 3’000 h",
+          "details": "Motoröl und Filter, Kontrolle der Achsen und des Knickgelenks, komplette Schmierung."
+        },
+        "e03": {
+          "title": "Hubzylinder: Dichtungen ersetzt",
+          "details": "Leichte Undichtheit am linken Zylinder. Dichtungssatz ersetzt, Öl nachgefüllt."
+        },
+        "e04": {
+          "title": "Schaufelzähne (8er-Satz)",
+          "details": "Bei der nächsten Wartung montiert."
+        },
+        "e05": {
+          "title": "Jährliche Sicherheitskontrolle",
+          "details": "Bremsen, Lenkung, Beleuchtung, Rückfahrwarner, Sicherheitsgurt, Feuerlöscher. Keine Mängel."
+        },
+        "e06": {
+          "title": "Schmierung und Kontrolle des Knickgelenks",
+          "details": "Spiel des Knickgelenks kontrolliert, Schmierung."
+        },
+        "e07": {
+          "title": "Wartung 3’500 h",
+          "details": "Motoröl und Filter, Luftfilter, Schmierung."
+        },
+        "e08": {
+          "title": "Reifen 23.5 R25 vorne links",
+          "details": "Reifen auf einer Abbruchbaustelle aufgerissen."
+        },
+        "e09": {
+          "title": "Bremsgeräusch beobachten",
+          "details": "Quietschen beim Rückwärtsfahren, vor allem bei kalter Maschine."
+        },
+        "e10": {
+          "title": "Bremsscheiben ersetzt",
+          "details": "Bremsscheiben und Beläge der Betriebsbremse ersetzt, Bremskreis entlüftet."
+        },
+        "e11": {
+          "title": "Bremsscheiben ersetzt",
+          "details": "Bremsscheiben und Beläge der Betriebsbremse ersetzt."
+        },
+        "e12": {
+          "title": "Kontrolle nach Erdarbeiten",
+          "details": "Kühler und Vorderwagen gereinigt, Schläuche kontrolliert."
+        },
+        "e13": {
+          "title": "Wartung 4’000 h",
+          "details": "Motoröl, Öl- und Kraftstofffilter, Hydrauliköl kontrolliert, Schmierung."
+        },
+        "e14": {
+          "title": "Hauptluftfilter"
+        },
+        "e15": {
+          "title": "Schmierung und Reinigung",
+          "details": "Bolzen geschmiert, Kabine und Scheiben gereinigt."
+        }
+      },
+      "schedules": {
+        "s1": "Wartung",
+        "s2": "Achsölwechsel",
+        "s3": "Jährliche Sicherheitskontrolle",
+        "s4": "Kontrolle der Reifenabnutzung"
+      }
+    },
+    "mp03": {
+      "notes": "Mechanischer Schnellwechsler. Tieflöffel 300 und 600 mm, Grabenräumlöffel 1’000 mm.",
+      "entries": {
+        "e01": {
+          "title": "Jährliche Sicherheitskontrolle",
+          "details": "Schnellwechsler, Rohrbruchsicherungen, Hupe, Beleuchtung, Feuerlöscher. Keine Mängel."
+        },
+        "e02": {
+          "title": "Kontrolle der Raupenketten",
+          "details": "Spannung eingestellt, Rollenverschleiss im zulässigen Bereich."
+        },
+        "e03": {
+          "title": "Grabenräumlöffel 1’000 mm"
+        },
+        "e04": {
+          "title": "Schlauch am Planierschild ersetzt",
+          "details": "Schlauch am Rahmen eingeklemmt, ersetzt und neu verlegt."
+        },
+        "e05": {
+          "title": "Schmierung und Kontrolle der Füllstände",
+          "details": "Füllstände ergänzt, Bolzen geschmiert."
+        },
+        "e06": {
+          "title": "Wartung 1’000 h",
+          "details": "Motoröl und Filter, Hydraulikfilter, komplette Schmierung."
+        },
+        "e07": {
+          "title": "Arbeitsscheinwerfer ersetzt",
+          "details": "Vorderer Scheinwerfer auf der Baustelle beschädigt, durch ein LED-Modell ersetzt."
+        },
+        "e08": {
+          "title": "Schmierung und Kontrolle der Füllstände",
+          "details": "Füllstände kontrolliert, Bolzen und Schnellwechsler geschmiert."
+        },
+        "e09": {
+          "title": "Spiel am Löffelbolzen beobachten",
+          "details": "Leichtes Spiel am Hubende spürbar, bei der nächsten Wartung kontrollieren."
+        },
+        "e10": {
+          "title": "Löffelzähne (4er-Satz)"
+        }
+      },
+      "schedules": {
+        "s1": "Wartung",
+        "s2": "Jährliche Sicherheitskontrolle",
+        "s3": "Kontrolle des Schnellwechslers"
+      }
+    },
+    "du04": {
+      "entries": {
+        "e01": {
+          "title": "Wartung 2’500 h",
+          "details": "Motoröl und Filter, Getriebeöl kontrolliert, Schmierung."
+        },
+        "e02": {
+          "title": "Anlasser ersetzt",
+          "details": "Anlasser defekt, durch ein Austauschteil ersetzt."
+        },
+        "e03": {
+          "title": "Winterschmierung",
+          "details": "Kältefett auf Knickgelenk und Mulde."
+        },
+        "e04": {
+          "title": "Jährliche Sicherheitskontrolle",
+          "details": "Bremsen, Lenkung, Überrollbügel, Sicherheitsgurt, Beleuchtung. Keine Mängel."
+        },
+        "e05": {
+          "title": "Wartung 3’000 h",
+          "details": "Motoröl und Filter, Luftfilter, komplette Schmierung."
+        },
+        "e06": {
+          "title": "Batterie 12 V 110 Ah"
+        },
+        "e07": {
+          "title": "Knickgelenk: Buchsen ersetzt",
+          "details": "Grosses Spiel am Knickgelenk. Buchsen und Bolzen ersetzt."
+        },
+        "e08": {
+          "title": "Reifenkontrolle",
+          "details": "Gleichmässige Abnutzung, Reifendruck angepasst."
+        },
+        "e09": {
+          "title": "Wartung 3’500 h planen",
+          "details": "Maschine bis Ende Oktober auf der Baustelle in Fully: Wartung nach der Rückkehr in die Werkstatt."
+        },
+        "e10": {
+          "title": "Leck am Kippzylinder",
+          "details": "Leichte Undichtheit an der Stangendichtung. Maschine mit reduzierter Last einsetzbar, Reparatur in der Werkstatt läuft."
+        }
+      },
+      "schedules": {
+        "s1": "Wartung",
+        "s2": "Bremsenkontrolle",
+        "s3": "Jährliche Sicherheitskontrolle"
+      }
+    },
+    "ro05": {
+      "notes": "Glattmantelbandage. Berieselung vor dem ersten Frost entleeren.",
+      "entries": {
+        "e01": {
+          "title": "Wartung 1’500 h",
+          "details": "Motoröl und Filter, Öl der Vibrationserreger kontrolliert, Schmierung."
+        },
+        "e02": {
+          "title": "Bandagenabstreifer (Satz)"
+        },
+        "e03": {
+          "title": "Einwinterung: Berieselung entleert",
+          "details": "Berieselungsanlage entleert, Wassertank gespült."
+        },
+        "e04": {
+          "title": "Jährliche Sicherheitskontrolle",
+          "details": "Bremsen, Überrollbügel, Rückfahrwarner, Beleuchtung. Keine Mängel."
+        },
+        "e05": {
+          "title": "Inbetriebnahme im Frühling",
+          "details": "Berieselung wieder befüllt, Düsen gereinigt, Füllstände kontrolliert."
+        },
+        "e06": {
+          "title": "Wartung 2’000 h",
+          "details": "Motoröl und Filter, Öl der Vibrationserreger, Luftfilter."
+        },
+        "e07": {
+          "title": "Berieselungspumpe ersetzt",
+          "details": "Pumpe festgefressen, ersetzt. Berieselung über die ganze Breite kontrolliert."
+        },
+        "e08": {
+          "title": "Kontrolle von Abstreifern und Berieselung",
+          "details": "Abstreifer eingestellt, Düsen gereinigt."
+        }
+      },
+      "schedules": {
+        "s1": "Wartung",
+        "s2": "Einwinterung der Berieselung",
+        "s3": "Jährliche Sicherheitskontrolle"
+      }
+    },
+    "ca06": {
+      "notes": "Dreiseitenkipper. Digitaler Fahrtschreiber.",
+      "entries": {
+        "e01": {
+          "title": "Periodische Fahrzeugprüfung",
+          "details": "Fahrzeug zur periodischen Prüfung vorgeführt. Keine Mängel, nächste Prüfung in 12 Monaten."
+        },
+        "e02": {
+          "title": "Reifen Vorderachse (2 × 385/65 R22.5)"
+        },
+        "e03": {
+          "title": "Schlauch am Kippzylinder ersetzt",
+          "details": "Poröser Schlauch ersetzt, Öl nachgefüllt."
+        },
+        "e04": {
+          "title": "Wartung 7’400 h",
+          "details": "Motoröl und Filter, Kraftstofffilter, Fahrgestell geschmiert."
+        },
+        "e05": {
+          "title": "Bremsbeläge Hinterachse"
+        },
+        "e06": {
+          "title": "Wartung 8’000 h",
+          "details": "Motoröl und Filter, Getriebeöl kontrolliert, Schmierung."
+        },
+        "e07": {
+          "title": "Kupplung: Ausrücklager und Scheibe ersetzt",
+          "details": "Kupplung rutschte. Ausrücklager und Kupplungsscheibe ersetzt, Einstellung kontrolliert."
+        },
+        "e08": {
+          "title": "Kontrolle von Beleuchtung und Reifen",
+          "details": "Lampen ersetzt, Reifendruck angepasst."
+        },
+        "e09": {
+          "title": "Wartung 8’600 h",
+          "details": "Motoröl und Filter, Luftfilter, Fahrgestell geschmiert."
+        },
+        "e10": {
+          "title": "Reinigung der Brücke und Schmierung",
+          "details": "Kippbrücke gereinigt, Gelenke und Kipplager geschmiert."
+        },
+        "e11": {
+          "title": "NOx-Sensor zu ersetzen",
+          "details": "Motorkontrollleuchte an, NOx-Sensor defekt. Teil beim Händler bestellt."
+        }
+      },
+      "schedules": {
+        "s1": "Wartung",
+        "s2": "Periodische Fahrzeugprüfung",
+        "s3": "Fahrtschreiberkontrolle"
+      }
+    }
+  }
+}

@@ -1,1 +1,178 @@
-{}
+{
+  "meta": {
+    "title": "Démo du garage 3D",
+    "shareTitle": "Godet — démo du garage 3D de votre parc d’engins",
+    "description": "Visitez un garage d’exemple sans inscription : six machines de chantier, douze mois de carnet d’entretien, réparations, pièces, coûts et échéances. Essayez tout, rien n’est enregistré.",
+    "keywords": "carnet d’entretien, machines de chantier, parc d’engins, gestion de flotte, entretien pelle, Suisse, démo"
+  },
+  "loading": "Ouverture du garage de démonstration…",
+  "org": "Entreprise Démo SA",
+  "people": {
+    "workshop": "Atelier interne",
+    "foreman": "Chef d’atelier",
+    "operator": "Machiniste",
+    "partner": "Garage partenaire",
+    "roadOffice": "Service de la circulation routière"
+  },
+  "suppliers": {
+    "tpValais": "Matériel TP Valais SA",
+    "rhoneHydraulics": "Rhône Hydraulique SA",
+    "rhoneTyres": "Pneus du Rhône SA",
+    "electroDiesel": "Électro-Diesel Sion SA",
+    "trucksMartigny": "Poids Lourds Martigny SA"
+  },
+  "reasons": {
+    "duplicate": "Saisie en double"
+  },
+  "machines": {
+    "pe01": {
+      "brand": "Démo",
+      "model": "Pelle sur chenilles 21 t",
+      "notes": "Machine de démonstration : modifiez-la, complétez son carnet ou archivez-la quand vous voulez.",
+      "entries": {
+        "e01": { "title": "Service 5’500 h", "details": "Huile moteur et filtres, contrôle des flexibles." },
+        "e02": { "title": "Contrôle après chantier en tranchée", "details": "Nettoyage du train de roulement, contrôle des chocs sur le godet." },
+        "e03": { "title": "Pompe de graissage centralisée remplacée", "details": "Pompe hors service, remplacée et purgée." },
+        "e04": { "title": "Filtre déshydrateur de climatisation" },
+        "e05": { "title": "Graissage hivernal", "details": "Graisse grand froid sur la couronne et les axes." },
+        "e06": { "title": "Ampoules et fusibles" },
+        "e07": { "title": "Préparation au froid", "details": "Batterie testée, bougies de préchauffage contrôlées, antigel vérifié." },
+        "e08": { "title": "Flexibles de rechange (stock atelier)" },
+        "e09": { "title": "Moteur de translation droit : fuite", "details": "Joint flottant remplacé, huile du réducteur renouvelée." },
+        "e10": { "title": "Phare de travail LED" },
+        "e11": { "title": "Inspection et graissage", "details": "Tension des chenilles réglée, axes de godet graissés, usure des dents mesurée." },
+        "e12": { "title": "Dents de godet remplacées", "details": "Cinq dents usées remplacées." },
+        "e13": { "title": "Lame d’usure de godet" },
+        "e14": { "title": "Service 6’000 h", "details": "Huile moteur et filtres, huile des réducteurs de translation, contrôle du jeu de la couronne d’orientation." },
+        "e15": { "title": "Batterie 12 V 140 Ah" },
+        "e16": { "title": "Contrôle du train de roulement", "details": "Usure des galets et des barbotins mesurée, tension des chenilles réglée." },
+        "e17": { "title": "Vérin de godet réétanché", "details": "Suintement à la tige. Jeu de joints remplacé, tige contrôlée." },
+        "e18": { "title": "Kit d’étanchéité du joint tournant" },
+        "e19": { "title": "Nettoyage et contrôle des flexibles", "details": "Nettoyage à la vapeur, contrôle visuel de tous les flexibles et raccords." },
+        "e20": { "title": "Contrôle annuel de sécurité", "details": "Frein de rotation, clapets de sécurité des vérins, avertisseur de surcharge, éclairage, extincteur. Aucun défaut." },
+        "e21": { "title": "Filtres de cabine et balais d’essuie-glace" },
+        "e22": { "title": "Climatisation : entretien et recharge", "details": "Filtre déshydrateur, recharge de gaz, test d’étanchéité." },
+        "e23": { "title": "Couteaux latéraux de godet (paire)" },
+        "e24": { "title": "Galet porteur gauche remplacé", "details": "Galet bruyant et grippé. Remplacé, tension de chenille réglée." },
+        "e25": { "title": "Service 6’500 h", "details": "Huile moteur, filtres à huile, à carburant et à air, filtre de retour hydraulique, graissage complet." },
+        "e26": { "title": "Graisse EP2, cartouches" },
+        "e27": { "title": "Flexible haute pression du balancier remplacé", "details": "Fuite sur le flexible du vérin de balancier. Flexible et joints remplacés, niveau d’huile complété." },
+        "e28": { "title": "Contrôle des niveaux", "details": "Huile moteur, huile hydraulique et liquide de refroidissement contrôlés, graissage." },
+        "e29": { "title": "Kit de filtres pour le service 7’000 h" },
+        "e30": { "title": "Graissage et nettoyage du radiateur", "details": "Axes graissés, radiateur et refroidisseur d’huile soufflés." },
+        "e31": { "title": "Suspension du siège à remplacer", "details": "Amortisseur du siège affaissé. Pièce commandée, montage prévu au service 7’000 h." }
+      },
+      "schedules": {
+        "s1": "Service",
+        "s2": "Inspection du train de roulement",
+        "s3": "Vidange de l’huile hydraulique",
+        "s4": "Contrôle de l’extincteur",
+        "s5": "Contrôle annuel de sécurité"
+      }
+    },
+    "ch02": {
+      "notes": "Godet 3,2 m³ et fourche à palettes. Pneus avant changés au printemps.",
+      "entries": {
+        "e01": { "title": "Contrôle des pneus et des niveaux", "details": "Pressions ajustées, niveaux complétés." },
+        "e02": { "title": "Service 3’000 h", "details": "Huile moteur et filtres, contrôle des ponts et de l’articulation, graissage complet." },
+        "e03": { "title": "Vérin de levage : joints remplacés", "details": "Suintement au vérin gauche. Jeu de joints remplacé, huile complétée." },
+        "e04": { "title": "Dents de godet (jeu de 8)", "details": "Montées au service suivant." },
+        "e05": { "title": "Contrôle annuel de sécurité", "details": "Freins, direction, éclairage, avertisseur de recul, ceinture, extincteur. Aucun défaut." },
+        "e06": { "title": "Graissage et contrôle de l’articulation", "details": "Jeu de l’articulation centrale contrôlé, graissage." },
+        "e07": { "title": "Service 3’500 h", "details": "Huile moteur et filtres, filtre à air, graissage." },
+        "e08": { "title": "Pneu 23.5 R25 avant gauche", "details": "Pneu déchiré sur un chantier de démolition." },
+        "e09": { "title": "Bruit au freinage à surveiller", "details": "Grincement en marche arrière, surtout à froid." },
+        "e10": { "title": "Disques de frein remplacés", "details": "Disques et garnitures du frein de service remplacés, circuit purgé." },
+        "e11": { "title": "Disques de frein remplacés", "details": "Disques et garnitures du frein de service remplacés." },
+        "e12": { "title": "Contrôle après chantier de terrassement", "details": "Nettoyage du radiateur et du train avant, contrôle des flexibles." },
+        "e13": { "title": "Service 4’000 h", "details": "Huile moteur, filtres à huile et à carburant, huile hydraulique contrôlée, graissage." },
+        "e14": { "title": "Filtre à air principal" },
+        "e15": { "title": "Graissage et nettoyage", "details": "Axes graissés, cabine et vitres nettoyées." }
+      },
+      "schedules": {
+        "s1": "Service",
+        "s2": "Vidange des ponts",
+        "s3": "Contrôle annuel de sécurité",
+        "s4": "Contrôle de l’usure des pneus"
+      }
+    },
+    "mp03": {
+      "notes": "Attache rapide mécanique. Godets 300, 600 et curage 1’000 mm.",
+      "entries": {
+        "e01": { "title": "Contrôle annuel de sécurité", "details": "Attache rapide, clapets de sécurité, avertisseur, éclairage, extincteur. Aucun défaut." },
+        "e02": { "title": "Contrôle des chenilles", "details": "Tension réglée, usure des galets dans la norme." },
+        "e03": { "title": "Godet de curage 1’000 mm" },
+        "e04": { "title": "Flexible de la lame remplacé", "details": "Flexible pincé contre le châssis, remplacé et rerouté." },
+        "e05": { "title": "Graissage et contrôle des niveaux", "details": "Niveaux complétés, axes graissés." },
+        "e06": { "title": "Service 1’000 h", "details": "Huile moteur et filtres, filtre hydraulique, graissage complet." },
+        "e07": { "title": "Phare de travail remplacé", "details": "Phare avant cassé sur le chantier, remplacé par un modèle LED." },
+        "e08": { "title": "Graissage et contrôle des niveaux", "details": "Niveaux contrôlés, axes et attache rapide graissés." },
+        "e09": { "title": "Jeu dans l’axe du godet à surveiller", "details": "Léger jeu ressenti en fin de course, à contrôler au prochain service." },
+        "e10": { "title": "Dents de godet (jeu de 4)" }
+      },
+      "schedules": {
+        "s1": "Service",
+        "s2": "Contrôle annuel de sécurité",
+        "s3": "Contrôle de l’attache rapide"
+      }
+    },
+    "du04": {
+      "entries": {
+        "e01": { "title": "Service 2’500 h", "details": "Huile moteur et filtres, huile de transmission contrôlée, graissage." },
+        "e02": { "title": "Démarreur remplacé", "details": "Démarreur hors service, échange standard." },
+        "e03": { "title": "Graissage hivernal", "details": "Graisse grand froid sur l’articulation et la benne." },
+        "e04": { "title": "Contrôle annuel de sécurité", "details": "Freins, direction, arceau de sécurité, ceinture, éclairage. Aucun défaut." },
+        "e05": { "title": "Service 3’000 h", "details": "Huile moteur et filtres, filtre à air, graissage complet." },
+        "e06": { "title": "Batterie 12 V 110 Ah" },
+        "e07": { "title": "Articulation centrale : bagues remplacées", "details": "Jeu important à l’articulation. Bagues et axes remplacés." },
+        "e08": { "title": "Contrôle des pneus", "details": "Usure régulière, pressions ajustées." },
+        "e09": { "title": "Service 3’500 h à planifier", "details": "Machine sur le chantier de Fully jusqu’à fin octobre : service à faire au retour à l’atelier." },
+        "e10": { "title": "Fuite au vérin de benne", "details": "Suintement au joint de tige. Machine utilisable à charge réduite, réparation en cours à l’atelier." }
+      },
+      "schedules": {
+        "s1": "Service",
+        "s2": "Contrôle des freins",
+        "s3": "Contrôle annuel de sécurité"
+      }
+    },
+    "ro05": {
+      "notes": "Bille lisse. Circuit d’arrosage à vidanger avant le gel.",
+      "entries": {
+        "e01": { "title": "Service 1’500 h", "details": "Huile moteur et filtres, huile des vibreurs contrôlée, graissage." },
+        "e02": { "title": "Racleurs de bille (jeu)" },
+        "e03": { "title": "Hivernage : vidange du circuit d’arrosage", "details": "Circuit d’arrosage vidangé, réservoir rincé." },
+        "e04": { "title": "Contrôle annuel de sécurité", "details": "Freins, arceau de sécurité, avertisseur de recul, éclairage. Aucun défaut." },
+        "e05": { "title": "Remise en service de printemps", "details": "Arrosage remis en eau, buses débouchées, niveaux contrôlés." },
+        "e06": { "title": "Service 2’000 h", "details": "Huile moteur et filtres, huile des vibreurs, filtre à air." },
+        "e07": { "title": "Pompe d’arrosage remplacée", "details": "Pompe grippée, remplacée. Arrosage contrôlé sur toute la largeur." },
+        "e08": { "title": "Contrôle des racleurs et de l’arrosage", "details": "Racleurs réglés, buses nettoyées." }
+      },
+      "schedules": {
+        "s1": "Service",
+        "s2": "Hivernage du circuit d’arrosage",
+        "s3": "Contrôle annuel de sécurité"
+      }
+    },
+    "ca06": {
+      "notes": "Camion benne trois côtés. Tachygraphe numérique.",
+      "entries": {
+        "e01": { "title": "Expertise périodique", "details": "Véhicule présenté au contrôle périodique. Aucun défaut, prochaine expertise dans 12 mois." },
+        "e02": { "title": "Pneus essieu avant (2 × 385/65 R22.5)" },
+        "e03": { "title": "Flexible du vérin de benne remplacé", "details": "Flexible poreux remplacé, niveau d’huile complété." },
+        "e04": { "title": "Service 7’400 h", "details": "Huile moteur et filtres, filtre à carburant, graissage du châssis." },
+        "e05": { "title": "Plaquettes de frein, essieu arrière" },
+        "e06": { "title": "Service 8’000 h", "details": "Huile moteur et filtres, huile de boîte contrôlée, graissage." },
+        "e07": { "title": "Embrayage : butée et disque remplacés", "details": "Patinage à l’embrayage. Butée et disque remplacés, réglage contrôlé." },
+        "e08": { "title": "Contrôle de l’éclairage et des pneus", "details": "Ampoules remplacées, pressions ajustées." },
+        "e09": { "title": "Service 8’600 h", "details": "Huile moteur et filtres, filtre à air, graissage du châssis." },
+        "e10": { "title": "Nettoyage de la benne et graissage", "details": "Benne nettoyée, articulations et sellette graissées." },
+        "e11": { "title": "Capteur NOx à remplacer", "details": "Témoin moteur allumé, capteur NOx défectueux. Pièce commandée chez le concessionnaire." }
+      },
+      "schedules": {
+        "s1": "Service",
+        "s2": "Expertise périodique",
+        "s3": "Contrôle du tachygraphe"
+      }
+    }
+  }
+}

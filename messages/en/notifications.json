@@ -1,1 +1,56 @@
-{}
+{
+  "title": "Email reminders",
+  "intro": "Godet emails you when a due date is approaching or has passed, and for as long as a repair stays open, in each of your companies.",
+  "loading": "Loading your settings…",
+  "loadError": "Your reminder settings could not be loaded.",
+  "retry": "Try again",
+  "signedOut": "Sign in to set up your reminders.",
+  "enabled": {
+    "label": "Receive email reminders",
+    "hint": "They are sent to the email address of your account."
+  },
+  "operator": "{operatorOnly, select, true {As an operator, you only receive reminders if you turn them on and save them here.} other {In companies where you are an operator, reminders are only sent once these settings are saved.}}",
+  "frequency": {
+    "legend": "Frequency",
+    "quotidien": {
+      "label": "Every day",
+      "hint": "One email in the morning, only when there is something to report."
+    },
+    "hebdo": {
+      "label": "Every week",
+      "hint": "A summary on Monday morning, only when there is something to report."
+    },
+    "jamais": {
+      "label": "Never",
+      "hint": "No email reminders."
+    }
+  },
+  "lead": {
+    "legend": "Advance notice",
+    "hint": "A due date appears in the reminder as soon as it falls within these limits, and stays there until the work is done.",
+    "days": {
+      "label": "Calendar due dates",
+      "unit": "days before",
+      "hint": "From 1 to 90 days.",
+      "error": "Enter a whole number of days, from 1 to 90."
+    },
+    "hours": {
+      "label": "Hour-meter due dates",
+      "unit": "hours before",
+      "hint": "From 5 to 500 hours. Based on how much the machine is used, a due date may also appear earlier if it falls within the limit in days.",
+      "error": "Enter a whole number of hours, from 5 to 500."
+    }
+  },
+  "save": "Save reminders",
+  "saving": "Saving…",
+  "saved": "Reminder settings saved.",
+  "unsaved": "Unsaved changes.",
+  "errors": {
+    "invalid": "Please check the highlighted fields.",
+    "network": "No connection. Please check your network and try again.",
+    "session": "Your session has expired. Reload the page to sign in again.",
+    "generic": "Saving failed. Please try again in a moment."
+  },
+  "lastSent": "Last reminder sent on {date}.",
+  "neverSent": "No reminder has been sent yet."
+}

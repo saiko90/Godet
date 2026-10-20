@@ -2,11 +2,12 @@
 
 // Visionneuse des médias : photo, vidéo ou document, précédent / suivant (flèches, glisser sur téléphone),
 // légende, date, taille, téléchargement et suppression si le rôle le permet.
+import { useTranslations } from 'next-intl';
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
+import { useFormat } from '@/components/FormatProvider';
 import { Icon } from '@/components/Icons';
-import { dateTimeCH, fileSize } from '@/lib/format';
 import type { MediaItem } from '@/lib/types';
-import { MEDIA_LABEL } from '@/lib/media';
+import { useErrorText } from './errors';
 import { MediaPreview } from './MediaPreview';
 import { trapTab } from './ui';
 
@@ -27,6 +28,10 @@ export function Lightbox({
   onClose: () => void;
   onDelete: (m: MediaItem) => Promise<void>;
 }) {
+  const t = useTranslations('garage');
+  const tc = useTranslations('common');
+  const f = useFormat();
+  const errorText = useErrorText();
   const root = useRef<HTMLDivElement>(null);
   const closeBtn = useRef<HTMLButtonElement>(null);
   const swipe = useRef<{ x: number; y: number } | null>(null);
@@ -77,13 +82,14 @@ export function Lightbox({
       await onDelete(m);
       setConfirming(null);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Le fichier n’a pas pu être supprimé.');
+      setError(errorText(err, 'deleteFile'));
     } finally {
       setBusy(false);
     }
   }
 
-  const label = m.caption || `${MEDIA_LABEL[m.kind]} de ${code}`;
+  const kind = t(`media.kind.${m.kind}`);
+  const label = m.caption || t('lightbox.label', { kind, code });
 
   return (
     <div
@@ -91,7 +97,7 @@ export function Lightbox({
       className="g-lightbox"
       role="dialog"
       aria-modal="true"
-      aria-label={`${MEDIA_LABEL[m.kind]} ${i + 1} sur ${n} : ${label}`}
+      aria-label={t('lightbox.dialog', { kind, index: String(i + 1), total: String(n), label })}
       onKeyDown={onKey}
       data-own-arrows=""
     >
@@ -113,24 +119,24 @@ export function Lightbox({
         }}
       >
         {m.kind !== 'document' ? (
-          <MediaPreview key={m.id} item={m} full alt={m.caption || `Photo de ${code} du ${dateTimeCH(m.taken_at)}`} />
+          <MediaPreview key={m.id} item={m} full alt={m.caption || t('lightbox.alt', { code, date: f.dateTime(m.taken_at) })} />
         ) : !m.url ? (
           <div className="g-lb-doc">
             <Icon name="file" />
-            <b>Aperçu indisponible</b>
-            <span>Le lien de ce fichier a expiré ou n’a pas pu être créé. Rouvrez la fiche pour le recharger.</span>
+            <b>{t('media.unavailable')}</b>
+            <span>{t('media.expired')}</span>
           </div>
         ) : (
           <div className="g-lb-doc">
             <Icon name="file" />
-            <b>{m.caption || 'Document PDF'}</b>
+            <b>{m.caption || t('media.pdf')}</b>
             <span>
-              {dateTimeCH(m.taken_at)}
-              {m.size_bytes != null ? ` · ${fileSize(m.size_bytes)}` : ''}
+              {f.dateTime(m.taken_at)}
+              {m.size_bytes != null ? ` · ${f.fileSize(m.size_bytes)}` : ''}
             </span>
             <a className="btn btn-primary" href={m.url} target="_blank" rel="noopener noreferrer">
               <Icon name="link" />
-              Ouvrir le document
+              {t('lightbox.openDoc')}
             </a>
           </div>
         )}
@@ -140,13 +146,13 @@ export function Lightbox({
         <div className="g-lb-info">
           <b>{label}</b>
           <span>
-            {MEDIA_LABEL[m.kind]} · {dateTimeCH(m.taken_at)}
-            {m.size_bytes != null ? ` · ${fileSize(m.size_bytes)}` : ''}
+            {kind} · {f.dateTime(m.taken_at)}
+            {m.size_bytes != null ? ` · ${f.fileSize(m.size_bytes)}` : ''}
           </span>
         </div>
         <div className="g-lb-actions">
           {m.url ? (
-            <a className="icon-btn" href={m.url} target="_blank" rel="noopener noreferrer" download aria-label="Télécharger le fichier">
+            <a className="icon-btn" href={m.url} target="_blank" rel="noopener noreferrer" download aria-label={t('lightbox.download')}>
               <Icon name="download" />
             </a>
           ) : null}
@@ -154,7 +160,7 @@ export function Lightbox({
             <button
               type="button"
               className="icon-btn"
-              aria-label="Supprimer le fichier"
+              aria-label={t('lightbox.delete')}
               onClick={() => setConfirming(m.id)}
               disabled={busy}
             >
@@ -166,8 +172,8 @@ export function Lightbox({
 
       {isConfirming ? (
         <div className="g-lb-confirm" role="alertdialog" aria-labelledby="lb-cf" aria-describedby="lb-cf-d">
-          <b id="lb-cf">Supprimer ce fichier ?</b>
-          <span id="lb-cf-d">Il disparaît de la fiche de {code}. Cette suppression est définitive.</span>
+          <b id="lb-cf">{t('lightbox.confirmTitle')}</b>
+          <span id="lb-cf-d">{t('lightbox.confirmText', { code })}</span>
           {error ? (
             <span className="err" role="alert">
               {error}
@@ -175,25 +181,25 @@ export function Lightbox({
           ) : null}
           <div className="g-lb-confirm-btns">
             <button type="button" className="btn btn-ghost g-btn-sm" onClick={() => setConfirming(null)} disabled={busy} autoFocus>
-              Annuler
+              {tc('actions.cancel')}
             </button>
             <button type="button" className="btn g-btn-danger g-btn-sm" onClick={() => void remove()} disabled={busy}>
               {busy ? <span className="g-spinner" aria-hidden="true" /> : <Icon name="trash" />}
-              Supprimer
+              {tc('actions.delete')}
             </button>
           </div>
         </div>
       ) : null}
 
-      <button ref={closeBtn} type="button" className="icon-btn g-lb-close" aria-label="Fermer" onClick={onClose}>
+      <button ref={closeBtn} type="button" className="icon-btn g-lb-close" aria-label={tc('actions.close')} onClick={onClose}>
         <Icon name="close" />
       </button>
       {n > 1 ? (
         <>
-          <button type="button" className="icon-btn g-lb-prev" aria-label="Média précédent" onClick={() => go(-1)}>
+          <button type="button" className="icon-btn g-lb-prev" aria-label={t('lightbox.prev')} onClick={() => go(-1)}>
             <Icon name="chevron-left" />
           </button>
-          <button type="button" className="icon-btn g-lb-next" aria-label="Média suivant" onClick={() => go(1)}>
+          <button type="button" className="icon-btn g-lb-next" aria-label={t('lightbox.next')} onClick={() => go(1)}>
             <Icon name="chevron-right" />
           </button>
           <p className="g-lb-count num" aria-hidden="true">

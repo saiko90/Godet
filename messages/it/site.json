@@ -1,1 +1,270 @@
-{}
+{
+  "meta": {
+    "title": "Godet — il garage del vostro parco macchine",
+    "description": "Il libretto di manutenzione digitale per le macchine edili: manutenzioni, riparazioni, ricambi, costi, foto, video e scadenze. 30\u00a0giorni di prova gratuita, senza carta di credito.",
+    "ogDescription": "Ogni macchina ha il suo libretto completo. Nessun controllo dimenticato, costi chiari per ogni macchina. Per le imprese edili in Svizzera e in Italia.",
+    "ogImageAlt": "Lo showroom 3D di Godet"
+  },
+  "chrome": {
+    "skip": "Vai al contenuto",
+    "logoHome": "Godet, pagina iniziale",
+    "logoBack": "Godet, torna alla pagina iniziale",
+    "mainNav": "Navigazione principale",
+    "anchors": {
+      "features": "Funzioni",
+      "compliance": "Conformità",
+      "pricing": "Prezzo",
+      "questions": "Domande"
+    },
+    "demo": "Demo 3D",
+    "contact": "Contatto",
+    "login": "Accedi",
+    "signup": "Crea il mio garage",
+    "footer": {
+      "tagline": "Il libretto di manutenzione digitale per le macchine edili, pensato per le imprese svizzere e italiane.",
+      "studio": "Un’applicazione di <link>Swiss Digital Studio</link>, in Vallese.",
+      "godet": "Godet",
+      "info": "Informazioni",
+      "demo": "Demo 3D senza account",
+      "signup": "Crea il mio garage",
+      "login": "Accedi",
+      "contact": "Contatto",
+      "ideas": "Cassetta delle idee",
+      "privacy": "Informativa sulla privacy",
+      "copyright": "© {year} Swiss Digital Studio · Vallese, Svizzera",
+      "hosting": "Dati ospitati nell’UE (Irlanda)"
+    },
+    "auth": {
+      "demo": "Demo 3D",
+      "home": "Pagina iniziale",
+      "contact": "Contatto",
+      "privacy": "Privacy"
+    },
+    "app": {
+      "garageOf": "Garage di {org}",
+      "backToGarage": "Torna al garage"
+    }
+  },
+  "home": {
+    "hero": {
+      "kicker": "Libretto di manutenzione per macchine edili",
+      "title": "Il garage del vostro <em>parco macchine</em>",
+      "lead": "Ogni macchina ha il suo libretto completo: manutenzioni, riparazioni, ricambi, costi, foto, video e scadenze. Nessun controllo viene più dimenticato. E finalmente si sa quanto costa ogni macchina.",
+      "demo": "Prova la demo 3D",
+      "signup": "Crea il mio garage",
+      "hasAccount": "Ha già un account?",
+      "login": "Accedi",
+      "assure": {
+        "trial": "30\u00a0giorni di prova gratuita",
+        "card": "Senza carta di credito",
+        "hosting": "Dati ospitati nell’UE"
+      }
+    },
+    "stage": {
+      "line": "Parco macchine · showroom",
+      "alt": "Lo showroom 3D di Godet: un escavatore sulla sua pedana illuminata, con la sua scheda di manutenzione.",
+      "cta": "Entra nello showroom · senza account"
+    },
+    "problem": {
+      "eyebrow": "La situazione",
+      "title": "Il libretto cartaceo non tiene più il passo del cantiere",
+      "text": "Cinque, venti o cinquanta macchine, più cantieri, una squadra che ruota. Strada facendo, le informazioni si perdono.",
+      "items": {
+        "paper": {
+          "title": "Libretti cartacei",
+          "text": "Restano in cabina, si sporcano, si perdono. Nessuno sa davvero a che punto è la macchina."
+        },
+        "invoices": {
+          "title": "Fatture sparse",
+          "text": "Tra il raccoglitore, la casella e-mail e il furgone, la storia di una macchina diventa introvabile."
+        },
+        "checks": {
+          "title": "Controlli dimenticati",
+          "text": "La manutenzione delle 500\u00a0h o il controllo annuale di sicurezza passano in secondo piano. Ce ne si accorge troppo tardi."
+        },
+        "costs": {
+          "title": "Costi poco chiari",
+          "text": "Impossibile dire quanto è costata una macchina quest’anno, né se è il momento di sostituirla."
+        }
+      }
+    },
+    "features": {
+      "eyebrow": "Cosa fa Godet",
+      "title": "Tutta la manutenzione del vostro parco, in un solo posto",
+      "text": "Lo storico, le scadenze e i costi di ogni macchina, riuniti in un unico garage. Su computer, tablet e smartphone.",
+      "items": {
+        "log": {
+          "title": "Il libretto completo",
+          "text": "Manutenzioni, controlli, riparazioni, ricambi e note. Ogni intervento conserva la data, la lettura del contaore, chi l’ha eseguito e quanto è costato."
+        },
+        "dues": {
+          "title": "Scadenze in ore o in date",
+          "text": "Manutenzione ogni 500\u00a0h, controllo annuale di sicurezza: Godet segue il ritmo reale di ogni macchina e avvisa prima della scadenza."
+        },
+        "costs": {
+          "title": "I costi per macchina",
+          "text": "Ricambi, manodopera, fermo macchina: quanto è costata ogni macchina negli ultimi dodici mesi, mese per mese."
+        },
+        "media": {
+          "title": "Foto, video, documenti",
+          "text": "Una foto della perdita, un video del rumore sospetto, la fattura in PDF: tutto resta legato alla macchina."
+        },
+        "team": {
+          "title": "Squadra e ruoli",
+          "text": "Titolare, amministratore, meccanico, operatore: ognuno accede al parco secondo il proprio ruolo."
+        },
+        "workshop": {
+          "title": "Modalità officina, senza 3D",
+          "text": "Una vista a elenco, veloce su tutti i dispositivi, per registrare ore e interventi senza giri inutili."
+        },
+        "print": {
+          "title": "Il libretto stampato",
+          "text": "Il libretto di una macchina si stampa o si salva in PDF: per un controllo, una perizia o una rivendita."
+        },
+        "showroom": {
+          "title": "Uno showroom per il vostro parco",
+          "text": "Ogni macchina sulla sua pedana, il suo stato visibile a colpo d’occhio: verde, arancione o rosso."
+        }
+      }
+    },
+    "compliance": {
+      "eyebrow": "Conformità",
+      "title": "Un libretto che regge a un controllo",
+      "lawMark": "ART. 32B OPI",
+      "quoteOpen": "«",
+      "quote": "Le attrezzature di lavoro devono essere sottoposte a manutenzione […]. Essa deve essere documentata.",
+      "quoteClose": "»",
+      "caption": "Ordinanza sulla prevenzione degli infortuni e delle malattie professionali (OPI, RS 832.30), art. 32b cpv. 1. Godet documenta ogni intervento, con data, autore e costi. Anche in Italia, un libretto completo fa da prova in caso di controllo.",
+      "proofs": {
+        "kept": {
+          "title": "Niente si cancella",
+          "text": "Una registrazione errata viene ritirata indicandone il motivo. Resta visibile, barrata, nello storico."
+        },
+        "journal": {
+          "title": "Ogni modifica è tracciata",
+          "text": "Chi ha inserito, modificato o ritirato cosa, e quando."
+        },
+        "archive": {
+          "title": "Le macchine si archiviano",
+          "text": "Una macchina venduta o dismessa lascia lo showroom. Il suo libretto resta consultabile e stampabile."
+        }
+      },
+      "note": "Godet facilita la tenuta del libretto. La manutenzione delle attrezzature di lavoro resta responsabilità del datore di lavoro."
+    },
+    "local": {
+      "eyebrow": "Pensato per la Svizzera",
+      "title": "Progettato in Vallese, per le imprese del Ticino e dell’Italia",
+      "text": "Godet parla la lingua del cantiere e segue le abitudini di chi ci lavora.",
+      "formatsLabel": "Esempi di formati",
+      "items": {
+        "formats": {
+          "title": "Formati familiari",
+          "text": "Ore, importi e date appaiono come si è abituati a scriverli, in franchi o in euro."
+        },
+        "language": {
+          "title": "Ognuno nella sua lingua",
+          "text": "Italiano, francese, tedesco o inglese: ognuno sceglie la propria lingua. Manutenzione ogni 500\u00a0h, contaore, controllo annuale: il vocabolario dell’officina."
+        },
+        "hosting": {
+          "title": "Dati ospitati nell’UE",
+          "text": "Database e file sono ospitati in Irlanda, nell’Unione europea."
+        },
+        "access": {
+          "title": "Accesso riservato alla vostra impresa",
+          "text": "Ogni impresa vede solo i propri dati. Le regole di accesso sono applicate dal database stesso."
+        }
+      }
+    },
+    "pricing": {
+      "eyebrow": "Prezzo",
+      "title": "30\u00a0giorni di prova gratuita",
+      "text": "Senza carta di credito. I prezzi vengono comunicati prima della fine della prova.",
+      "small": "Durante la prova sono disponibili tutte le funzioni."
+    },
+    "faq": {
+      "eyebrow": "Domande",
+      "title": "Domande frequenti",
+      "items": {
+        "install": {
+          "q": "Bisogna installare qualcosa?",
+          "a": "No. Godet si apre nel browser, su computer, tablet o smartphone. Si può aggiungere alla schermata iniziale come un’app."
+        },
+        "threeD": {
+          "q": "Il 3D è obbligatorio?",
+          "a": "No. La modalità officina mostra il parco come elenco, senza 3D. È adatta ai dispositivi meno potenti e alle registrazioni rapide."
+        },
+        "data": {
+          "q": "Chi vede i nostri dati?",
+          "a": "Solo le persone che invitate nella vostra impresa, secondo il loro ruolo. I dati sono ospitati nell’UE, in Irlanda."
+        },
+        "erase": {
+          "q": "Si può cancellare un intervento?",
+          "a": "Si può ritirare, indicandone il motivo. Resta visibile nello storico: è proprio questo a dare valore al libretto durante un controllo."
+        },
+        "export": {
+          "q": "Si può portare il libretto fuori da Godet?",
+          "a": "Sì. Ogni libretto si stampa o si salva in PDF, con interventi, riparazioni, ricambi e costi."
+        },
+        "languages": {
+          "q": "Godet esiste anche in altre lingue?",
+          "a": "Sì: in italiano, francese, tedesco e inglese. Ognuno sceglie la propria lingua, e gli importi appaiono nella valuta della vostra impresa."
+        },
+        "trial": {
+          "q": "Cosa succede dopo la prova?",
+          "a": "I prezzi vengono comunicati prima della fine dei 30\u00a0giorni. Per provare non serve una carta di credito."
+        }
+      }
+    },
+    "final": {
+      "title": "Il vostro garage vi aspetta",
+      "text": "Visiti la demo senza account, oppure crei il garage della Sua impresa e aggiunga la prima macchina.",
+      "contact": "Una domanda, una dimostrazione per la Sua squadra? <link>Ci scriva</link>."
+    }
+  },
+  "notFound": {
+    "metaTitle": "Pagina non trovata",
+    "title": "Questa pagina non esiste",
+    "text": "Il link forse è incompleto, oppure la pagina ha cambiato indirizzo. Il Suo garage, invece, è sempre al suo posto.",
+    "home": "Torna alla pagina iniziale",
+    "garage": "Apri il mio garage"
+  },
+  "error": {
+    "metaTitle": "Errore",
+    "title": "Si è verificato un errore",
+    "text": "Non è stato possibile visualizzare la pagina. Quanto già salvato non è andato perso: riprovi, oppure torni tra un istante.",
+    "home": "Torna alla pagina iniziale",
+    "reference": "Riferimento dell’errore: {digest}"
+  },
+  "cantons": {
+    "AG": "Argovia",
+    "AI": "Appenzello Interno",
+    "AR": "Appenzello Esterno",
+    "BE": "Berna",
+    "BL": "Basilea Campagna",
+    "BS": "Basilea Città",
+    "FR": "Friburgo",
+    "GE": "Ginevra",
+    "GL": "Glarona",
+    "GR": "Grigioni",
+    "JU": "Giura",
+    "LU": "Lucerna",
+    "NE": "Neuchâtel",
+    "NW": "Nidvaldo",
+    "OW": "Obvaldo",
+    "SG": "San Gallo",
+    "SH": "Sciaffusa",
+    "SO": "Soletta",
+    "SZ": "Svitto",
+    "TG": "Turgovia",
+    "TI": "Ticino",
+    "UR": "Uri",
+    "VD": "Vaud",
+    "VS": "Vallese",
+    "ZG": "Zugo",
+    "ZH": "Zurigo"
+  },
+  "manifest": {
+    "name": "Godet — il garage del vostro parco macchine",
+    "description": "Libretto di manutenzione per macchine edili: manutenzioni, riparazioni, ricambi, costi, foto e video."
+  }
+}

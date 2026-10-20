@@ -1,1 +1,74 @@
-{}
+{
+  "meta": {
+    "title": "Contact",
+    "description": "A demo for your team, a question, a partnership: write to the team behind Godet, the maintenance log for construction machinery."
+  },
+  "eyebrow": "Contact",
+  "title": "Let’s talk about your fleet",
+  "lead": "A demo for your team, a question about Godet, a partnership: write to us. A member of our team will reply in person.",
+  "points": {
+    "demo": {
+      "title": "A demo",
+      "text": "We show you Godet with a fleet like yours and answer your questions."
+    },
+    "languages": {
+      "title": "In your language",
+      "text": "Write to us in English, French, German or Italian."
+    },
+    "ideas": {
+      "title": "An idea for Godet?",
+      "text": "Suggest it in the <link>ideas box</link>: you can follow our replies there."
+    }
+  },
+  "studio": "Godet is developed by <link>Swiss Digital Studio</link>, in Valais, Switzerland.",
+  "form": {
+    "title": "Your message",
+    "requiredNote": "Fields marked “required” must be filled in.",
+    "required": "required",
+    "subject": "Subject",
+    "subjects": {
+      "demo": "Request a demo",
+      "contact": "General question",
+      "partenaire": "Partnership",
+      "support": "Help using Godet"
+    },
+    "name": "Full name",
+    "email": "Email address",
+    "company": "Company",
+    "phone": "Phone",
+    "country": "Country",
+    "notSpecified": "Not specified",
+    "countriesMain": "Most common countries",
+    "countriesOther": "Other countries",
+    "fleet": "Fleet size",
+    "fleetSizes": {
+      "1-5": "1 to 5\u00a0machines",
+      "6-20": "6 to 20\u00a0machines",
+      "21-50": "21 to 50\u00a0machines",
+      "50+": "More than 50\u00a0machines"
+    },
+    "message": "Message",
+    "messageHint": "Your fleet, your questions, when you are available for a demo… 4000\u00a0characters maximum.",
+    "consent": "Swiss Digital Studio may contact me again about Godet (news, offers). Optional, and can be withdrawn at any time.",
+    "privacy": "Your data is used to reply to your message. See our <link>privacy policy</link>.",
+    "trap": "Leave this field empty",
+    "submit": "Send message",
+    "pending": "Sending…"
+  },
+  "sent": {
+    "title": "Message sent",
+    "text": "Thank you! We will reply to <b>{email}</b>.",
+    "again": "Write another message",
+    "home": "Back to home"
+  },
+  "errors": {
+    "checkFields": "Please check the highlighted fields.",
+    "emailRequired": "Please enter your email address so that we can reply.",
+    "emailInvalid": "Incomplete address. Example: name@company.com",
+    "messageRequired": "Please write your message.",
+    "messageTooLong": "4000\u00a0characters maximum.",
+    "rateLimited": "You have already sent several messages in a short time. Please try again in an hour.",
+    "busy": "The service is very busy. Please try again in a few minutes.",
+    "generic": "The message could not be sent. Please try again in a moment."
+  }
+}
