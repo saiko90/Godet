@@ -296,11 +296,16 @@ nouveau marché que lorsque le précédent tourne (brouillons relus chaque semai
 
 | Quand | Quoi | Durée |
 |---|---|---|
-| Lundi matin | Les agents tournent (tâches planifiées) | — |
+| Lundi 05:47 | L’agent Suisse tourne (tâche planifiée) ; Allemagne-Autriche le mardi, France le mercredi, Italie le jeudi | — |
 | Lundi | Relire les prospects « À valider » et les brouillons ; corriger ; valider | 30 à 60 min par marché |
 | Mardi | Imprimer et poster les lettres, marquer comme envoyé ; appels du jour | 1 h |
 | Chaque jour | Messages de contact, réponses, actions dues | 15 min |
 | Vendredi | Tableau de bord : indicateurs, visites, ajustements des modèles | 15 min |
+
+Tâches planifiées (application Claude, liste des tâches planifiées) : « Godet — prospection Suisse (hebdo) » est
+active ; « Allemagne-Autriche », « France » et « Italie » sont créées **en pause**, à activer une par une quand la
+relecture suisse est devenue une routine. Chaque tâche relit sa consigne `agents/<pays>.md` sur la branche `main` :
+une consigne modifiée et poussée sur `main` s’applique dès l’exécution suivante.
 
 ## 10. Sources
 
