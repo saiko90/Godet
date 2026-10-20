@@ -958,6 +958,31 @@ export type Database = {
         | "camion"
         | "grue"
         | "rouleau"
+        | "pelle_pneus"
+        | "pelle_araignee"
+        | "chargeuse_compacte"
+        | "tractopelle"
+        | "bulldozer"
+        | "niveleuse"
+        | "mini_dumper"
+        | "camion_grue"
+        | "camion_malaxeur"
+        | "grue_tour"
+        | "chariot_telescopique"
+        | "chariot_elevateur"
+        | "nacelle_ciseaux"
+        | "nacelle_articulee"
+        | "nacelle_telescopique"
+        | "rouleau_tandem"
+        | "plaque_vibrante"
+        | "finisseur"
+        | "fraiseuse"
+        | "pompe_beton"
+        | "foreuse"
+        | "concasseur"
+        | "crible"
+        | "groupe_electrogene"
+        | "compresseur"
         | "autre"
       media_kind: "photo" | "video" | "document"
       member_role: "owner" | "admin" | "mechanic" | "operator"
@@ -990,7 +1015,41 @@ export const Constants = {
   public: {
     Enums: {
       entry_kind: ["service", "reparation", "piece", "controle", "inspection", "note"],
-      machine_kind: ["pelle", "mini_pelle", "chargeuse", "dumper", "camion", "grue", "rouleau", "autre"],
+      machine_kind: [
+        "pelle",
+        "mini_pelle",
+        "chargeuse",
+        "dumper",
+        "camion",
+        "grue",
+        "rouleau",
+        "pelle_pneus",
+        "pelle_araignee",
+        "chargeuse_compacte",
+        "tractopelle",
+        "bulldozer",
+        "niveleuse",
+        "mini_dumper",
+        "camion_grue",
+        "camion_malaxeur",
+        "grue_tour",
+        "chariot_telescopique",
+        "chariot_elevateur",
+        "nacelle_ciseaux",
+        "nacelle_articulee",
+        "nacelle_telescopique",
+        "rouleau_tandem",
+        "plaque_vibrante",
+        "finisseur",
+        "fraiseuse",
+        "pompe_beton",
+        "foreuse",
+        "concasseur",
+        "crible",
+        "groupe_electrogene",
+        "compresseur",
+        "autre",
+      ],
       media_kind: ["photo", "video", "document"],
       member_role: ["owner", "admin", "mechanic", "operator"],
       repair_status: ["fait", "en_cours", "attente_piece"],

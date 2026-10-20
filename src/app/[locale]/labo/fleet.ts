@@ -1,14 +1,21 @@
 // Parcs de test variés (types, peintures, poids, états, alertes) pour le laboratoire du moteur 3D.
 // Les noms des modèles sont traduits (garage.labo.models.*) : `label` reçoit le nom et le poids, et compose l'étiquette.
+import { KIND_PREFIX } from '@/components/garage/helpers';
 import type { MachineKind } from '@/lib/types';
 import type { MachineState, ShowroomMachine } from '@/engine/types';
 
-export type LaboModel = 'pelle' | 'chargeuse' | 'miniPelle' | 'tombereau' | 'camionBenne' | 'rouleau' | 'grueMobile' | 'chargeuseCompacte' | 'dumper';
+const LABO_MODELS = ['pelle', 'chargeuse', 'miniPelle', 'tombereau', 'camionBenne', 'rouleau', 'grueMobile', 'chargeuseCompacte', 'dumper'] as const;
+export type LaboModel = (typeof LABO_MODELS)[number];
+
+/** Modèle nommé du labo (garage.labo.models.*) plutôt qu'un type de machine sans nom propre. */
+export function isLaboModel(name: string): name is LaboModel {
+  return (LABO_MODELS as readonly string[]).includes(name);
+}
 
 interface Model {
   kind: MachineKind;
   prefix: string;
-  name: LaboModel;
+  name: LaboModel | MachineKind;
   weight: number;
 }
 
@@ -29,7 +36,7 @@ const MODELS: Model[] = [
 const PAINTS = ['#f3b71b', '#f3b71b', '#e9e6df', '#f07c1a', '#f3b71b', '#3b4047', '#f3b71b', '#e9e6df', '#d9a514', '#5b6670'];
 const STATES: MachineState[] = ['ok', 'warn', 'ok', 'ok', 'bad', 'ok', 'warn', 'ok', 'ok', 'ok', 'warn'];
 
-export function demoFleet(n: number, label: (name: LaboModel, weight: number) => string, kinds?: MachineKind[]): ShowroomMachine[] {
+export function demoFleet(n: number, label: (name: LaboModel | MachineKind, weight: number) => string, kinds?: readonly MachineKind[]): ShowroomMachine[] {
   const counters = new Map<string, number>();
   const perKind = new Map<string, number>();
   const out: ShowroomMachine[] = [];
@@ -41,7 +48,8 @@ export function demoFleet(n: number, label: (name: LaboModel, weight: number) =>
       const variants = MODELS.filter((x) => x.kind === kind);
       const k = perKind.get(kind) ?? 0;
       perKind.set(kind, k + 1);
-      m = variants.length ? variants[k % variants.length] : MODELS[0];
+      // type sans modèle nommé du labo : poids de référence du gabarit (échelle 1)
+      m = variants.length ? variants[k % variants.length] : { kind, prefix: KIND_PREFIX[kind], name: kind, weight: 0 };
     }
     const c = (counters.get(m.prefix) ?? 0) + 1;
     counters.set(m.prefix, c);
@@ -55,7 +63,7 @@ export function demoFleet(n: number, label: (name: LaboModel, weight: number) =>
       label: label(m.name, weight),
       state,
       alerts: state === 'ok' ? (i % 4 === 3 ? 1 : 0) : state === 'warn' ? 2 : 3,
-      weightT: weight,
+      weightT: weight || null,
     });
   }
   return out;

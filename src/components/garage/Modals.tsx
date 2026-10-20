@@ -8,6 +8,7 @@ import { useFormat } from '@/components/FormatProvider';
 import { Icon } from '@/components/Icons';
 import { can, PAINTS } from '@/lib/domain';
 import { addDays } from '@/lib/format';
+import { categoryOf, MACHINE_CATEGORIES, type MachineCategory } from '@/lib/machine-kinds';
 import type { MachineKind, ScheduleBasis } from '@/lib/types';
 import type { NewMachine } from '@/lib/repo/types';
 import { useDomainText } from '@/lib/use-domain-text';
@@ -20,7 +21,6 @@ import { parseLocalNumber } from './numbers';
 import { useGarageText } from './text';
 import { Modal } from './ui';
 
-const KIND_ORDER: MachineKind[] = ['pelle', 'mini_pelle', 'chargeuse', 'dumper', 'camion', 'rouleau', 'grue', 'autre'];
 const THIS_YEAR = new Date().getFullYear();
 const bold = (chunks: React.ReactNode) => <b className="num">{chunks}</b>;
 
@@ -71,6 +71,9 @@ export function MachineModal({ machineId, onClose }: { machineId?: string; onClo
   const machine = machineId ? g.fleet.machines.find((m) => m.id === machineId) : undefined;
   const editing = Boolean(machine);
   const [kind, setKind] = useState<MachineKind>(machine?.kind ?? 'pelle');
+  // Famille affichée dans le sélecteur (celle de la machine modifiée, sinon le terrassement).
+  const [family, setFamily] = useState<MachineCategory>(categoryOf(machine?.kind ?? 'pelle'));
+  const td = useTranslations('domain');
   const [code, setCode] = useState(machine?.code ?? nextCode('pelle', g.fleet.machines, prefixes));
   const [codeTouched, setCodeTouched] = useState(editing);
   const [brand, setBrand] = useState(machine?.brand ?? '');
@@ -182,9 +185,26 @@ export function MachineModal({ machineId, onClose }: { machineId?: string; onClo
       <div className="field">
         <span className="label" id="mc-kind-l">
           {t('machineForm.type')}
+          <span className="g-kind-chosen"> · {dt.kind(kind)}</span>
         </span>
-        <div className="g-kind-grid" role="group" aria-labelledby="mc-kind-l">
-          {KIND_ORDER.map((k) => (
+        <div className="g-kind-cats" role="group" aria-label={t('machineForm.family')}>
+          {MACHINE_CATEGORIES.map((c) => (
+            <button
+              key={c.id}
+              type="button"
+              className="g-kind-cat"
+              aria-pressed={family === c.id}
+              aria-controls="mc-kind-grid"
+              onClick={() => setFamily(c.id)}
+              disabled={busy}
+            >
+              {td(`machineCategories.${c.id}`)}
+              {categoryOf(kind) === c.id ? <span className="g-kind-cat-dot" aria-hidden="true" /> : null}
+            </button>
+          ))}
+        </div>
+        <div id="mc-kind-grid" className="g-kind-grid" role="group" aria-labelledby="mc-kind-l">
+          {(MACHINE_CATEGORIES.find((c) => c.id === family)?.kinds ?? []).map((k) => (
             <button key={k} type="button" className="g-kind" aria-pressed={kind === k} onClick={() => chooseKind(k)} disabled={busy}>
               <KindIcon kind={k} />
               <span>{dt.kind(k)}</span>

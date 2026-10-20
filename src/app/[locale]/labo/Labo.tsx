@@ -18,9 +18,11 @@ import { Icon } from '@/components/Icons';
 import { Loader } from '@/components/Loader';
 import { weightText } from '@/components/garage/text';
 import { applyShowroomTexts, engineStep, type EngineStep } from '@/components/garage/useShowroom';
+import { MACHINE_KIND_ORDER } from '@/lib/machine-kinds';
 import type { MachineKind } from '@/lib/types';
+import { useDomainText } from '@/lib/use-domain-text';
 import type { MachineState, Showroom, ShowroomEffect, ShowroomMachine, ShowroomQuality } from '@/engine/types';
-import { demoFleet, type LaboModel } from './fleet';
+import { demoFleet, isLaboModel, type LaboModel } from './fleet';
 import './labo.css';
 
 interface Params {
@@ -39,7 +41,7 @@ interface Params {
   signage: string;
 }
 
-const KINDS: MachineKind[] = ['pelle', 'mini_pelle', 'chargeuse', 'dumper', 'camion', 'grue', 'rouleau', 'autre'];
+const KINDS: readonly MachineKind[] = MACHINE_KIND_ORDER;
 const QUALITIES: (ShowroomQuality | 'auto')[] = ['auto', 'high', 'medium', 'low'];
 const EFFECTS: ShowroomEffect[] = ['save', 'open', 'close', 'alert', 'tick', 'photo', 'whoosh'];
 const COUNTS = [1, 3, 8, 20];
@@ -86,7 +88,16 @@ function sheetInsets(open: boolean): { top: number; right: number; bottom: numbe
 export function Labo() {
   const t = useTranslations('garage');
   const f = useFormat();
-  const label = useCallback((name: LaboModel, weight: number) => t('labo.label', { name: t(`labo.models.${name}`), weight: weightText(f, weight) }), [t, f]);
+  const dt = useDomainText();
+  // Modèles du labo nommés (garage.labo.models), sinon nom court du type de machine.
+  const label = useCallback(
+    (name: LaboModel | MachineKind, weight: number) =>
+      t('labo.label', {
+        name: isLaboModel(name) ? t(`labo.models.${name}`) : dt.kindShort(name),
+        weight: weightText(f, weight),
+      }),
+    [t, f, dt],
+  );
   const labelRef = useRef(label);
   const tRef = useRef(t);
   useEffect(() => {

@@ -9,6 +9,7 @@ import en from '../../../messages/en/demo.json';
 import fr from '../../../messages/fr/demo.json';
 import it from '../../../messages/it/demo.json';
 import { DEMO_FLEET, entryText, scheduleText, type DemoMachineDef, type DemoTexts } from './fleet';
+import type { MachineKind } from '@/lib/types';
 
 export interface DemoEntry {
   kind: 'service' | 'reparation' | 'piece' | 'controle' | 'inspection' | 'note';
@@ -41,7 +42,7 @@ export interface DemoSchedule {
 export interface DemoMachinePayload {
   machine: {
     code: string;
-    kind: 'pelle' | 'mini_pelle' | 'chargeuse' | 'dumper' | 'camion' | 'grue' | 'rouleau' | 'autre';
+    kind: MachineKind;
     brand: string;
     model: string;
     year: number;

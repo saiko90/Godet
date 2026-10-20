@@ -57,29 +57,129 @@ export const MESSAGES: Readonly<Record<Locale, MessageTree>> = {
           "label": "Pelle sur chenilles",
           "short": "Pelle"
         },
+        "pelle_pneus": {
+          "label": "Pelle sur pneus",
+          "short": "Pelle sur pneus"
+        },
         "mini_pelle": {
           "label": "Mini-pelle",
           "short": "Mini-pelle"
+        },
+        "pelle_araignee": {
+          "label": "Pelle araignée",
+          "short": "Pelle araignée"
         },
         "chargeuse": {
           "label": "Chargeuse sur pneus",
           "short": "Chargeuse"
         },
+        "chargeuse_compacte": {
+          "label": "Chargeuse compacte",
+          "short": "Chargeuse compacte"
+        },
+        "tractopelle": {
+          "label": "Tractopelle",
+          "short": "Tractopelle"
+        },
+        "bulldozer": {
+          "label": "Bulldozer",
+          "short": "Bulldozer"
+        },
+        "niveleuse": {
+          "label": "Niveleuse",
+          "short": "Niveleuse"
+        },
         "dumper": {
           "label": "Dumper",
           "short": "Dumper"
+        },
+        "mini_dumper": {
+          "label": "Mini-dumper",
+          "short": "Mini-dumper"
         },
         "camion": {
           "label": "Camion",
           "short": "Camion"
         },
+        "camion_grue": {
+          "label": "Camion-grue",
+          "short": "Camion-grue"
+        },
+        "camion_malaxeur": {
+          "label": "Camion malaxeur",
+          "short": "Malaxeur"
+        },
         "grue": {
-          "label": "Grue",
-          "short": "Grue"
+          "label": "Grue mobile",
+          "short": "Grue mobile"
+        },
+        "grue_tour": {
+          "label": "Grue à tour",
+          "short": "Grue à tour"
+        },
+        "chariot_telescopique": {
+          "label": "Chariot télescopique",
+          "short": "Télescopique"
+        },
+        "chariot_elevateur": {
+          "label": "Chariot élévateur",
+          "short": "Élévateur"
+        },
+        "nacelle_ciseaux": {
+          "label": "Nacelle à ciseaux",
+          "short": "Nacelle ciseaux"
+        },
+        "nacelle_articulee": {
+          "label": "Nacelle articulée",
+          "short": "Nacelle articulée"
+        },
+        "nacelle_telescopique": {
+          "label": "Nacelle télescopique",
+          "short": "Nacelle télescopique"
         },
         "rouleau": {
           "label": "Rouleau compresseur",
           "short": "Rouleau"
+        },
+        "rouleau_tandem": {
+          "label": "Rouleau tandem",
+          "short": "Rouleau tandem"
+        },
+        "plaque_vibrante": {
+          "label": "Plaque vibrante",
+          "short": "Plaque vibrante"
+        },
+        "finisseur": {
+          "label": "Finisseur",
+          "short": "Finisseur"
+        },
+        "fraiseuse": {
+          "label": "Fraiseuse routière",
+          "short": "Fraiseuse"
+        },
+        "pompe_beton": {
+          "label": "Pompe à béton",
+          "short": "Pompe à béton"
+        },
+        "foreuse": {
+          "label": "Foreuse",
+          "short": "Foreuse"
+        },
+        "concasseur": {
+          "label": "Concasseur mobile",
+          "short": "Concasseur"
+        },
+        "crible": {
+          "label": "Crible mobile",
+          "short": "Crible"
+        },
+        "groupe_electrogene": {
+          "label": "Groupe électrogène",
+          "short": "Groupe électrogène"
+        },
+        "compresseur": {
+          "label": "Compresseur",
+          "short": "Compresseur"
         },
         "autre": {
           "label": "Autre engin",
@@ -162,29 +262,129 @@ export const MESSAGES: Readonly<Record<Locale, MessageTree>> = {
           "label": "Raupenbagger",
           "short": "Bagger"
         },
+        "pelle_pneus": {
+          "label": "Mobilbagger",
+          "short": "Mobilbagger"
+        },
         "mini_pelle": {
           "label": "Minibagger",
           "short": "Minibagger"
+        },
+        "pelle_araignee": {
+          "label": "Schreitbagger",
+          "short": "Schreitbagger"
         },
         "chargeuse": {
           "label": "Radlader",
           "short": "Radlader"
         },
+        "chargeuse_compacte": {
+          "label": "Kompaktlader",
+          "short": "Kompaktlader"
+        },
+        "tractopelle": {
+          "label": "Baggerlader",
+          "short": "Baggerlader"
+        },
+        "bulldozer": {
+          "label": "Planierraupe",
+          "short": "Planierraupe"
+        },
+        "niveleuse": {
+          "label": "Grader",
+          "short": "Grader"
+        },
         "dumper": {
           "label": "Dumper",
           "short": "Dumper"
+        },
+        "mini_dumper": {
+          "label": "Raupendumper",
+          "short": "Raupendumper"
         },
         "camion": {
           "label": "Lastwagen",
           "short": "Lastwagen"
         },
+        "camion_grue": {
+          "label": "Lastwagen mit Ladekran",
+          "short": "Kranlastwagen"
+        },
+        "camion_malaxeur": {
+          "label": "Fahrmischer",
+          "short": "Fahrmischer"
+        },
         "grue": {
-          "label": "Kran",
-          "short": "Kran"
+          "label": "Mobilkran",
+          "short": "Mobilkran"
+        },
+        "grue_tour": {
+          "label": "Turmdrehkran",
+          "short": "Turmkran"
+        },
+        "chariot_telescopique": {
+          "label": "Teleskoplader",
+          "short": "Teleskoplader"
+        },
+        "chariot_elevateur": {
+          "label": "Gabelstapler",
+          "short": "Stapler"
+        },
+        "nacelle_ciseaux": {
+          "label": "Scherenarbeitsbühne",
+          "short": "Scherenbühne"
+        },
+        "nacelle_articulee": {
+          "label": "Gelenkteleskopbühne",
+          "short": "Gelenkbühne"
+        },
+        "nacelle_telescopique": {
+          "label": "Teleskopbühne",
+          "short": "Teleskopbühne"
         },
         "rouleau": {
           "label": "Walzenzug",
           "short": "Walze"
+        },
+        "rouleau_tandem": {
+          "label": "Tandemwalze",
+          "short": "Tandemwalze"
+        },
+        "plaque_vibrante": {
+          "label": "Vibrationsplatte",
+          "short": "Vibroplatte"
+        },
+        "finisseur": {
+          "label": "Strassenfertiger",
+          "short": "Fertiger"
+        },
+        "fraiseuse": {
+          "label": "Kaltfräse",
+          "short": "Fräse"
+        },
+        "pompe_beton": {
+          "label": "Autobetonpumpe",
+          "short": "Betonpumpe"
+        },
+        "foreuse": {
+          "label": "Bohrgerät",
+          "short": "Bohrgerät"
+        },
+        "concasseur": {
+          "label": "Mobiler Brecher",
+          "short": "Brecher"
+        },
+        "crible": {
+          "label": "Mobile Siebanlage",
+          "short": "Siebanlage"
+        },
+        "groupe_electrogene": {
+          "label": "Stromaggregat",
+          "short": "Aggregat"
+        },
+        "compresseur": {
+          "label": "Kompressor",
+          "short": "Kompressor"
         },
         "autre": {
           "label": "Andere Maschine",
@@ -267,29 +467,129 @@ export const MESSAGES: Readonly<Record<Locale, MessageTree>> = {
           "label": "Escavatore cingolato",
           "short": "Escavatore"
         },
+        "pelle_pneus": {
+          "label": "Escavatore gommato",
+          "short": "Escavatore gommato"
+        },
         "mini_pelle": {
           "label": "Miniescavatore",
           "short": "Miniescavatore"
+        },
+        "pelle_araignee": {
+          "label": "Escavatore ragno",
+          "short": "Escavatore ragno"
         },
         "chargeuse": {
           "label": "Pala gommata",
           "short": "Pala"
         },
+        "chargeuse_compacte": {
+          "label": "Minipala",
+          "short": "Minipala"
+        },
+        "tractopelle": {
+          "label": "Terna",
+          "short": "Terna"
+        },
+        "bulldozer": {
+          "label": "Apripista",
+          "short": "Apripista"
+        },
+        "niveleuse": {
+          "label": "Livellatrice",
+          "short": "Livellatrice"
+        },
         "dumper": {
           "label": "Dumper",
           "short": "Dumper"
+        },
+        "mini_dumper": {
+          "label": "Minidumper",
+          "short": "Minidumper"
         },
         "camion": {
           "label": "Camion",
           "short": "Camion"
         },
+        "camion_grue": {
+          "label": "Camion con gru",
+          "short": "Camion con gru"
+        },
+        "camion_malaxeur": {
+          "label": "Autobetoniera",
+          "short": "Autobetoniera"
+        },
         "grue": {
-          "label": "Gru",
-          "short": "Gru"
+          "label": "Autogru",
+          "short": "Autogru"
+        },
+        "grue_tour": {
+          "label": "Gru a torre",
+          "short": "Gru a torre"
+        },
+        "chariot_telescopique": {
+          "label": "Sollevatore telescopico",
+          "short": "Telescopico"
+        },
+        "chariot_elevateur": {
+          "label": "Carrello elevatore",
+          "short": "Carrello"
+        },
+        "nacelle_ciseaux": {
+          "label": "Piattaforma a pantografo",
+          "short": "Pantografo"
+        },
+        "nacelle_articulee": {
+          "label": "Piattaforma articolata",
+          "short": "Articolata"
+        },
+        "nacelle_telescopique": {
+          "label": "Piattaforma telescopica",
+          "short": "Telescopica"
         },
         "rouleau": {
           "label": "Rullo compattatore",
           "short": "Rullo"
+        },
+        "rouleau_tandem": {
+          "label": "Rullo tandem",
+          "short": "Rullo tandem"
+        },
+        "plaque_vibrante": {
+          "label": "Piastra vibrante",
+          "short": "Piastra"
+        },
+        "finisseur": {
+          "label": "Vibrofinitrice",
+          "short": "Finitrice"
+        },
+        "fraiseuse": {
+          "label": "Fresa stradale",
+          "short": "Fresa"
+        },
+        "pompe_beton": {
+          "label": "Autopompa per calcestruzzo",
+          "short": "Autopompa"
+        },
+        "foreuse": {
+          "label": "Perforatrice",
+          "short": "Perforatrice"
+        },
+        "concasseur": {
+          "label": "Frantoio mobile",
+          "short": "Frantoio"
+        },
+        "crible": {
+          "label": "Vaglio mobile",
+          "short": "Vaglio"
+        },
+        "groupe_electrogene": {
+          "label": "Gruppo elettrogeno",
+          "short": "Generatore"
+        },
+        "compresseur": {
+          "label": "Motocompressore",
+          "short": "Compressore"
         },
         "autre": {
           "label": "Altra macchina",
@@ -372,29 +672,129 @@ export const MESSAGES: Readonly<Record<Locale, MessageTree>> = {
           "label": "Crawler excavator",
           "short": "Excavator"
         },
+        "pelle_pneus": {
+          "label": "Wheeled excavator",
+          "short": "Wheeled excavator"
+        },
         "mini_pelle": {
           "label": "Mini excavator",
           "short": "Mini excavator"
+        },
+        "pelle_araignee": {
+          "label": "Spider excavator",
+          "short": "Spider excavator"
         },
         "chargeuse": {
           "label": "Wheel loader",
           "short": "Loader"
         },
+        "chargeuse_compacte": {
+          "label": "Compact loader",
+          "short": "Compact loader"
+        },
+        "tractopelle": {
+          "label": "Backhoe loader",
+          "short": "Backhoe"
+        },
+        "bulldozer": {
+          "label": "Bulldozer",
+          "short": "Dozer"
+        },
+        "niveleuse": {
+          "label": "Motor grader",
+          "short": "Grader"
+        },
         "dumper": {
           "label": "Dumper",
           "short": "Dumper"
+        },
+        "mini_dumper": {
+          "label": "Tracked mini dumper",
+          "short": "Mini dumper"
         },
         "camion": {
           "label": "Truck",
           "short": "Truck"
         },
+        "camion_grue": {
+          "label": "Truck with loader crane",
+          "short": "Crane truck"
+        },
+        "camion_malaxeur": {
+          "label": "Truck mixer",
+          "short": "Mixer"
+        },
         "grue": {
-          "label": "Crane",
-          "short": "Crane"
+          "label": "Mobile crane",
+          "short": "Mobile crane"
+        },
+        "grue_tour": {
+          "label": "Tower crane",
+          "short": "Tower crane"
+        },
+        "chariot_telescopique": {
+          "label": "Telehandler",
+          "short": "Telehandler"
+        },
+        "chariot_elevateur": {
+          "label": "Forklift",
+          "short": "Forklift"
+        },
+        "nacelle_ciseaux": {
+          "label": "Scissor lift",
+          "short": "Scissor lift"
+        },
+        "nacelle_articulee": {
+          "label": "Articulating boom lift",
+          "short": "Articulating lift"
+        },
+        "nacelle_telescopique": {
+          "label": "Telescopic boom lift",
+          "short": "Telescopic lift"
         },
         "rouleau": {
           "label": "Roller compactor",
           "short": "Roller"
+        },
+        "rouleau_tandem": {
+          "label": "Tandem roller",
+          "short": "Tandem roller"
+        },
+        "plaque_vibrante": {
+          "label": "Plate compactor",
+          "short": "Plate compactor"
+        },
+        "finisseur": {
+          "label": "Asphalt paver",
+          "short": "Paver"
+        },
+        "fraiseuse": {
+          "label": "Cold planer",
+          "short": "Cold planer"
+        },
+        "pompe_beton": {
+          "label": "Concrete pump",
+          "short": "Concrete pump"
+        },
+        "foreuse": {
+          "label": "Drilling rig",
+          "short": "Drill rig"
+        },
+        "concasseur": {
+          "label": "Mobile crusher",
+          "short": "Crusher"
+        },
+        "crible": {
+          "label": "Mobile screener",
+          "short": "Screener"
+        },
+        "groupe_electrogene": {
+          "label": "Generator",
+          "short": "Generator"
+        },
+        "compresseur": {
+          "label": "Air compressor",
+          "short": "Compressor"
         },
         "autre": {
           "label": "Other machine",

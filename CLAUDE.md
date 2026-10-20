@@ -67,8 +67,8 @@ Navigateur de test : Chromium de Playwright dans `/opt/pw-browsers` (ne pas lanc
 - Suivi des liens envoyés par les agents : paramètre `?ref=code` → cookie `godet-ref` (30 jours) → transmis à
   l'inscription (`options.data.ref` → `profiles.signup_ref`).
 - RLS partout : on ne voit que les données des entreprises dont on est membre. Les fonctions d'accès vivent dans
-  le schéma `private` (non exposé). RPC publiques : `create_organization`, `create_demo_machine`,
-  `invitation_info`, `accept_invitation`.
+  le schéma `private` (non exposé). RPC publiques d'origine : `invitation_info`, `accept_invitation`
+  (`create_organization` et `create_demo_machine`, remplacées, ne sont plus appelables).
 - Déclencheurs : l'entreprise d'une saisie suit toujours sa machine ; une saisie avec compteur crée un relevé et fait
   avancer le compteur ; une saisie liée à une échéance (`schedule_id`) la renouvelle ; une nouvelle machine reçoit
   « Service » toutes les 500 h et « Contrôle annuel de sécurité » (dans la langue du profil de la personne qui
