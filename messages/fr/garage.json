@@ -388,7 +388,10 @@
     "confirmTitle": "Supprimer ce fichier ?",
     "confirmText": "Il disparaît de la fiche de {code}. Cette suppression est définitive.",
     "prev": "Média précédent",
-    "next": "Média suivant"
+    "next": "Média suivant",
+    "zoomIn": "Agrandir",
+    "zoomOut": "Réduire",
+    "zoomReset": "Image entière"
   },
   "atelier": {
     "failure": {
@@ -517,7 +520,10 @@
         "generic": "La photo n’a pas pu être lue. Réessayez, ou saisissez le chiffre."
       },
       "camera": "Prendre une photo",
-      "gallery": "Choisir dans la galerie"
+      "gallery": "Choisir dans la galerie",
+      "caption": "Compteur : {hours} (photo du relevé)",
+      "notAttached": "La photo n’a pas pu être jointe aux médias.",
+      "willAttach": "La photo sera jointe aux médias de la machine."
     }
   },
   "scheduleForm": {
@@ -958,5 +964,13 @@
     "last": "Dernière position : {date}",
     "accuracy": "± {meters} m",
     "openMap": "Voir sur la carte"
+  },
+  "picker": {
+    "camera": "Prendre une photo",
+    "record": "Filmer",
+    "gallery": "Choisir dans la galerie",
+    "cancel": "Annuler",
+    "titlePhoto": "Ajouter une photo",
+    "titleVideo": "Ajouter une vidéo"
   }
 }

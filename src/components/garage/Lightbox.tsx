@@ -10,6 +10,7 @@ import type { MediaItem } from '@/lib/types';
 import { useErrorText } from './errors';
 import { MediaPreview } from './MediaPreview';
 import { trapTab } from './ui';
+import { Zoomable } from './Zoomable';
 
 export function Lightbox({
   items,
@@ -118,7 +119,11 @@ export function Lightbox({
           if (e.target === e.currentTarget) onClose();
         }}
       >
-        {m.kind !== 'document' ? (
+        {m.kind === 'photo' && m.url ? (
+          <Zoomable key={m.id}>
+            <MediaPreview item={m} full alt={m.caption || t('lightbox.alt', { code, date: f.dateTime(m.taken_at) })} />
+          </Zoomable>
+        ) : m.kind !== 'document' ? (
           <MediaPreview key={m.id} item={m} full alt={m.caption || t('lightbox.alt', { code, date: f.dateTime(m.taken_at) })} />
         ) : !m.url ? (
           <div className="g-lb-doc">

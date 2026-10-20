@@ -419,6 +419,8 @@ export function HoursModal({ machineId, onClose }: { machineId: string; onClose:
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [reading, setReading] = useState(false);
+  /** Photo du compteur lue par l'IA : jointe aux médias de la machine avec le relevé (preuve du chiffre). */
+  const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [photoNote, setPhotoNote] = useState<{ text: string; tone: 'ok' | 'warn' } | null>(null);
   const locale = useLocale();
   const geo = useGeoFix(g.mode === 'cloud' && g.org.track_location);
@@ -435,6 +437,7 @@ export function HoursModal({ machineId, onClose }: { machineId: string; onClose:
       return;
     }
     setReading(true);
+    setPhotoFile(file);
     try {
       const r = await readMeter({ orgId: g.org.id, locale, file, machineId: machine.id });
       if (r.hours == null) {
@@ -443,7 +446,7 @@ export function HoursModal({ machineId, onClose }: { machineId: string; onClose:
         setValue(String(r.hours));
         const sure = r.confidence === 'high';
         setPhotoNote({
-          text: `${sure ? t('hoursForm.photo.read', { hours: f.hours(r.hours) }) : t('hoursForm.photo.unsure', { hours: f.hours(r.hours) })}${r.note ? ` ${r.note}` : ''}`,
+          text: `${sure ? t('hoursForm.photo.read', { hours: f.hours(r.hours) }) : t('hoursForm.photo.unsure', { hours: f.hours(r.hours) })}${r.note ? ` ${r.note}` : ''} ${t('hoursForm.photo.willAttach')}`,
           tone: sure ? 'ok' : 'warn',
         });
         if (!isTouch()) document.getElementById('hr-value')?.focus();
@@ -482,14 +485,18 @@ export function HoursModal({ machineId, onClose }: { machineId: string; onClose:
     setBusy(true);
     try {
       await g.repo().addReading(machine.id, n, withGeo ? geo.fix : null);
+      let photoFailed = false;
+      if (photoFile) {
+        const out = await g.upload(machine.id, [photoFile], { caption: t('hoursForm.photo.caption', { hours: f.hours(n) }) });
+        photoFailed = out.errors.length > 0;
+      }
       await g.refresh(machine.id);
       g.effect('tick');
       onClose();
-      g.toast(
-        diff
-          ? t('hoursForm.savedDiff', { code: machine.code, hours: f.hours(n), diff: f.hours(diff) })
-          : t('hoursForm.saved', { code: machine.code, hours: f.hours(n) }),
-      );
+      const saved = diff
+        ? t('hoursForm.savedDiff', { code: machine.code, hours: f.hours(n), diff: f.hours(diff) })
+        : t('hoursForm.saved', { code: machine.code, hours: f.hours(n) });
+      g.toast(photoFailed ? `${saved} ${t('hoursForm.photo.notAttached')}` : saved, photoFailed ? 'error' : 'ok');
     } catch (e) {
       setError(errorText(e, 'reading'));
       g.effect('alert');

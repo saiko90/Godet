@@ -388,7 +388,10 @@
     "confirmTitle": "Diese Datei löschen?",
     "confirmText": "Sie verschwindet aus den Details von {code}. Das Löschen ist endgültig.",
     "prev": "Vorheriges Medium",
-    "next": "Nächstes Medium"
+    "next": "Nächstes Medium",
+    "zoomIn": "Vergrössern",
+    "zoomOut": "Verkleinern",
+    "zoomReset": "Ganzes Bild"
   },
   "atelier": {
     "failure": {
@@ -517,7 +520,10 @@
         "generic": "Das Foto konnte nicht gelesen werden. Erneut versuchen oder Wert eintippen."
       },
       "camera": "Foto aufnehmen",
-      "gallery": "Aus der Galerie wählen"
+      "gallery": "Aus der Galerie wählen",
+      "caption": "Zähler: {hours} (Foto der Ablesung)",
+      "notAttached": "Das Foto konnte nicht zu den Medien hinzugefügt werden.",
+      "willAttach": "Das Foto wird den Medien der Maschine hinzugefügt."
     }
   },
   "scheduleForm": {
@@ -958,5 +964,13 @@
     "last": "Letzter Standort: {date}",
     "accuracy": "± {meters} m",
     "openMap": "Auf der Karte ansehen"
+  },
+  "picker": {
+    "camera": "Foto aufnehmen",
+    "record": "Video aufnehmen",
+    "gallery": "Aus der Galerie wählen",
+    "cancel": "Abbrechen",
+    "titlePhoto": "Foto hinzufügen",
+    "titleVideo": "Video hinzufügen"
   }
 }

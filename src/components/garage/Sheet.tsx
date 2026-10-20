@@ -13,7 +13,8 @@ import { useGarage } from './context';
 import { GroupList } from './GroupList';
 import type { FleetView } from './groups';
 import { TABS, type SheetTab } from './helpers';
-import { FileButton, MediaTab, UploadStatus, useSendFiles } from './MediaTab';
+import { CaptureButton } from './CaptureButton';
+import { MediaTab, UploadStatus, useSendFiles } from './MediaTab';
 import { CostsTab, LogbookTab, OverviewTab, PartsTab, RepairsTab, SchedulesTab, tabCounts } from './SheetTabs';
 import { useGarageText } from './text';
 import { Menu, type MenuEntry } from './ui';
@@ -335,14 +336,14 @@ export function Sheet({
           <Icon name="plus" />
           {t('sheet.work')}
         </button>
-        <FileButton accept="image/*" capture="environment" disabled={busy} label={t('sheet.photo')} onFiles={(list) => void send(machine.id, list)}>
+        <CaptureButton kind="photo" disabled={busy} label={t('sheet.photo')} onFiles={(list) => void send(machine.id, list)}>
           <Icon name="camera" />
           <span className="g-quick-lbl">{t('sheet.photo')}</span>
-        </FileButton>
-        <FileButton accept="video/*" disabled={busy} label={t('sheet.video')} onFiles={(list) => void send(machine.id, list)}>
+        </CaptureButton>
+        <CaptureButton kind="video" disabled={busy} label={t('sheet.video')} onFiles={(list) => void send(machine.id, list)}>
           <Icon name="video" />
           <span className="g-quick-lbl">{t('sheet.video')}</span>
-        </FileButton>
+        </CaptureButton>
         <button
           type="button"
           className="btn btn-soft"

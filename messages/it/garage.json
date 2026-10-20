@@ -388,7 +388,10 @@
     "confirmTitle": "Eliminare questo file?",
     "confirmText": "Scompare dalla scheda di {code}. L’eliminazione è definitiva.",
     "prev": "Media precedente",
-    "next": "Media successivo"
+    "next": "Media successivo",
+    "zoomIn": "Ingrandisci",
+    "zoomOut": "Riduci",
+    "zoomReset": "Immagine intera"
   },
   "atelier": {
     "failure": {
@@ -517,7 +520,10 @@
         "generic": "Non è stato possibile leggere la foto. Riprovate o inserite la cifra."
       },
       "camera": "Scatta una foto",
-      "gallery": "Scegli dalla galleria"
+      "gallery": "Scegli dalla galleria",
+      "caption": "Contaore: {hours} (foto della lettura)",
+      "notAttached": "Non è stato possibile allegare la foto ai media.",
+      "willAttach": "La foto sarà allegata ai media della macchina."
     }
   },
   "scheduleForm": {
@@ -958,5 +964,13 @@
     "last": "Ultima posizione: {date}",
     "accuracy": "± {meters} m",
     "openMap": "Vedi sulla mappa"
+  },
+  "picker": {
+    "camera": "Scatta una foto",
+    "record": "Registra un video",
+    "gallery": "Scegli dalla galleria",
+    "cancel": "Annulla",
+    "titlePhoto": "Aggiungi una foto",
+    "titleVideo": "Aggiungi un video"
   }
 }

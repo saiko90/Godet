@@ -7,6 +7,7 @@ import type { ReactNode } from 'react';
 import { useFormat } from '@/components/FormatProvider';
 import { Icon } from '@/components/Icons';
 import type { Machine, MachineFile } from '@/lib/types';
+import { CaptureButton } from './CaptureButton';
 import { useGarage, type UploadOutcome } from './context';
 import { MediaPreview } from './MediaPreview';
 import { Progress } from './ui';
@@ -120,14 +121,14 @@ export function MediaTab({ machine, file }: { machine: Machine; file: MachineFil
   return (
     <div className="stack fade-in">
       <div className="media-actions g-media-actions">
-        <FileButton accept="image/*" capture="environment" disabled={busy} onFiles={go}>
+        <CaptureButton kind="photo" disabled={busy} onFiles={go}>
           <Icon name="camera" />
           {t('photo')}
-        </FileButton>
-        <FileButton accept="video/*" disabled={busy} onFiles={go}>
+        </CaptureButton>
+        <CaptureButton kind="video" disabled={busy} onFiles={go}>
           <Icon name="video" />
           {t('video')}
-        </FileButton>
+        </CaptureButton>
         <FileButton accept="image/*,video/*" disabled={busy} onFiles={go}>
           <Icon name="upload" />
           {t('import')}

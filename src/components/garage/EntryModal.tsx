@@ -16,7 +16,8 @@ import { GeoNote } from './GeoNote';
 import { useErrorText } from './errors';
 import { aria, Field, focusFirstError, type Errors } from './fields';
 import { isServiceLabel, KINDS_WITH_HOURS } from './helpers';
-import { FileButton, UploadStatus } from './MediaTab';
+import { CaptureButton } from './CaptureButton';
+import { UploadStatus } from './MediaTab';
 import { parseLocalNumber } from './numbers';
 import { useGarageText } from './text';
 import { Modal } from './ui';
@@ -533,16 +534,10 @@ export function EntryModal({
           {t('entryForm.photos')}
         </span>
         <div className="photo-in g-photo-in">
-          <FileButton
-            accept="image/*"
-            capture="environment"
-            disabled={busy || photos.length >= 12}
-            onFiles={addPhotos}
-            label={t('entryForm.photosAdd')}
-          >
+          <CaptureButton kind="photo" disabled={busy || photos.length >= 12} onFiles={addPhotos} label={t('entryForm.photosAdd')}>
             <Icon name="camera" />
             {photos.length ? t('entryForm.photosAddShort') : t('entryForm.photosAddLong')}
-          </FileButton>
+          </CaptureButton>
           {photos.map((p) => (
             <span key={p.key} className="g-photo-chip">
               {/* eslint-disable-next-line @next/next/no-img-element -- aperçu local */}

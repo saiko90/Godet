@@ -388,7 +388,10 @@
     "confirmTitle": "Delete this file?",
     "confirmText": "It will disappear from the details of {code}. This cannot be undone.",
     "prev": "Previous media item",
-    "next": "Next media item"
+    "next": "Next media item",
+    "zoomIn": "Zoom in",
+    "zoomOut": "Zoom out",
+    "zoomReset": "Fit"
   },
   "atelier": {
     "failure": {
@@ -517,7 +520,10 @@
         "generic": "The photo couldn’t be read. Try again, or type the figure."
       },
       "camera": "Take a photo",
-      "gallery": "Choose from gallery"
+      "gallery": "Choose from gallery",
+      "caption": "Hour meter: {hours} (reading photo)",
+      "notAttached": "The photo couldn’t be attached to the media.",
+      "willAttach": "The photo will be attached to the machine’s media."
     }
   },
   "scheduleForm": {
@@ -958,5 +964,13 @@
     "last": "Last location: {date}",
     "accuracy": "± {meters} m",
     "openMap": "View on map"
+  },
+  "picker": {
+    "camera": "Take a photo",
+    "record": "Record a video",
+    "gallery": "Choose from gallery",
+    "cancel": "Cancel",
+    "titlePhoto": "Add a photo",
+    "titleVideo": "Add a video"
   }
 }
