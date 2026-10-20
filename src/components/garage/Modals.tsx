@@ -8,7 +8,7 @@ import { useFormat } from '@/components/FormatProvider';
 import { Icon } from '@/components/Icons';
 import { can, PAINTS } from '@/lib/domain';
 import { addDays } from '@/lib/format';
-import { categoryOf, MACHINE_CATEGORIES, type MachineCategory } from '@/lib/machine-kinds';
+import { categoryOf, MACHINE_CATEGORIES, TYPICAL_WEIGHT, type MachineCategory } from '@/lib/machine-kinds';
 import type { MachineKind, ScheduleBasis } from '@/lib/types';
 import type { NewMachine } from '@/lib/repo/types';
 import { useDomainText } from '@/lib/use-domain-text';
@@ -207,7 +207,9 @@ export function MachineModal({ machineId, onClose }: { machineId?: string; onClo
           {(MACHINE_CATEGORIES.find((c) => c.id === family)?.kinds ?? []).map((k) => (
             <button key={k} type="button" className="g-kind" aria-pressed={kind === k} onClick={() => chooseKind(k)} disabled={busy}>
               <KindIcon kind={k} />
-              <span>{dt.kind(k)}</span>
+              {/* nom complet ; sur téléphone, le nom court (le nom complet reste affiché au-dessus de la grille) */}
+              <span className="g-kind-long">{dt.kind(k)}</span>
+              <span className="g-kind-short">{dt.kindShort(k)}</span>
             </button>
           ))}
         </div>
@@ -237,7 +239,7 @@ export function MachineModal({ machineId, onClose }: { machineId?: string; onClo
             inputMode="decimal"
             autoComplete="off"
             value={weight}
-            placeholder="21"
+            placeholder={f.num(TYPICAL_WEIGHT[kind], Number.isInteger(TYPICAL_WEIGHT[kind]) ? 0 : TYPICAL_WEIGHT[kind] < 1 ? 2 : 1)}
             onChange={(e) => setWeight(e.target.value)}
           />
         </Field>

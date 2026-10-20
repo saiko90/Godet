@@ -28,7 +28,7 @@
   "welcome": {
     "demoEyebrow": "Demo · sample data",
     "demoLead": "The garage for your equipment fleet.",
-    "demoCopy": "Six machines from a construction firm in Valais, with twelve months of logbook: services, repairs, parts, costs, photos and due dates. Try everything: nothing is saved.",
+    "demoCopy": "Eight machines from a construction firm in Valais, with twelve months of logbook: services, repairs, parts, costs, photos and due dates. Try everything: nothing is saved.",
     "lead": "Welcome to the {org} garage.",
     "copy": "Every machine has its full log: services, repairs, replaced parts, costs, photos, videos and upcoming due dates.",
     "copyEmpty": "Add your first machine: its log, due dates and costs will fill up as work is recorded.",

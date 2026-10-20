@@ -1,4 +1,4 @@
-// Parc d'exemple de /demo : six machines et douze mois de carnet, dans la langue de la visite.
+// Parc d'exemple de /demo : huit machines et douze mois de carnet, dans la langue de la visite.
 // La structure (chiffres, dates relatives) est dans src/lib/demo-content/fleet.ts ; les textes dans
 // messages/<langue>/demo.json. Toutes les dates sont relatives au jour de la visite.
 import { addDays, daysBetween } from '@/lib/format';

@@ -5,6 +5,7 @@ import { totalsOf } from './digest.ts';
 import { isOverdue, type Due } from './dues.ts';
 import { htmlLang, makeFormat, type Format, type Locale } from './format.ts';
 import { translator, type Translate } from './i18n.ts';
+import { MESSAGES, type MessageTree } from './messages.ts';
 import {
   emailButton,
   emailChip,
@@ -46,7 +47,8 @@ export interface RenderedDigest {
   text: string;
 }
 
-const KINDS = new Set(['pelle', 'mini_pelle', 'chargeuse', 'dumper', 'camion', 'grue', 'rouleau', 'autre']);
+/** Types de machines connus : ceux du catalogue (textes recopiés de messages/<langue>/domain.json par sync.mjs). */
+const KINDS = new Set(Object.keys((MESSAGES.fr.domain as MessageTree).machineKinds as MessageTree));
 
 const formats = new Map<string, Format>();
 

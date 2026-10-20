@@ -90,8 +90,8 @@ export interface TemplateMeta {
   nod: PoseStep[];
   /** Respiration au repos de la machine visée : amplitude par liaison. */
   breathe?: Pose;
-  /** Pièce qui vibre au réveil (cylindre du rouleau). */
-  vibrate?: string;
+  /** Pièce(s) qui vibrent au réveil (cylindre du rouleau, deux cylindres du tandem). */
+  vibrate?: string | string[];
 }
 
 export interface MachineTemplate extends TemplateMeta {
@@ -111,6 +111,12 @@ export interface MachineTemplate extends TemplateMeta {
   footprint: { w: number; d: number };
   /** Boîte englobante au repos (après centrage). */
   bounds: THREE.Box3;
+  /**
+   * Hauteur et rayon maximaux atteints pendant le réveil (flèche levée, mât dressé, convoyeur déplié), au moins ceux
+   * du repos : la caméra recule le temps du mouvement pour le garder dans le cadre.
+   */
+  wakeHeight: number;
+  wakeRadius: number;
   /** Gyrophares : position au repos (repère centré) et ancrage articulé. */
   beacons: { anchor: Anchor; rest: THREE.Vector3 }[];
 }
@@ -634,6 +640,32 @@ export class Kit {
       rest: anchor.p.clone().applyMatrix4(objs[anchor.part].matrixWorld).add(offset),
     }));
 
+    // Emprise pendant le réveil : boîte de chaque pièce dans chaque pose (poses cumulées, comme à l'écran).
+    let wakeHeight = bounds.max.y;
+    let wakeRadius = Math.sqrt(r2);
+    if (meta.wake.length) {
+      const partBox = parts.map((p) => {
+        const b = new THREE.Box3();
+        for (const m of p.meshes) {
+          m.geo.computeBoundingBox();
+          if (m.geo.boundingBox) b.union(m.geo.boundingBox);
+        }
+        return b;
+      });
+      let pose: Pose = { ...rest };
+      const wb = new THREE.Box3();
+      for (const step of meta.wake) {
+        pose = { ...pose, ...step.pose };
+        const po = poseObjects(parts, this.joints, pose);
+        partBox.forEach((b, i) => {
+          if (b.isEmpty()) return;
+          wb.copy(b).applyMatrix4(po[i].matrixWorld).translate(offset);
+          wakeHeight = Math.max(wakeHeight, wb.max.y);
+          for (const x of [wb.min.x, wb.max.x]) for (const z of [wb.min.z, wb.max.z]) wakeRadius = Math.max(wakeRadius, Math.hypot(x, z));
+        });
+      }
+    }
+
     return {
       ...meta,
       key: this.key,
@@ -648,6 +680,8 @@ export class Kit {
       height: bounds.max.y,
       footprint: { w: box.max.x - box.min.x, d: box.max.z - box.min.z },
       bounds,
+      wakeHeight,
+      wakeRadius,
       beacons,
     };
   }

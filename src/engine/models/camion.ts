@@ -80,11 +80,12 @@ export function buildCamion(): MachineTemplate {
     const fg = extrudeGeo(frame, 0.02, 0, 6);
     fg.rotateY(Math.PI / 2);
     fg.rotateZ(rake);
-    k.add(cab, 'black', fg, [4.125, 2.02, 0]);
+    // la face avant arrondie déborde de 6 cm (arrondi de l'extrusion) : cadre et verre posés devant elle
+    k.add(cab, 'black', fg, [4.18, 2.02, 0]);
     const gg = extrudeGeo(glass, 0.01, 0, 6);
     gg.rotateY(Math.PI / 2);
     gg.rotateZ(rake);
-    k.add(cab, 'glass', gg, [4.14, 2.02, 0]);
+    k.add(cab, 'glass', gg, [4.195, 2.02, 0]);
   }
   for (const s of [-1, 1]) {
     const sw = softPolygon(

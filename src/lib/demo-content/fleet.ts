@@ -1,4 +1,4 @@
-// Structure du parc d'exemple de /demo (six machines, douze mois de carnet) et de la pelle de démonstration créée à
+// Structure du parc d'exemple de /demo (huit machines, douze mois de carnet) et de la pelle de démonstration créée à
 // l'inscription (PE-01) : types, chiffres et dates. Aucun texte ici : les titres, détails, échéances, notes, modèles,
 // personnes et fournisseurs sont dans messages/<langue>/demo.json, sous les mêmes clés (machine, e01, s1…).
 // Les quatre langues reprennent donc exactement les mêmes chiffres.
@@ -6,8 +6,8 @@
 // (supabase/migrations/20261019150100_demo_machine.sql, date de référence 19.10.2026).
 import type { EntryKind, MachineKind, RepairStatus } from '@/lib/types';
 
-export type DemoSlug = 'pe01' | 'ch02' | 'mp03' | 'du04' | 'ro05' | 'ca06';
-export type DemoPerson = 'workshop' | 'foreman' | 'operator' | 'partner' | 'roadOffice';
+export type DemoSlug = 'pe01' | 'ch02' | 'mp03' | 'du04' | 'ro05' | 'ca06' | 'na07' | 'pa08';
+export type DemoPerson = 'workshop' | 'foreman' | 'operator' | 'partner' | 'roadOffice' | 'inspector';
 export type DemoSupplier = 'tpValais' | 'rhoneHydraulics' | 'rhoneTyres' | 'electroDiesel' | 'trucksMartigny';
 export type DemoReason = 'duplicate';
 
@@ -291,6 +291,70 @@ export const DEMO_FLEET: DemoMachineDef[] = [
       { basis: 'heures', every: 600, last: 8600, lastDay: -60, due: 9200 },
       { basis: 'date', everyDays: 365, lastDay: -343, dueDay: 22 },
       { basis: 'date', everyDays: 730, lastDay: -430, dueDay: 300 },
+    ],
+  },
+  {
+    // Contrôle périodique (expert externe) dans deux semaines et prise de la plateforme en attente : à surveiller.
+    slug: 'na07',
+    code: 'NA-07',
+    kind: 'nacelle_articulee',
+    year: 2019,
+    serial: 'AB16-003182',
+    plate: null,
+    weight: 6.9,
+    color: '#d8362f',
+    hours: 2780,
+    perDay: 1.3,
+    lastRead: 0,
+    routineReadings: true,
+    entries: [
+      ['controle', -350, 'auto', 'inspector', 0, 560, null, null, null, null, null],
+      ['piece', -287, null, null, 230, 0, null, null, 'BAT-100', 1, 730, 'electroDiesel'],
+      ['service', -215, 2500, 'workshop', 360, 400, null, null, null, null, null],
+      ['controle', -213, 'auto', 'foreman', 0, 190, null, null, null, null, null],
+      ['inspection', -183, 'auto', 'operator', 0, 90, null, null, null, null, null],
+      ['reparation', -147, 'auto', 'workshop', 260, 340, 5, 'fait', null, null, null],
+      ['reparation', -96, 'auto', 'workshop', 840, 290, 4, 'fait', null, null, null],
+      ['inspection', -61, 'auto', 'operator', 0, 150, null, null, null, null, null],
+      ['inspection', -24, 'auto', 'operator', 0, 60, null, null, null, null, null],
+      ['reparation', -5, 'auto', 'foreman', 180, 120, null, 'attente_piece', null, null, null],
+    ],
+    schedules: [
+      { basis: 'heures', every: 500, last: 2500, lastDay: -215, due: 3000 },
+      { basis: 'date', everyDays: 365, lastDay: -350, dueDay: 15 },
+      { basis: 'date', everyDays: 365, lastDay: -213, dueDay: 152 },
+    ],
+  },
+  {
+    // Pelle araignée des torrents et des paravalanches : tout est à jour.
+    slug: 'pa08',
+    code: 'PA-08',
+    kind: 'pelle_araignee',
+    year: 2018,
+    serial: 'WX10-001946',
+    plate: null,
+    weight: 10,
+    color: '#3c9a5f',
+    hours: 5260,
+    perDay: 2.2,
+    lastRead: -2,
+    routineReadings: true,
+    entries: [
+      ['inspection', -352, 'auto', 'operator', 0, 180, null, null, null, null, null],
+      ['service', -347, 4500, 'workshop', 520, 460, null, null, null, null, null],
+      ['reparation', -290, 'auto', 'workshop', 190, 430, 6, 'fait', null, null, null],
+      ['controle', -255, 'auto', 'foreman', 0, 360, null, null, null, null, null],
+      ['piece', -205, null, null, 820, 0, null, null, 'GF-PA10', 2, null, 'tpValais'],
+      ['service', -119, 5000, 'workshop', 560, 480, null, null, null, null, null],
+      ['service', -98, 'auto', 'partner', 240, 390, null, null, null, null, null],
+      ['inspection', -60, 'auto', 'operator', 0, 120, null, null, null, null, null],
+      ['reparation', -54, 'auto', 'workshop', 640, 760, 9, 'fait', null, null, null],
+      ['inspection', -12, 'auto', 'operator', 0, 90, null, null, null, null, null],
+    ],
+    schedules: [
+      { basis: 'heures', every: 500, last: 5000, lastDay: -119, due: 5500 },
+      { basis: 'date', everyDays: 365, lastDay: -255, dueDay: 110 },
+      { basis: 'date', everyDays: 365, lastDay: -98, dueDay: 267 },
     ],
   },
 ];

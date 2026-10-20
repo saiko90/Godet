@@ -2,7 +2,7 @@
   "meta": {
     "title": "Demo del garage 3D",
     "shareTitle": "Godet — demo del garage 3D del Suo parco macchine",
-    "description": "Visiti un garage di esempio senza registrarsi: sei macchine edili, dodici mesi di libretto di manutenzione, riparazioni, ricambi, costi e scadenze. Provi tutto, non viene salvato nulla.",
+    "description": "Visiti un garage di esempio senza registrarsi: otto macchine edili, dodici mesi di libretto di manutenzione, riparazioni, ricambi, costi e scadenze. Provi tutto, non viene salvato nulla.",
     "keywords": "libretto di manutenzione, macchine edili, parco macchine, gestione della flotta, manutenzione escavatore, Svizzera, demo"
   },
   "loading": "Apertura del garage dimostrativo…",
@@ -12,7 +12,8 @@
     "foreman": "Capo officina",
     "operator": "Operatore",
     "partner": "Officina partner",
-    "roadOffice": "Ufficio della circolazione"
+    "roadOffice": "Ufficio della circolazione",
+    "inspector": "Perito esterno"
   },
   "suppliers": {
     "tpValais": "Macchine Edili Vallese SA",
@@ -409,6 +410,110 @@
         "s1": "Manutenzione",
         "s2": "Collaudo periodico",
         "s3": "Controllo del tachigrafo"
+      }
+    },
+    "na07": {
+      "brand": "Demo",
+      "model": "Piattaforma articolata 16 m",
+      "notes": "Altezza di lavoro 16 m, portata massima 230 kg. Facciate e tetti. Imbracatura obbligatoria nella piattaforma.",
+      "entries": {
+        "e01": {
+          "title": "Controllo periodico della PLE",
+          "details": "Struttura e saldature, perni e boccole del braccio, tubi flessibili, limitatore di carico, allarme di inclinazione, comandi e discesa d’emergenza. Nessun difetto, bollino di controllo rinnovato."
+        },
+        "e02": {
+          "title": "Batteria 12 V 100 Ah",
+          "details": "Batteria originale fuori uso dopo il grande freddo."
+        },
+        "e03": {
+          "title": "Manutenzione 2’500 h",
+          "details": "Olio motore e filtri, filtro idraulico, ingrassaggio della torretta e dei perni del braccio, serraggio delle viti della ralla controllato."
+        },
+        "e04": {
+          "title": "Controllo del limitatore di carico",
+          "details": "Prova con il carico nominale (230 kg), poi in sovraccarico: allarme e blocco dei movimenti conformi."
+        },
+        "e05": {
+          "title": "Controllo prima dell’uso",
+          "details": "Prima del cantiere di facciate: livelli, pneumatici, arresti d’emergenza, comandi da terra e dalla piattaforma, discesa d’emergenza. Nessun difetto."
+        },
+        "e06": {
+          "title": "Tubo flessibile del cilindro del braccio sostituito",
+          "details": "Perdita in cantiere. Tubo e guarnizioni sostituiti, livello dell’olio rabboccato, prova di funzionamento."
+        },
+        "e07": {
+          "title": "Pulsantiera della piattaforma: joystick sostituito",
+          "details": "Movimenti del braccio a scatti. Joystick proporzionale sostituito, comandi regolati e provati da terra e dalla piattaforma."
+        },
+        "e08": {
+          "title": "Pulizia dopo lavori di intonacatura",
+          "details": "Spruzzi di intonaco rimossi dalla piattaforma e dal braccio, perni ingrassati."
+        },
+        "e09": {
+          "title": "Controllo prima dell’uso",
+          "details": "Livelli, pneumatici e parapetti controllati, arresti d’emergenza, avvisatore acustico e allarme di inclinazione provati. Nessun difetto."
+        },
+        "e10": {
+          "title": "Presa 230 V della piattaforma da sostituire",
+          "details": "Presa rotta in cantiere. Pezzo ordinato, montaggio previsto prima del controllo periodico. Piattaforma utilizzabile nel frattempo."
+        }
+      },
+      "schedules": {
+        "s1": "Manutenzione",
+        "s2": "Controllo periodico della PLE",
+        "s3": "Controllo del limitatore di carico"
+      }
+    },
+    "pa08": {
+      "brand": "Demo",
+      "model": "Escavatore ragno 10 t",
+      "notes": "Tiltrotatore e pinza selezionatrice. Torrenti, scarpate ripide e paravalanghe.",
+      "entries": {
+        "e01": {
+          "title": "Rientro dal cantiere dei paravalanghe",
+          "details": "Macchina riportata a valle prima della neve. Pulizia, controllo dei tubi flessibili, degli artigli e dei pneumatici."
+        },
+        "e02": {
+          "title": "Manutenzione 4’500 h",
+          "details": "Olio motore e filtri, filtro idraulico, olio dei mozzi ruota controllato, ingrassaggio completo."
+        },
+        "e03": {
+          "title": "Guarnizione del mozzo ruota posteriore sinistro sostituita",
+          "details": "Perdita d’olio al mozzo. Guarnizione sostituita, cuscinetto controllato, olio del mozzo cambiato."
+        },
+        "e04": {
+          "title": "Controllo annuale di sicurezza",
+          "details": "Freni, valvole di sicurezza dei cilindri, attacco rapido del tiltrotatore, cintura, illuminazione, estintore. Nessun difetto."
+        },
+        "e05": {
+          "title": "Artigli delle gambe anteriori (coppia)",
+          "details": "Usurati dai massi del torrente, montati dall’officina."
+        },
+        "e06": {
+          "title": "Manutenzione 5’000 h",
+          "details": "Olio motore, filtri olio, carburante e aria, filtro di ritorno idraulico, olio dei mozzi ruota, ingrassaggio completo."
+        },
+        "e07": {
+          "title": "Manutenzione del tiltrotatore",
+          "details": "Gioco del motore di rotazione controllato, tenuta del giunto rotante rifatta, viti di fissaggio riserrate, ingrassaggio."
+        },
+        "e08": {
+          "title": "Ingrassaggio delle articolazioni delle gambe",
+          "details": "Articolazioni e cilindri delle gambe ingrassati. Gioco riscontrato sulla gamba anteriore destra."
+        },
+        "e09": {
+          "title": "Gamba anteriore destra: perno e boccole sostituiti",
+          "details": "Gioco importante all’articolazione. Perno e boccole sostituiti, articolazione di nuovo ingrassata."
+        },
+        "e10": {
+          "title": "Controllo dei livelli e ingrassaggio",
+          "details": "Prima dell’ultimo cantiere della stagione in quota. Livelli rabboccati, perni e tiltrotatore ingrassati."
+        }
+      },
+      "schedules": {
+        "s1": "Manutenzione",
+        "s2": "Controllo annuale di sicurezza",
+        "s3": "Manutenzione del tiltrotatore"
       }
     }
   }

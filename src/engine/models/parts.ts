@@ -123,7 +123,7 @@ export function cabin(kit: Kit, part: number, o: CabOpts): void {
   if (o.seat !== false) {
     const sx = x0 + (x1 - x0) * 0.42;
     kit.rbox(part, 'interior', [0.46, 0.14, 0.48], 0.05, [sx, y0 + 0.42, zc]);
-    kit.rbox(part, 'interior', [0.12, 0.62, 0.46], 0.05, [sx - 0.26, y0 + 0.72, zc], [0, 0, -0.12]);
+    kit.rbox(part, 'interior', [0.12, 0.62, 0.46], 0.05, [sx - 0.26, y0 + 0.72, zc], [0, 0, 0.12]);
     kit.box(part, 'interior', [0.3, 0.32, 0.4], [sx, y0 + 0.2, zc]);
     for (const s of [-1, 1]) {
       kit.rbox(part, 'interior', [0.42, 0.1, 0.14], 0.03, [sx + 0.08, y0 + 0.56, zc + s * 0.33]);

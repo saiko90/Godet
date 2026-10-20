@@ -2,7 +2,7 @@
   "meta": {
     "title": "Demo der 3D-Garage",
     "shareTitle": "Godet — Demo der 3D-Garage für Ihren Maschinenpark",
-    "description": "Besuchen Sie eine Beispielgarage ohne Anmeldung: sechs Baumaschinen, zwölf Monate Wartungsheft, Reparaturen, Ersatzteile, Kosten und Termine. Probieren Sie alles aus, nichts wird gespeichert.",
+    "description": "Besuchen Sie eine Beispielgarage ohne Anmeldung: acht Baumaschinen, zwölf Monate Wartungsheft, Reparaturen, Ersatzteile, Kosten und Termine. Probieren Sie alles aus, nichts wird gespeichert.",
     "keywords": "Wartungsheft, Baumaschinen, Maschinenpark, Flottenmanagement, Baggerwartung, Schweiz, Demo"
   },
   "loading": "Die Demo-Garage wird geöffnet…",
@@ -12,7 +12,8 @@
     "foreman": "Werkstattchef",
     "operator": "Maschinist",
     "partner": "Partnergarage",
-    "roadOffice": "Strassenverkehrsamt"
+    "roadOffice": "Strassenverkehrsamt",
+    "inspector": "Externer Experte"
   },
   "suppliers": {
     "tpValais": "Baumaschinen Wallis AG",
@@ -409,6 +410,110 @@
         "s1": "Wartung",
         "s2": "Periodische Fahrzeugprüfung",
         "s3": "Fahrtschreiberkontrolle"
+      }
+    },
+    "na07": {
+      "brand": "Demo",
+      "model": "Gelenkteleskopbühne 16 m",
+      "notes": "Arbeitshöhe 16 m, Tragfähigkeit 230 kg. Fassaden und Dächer. Auffanggurt im Korb obligatorisch.",
+      "entries": {
+        "e01": {
+          "title": "Periodische Prüfung der Hubarbeitsbühne",
+          "details": "Struktur und Schweissnähte, Bolzen und Buchsen des Auslegers, Schläuche, Überlastsicherung, Neigungswarnung, Notsteuerung und Notablass. Keine Mängel, Prüfplakette erneuert."
+        },
+        "e02": {
+          "title": "Batterie 12 V 100 Ah",
+          "details": "Originalbatterie nach der grossen Kälte defekt."
+        },
+        "e03": {
+          "title": "Wartung 2’500 h",
+          "details": "Motoröl und Filter, Hydraulikfilter, Schmierung von Drehturm und Auslegerbolzen, Anzug der Drehkranzschrauben kontrolliert."
+        },
+        "e04": {
+          "title": "Prüfung der Überlastsicherung",
+          "details": "Test mit Nennlast (230 kg), dann mit Überlast: Warnung und Abschaltung der Bewegungen in Ordnung."
+        },
+        "e05": {
+          "title": "Kontrolle vor Arbeitsbeginn",
+          "details": "Vor den Fassadenarbeiten: Füllstände, Reifen, Not-Halt, Steuerung am Boden und im Korb, Notablass. Keine Mängel."
+        },
+        "e06": {
+          "title": "Schlauch am Auslegerzylinder ersetzt",
+          "details": "Leck auf der Baustelle. Schlauch und Dichtungen ersetzt, Öl nachgefüllt, Funktionstest."
+        },
+        "e07": {
+          "title": "Bedienpult im Korb: Joystick ersetzt",
+          "details": "Ruckartige Auslegerbewegungen. Proportional-Joystick ersetzt, Steuerung eingestellt und vom Boden und vom Korb aus getestet."
+        },
+        "e08": {
+          "title": "Reinigung nach Verputzarbeiten",
+          "details": "Verputzspritzer von Korb und Ausleger entfernt, Bolzen geschmiert."
+        },
+        "e09": {
+          "title": "Kontrolle vor Arbeitsbeginn",
+          "details": "Füllstände, Reifen und Geländer kontrolliert, Not-Halt, Hupe und Neigungswarnung getestet. Keine Mängel."
+        },
+        "e10": {
+          "title": "Steckdose 230 V im Korb ersetzen",
+          "details": "Steckdose auf der Baustelle beschädigt. Teil bestellt, Einbau vor der periodischen Prüfung geplant. Arbeitsbühne bis dahin einsetzbar."
+        }
+      },
+      "schedules": {
+        "s1": "Wartung",
+        "s2": "Periodische Prüfung der Hubarbeitsbühne",
+        "s3": "Prüfung der Überlastsicherung"
+      }
+    },
+    "pa08": {
+      "brand": "Demo",
+      "model": "Schreitbagger 10 t",
+      "notes": "Tiltrotator und Sortiergreifer. Wildbäche, steile Böschungen und Lawinenverbauungen.",
+      "entries": {
+        "e01": {
+          "title": "Zurück von der Lawinenverbauung",
+          "details": "Maschine vor dem Schnee ins Tal gebracht. Reinigung, Kontrolle von Schläuchen, Krallen und Reifen."
+        },
+        "e02": {
+          "title": "Wartung 4’500 h",
+          "details": "Motoröl und Filter, Hydraulikfilter, Öl der Radnaben kontrolliert, komplette Schmierung."
+        },
+        "e03": {
+          "title": "Radnabendichtung hinten links ersetzt",
+          "details": "Ölleck an der Radnabe. Dichtung ersetzt, Lager kontrolliert, Nabenöl erneuert."
+        },
+        "e04": {
+          "title": "Jährliche Sicherheitskontrolle",
+          "details": "Bremsen, Rohrbruchsicherungen der Zylinder, Schnellwechsler des Tiltrotators, Sicherheitsgurt, Beleuchtung, Feuerlöscher. Keine Mängel."
+        },
+        "e05": {
+          "title": "Krallen der Vorderbeine (Paar)",
+          "details": "Durch die Steinblöcke im Wildbach verschlissen, von der Werkstatt montiert."
+        },
+        "e06": {
+          "title": "Wartung 5’000 h",
+          "details": "Motoröl, Öl-, Kraftstoff- und Luftfilter, Hydraulik-Rücklauffilter, Öl der Radnaben, komplette Schmierung."
+        },
+        "e07": {
+          "title": "Wartung des Tiltrotators",
+          "details": "Spiel des Drehmotors kontrolliert, Drehdurchführung neu abgedichtet, Befestigungsschrauben nachgezogen, Schmierung."
+        },
+        "e08": {
+          "title": "Schmierung der Beingelenke",
+          "details": "Gelenke und Zylinder der Beine geschmiert. Spiel am rechten Vorderbein festgestellt."
+        },
+        "e09": {
+          "title": "Vorderbein rechts: Bolzen und Buchsen ersetzt",
+          "details": "Grosses Spiel am Gelenk. Bolzen und Buchsen ersetzt, Gelenk neu geschmiert."
+        },
+        "e10": {
+          "title": "Kontrolle der Füllstände und Schmierung",
+          "details": "Vor der letzten Baustelle der Saison in der Höhe. Füllstände ergänzt, Bolzen und Tiltrotator geschmiert."
+        }
+      },
+      "schedules": {
+        "s1": "Wartung",
+        "s2": "Jährliche Sicherheitskontrolle",
+        "s3": "Wartung des Tiltrotators"
       }
     }
   }

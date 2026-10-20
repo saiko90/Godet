@@ -1177,11 +1177,9 @@
 }
 .g-kind-cats {
   display: flex;
+  flex-wrap: wrap;
   gap: 6px;
   margin: 2px 0 10px;
-  overflow-x: auto;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
 }
 .g-kind-cats::-webkit-scrollbar {
   display: none;
@@ -1245,6 +1243,17 @@
 .g-kind svg {
   width: 52px;
   height: 32px;
+}
+/* Libellés longs (« Scherenarbeitsbühne », « Piattaforma articolata ») : coupure avec trait d'union. */
+.g-kind span {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  hyphens: auto;
+  line-height: 1.25;
+}
+.g-kind .g-kind-short {
+  display: none;
 }
 .g-kind:hover {
   color: var(--chalk);
@@ -1601,6 +1610,18 @@
     display: none;
   }
   .g-demo-short {
+    display: inline;
+  }
+  .g-kind-cats {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .g-kind .g-kind-long {
+    display: none;
+  }
+  .g-kind .g-kind-short {
     display: inline;
   }
   .g-kind-grid {

@@ -28,7 +28,7 @@
   "welcome": {
     "demoEyebrow": "Demo · Beispieldaten",
     "demoLead": "Die Garage für Ihren Maschinenpark.",
-    "demoCopy": "Sechs Maschinen eines Walliser Bauunternehmens, mit zwölf Monaten Wartungsheft: Wartungen, Reparaturen, Ersatzteile, Kosten, Fotos und Termine. Probieren Sie alles aus: Nichts wird gespeichert.",
+    "demoCopy": "Acht Maschinen eines Walliser Bauunternehmens, mit zwölf Monaten Wartungsheft: Wartungen, Reparaturen, Ersatzteile, Kosten, Fotos und Termine. Probieren Sie alles aus: Nichts wird gespeichert.",
     "lead": "Willkommen in der Garage von {org}.",
     "copy": "Jede Maschine hat ihr vollständiges Wartungsheft: Wartungen, Reparaturen, ersetzte Teile, Kosten, Fotos, Videos und die nächsten Termine.",
     "copyEmpty": "Fügen Sie Ihre erste Maschine hinzu: Wartungsheft, Termine und Kosten füllen sich mit jedem Eintrag.",

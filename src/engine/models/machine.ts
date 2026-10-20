@@ -191,14 +191,21 @@ export class MachineView {
       for (const k in tpl.breathe) pose[k] = (pose[k] ?? 0) + tpl.breathe[k] * s;
     }
     applyJoints(art.objs, tpl.parts, tpl.joints, pose);
-    if (this.vibration > 0 && tpl.vibrate) {
-      const i = tpl.parts.findIndex((p) => p.name === tpl.vibrate);
-      if (i >= 0) {
+    if (tpl.vibrate) {
+      const names = Array.isArray(tpl.vibrate) ? tpl.vibrate : [tpl.vibrate];
+      const a = 0.012 * Math.max(0, this.vibration);
+      names.forEach((name, k) => {
+        const i = tpl.parts.findIndex((p) => p.name === name);
+        if (i < 0) return;
         const o = art.objs[i];
-        const a = 0.012 * this.vibration;
-        o.position.y = tpl.parts[i].pos.y + Math.sin(time * 95) * a;
-        o.position.x = tpl.parts[i].pos.x + Math.sin(time * 71 + 1) * a * 0.5;
-      }
+        // Position de base : celle de la liaison de translation si la pièce en a une (déjà posée par applyJoints),
+        // sinon sa place au repos. Vibration nulle : la pièce revient exactement à sa place.
+        const slides = tpl.joints.filter((j) => j.part === i);
+        const baseY = slides.some((j) => j.kind === 'ty') ? o.position.y : tpl.parts[i].pos.y;
+        const baseX = slides.some((j) => j.kind === 'tx') ? o.position.x : tpl.parts[i].pos.x;
+        o.position.y = baseY + Math.sin(time * 95 + k * 1.7) * a;
+        o.position.x = baseX + Math.sin(time * 71 + 1 + k) * a * 0.5;
+      });
     }
     art.group.updateMatrixWorld(true);
     for (const p of art.pistons) {

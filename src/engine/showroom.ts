@@ -962,10 +962,13 @@ export class Engine implements Showroom {
   private async runWake(e: Entry, token: number): Promise<void> {
     const v = e.view;
     v.busy++;
+    // Grands mouvements (flèche de nacelle, mât de foreuse, convoyeur déplié) : la caméra recule pendant le réveil.
+    const wide = v.tpl.wakeHeight > v.tpl.height * 1.15 || v.tpl.wakeRadius > v.tpl.radius * 1.15;
     try {
       void this.lampsTo(e, 1, 0.5);
       v.beacon = 1;
       this.sfx.engineOn();
+      if (wide) this.frameMachine(e, true);
       if (!(await this.tl.delay(this.reduced ? 0.05 : 0.65)) || token !== e.token) return;
       if (v.tpl.vibrate && !this.reduced) {
         v.vibration = 1;
@@ -973,6 +976,7 @@ export class Engine implements Showroom {
       }
       await this.playSteps(e, token, v.tpl.wake);
       v.vibration = 0;
+      if (wide) this.frameMachine(e, false);
       if (token !== e.token) return;
       if (!(await this.tl.delay(3.2)) || token !== e.token) return;
       this.sleepMachine(e);
@@ -1171,6 +1175,22 @@ export class Engine implements Showroom {
     };
     this.vp = { w: this.cssW, h: this.cssH, insets: ins };
     this.cam.setViewport(this.vp);
+  }
+
+  /**
+   * Cadrage de la machine visée : celui du repos, ou élargi à l'emprise de son réveil (hauteur et rayon maximaux).
+   * Petit vol de la caméra (même angle, même zoom relatif) ; rien si une autre machine est visée ou en plein vol.
+   */
+  private frameMachine(e: Entry, wake: boolean): void {
+    if (this.disposed || this.target !== e.data.id || this.cam.flying) return;
+    const s = e.view.scale;
+    // La hauteur compte entière (flèche levée, mât dressé) ; le rayon est plafonné : une flèche qui pivote passe
+    // brièvement hors champ plutôt que de faire reculer la caméra au fond du hall.
+    const r = wake ? Math.max(e.view.radius, Math.min(e.view.tpl.wakeRadius * s, e.view.radius * 1.3)) : e.view.radius;
+    const h = wake ? Math.max(e.view.height, e.view.tpl.wakeHeight * s) : e.view.height;
+    const v = machineView(this.slots[e.index], r, h, this.vp, this.obstacles, this.dims);
+    this.cam.refit(v.frame);
+    this.invalidate();
   }
 
   /** Recadre la vue courante (taille d'écran ou zones masquées changées). */

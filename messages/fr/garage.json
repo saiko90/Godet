@@ -28,7 +28,7 @@
   "welcome": {
     "demoEyebrow": "Démo · données d’exemple",
     "demoLead": "Le garage de votre parc d’engins.",
-    "demoCopy": "Six machines d’une entreprise valaisanne, avec douze mois de carnet : services, réparations, pièces, coûts, photos et échéances. Essayez tout : rien n’est enregistré.",
+    "demoCopy": "Huit machines d’une entreprise valaisanne, avec douze mois de carnet : services, réparations, pièces, coûts, photos et échéances. Essayez tout : rien n’est enregistré.",
     "lead": "Bienvenue dans le garage de {org}.",
     "copy": "Chaque machine a son carnet complet : services, réparations, pièces changées, coûts, photos, vidéos et prochaines échéances.",
     "copyEmpty": "Ajoutez votre première machine : son carnet, ses échéances et ses coûts se rempliront au fil des interventions.",

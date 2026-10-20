@@ -43,6 +43,11 @@ Navigateur de test : Chromium de Playwright dans `/opt/pw-browsers` (ne pas lanc
   `/parametres`, `/carnet/[id]` (impression), `/admin` (Swiss Digital Studio uniquement).
 - `src/proxy.ts` : session Supabase + protection des pages privées + langues (next-intl).
 - `src/engine` : moteur 3D. Contrat unique : `src/engine/types.ts` (`createShowroom`). Rien d'autre n'importe three.js.
+  Un modèle procédural par type de machine dans `src/engine/models/<type>.ts` (boîte à outils `kit.ts`, pièces
+  communes `parts.ts`, registre `index.ts`). Catalogue des types et familles : `src/lib/machine-kinds.ts` (33 types en
+  5 familles) ; textes `domain.json` (`machineKinds`, `machineCategories`), préfixes de code `garage.json`
+  (`codePrefix`), icônes `src/components/garage/KindIcon.tsx`. Ajouter un type = valeur de l'enum `machine_kind`
+  (migration) + ces fichiers + resynchroniser la fonction `rappels`.
 - `src/components/garage` : interface du garage (scène, fiche machine, saisies, mode atelier). Styles : `garage.css`.
 - `src/components/site` : pages du site et des comptes. Styles : `site.css`.
 - `src/components` : partagé (`Icons.tsx` sprite + `<Icon name>`, `Logo.tsx`, `Loader.tsx` écran de chargement).

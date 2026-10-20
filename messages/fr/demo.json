@@ -2,7 +2,7 @@
   "meta": {
     "title": "Démo du garage 3D",
     "shareTitle": "Godet — démo du garage 3D de votre parc d’engins",
-    "description": "Visitez un garage d’exemple sans inscription : six machines de chantier, douze mois de carnet d’entretien, réparations, pièces, coûts et échéances. Essayez tout, rien n’est enregistré.",
+    "description": "Visitez un garage d’exemple sans inscription : huit machines de chantier, douze mois de carnet d’entretien, réparations, pièces, coûts et échéances. Essayez tout, rien n’est enregistré.",
     "keywords": "carnet d’entretien, machines de chantier, parc d’engins, gestion de flotte, entretien pelle, Suisse, démo"
   },
   "loading": "Ouverture du garage de démonstration…",
@@ -12,7 +12,8 @@
     "foreman": "Chef d’atelier",
     "operator": "Machiniste",
     "partner": "Garage partenaire",
-    "roadOffice": "Service de la circulation routière"
+    "roadOffice": "Service de la circulation routière",
+    "inspector": "Expert externe"
   },
   "suppliers": {
     "tpValais": "Matériel TP Valais SA",
@@ -172,6 +173,50 @@
         "s1": "Service",
         "s2": "Expertise périodique",
         "s3": "Contrôle du tachygraphe"
+      }
+    },
+    "na07": {
+      "brand": "Démo",
+      "model": "Nacelle articulée 16 m",
+      "notes": "Hauteur de travail 16 m, charge maximale 230 kg. Façades et toitures. Harnais obligatoire dans la plateforme.",
+      "entries": {
+        "e01": { "title": "Contrôle périodique PEMP", "details": "Structure et soudures, axes et bagues de la flèche, flexibles, limiteur de charge, alarme de dévers, commandes et descente de secours. Aucun défaut, vignette de contrôle renouvelée." },
+        "e02": { "title": "Batterie 12 V 100 Ah", "details": "Batterie d’origine hors d’usage après les grands froids." },
+        "e03": { "title": "Service 2’500 h", "details": "Huile moteur et filtres, filtre hydraulique, graissage de la tourelle et des axes de flèche, serrage des vis de la couronne contrôlé." },
+        "e04": { "title": "Contrôle du limiteur de charge", "details": "Essai à la charge nominale (230 kg) puis en surcharge : alarme et blocage des mouvements conformes." },
+        "e05": { "title": "Contrôle avant utilisation", "details": "Avant le chantier de façades : niveaux, pneus, arrêts d’urgence, commandes au sol et dans la plateforme, descente de secours. Aucun défaut." },
+        "e06": { "title": "Flexible du vérin de flèche remplacé", "details": "Fuite sur le chantier. Flexible et joints remplacés, niveau d’huile complété, essai de fonctionnement." },
+        "e07": { "title": "Pupitre de la plateforme : manipulateur remplacé", "details": "Mouvements de flèche saccadés. Manipulateur proportionnel remplacé, commandes réglées et testées depuis le sol et la plateforme." },
+        "e08": { "title": "Nettoyage après chantier de crépissage", "details": "Projections de crépi retirées de la plateforme et de la flèche, axes graissés." },
+        "e09": { "title": "Contrôle avant utilisation", "details": "Niveaux, pneus et garde-corps contrôlés, arrêts d’urgence, avertisseur et alarme de dévers testés. Aucun défaut." },
+        "e10": { "title": "Prise 230 V de la plateforme à remplacer", "details": "Prise cassée sur le chantier. Pièce commandée, montage prévu avant le contrôle périodique. Nacelle utilisable en attendant." }
+      },
+      "schedules": {
+        "s1": "Service",
+        "s2": "Contrôle périodique PEMP",
+        "s3": "Contrôle du limiteur de charge"
+      }
+    },
+    "pa08": {
+      "brand": "Démo",
+      "model": "Pelle araignée 10 t",
+      "notes": "Tiltrotateur et pince de tri. Torrents, talus raides et paravalanches.",
+      "entries": {
+        "e01": { "title": "Retour du chantier de paravalanches", "details": "Machine redescendue avant la neige. Nettoyage, contrôle des flexibles, des griffes et des pneus." },
+        "e02": { "title": "Service 4’500 h", "details": "Huile moteur et filtres, filtre hydraulique, huile des moyeux de roues contrôlée, graissage complet." },
+        "e03": { "title": "Joint de moyeu de roue arrière gauche remplacé", "details": "Fuite d’huile au moyeu. Joint remplacé, roulement contrôlé, huile du moyeu renouvelée." },
+        "e04": { "title": "Contrôle annuel de sécurité", "details": "Freins, clapets de sécurité des vérins, attache rapide du tiltrotateur, ceinture, éclairage, extincteur. Aucun défaut." },
+        "e05": { "title": "Griffes des jambes avant (paire)", "details": "Usées par les blocs du torrent, montées par l’atelier." },
+        "e06": { "title": "Service 5’000 h", "details": "Huile moteur, filtres à huile, à carburant et à air, filtre de retour hydraulique, huile des moyeux de roues, graissage complet." },
+        "e07": { "title": "Service du tiltrotateur", "details": "Jeu du moteur de rotation contrôlé, étanchéité du joint tournant refaite, vis de fixation resserrées, graissage." },
+        "e08": { "title": "Graissage des articulations des jambes", "details": "Articulations et vérins des jambes graissés. Jeu constaté à la jambe avant droite." },
+        "e09": { "title": "Jambe avant droite : axe et bagues remplacés", "details": "Jeu important à l’articulation. Axe et bagues remplacés, articulation regraissée." },
+        "e10": { "title": "Contrôle des niveaux et graissage", "details": "Avant le dernier chantier de la saison en altitude. Niveaux complétés, axes et tiltrotateur graissés." }
+      },
+      "schedules": {
+        "s1": "Service",
+        "s2": "Contrôle annuel de sécurité",
+        "s3": "Service du tiltrotateur"
       }
     }
   }

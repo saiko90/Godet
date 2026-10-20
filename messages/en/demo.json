@@ -2,7 +2,7 @@
   "meta": {
     "title": "3D garage demo",
     "shareTitle": "Godet — 3D garage demo for your equipment fleet",
-    "description": "Visit a sample garage without signing up: six construction machines, twelve months of maintenance log, repairs, parts, costs and due dates. Try everything, nothing is saved.",
+    "description": "Visit a sample garage without signing up: eight construction machines, twelve months of maintenance log, repairs, parts, costs and due dates. Try everything, nothing is saved.",
     "keywords": "maintenance log, construction machinery, plant fleet, fleet management, excavator maintenance, Switzerland, demo"
   },
   "loading": "Opening the demo garage…",
@@ -12,7 +12,8 @@
     "foreman": "Workshop foreman",
     "operator": "Operator",
     "partner": "Partner garage",
-    "roadOffice": "Road Traffic Office"
+    "roadOffice": "Road Traffic Office",
+    "inspector": "External inspector"
   },
   "suppliers": {
     "tpValais": "Valais Plant & Equipment Ltd",
@@ -409,6 +410,110 @@
         "s1": "Service",
         "s2": "Periodic vehicle inspection",
         "s3": "Tachograph check"
+      }
+    },
+    "na07": {
+      "brand": "Demo",
+      "model": "Articulating boom lift 16 m",
+      "notes": "Working height 16 m, safe working load 230 kg. Façades and roofs. Harness compulsory in the platform.",
+      "entries": {
+        "e01": {
+          "title": "Periodic MEWP safety inspection",
+          "details": "Structure and welds, boom pins and bushes, hoses, load limiter, tilt alarm, emergency controls and emergency lowering. No defects, inspection sticker renewed."
+        },
+        "e02": {
+          "title": "Battery 12 V 100 Ah",
+          "details": "Original battery dead after the cold spell."
+        },
+        "e03": {
+          "title": "2’500 h service",
+          "details": "Engine oil and filters, hydraulic filter, turntable and boom pins greased, slew ring bolt torque checked."
+        },
+        "e04": {
+          "title": "Load limiter check",
+          "details": "Test at rated load (230 kg), then with an overload: alarm and motion cut-out working correctly."
+        },
+        "e05": {
+          "title": "Pre-use check",
+          "details": "Before the façade job: fluid levels, tyres, emergency stops, ground and platform controls, emergency lowering. No defects."
+        },
+        "e06": {
+          "title": "Boom cylinder hose replaced",
+          "details": "Leak on site. Hose and seals replaced, oil topped up, function test."
+        },
+        "e07": {
+          "title": "Platform control box: joystick replaced",
+          "details": "Jerky boom movements. Proportional joystick replaced, controls adjusted and tested from the ground and the platform."
+        },
+        "e08": {
+          "title": "Cleaning after rendering work",
+          "details": "Render splashes removed from the platform and boom, pins greased."
+        },
+        "e09": {
+          "title": "Pre-use check",
+          "details": "Fluid levels, tyres and guardrails checked; emergency stops, horn and tilt alarm tested. No defects."
+        },
+        "e10": {
+          "title": "Platform 230 V socket to be replaced",
+          "details": "Socket broken on site. Part ordered, fitting planned before the periodic inspection. Lift usable in the meantime."
+        }
+      },
+      "schedules": {
+        "s1": "Service",
+        "s2": "Periodic MEWP safety inspection",
+        "s3": "Load limiter check"
+      }
+    },
+    "pa08": {
+      "brand": "Demo",
+      "model": "Spider excavator 10 t",
+      "notes": "Tiltrotator and sorting grab. Mountain streams, steep slopes and avalanche defences.",
+      "entries": {
+        "e01": {
+          "title": "Back from the avalanche defence site",
+          "details": "Machine brought down to the valley before the snow. Cleaning; hoses, claws and tyres checked."
+        },
+        "e02": {
+          "title": "4’500 h service",
+          "details": "Engine oil and filters, hydraulic filter, wheel hub oil checked, full greasing."
+        },
+        "e03": {
+          "title": "Rear left wheel hub seal replaced",
+          "details": "Oil leak at the hub. Seal replaced, bearing checked, hub oil changed."
+        },
+        "e04": {
+          "title": "Annual safety inspection",
+          "details": "Brakes, cylinder safety valves, tiltrotator quick hitch, seat belt, lights, fire extinguisher. No defects."
+        },
+        "e05": {
+          "title": "Front leg claws (pair)",
+          "details": "Worn by the boulders in the stream, fitted by the workshop."
+        },
+        "e06": {
+          "title": "5’000 h service",
+          "details": "Engine oil; oil, fuel and air filters; hydraulic return filter; wheel hub oil; full greasing."
+        },
+        "e07": {
+          "title": "Tiltrotator service",
+          "details": "Rotation motor play checked, swivel resealed, mounting bolts retightened, greasing."
+        },
+        "e08": {
+          "title": "Leg joint greasing",
+          "details": "Leg joints and cylinders greased. Play found in the front right leg."
+        },
+        "e09": {
+          "title": "Front right leg: pin and bushes replaced",
+          "details": "Excessive play at the joint. Pin and bushes replaced, joint greased again."
+        },
+        "e10": {
+          "title": "Fluid level check and greasing",
+          "details": "Before the last high-altitude job of the season. Fluids topped up, pins and tiltrotator greased."
+        }
+      },
+      "schedules": {
+        "s1": "Service",
+        "s2": "Annual safety inspection",
+        "s3": "Tiltrotator service"
       }
     }
   }

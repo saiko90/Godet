@@ -15,6 +15,7 @@ import {
 } from './digest.ts';
 import { dueOf, isWithinLead, weeklyRate, type ScheduleRow } from './dues.ts';
 import { isoWeekday, makeFormat, zurichDay } from './format.ts';
+import { translator } from './i18n.ts';
 import { renderDigest, scheduleLabel } from './render.ts';
 import { sendWithResend } from './resend.ts';
 import { linksFor, runReminders, type RunConfig } from './run.ts';
@@ -40,6 +41,12 @@ Deno.test('formats : Suisse dans toutes les langues, Allemagne en euros', () => 
   assertEquals(isoWeekday(MONDAY), 1);
   // 00:30 à Zurich (heure d'été) = la veille 22:30 en UTC.
   assertEquals(zurichDay(new Date('2026-10-18T22:30:00Z')), MONDAY);
+});
+
+Deno.test('catalogue : les nouveaux types de machines ont leur libellé dans les rappels', () => {
+  const t = translator('de');
+  deepStrictEqual(t('domain.machineKinds.nacelle_ciseaux.short'), 'Scherenbühne');
+  deepStrictEqual(translator('it')('domain.machineKinds.pelle_araignee.short'), 'Escavatore ragno');
 });
 
 Deno.test('échéances par défaut : libellé dans la langue du destinataire', () => {

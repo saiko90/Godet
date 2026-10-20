@@ -25,3 +25,40 @@ export function categoryOf(kind: MachineKind): MachineCategory {
 export function isMachineKind(value: unknown): value is MachineKind {
   return typeof value === 'string' && (MACHINE_KIND_ORDER as readonly string[]).includes(value);
 }
+
+/** Poids typique (t) d'une machine de chaque type : exemple du champ « Poids » (et ordre de grandeur des modèles 3D). */
+export const TYPICAL_WEIGHT: Record<MachineKind, number> = {
+  pelle: 21,
+  pelle_pneus: 18,
+  mini_pelle: 2.7,
+  pelle_araignee: 10,
+  chargeuse: 18,
+  chargeuse_compacte: 4,
+  tractopelle: 8,
+  bulldozer: 20,
+  niveleuse: 17,
+  dumper: 9,
+  mini_dumper: 2.5,
+  camion: 32,
+  camion_grue: 26,
+  camion_malaxeur: 32,
+  grue: 40,
+  grue_tour: 24,
+  chariot_telescopique: 11,
+  chariot_elevateur: 5,
+  nacelle_ciseaux: 3.8,
+  nacelle_articulee: 6.9,
+  nacelle_telescopique: 10.5,
+  rouleau: 12,
+  rouleau_tandem: 9,
+  plaque_vibrante: 0.45,
+  finisseur: 18,
+  fraiseuse: 19,
+  pompe_beton: 32,
+  foreuse: 12,
+  concasseur: 30,
+  crible: 25,
+  groupe_electrogene: 1.9,
+  compresseur: 1,
+  autre: 5,
+};
