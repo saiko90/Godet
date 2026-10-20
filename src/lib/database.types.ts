@@ -155,6 +155,9 @@ export type Database = {
           title: string
           updated_at: string
           warranty_until: string | null
+          lat: number | null
+          lng: number | null
+          loc_accuracy: number | null
         }
         Insert: {
           cost_labour?: number
@@ -181,6 +184,9 @@ export type Database = {
           title: string
           updated_at?: string
           warranty_until?: string | null
+          lat?: number | null
+          lng?: number | null
+          loc_accuracy?: number | null
         }
         Update: {
           cost_labour?: number
@@ -207,6 +213,9 @@ export type Database = {
           title?: string
           updated_at?: string
           warranty_until?: string | null
+          lat?: number | null
+          lng?: number | null
+          loc_accuracy?: number | null
         }
         Relationships: [
           {
@@ -241,6 +250,9 @@ export type Database = {
           org_id: string
           read_at: string
           source: string
+          lat: number | null
+          lng: number | null
+          loc_accuracy: number | null
         }
         Insert: {
           created_by?: string | null
@@ -250,6 +262,9 @@ export type Database = {
           org_id: string
           read_at?: string
           source?: string
+          lat?: number | null
+          lng?: number | null
+          loc_accuracy?: number | null
         }
         Update: {
           created_by?: string | null
@@ -259,6 +274,9 @@ export type Database = {
           org_id?: string
           read_at?: string
           source?: string
+          lat?: number | null
+          lng?: number | null
+          loc_accuracy?: number | null
         }
         Relationships: [
           {
@@ -413,6 +431,10 @@ export type Database = {
           updated_at: string
           weight_t: number | null
           year: number | null
+          last_lat: number | null
+          last_lng: number | null
+          last_loc_accuracy: number | null
+          last_located_at: string | null
         }
         Insert: {
           archived_at?: string | null
@@ -434,6 +456,10 @@ export type Database = {
           updated_at?: string
           weight_t?: number | null
           year?: number | null
+          last_lat?: number | null
+          last_lng?: number | null
+          last_loc_accuracy?: number | null
+          last_located_at?: string | null
         }
         Update: {
           archived_at?: string | null
@@ -455,6 +481,10 @@ export type Database = {
           updated_at?: string
           weight_t?: number | null
           year?: number | null
+          last_lat?: number | null
+          last_lng?: number | null
+          last_loc_accuracy?: number | null
+          last_located_at?: string | null
         }
         Relationships: [
           {
@@ -659,6 +689,7 @@ export type Database = {
           name: string
           plan: string
           trial_ends_at: string
+          track_location: boolean
         }
         Insert: {
           billing_interval?: string | null
@@ -678,6 +709,7 @@ export type Database = {
           name: string
           plan?: string
           trial_ends_at?: string
+          track_location?: boolean
         }
         Update: {
           billing_interval?: string | null
@@ -697,6 +729,7 @@ export type Database = {
           name?: string
           plan?: string
           trial_ends_at?: string
+          track_location?: boolean
         }
         Relationships: []
       }

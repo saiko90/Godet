@@ -10,7 +10,9 @@ import { ENTRY_KINDS } from '@/lib/domain';
 import type { EntryKind, RepairStatus } from '@/lib/types';
 import type { NewEntry } from '@/lib/repo/types';
 import { useDomainText } from '@/lib/use-domain-text';
+import { useGeoFix } from '@/lib/geo';
 import { useGarage } from './context';
+import { GeoNote } from './GeoNote';
 import { useErrorText } from './errors';
 import { aria, Field, focusFirstError, type Errors } from './fields';
 import { isServiceLabel, KINDS_WITH_HOURS } from './helpers';
@@ -54,6 +56,9 @@ export function EntryModal({
   const errorText = useErrorText();
   const messages = useMessages();
   const g = useGarage();
+  // Position jointe aux nouvelles saisies si l'entreprise l'a activée (jamais dans la démo, jamais en modification).
+  const geo = useGeoFix(g.mode === 'cloud' && g.org.track_location && !entryId);
+  const [withGeo, setWithGeo] = useState(true);
   const machine = g.fleet.machines.find((m) => m.id === machineId);
   const file = g.files[machineId];
   const entry = entryId ? file?.entries.find((e) => e.id === entryId) : undefined;
@@ -261,7 +266,7 @@ export function EntryModal({
     try {
       const saved = entry
         ? await g.repo().updateEntry(entry.id, input)
-        : await g.repo().addEntry({ machineId: machine.id, ...input, scheduleId: scheduleId || null });
+        : await g.repo().addEntry({ machineId: machine.id, ...input, scheduleId: scheduleId || null, location: withGeo ? geo.fix : null });
       let photoErrors: string[] = [];
       if (photos.length) {
         setStage(t('entryForm.sendingPhotos', { count: photos.length }));
@@ -560,6 +565,8 @@ export function EntryModal({
       {editing && entry?.schedule_id ? (
         <p className="g-hint">{t('entryForm.linkedNote')}</p>
       ) : null}
+
+      <GeoNote state={geo.state} accuracy={geo.fix?.accuracy ?? null} on={withGeo} onToggle={setWithGeo} />
 
       {busy && photos.length ? <UploadStatus machineId={machine.id} /> : null}
       {error ? (

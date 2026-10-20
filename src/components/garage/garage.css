@@ -1893,3 +1893,16 @@
 .g-meter-photo { display: grid; justify-items: start; gap: 6px; }
 .g-meter-photo .btn { min-height: 40px; gap: 8px; }
 .g-meter-photo .btn svg { width: 18px; height: 18px; }
+
+/* ---------- position GPS des saisies ---------- */
+.g-geo { display: flex; align-items: center; gap: 8px; margin: 0; font-size: var(--t-sm); color: var(--steel); }
+.g-geo svg { width: 16px; height: 16px; flex: none; color: var(--paint); }
+.g-geo.is-off svg { color: var(--dim); }
+.g-geo.is-ok { cursor: pointer; color: var(--chalk); }
+.g-geo input { width: 18px; height: 18px; margin: 0; accent-color: var(--paint); }
+.g-tl-geo { display: inline-flex; align-items: center; gap: 4px; margin-top: 4px; font-size: var(--t-xs); color: var(--steel); }
+.g-tl-geo svg { width: 13px; height: 13px; }
+.g-tl-geo:hover { color: var(--paint); }
+.g-geo-last { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin: 0; font-size: var(--t-sm); color: var(--steel); }
+.g-geo-last svg { width: 16px; height: 16px; color: var(--paint); }
+.g-geo-last a { color: var(--paint); }

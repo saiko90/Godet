@@ -18,10 +18,12 @@
       "account": "<strong>Compte</strong>\u00a0: nom, adresse e-mail, mot de passe (jamais stocké en clair), langue choisie, entreprises dont vous êtes membre et rôle dans chacune.",
       "fleet": "<strong>Données du parc</strong>\u00a0: machines, interventions, échéances, relevés d’heures, coûts et notes saisis par votre entreprise, avec le nom de la personne qui a fait chaque saisie.",
       "media": "<strong>Médias déposés</strong>\u00a0: photos, vidéos et documents (factures, rapports) ajoutés aux machines.",
+      "location": "<strong>Position des saisies</strong>\u00a0: si votre entreprise l’active, la position GPS de l’appareil au moment d’une intervention ou d’un relevé d’heures (jamais en continu\u00a0; chaque personne peut la retirer à chaque saisie).",
       "journal": "<strong>Journal des modifications</strong>\u00a0: qui a créé, modifié ou retiré quoi, et quand.",
       "contact": "<strong>Formulaire de contact</strong>\u00a0: nom, adresse e-mail, entreprise, téléphone, pays, taille du parc, sujet et message, et votre choix d’être recontacté ou non.",
       "ideas": "<strong>Boîte à idées</strong>\u00a0: votre idée, son domaine et ses détails, votre adresse e-mail ou votre compte, et les réponses de notre équipe.",
       "reminders": "<strong>Rappels par e-mail</strong>\u00a0: vos préférences (activés ou non, fréquence, délais) et la trace des envois.",
+      "ai": "<strong>Assistant IA</strong>\u00a0: les questions posées à l’assistant, les photos de compteur envoyées pour lecture et le nombre d’utilisations par mois.",
       "prospects": "<strong>Prospection</strong>\u00a0: coordonnées professionnelles d’entreprises (nom, adresse, site web, téléphone et e-mail professionnels, domaine d’activité) tirées de sources publiques, et l’historique de nos prises de contact.",
       "technical": "<strong>Données techniques</strong>\u00a0: informations nécessaires au fonctionnement et à la sécurité, comme l’adresse IP et le type de navigateur dans les journaux des serveurs."
     },
@@ -57,7 +59,9 @@
     "items": {
       "supabase": "<strong>Supabase</strong>\u00a0: base de données, authentification et stockage des fichiers. Les données sont hébergées dans l’Union européenne (Irlande).",
       "vercel": "<strong>Vercel</strong>\u00a0: hébergement et diffusion du site.",
-      "email": "<strong>Prestataire d’envoi d’e-mails</strong>\u00a0: e-mails liés au compte et rappels."
+      "email": "<strong>Prestataire d’envoi d’e-mails</strong>\u00a0: e-mails liés au compte et rappels.",
+      "stripe": "<strong>Stripe</strong>\u00a0: paiement des abonnements et factures. Les données de carte sont saisies chez Stripe\u00a0; Godet ne les reçoit jamais.",
+      "anthropic": "<strong>Anthropic</strong>\u00a0: modèle d’IA (Claude) de l’assistant et de la lecture du compteur sur photo. Ne reçoit la question ou la photo et les données du parc nécessaires qu’au moment d’une demande\u00a0; ces données ne servent pas à entraîner ses modèles."
     },
     "transfers": "Ces prestataires peuvent être établis hors de Suisse et de l’UE, par exemple aux États-Unis. Lorsque des données y sont communiquées, nous nous appuyons sur une décision d’adéquation (du Conseil fédéral ou de la Commission européenne) ou sur des garanties contractuelles reconnues, comme les clauses contractuelles types."
   },
@@ -86,5 +90,60 @@
   "changes": {
     "title": "Modifications",
     "text": "Nous pouvons adapter cette politique, par exemple si le service évolue. La date de la dernière mise à jour figure en haut de cette page."
+  },
+  "securityPage": {
+    "meta": {
+      "title": "Sécurité et protection des données",
+      "description": "Où sont vos données, comment elles sont protégées, sauvegardées et cloisonnées, et comment les récupérer à tout moment."
+    },
+    "eyebrow": "Confiance",
+    "title": "Vos données sont en sécurité",
+    "intro": "Le carnet d’entretien de votre parc est une preuve devant un contrôle et une valeur à la revente. Voici, concrètement, comment Godet le protège.",
+    "hosting": {
+      "title": "Hébergées en Europe",
+      "text": "La base de données et les fichiers (photos, vidéos, factures) sont hébergés dans l’Union européenne, en Irlande. Le site est servi depuis Dublin."
+    },
+    "encryption": {
+      "title": "Chiffrées",
+      "text": "Tous les échanges passent en HTTPS. Les données sont chiffrées sur les disques de l’hébergeur. Les mots de passe ne sont jamais stockés en clair."
+    },
+    "isolation": {
+      "title": "Cloisonnées par entreprise",
+      "text": "Chaque entreprise ne voit que ses propres données\u00a0: les règles d’accès sont appliquées par la base de données elle-même, pas seulement par l’application. Les fichiers sont privés et ne s’ouvrent qu’avec des liens temporaires."
+    },
+    "roles": {
+      "title": "Chacun selon son rôle",
+      "text": "Propriétaire, administrateur, mécanicien, machiniste\u00a0: chaque personne n’a que les droits de son rôle. Un départ se règle en un clic dans Paramètres → Équipe."
+    },
+    "backups": {
+      "title": "Sauvegardées chaque jour",
+      "text": "Une copie complète de la base de données est faite chaque jour et conservée sept jours."
+    },
+    "kept": {
+      "title": "Rien ne s’efface",
+      "text": "Une saisie erronée est retirée avec son motif et reste visible dans l’historique\u00a0; chaque changement est journalisé. Après l’essai ou en cas de résiliation, le garage passe en lecture seule\u00a0: rien n’est supprimé."
+    },
+    "yours": {
+      "title": "Vos données restent les vôtres",
+      "text": "Exportez à tout moment tout le parc et tout le carnet dans un classeur Excel, et chaque carnet en PDF. Nous ne vendons pas vos données et ne les utilisons pas pour de la publicité. Sur demande, nous les effaçons."
+    },
+    "ai": {
+      "title": "IA sous contrôle",
+      "text": "L’assistant et la lecture du compteur sur photo n’envoient au modèle d’IA (Claude, d’Anthropic) que la question ou la photo et les données nécessaires, au moment de la demande. Ces données ne servent pas à entraîner ses modèles. L’assistant ne peut rien modifier."
+    },
+    "location": {
+      "title": "Position\u00a0: seulement si vous le voulez",
+      "text": "La position GPS des saisies est désactivée par défaut. Si l’entreprise l’active, elle n’est prise qu’au moment d’une saisie, jamais en continu, et chaque personne peut la retirer."
+    },
+    "payments": {
+      "title": "Paiement sécurisé",
+      "text": "Les abonnements sont payés chez Stripe. Godet ne reçoit ni ne conserve aucune donnée de carte."
+    },
+    "devices": {
+      "title": "Appareils partagés",
+      "text": "Le mode sans réseau garde une copie du parc sur l’appareil\u00a0; elle est effacée à la déconnexion."
+    },
+    "report": "Une question sur la sécurité, une demande d’effacement ou un problème à signaler\u00a0? <contact>Écrivez-nous</contact>. Détails juridiques\u00a0: <privacy>politique de confidentialité</privacy>.",
+    "footer": "Sécurité des données"
   }
 }

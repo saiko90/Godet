@@ -5,7 +5,7 @@
 import type { DemoTexts } from '@/lib/demo-content/fleet';
 import { addDays, todayISO } from '@/lib/format';
 import { extForMime, type UploadProgressOptions } from '@/lib/media';
-import type { GarageRepo, NewEntry, NewMachine, NewSchedule } from '@/lib/repo/types';
+import type { GarageRepo, GeoFix, NewEntry, NewMachine, NewSchedule } from '@/lib/repo/types';
 import type { Entry, FleetSnapshot, HourReading, Machine, MachineFile, MediaItem, Schedule } from '@/lib/types';
 import { buildDemoSeed, zurichISO, type DemoSeed } from './demo-data';
 import { fleetSince, GarageError, readingsSince, type GarageErrorCode, type GarageErrorParams } from './supabase';
@@ -63,10 +63,30 @@ export function createDemoRepo({ texts, defaultSchedules, seed }: DemoRepoOption
     }
   };
 
-  const addReadingRow = (m: Machine, hours: number, at: string, source: string) => {
-    const r: HourReading = { id: nextReadingId++, org_id: db.org.id, machine_id: m.id, hours, read_at: at, source, created_by: db.userId };
+  const addReadingRow = (m: Machine, hours: number, at: string, source: string, l?: GeoFix | null) => {
+    const r: HourReading = {
+      id: nextReadingId++,
+      org_id: db.org.id,
+      machine_id: m.id,
+      hours,
+      read_at: at,
+      source,
+      created_by: db.userId,
+      lat: l?.lat ?? null,
+      lng: l?.lng ?? null,
+      loc_accuracy: l?.accuracy ?? null,
+    };
     db.readings.push(r);
     bump(m, hours, at);
+    // Déclencheur « *_last_position » : dernière position de la machine.
+    if (l) locate(m, l);
+  };
+
+  const locate = (m: Machine, l: GeoFix) => {
+    m.last_lat = l.lat;
+    m.last_lng = l.lng;
+    m.last_loc_accuracy = l.accuracy;
+    m.last_located_at = nowISO();
   };
 
   const validateMachine = (input: Partial<NewMachine>, exceptId?: string) => {
@@ -170,6 +190,10 @@ export function createDemoRepo({ texts, defaultSchedules, seed }: DemoRepoOption
         created_by: db.userId,
         created_at: at,
         updated_at: at,
+        last_lat: null,
+        last_lng: null,
+        last_loc_accuracy: null,
+        last_located_at: null,
       };
       db.machines.push(m);
       // Déclencheur « machines_after_insert » : relevé initial et échéances par défaut.
@@ -277,8 +301,12 @@ export function createDemoRepo({ texts, defaultSchedules, seed }: DemoRepoOption
         deleted_at: null,
         deleted_by: null,
         delete_reason: null,
+        lat: input.location?.lat ?? null,
+        lng: input.location?.lng ?? null,
+        loc_accuracy: input.location?.accuracy ?? null,
       };
       db.entries.push(e);
+      if (input.location) locate(m, input.location);
       // Déclencheur « entry_after_insert » : relevé du compteur, puis renouvellement de l'échéance réglée.
       if (e.hours != null) addReadingRow(m, Number(e.hours), zurichISO(date, 12), 'intervention');
       if (schedule) {
@@ -339,12 +367,12 @@ export function createDemoRepo({ texts, defaultSchedules, seed }: DemoRepoOption
       entry.updated_at = entry.deleted_at;
     },
 
-    async addReading(machineId: string, hours: number): Promise<void> {
+    async addReading(machineId: string, hours: number, location?: GeoFix | null): Promise<void> {
       await wait(LATENCY);
       const m = machineById(machineId);
       check(Number.isFinite(hours) && hours >= 0, 'hoursInvalid');
       check(hours >= Number(m.hours), 'hoursBackwards', { hours: Number(m.hours), at: m.hours_at });
-      addReadingRow(m, hours, nowISO(), 'saisie');
+      addReadingRow(m, hours, nowISO(), 'saisie', location);
     },
 
     async addSchedule(input: NewSchedule): Promise<Schedule> {

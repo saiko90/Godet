@@ -43,7 +43,12 @@
     "yourCompanies": "Le Sue imprese",
     "active": "Impresa attiva",
     "switch": "Lavora in questa impresa",
-    "switching": "Cambio di impresa…"
+    "switching": "Cambio di impresa…",
+    "position": "Posizione delle registrazioni",
+    "positionOn": "Registrata",
+    "positionOff": "Non registrata",
+    "positionLabel": "Registra la posizione GPS delle registrazioni",
+    "positionHint": "Al momento di un intervento o di una lettura delle ore, il dispositivo allega la sua posizione (con il consenso della persona, che può toglierla a ogni registrazione). Mai un tracciamento continuo. Informate la vostra squadra prima di attivarla."
   },
   "billing": {
     "title": "Abbonamento",

@@ -104,6 +104,12 @@ Navigateur de test : Chromium de Playwright dans `/opt/pw-browsers` (ne pas lanc
   Compteur mensuel `ai_usage` (rpc `ai_consume`, clé de service seulement) ; limites dans `LIMITS` (essai 30/50,
   essentiel 100, pro 300, parc 800 questions ; 500 photos). Interface : `AssistantPanel` (bouton « Assistant » de la
   barre du haut), bouton « Lire sur une photo » de `HoursModal` ; client `src/lib/ai.ts`. Garder `aide.ts` à jour.
+- Position GPS (migration `20261020181710_positions.sql`) : `organizations.track_location` (désactivée par défaut,
+  case dans Paramètres → Entreprise). Si active, `useGeoFix` (src/lib/geo.ts) prend la position à l'ouverture de la
+  fenêtre d'intervention ou de relevé (jamais en arrière-plan) ; `lat`, `lng`, `loc_accuracy` sur `entries` et
+  `hour_readings`, dernière position sur `machines.last_*` (déclencheurs `*_last_position`). Lien carte OpenStreetMap.
+  `Permissions-Policy` : `geolocation=(self)`. Page publique `/securite` (textes `legal.securityPage`) : chaque
+  garantie doit rester vraie (sauvegardes = plan Supabase Pro, 7 jours).
 - Abonnement : `plan` et `trial_ends_at` d'une entreprise (et `created_by`, `created_at`) ne se modifient pas depuis
   l'application (déclencheur `organizations_guard_billing`, erreur `billing_locked`) : seulement la clé de service,
   une fonction SECURITY DEFINER ou l'administration de la plateforme.

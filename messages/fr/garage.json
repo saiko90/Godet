@@ -943,5 +943,17 @@
     "send": "Envoyer",
     "disclaimer": "L’IA peut se tromper : vérifiez les chiffres importants dans le carnet.",
     "usage": "{used} / {limit} questions ce mois"
+  },
+  "geo": {
+    "attach": "Joindre la position (précise à {meters} m)",
+    "attachNoAccuracy": "Joindre la position",
+    "locating": "Recherche de la position…",
+    "denied": "Position refusée sur cet appareil : la saisie s’enregistre sans position.",
+    "unavailable": "Position indisponible : la saisie s’enregistre sans position.",
+    "entryMap": "Lieu de la saisie",
+    "newTab": "(nouvel onglet)",
+    "last": "Dernière position : {date}",
+    "accuracy": "± {meters} m",
+    "openMap": "Voir sur la carte"
   }
 }

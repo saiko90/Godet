@@ -18,10 +18,12 @@
       "account": "<strong>Konto</strong>: Name, E-Mail-Adresse, Passwort (nie im Klartext gespeichert), gewählte Sprache, Unternehmen, denen Sie angehören, und Ihre Rolle in jedem davon.",
       "fleet": "<strong>Daten des Maschinenparks</strong>: Maschinen, Arbeiten, Termine, Betriebsstunden, Kosten und Notizen, die Ihr Unternehmen erfasst, mit dem Namen der Person, die den jeweiligen Eintrag gemacht hat.",
       "media": "<strong>Hochgeladene Medien</strong>: Fotos, Videos und Dokumente (Rechnungen, Berichte), die den Maschinen hinzugefügt werden.",
+      "location": "<strong>Standort der Einträge</strong>: wenn Ihre Firma es aktiviert, der GPS-Standort des Geräts im Moment eines Eintrags oder einer Zählerablesung (nie laufend; jede Person kann ihn bei jedem Eintrag entfernen).",
       "journal": "<strong>Änderungsprotokoll</strong>: wer was erstellt, geändert oder entfernt hat, und wann.",
       "contact": "<strong>Kontaktformular</strong>: Name, E-Mail-Adresse, Unternehmen, Telefon, Land, Grösse des Maschinenparks, Betreff und Nachricht sowie Ihre Angabe, ob wir Sie erneut kontaktieren dürfen.",
       "ideas": "<strong>Ideenbox</strong>: Ihre Idee, ihr Bereich und ihre Details, Ihre E-Mail-Adresse oder Ihr Konto sowie die Antworten unseres Teams.",
       "reminders": "<strong>Erinnerungen per E-Mail</strong>: Ihre Einstellungen (aktiv oder nicht, Häufigkeit, Vorlaufzeiten) und das Protokoll der Versände.",
+      "ai": "<strong>KI-Assistent</strong>: die Fragen an den Assistenten, die zum Ablesen gesendeten Zählerfotos und die Anzahl Nutzungen pro Monat.",
       "prospects": "<strong>Akquise</strong>: geschäftliche Kontaktdaten von Unternehmen (Name, Adresse, Website, geschäftliche Telefonnummer und E-Mail-Adresse, Branche) aus öffentlichen Quellen sowie der Verlauf unserer Kontaktaufnahmen.",
       "technical": "<strong>Technische Daten</strong>: Angaben, die für Betrieb und Sicherheit nötig sind, etwa die IP-Adresse und der Browsertyp in den Serverprotokollen."
     },
@@ -57,7 +59,9 @@
     "items": {
       "supabase": "<strong>Supabase</strong>: Datenbank, Authentifizierung und Dateispeicher. Die Daten werden in der Europäischen Union (Irland) gespeichert.",
       "vercel": "<strong>Vercel</strong>: Hosting und Auslieferung der Website.",
-      "email": "<strong>E-Mail-Versanddienst</strong>: E-Mails zum Konto und Erinnerungen."
+      "email": "<strong>E-Mail-Versanddienst</strong>: E-Mails zum Konto und Erinnerungen.",
+      "stripe": "<strong>Stripe</strong>: Zahlung der Abonnements und Rechnungen. Kartendaten werden bei Stripe eingegeben; Godet erhält sie nie.",
+      "anthropic": "<strong>Anthropic</strong>: KI-Modell (Claude) des Assistenten und des Ablesens vom Foto. Erhält die Frage oder das Foto und die nötigen Daten des Maschinenparks nur im Moment einer Anfrage; diese Daten werden nicht zum Training seiner Modelle verwendet."
     },
     "transfers": "Diese Dienstleister können ausserhalb der Schweiz und der EU ansässig sein, zum Beispiel in den USA. Werden Daten dorthin übermittelt, stützen wir uns auf einen Angemessenheitsbeschluss (des Bundesrates oder der Europäischen Kommission) oder auf anerkannte vertragliche Garantien wie die Standardvertragsklauseln."
   },
@@ -86,5 +90,60 @@
   "changes": {
     "title": "Änderungen",
     "text": "Wir können diese Erklärung anpassen, zum Beispiel wenn sich der Dienst weiterentwickelt. Das Datum der letzten Aktualisierung steht oben auf dieser Seite."
+  },
+  "securityPage": {
+    "meta": {
+      "title": "Sicherheit und Datenschutz",
+      "description": "Wo Ihre Daten liegen, wie sie geschützt, gesichert und getrennt werden und wie Sie sie jederzeit herunterladen."
+    },
+    "eyebrow": "Vertrauen",
+    "title": "Ihre Daten sind sicher",
+    "intro": "Das Serviceheft Ihres Maschinenparks ist ein Nachweis bei Kontrollen und ein Wert beim Wiederverkauf. So schützt Godet es konkret.",
+    "hosting": {
+      "title": "In Europa gespeichert",
+      "text": "Datenbank und Dateien (Fotos, Videos, Rechnungen) liegen in der Europäischen Union, in Irland. Die Website wird aus Dublin ausgeliefert."
+    },
+    "encryption": {
+      "title": "Verschlüsselt",
+      "text": "Alle Verbindungen laufen über HTTPS. Die Daten sind auf den Datenträgern des Hosters verschlüsselt. Passwörter werden nie im Klartext gespeichert."
+    },
+    "isolation": {
+      "title": "Pro Firma getrennt",
+      "text": "Jede Firma sieht nur ihre eigenen Daten: Die Zugriffsregeln setzt die Datenbank selbst durch, nicht nur die Anwendung. Dateien sind privat und öffnen sich nur über zeitlich begrenzte Links."
+    },
+    "roles": {
+      "title": "Jeder nach seiner Rolle",
+      "text": "Inhaber, Administrator, Mechaniker, Maschinist: Jede Person hat nur die Rechte ihrer Rolle. Ein Austritt ist mit einem Klick unter Einstellungen → Team erledigt."
+    },
+    "backups": {
+      "title": "Täglich gesichert",
+      "text": "Jeden Tag wird eine vollständige Kopie der Datenbank erstellt und sieben Tage aufbewahrt."
+    },
+    "kept": {
+      "title": "Nichts geht verloren",
+      "text": "Ein falscher Eintrag wird mit Begründung zurückgezogen und bleibt im Verlauf sichtbar; jede Änderung wird protokolliert. Nach der Testphase oder bei Kündigung wird die Garage schreibgeschützt: Nichts wird gelöscht."
+    },
+    "yours": {
+      "title": "Ihre Daten bleiben Ihre",
+      "text": "Laden Sie jederzeit den ganzen Maschinenpark und das ganze Serviceheft als Excel-Datei herunter, und jedes Serviceheft als PDF. Wir verkaufen Ihre Daten nicht und nutzen sie nicht für Werbung. Auf Wunsch löschen wir sie."
+    },
+    "ai": {
+      "title": "KI unter Kontrolle",
+      "text": "Der Assistent und das Ablesen vom Foto senden dem KI-Modell (Claude, von Anthropic) nur die Frage oder das Foto und die nötigen Daten, im Moment der Anfrage. Diese Daten werden nicht zum Training seiner Modelle verwendet. Der Assistent kann nichts ändern."
+    },
+    "location": {
+      "title": "Standort: nur wenn Sie wollen",
+      "text": "Der GPS-Standort der Einträge ist standardmässig ausgeschaltet. Aktiviert ihn die Firma, wird er nur im Moment eines Eintrags erfasst, nie laufend, und jede Person kann ihn entfernen."
+    },
+    "payments": {
+      "title": "Sichere Zahlung",
+      "text": "Abonnements werden bei Stripe bezahlt. Godet erhält und speichert keine Kartendaten."
+    },
+    "devices": {
+      "title": "Geteilte Geräte",
+      "text": "Der Offline-Modus behält eine Kopie des Maschinenparks auf dem Gerät; sie wird beim Abmelden gelöscht."
+    },
+    "report": "Eine Frage zur Sicherheit, ein Löschbegehren oder ein Problem zu melden? <contact>Schreiben Sie uns</contact>. Rechtliche Details: <privacy>Datenschutzerklärung</privacy>.",
+    "footer": "Datensicherheit"
   }
 }

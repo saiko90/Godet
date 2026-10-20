@@ -37,6 +37,18 @@ export function zurichISO(date: string, hh: number, mm = 0): string {
   return new Date(guess - (local - guess)).toISOString();
 }
 
+/** Chantiers fictifs de la démo (latitude, longitude). */
+const DEMO_SITES: [number, number][] = [
+  [46.2318, 7.3561],
+  [46.1031, 7.0748],
+  [46.2925, 7.5349],
+  [46.2562, 6.9532],
+  [46.2941, 7.8826],
+  [46.2246, 7.3072],
+  [46.3165, 7.9861],
+  [46.1508, 7.1773],
+];
+
 /** Parc d'exemple pour le jour `today` (AAAA-MM-JJ). Identifiants stables : /demo?m=demo-pe-01 ouvre PE-01. */
 export function buildDemoSeed(today: string, texts: DemoTexts): DemoSeed {
   const dayOf = (offset: number) => addDays(today, offset);
@@ -60,6 +72,8 @@ export function buildDemoSeed(today: string, texts: DemoTexts): DemoSeed {
     founder: false,
     stripe_customer_id: null,
     stripe_subscription_id: null,
+    // Positions affichées dans la démo (aucune position n'est demandée à l'appareil).
+    track_location: true,
   };
 
   const machines: Machine[] = [];
@@ -68,7 +82,7 @@ export function buildDemoSeed(today: string, texts: DemoTexts): DemoSeed {
   const readings: HourReading[] = [];
   let readingId = 1;
   const read = (machineId: string, hours: number, at: string, source: string) => {
-    readings.push({ id: readingId++, org_id: org.id, machine_id: machineId, hours, read_at: at, source, created_by: DEMO_USER_ID });
+    readings.push({ id: readingId++, org_id: org.id, machine_id: machineId, hours, read_at: at, source, created_by: DEMO_USER_ID, lat: null, lng: null, loc_accuracy: null });
   };
 
   DEMO_FLEET.forEach((def, position) => {
@@ -100,6 +114,11 @@ export function buildDemoSeed(today: string, texts: DemoTexts): DemoSeed {
       created_by: DEMO_USER_ID,
       created_at: machineCreated,
       updated_at: machineCreated,
+      // Dernière position : chantiers fictifs en Valais (Sion, Martigny, Sierre…).
+      last_lat: DEMO_SITES[position % DEMO_SITES.length][0],
+      last_lng: DEMO_SITES[position % DEMO_SITES.length][1],
+      last_loc_accuracy: 8 + (position % 4) * 6,
+      last_located_at: isDemoMachine ? machineCreated : lastReadAt,
     });
 
     // Relevés : création, relevés réguliers, dernier relevé (comme les déclencheurs de la base).
@@ -147,6 +166,9 @@ export function buildDemoSeed(today: string, texts: DemoTexts): DemoSeed {
         deleted_at: removedAt,
         deleted_by: removed ? DEMO_USER_ID : null,
         delete_reason: removed ? texts.reasons[removed.reason] : null,
+        lat: null,
+        lng: null,
+        loc_accuracy: null,
       });
       // Déclencheur : une saisie avec compteur crée un relevé à midi (heure suisse).
       if (hours != null) read(id, hours, zurichISO(date, 12), 'intervention');

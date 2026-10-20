@@ -8,7 +8,7 @@ import type { Database, TablesInsert, TablesUpdate } from '@/lib/database.types'
 import { MEDIA_BUCKET, SUPABASE_PUBLISHABLE_KEY, SUPABASE_URL } from '@/lib/env';
 import { addDays, todayISO } from '@/lib/format';
 import { extForMime, type UploadProgressOptions } from '@/lib/media';
-import type { GarageRepo, NewEntry, NewMachine, NewSchedule } from '@/lib/repo/types';
+import type { GarageRepo, GeoFix, NewEntry, NewMachine, NewSchedule } from '@/lib/repo/types';
 import type { Entry, FleetSnapshot, HourReading, Machine, MachineFile, MediaItem, MediaRow, MemberRole, Org, Schedule } from '@/lib/types';
 
 export type GarageClient = SupabaseClient<Database>;
@@ -471,6 +471,16 @@ export function createSupabaseRepo(client: GarageClient, ctx: RepoContext, optio
     );
   }
 
+  /** Colonnes de position (arrondies : ~1 m suffit). */
+  function geo(l: GeoFix | null | undefined) {
+    if (!l || !Number.isFinite(l.lat) || !Number.isFinite(l.lng)) return {};
+    return {
+      lat: Math.round(l.lat * 1e6) / 1e6,
+      lng: Math.round(l.lng * 1e6) / 1e6,
+      loc_accuracy: l.accuracy != null && Number.isFinite(l.accuracy) ? Math.round(l.accuracy) : null,
+    };
+  }
+
   function entryInsert(input: NewEntry): TablesInsert<'entries'> {
     return {
       ...(input.id ? { id: input.id } : {}),
@@ -491,6 +501,7 @@ export function createSupabaseRepo(client: GarageClient, ctx: RepoContext, optio
       supplier: clean(input.supplier),
       warranty_until: input.warrantyUntil || null,
       schedule_id: input.scheduleId ?? null,
+      ...geo(input.location),
     };
   }
 
@@ -707,12 +718,12 @@ export function createSupabaseRepo(client: GarageClient, ctx: RepoContext, optio
       }
     },
 
-    async addReading(machineId: string, hours: number): Promise<void> {
+    async addReading(machineId: string, hours: number, location?: GeoFix | null): Promise<void> {
       await ensureSession();
       if (!Number.isFinite(hours) || hours < 0) throw new GarageError('hoursInvalid');
       const m = await currentMachine(machineId);
       if (hours < Number(m.hours)) throw new GarageError('hoursBackwards', { hours: Number(m.hours), at: m.hours_at });
-      const { error } = await client.from('hour_readings').insert({ org_id: orgId, machine_id: machineId, hours, source: 'saisie' });
+      const { error } = await client.from('hour_readings').insert({ org_id: orgId, machine_id: machineId, hours, source: 'saisie', ...geo(location) });
       if (error) throw repoError(error, 'addReading');
     },
 

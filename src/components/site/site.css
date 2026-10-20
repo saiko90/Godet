@@ -912,3 +912,17 @@
 .s-price p.s-plans-founder { color: var(--paint); font-size: var(--t-sm); font-weight: 650; }
 .s-linkbtn { padding: 0; border: 0; background: none; color: inherit; font: inherit; text-decoration: underline; cursor: pointer; }
 .s-linkbtn:disabled { opacity: .6; cursor: progress; }
+
+/* case à cocher avec explication (position GPS des saisies) */
+.s-check { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 12px; align-items: center; margin: 4px 0 8px; }
+.s-check input { width: 20px; height: 20px; accent-color: var(--paint); margin: 0; }
+.s-check label { font-weight: 600; cursor: pointer; }
+.s-check .s-field-hint { grid-column: 2; margin: 0; }
+
+/* page Sécurité : garanties en liste illustrée */
+.s-legal .s-trust { list-style: none; margin: 24px 0 8px; padding: 0; display: grid; gap: 18px; }
+.s-trust li { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 14px; align-items: start; }
+.s-trust-icon { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; background: var(--paint-soft); color: var(--paint); }
+.s-trust-icon svg { width: 22px; height: 22px; }
+.s-legal .s-trust h2 { margin: 2px 0 4px; font-size: var(--t-lg); display: block; }
+.s-legal .s-trust p { margin: 0; }

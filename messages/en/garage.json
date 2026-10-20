@@ -943,5 +943,17 @@
     "send": "Send",
     "disclaimer": "AI can make mistakes: check important figures in the log.",
     "usage": "{used} / {limit} questions this month"
+  },
+  "geo": {
+    "attach": "Attach location (accurate to {meters} m)",
+    "attachNoAccuracy": "Attach location",
+    "locating": "Finding location…",
+    "denied": "Location blocked on this device: the entry is saved without a location.",
+    "unavailable": "Location unavailable: the entry is saved without a location.",
+    "entryMap": "Where it was logged",
+    "newTab": "(new tab)",
+    "last": "Last location: {date}",
+    "accuracy": "± {meters} m",
+    "openMap": "View on map"
   }
 }

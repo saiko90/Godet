@@ -43,7 +43,12 @@
     "yourCompanies": "Vos entreprises",
     "active": "Entreprise active",
     "switch": "Travailler dans cette entreprise",
-    "switching": "Changement d’entreprise…"
+    "switching": "Changement d’entreprise…",
+    "position": "Position des saisies",
+    "positionOn": "Enregistrée",
+    "positionOff": "Non enregistrée",
+    "positionLabel": "Enregistrer la position GPS des saisies",
+    "positionHint": "Au moment d’une intervention ou d’un relevé d’heures, l’appareil joint sa position (avec l’accord de la personne, qui peut la retirer à chaque saisie). Jamais de suivi en continu. Informez votre équipe avant d’activer."
   },
   "billing": {
     "title": "Abonnement",

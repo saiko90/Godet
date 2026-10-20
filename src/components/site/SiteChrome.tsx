@@ -10,7 +10,7 @@ import './site.css';
 export const STUDIO_URL = 'https://www.swissdigitalstudio.ch';
 
 /** Pages publiques reliées depuis l'en-tête et le pied de page (lien marqué « page actuelle »). */
-export type PublicPage = 'contact' | 'idees' | 'confidentialite';
+export type PublicPage = 'contact' | 'idees' | 'confidentialite' | 'securite';
 
 const currentIf = (current: PublicPage | undefined, page: PublicPage): 'page' | undefined =>
   current === page ? 'page' : undefined;
@@ -74,6 +74,7 @@ export async function SiteHeader({ anchors = false, current }: { anchors?: boole
 /** Pied de page des pages publiques. */
 export async function SiteFooter({ current }: { current?: PublicPage } = {}) {
   const t = await getTranslations('site.chrome.footer');
+  const ts = await getTranslations('legal.securityPage');
   // Chaîne (et non nombre) : un nombre serait mis en forme (« 2 026 »).
   const year = String(new Date().getFullYear());
   return (
@@ -123,6 +124,11 @@ export async function SiteFooter({ current }: { current?: PublicPage } = {}) {
               <li>
                 <Link href="/confidentialite" aria-current={currentIf(current, 'confidentialite')}>
                   {t('privacy')}
+                </Link>
+              </li>
+              <li>
+                <Link href="/securite" aria-current={currentIf(current, 'securite')}>
+                  {ts('footer')}
                 </Link>
               </li>
               <li>

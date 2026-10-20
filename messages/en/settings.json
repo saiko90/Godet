@@ -43,7 +43,12 @@
     "yourCompanies": "Your companies",
     "active": "Active company",
     "switch": "Work in this company",
-    "switching": "Switching company…"
+    "switching": "Switching company…",
+    "position": "Entry location",
+    "positionOn": "Recorded",
+    "positionOff": "Not recorded",
+    "positionLabel": "Record the GPS location of entries",
+    "positionHint": "When someone logs work or an hour reading, the device attaches its location (with that person’s permission; they can remove it on each entry). Never continuous tracking. Tell your team before switching it on."
   },
   "billing": {
     "title": "Subscription",

@@ -106,6 +106,19 @@ Une machine vendue ou hors service s'archive : elle quitte le showroom, son carn
 - Boîte à idées (menu → « Boîte à idées », ou Paramètres) : proposer une fonction et suivre les réponses.
 - Pas de mise en route sur place ; tout se fait en ligne.
 
+## Position GPS des saisies
+Désactivée par défaut. Paramètres → Entreprise → « Enregistrer la position GPS des saisies » (propriétaire,
+administrateur). Ensuite, à chaque intervention ou relevé d'heures, l'appareil joint sa position (la personne peut la
+retirer, case « Joindre la position »). Jamais de suivi en continu. La fiche montre la dernière position de la machine
+avec un lien vers la carte ; chaque saisie localisée a un lien « Lieu de la saisie ». Il faut autoriser la position
+dans le navigateur ou le téléphone.
+
+## Sécurité des données
+Page https://godet.app/securite : hébergement UE (Irlande), HTTPS et chiffrement au repos, cloisonnement par
+entreprise appliqué par la base, sauvegarde quotidienne de la base conservée 7 jours, rien ne s'efface, export Excel
+et PDF à tout moment, paiement chez Stripe (aucune donnée de carte chez Godet), IA (Anthropic) sans entraînement sur
+les données, copie hors ligne effacée à la déconnexion.
+
 ## Conformité
 Art. 32b OPA (RS 832.30) : les résultats des opérations d'entretien doivent être consignés. Godet facilite la tenue du
 carnet ; l'entretien reste de la responsabilité de l'employeur.

@@ -63,6 +63,8 @@ export async function enregistrerEntreprise(prev: FormState, formData: FormData)
   // Le canton n'a de sens qu'en Suisse.
   const canton = country === 'CH' ? text(formData, 'canton').toUpperCase() : '';
   const currency = text(formData, 'devise').toUpperCase();
+  // Position GPS des saisies (case cochée : « 1 »).
+  const trackLocation = formData.get('position') === '1';
   const values = { nom, pays: country, canton, devise: currency };
   const errors: Record<string, string> = {};
   if (nom.length < 2) errors.nom = t('orgNameShort');
@@ -78,7 +80,7 @@ export async function enregistrerEntreprise(prev: FormState, formData: FormData)
   const supabase = await supabaseServer();
   const { data, error } = await supabase
     .from('organizations')
-    .update({ name: nom, country, canton: canton || null, currency })
+    .update({ name: nom, country, canton: canton || null, currency, track_location: trackLocation })
     .eq('id', ctx.org.id)
     .select('id');
   if (error || !data?.length) {

@@ -12,7 +12,7 @@ import { EMPTY_FORM } from '../types';
 import { useServerAction } from './useServerAction';
 
 interface Props {
-  org: { id: string; name: string; country: string; canton: string | null; currency: string };
+  org: { id: string; name: string; country: string; canton: string | null; currency: string; trackLocation: boolean };
   /** « Essai gratuit jusqu’au 18.11.2026 », « Abonnement actif »… (calculé côté serveur). */
   planLabel: string;
   createdLabel: string;
@@ -43,6 +43,8 @@ export function EntreprisePanel({ org, planLabel, createdLabel, countryLabel, ca
     currency: `${uid}-devise`,
     currencyErr: `${uid}-devise-err`,
     currencyHint: `${uid}-devise-aide`,
+    position: `${uid}-position`,
+    positionHint: `${uid}-position-aide`,
   };
   // React remet le formulaire à ses valeurs par défaut après chaque envoi : après un refus, on réaffiche la saisie ;
   // sinon, les valeurs enregistrées. Une liste déroulante ne relit pas `defaultValue` : la clé la recrée.
@@ -91,6 +93,10 @@ export function EntreprisePanel({ org, planLabel, createdLabel, countryLabel, ca
             <div>
               <dt>{t('currency')}</dt>
               <dd>{org.currency}</dd>
+            </div>
+            <div>
+              <dt>{t('position')}</dt>
+              <dd>{org.trackLocation ? t('positionOn') : t('positionOff')}</dd>
             </div>
           </>
         ) : null}
@@ -190,6 +196,13 @@ export function EntreprisePanel({ org, planLabel, createdLabel, countryLabel, ca
               </p>
               <FieldError id={ids.currencyErr} message={state.errors.devise} />
             </div>
+          </div>
+          <div className="s-check">
+            <input id={ids.position} name="position" type="checkbox" value="1" defaultChecked={org.trackLocation} aria-describedby={ids.positionHint} />
+            <label htmlFor={ids.position}>{t('positionLabel')}</label>
+            <p id={ids.positionHint} className="s-field-hint">
+              {t('positionHint')}
+            </p>
           </div>
           <div className="s-form-foot">
             <button type="submit" className="btn btn-primary s-btn-sm" disabled={pending}>

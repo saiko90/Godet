@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { useFormat } from '@/components/FormatProvider';
 import { Icon } from '@/components/Icons';
 import { AiError, readMeter } from '@/lib/ai';
+import { useGeoFix } from '@/lib/geo';
 import { can, PAINTS } from '@/lib/domain';
 import { addDays } from '@/lib/format';
 import { categoryOf, MACHINE_CATEGORIES, TYPICAL_WEIGHT, type MachineCategory } from '@/lib/machine-kinds';
@@ -19,6 +20,7 @@ import { aria, Field, focusFirstError, type Errors } from './fields';
 import { nextCode } from './helpers';
 import { KindIcon } from './KindIcon';
 import { FileButton } from './MediaTab';
+import { GeoNote } from './GeoNote';
 import { parseLocalNumber } from './numbers';
 import { useGarageText } from './text';
 import { Modal } from './ui';
@@ -419,6 +421,8 @@ export function HoursModal({ machineId, onClose }: { machineId: string; onClose:
   const [reading, setReading] = useState(false);
   const [photoNote, setPhotoNote] = useState<{ text: string; tone: 'ok' | 'warn' } | null>(null);
   const locale = useLocale();
+  const geo = useGeoFix(g.mode === 'cloud' && g.org.track_location);
+  const [withGeo, setWithGeo] = useState(true);
   if (!machine) return null;
 
   /** Lecture du compteur sur une photo : la valeur est proposée, la personne vérifie avant d'enregistrer. */
@@ -477,7 +481,7 @@ export function HoursModal({ machineId, onClose }: { machineId: string; onClose:
     setError(null);
     setBusy(true);
     try {
-      await g.repo().addReading(machine.id, n);
+      await g.repo().addReading(machine.id, n, withGeo ? geo.fix : null);
       await g.refresh(machine.id);
       g.effect('tick');
       onClose();
@@ -553,6 +557,7 @@ export function HoursModal({ machineId, onClose }: { machineId: string; onClose:
           <p className="g-hint">{t('hoursForm.photo.hint')}</p>
         )}
       </div>
+      <GeoNote state={geo.state} accuracy={geo.fix?.accuracy ?? null} on={withGeo} onToggle={setWithGeo} />
       {recent.length ? (
         <div>
           <p className="g-mini-title">{t('hoursForm.recent')}</p>

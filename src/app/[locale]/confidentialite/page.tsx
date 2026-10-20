@@ -19,11 +19,11 @@ export async function generateMetadata({ params }: { params: LocaleParams }): Pr
 }
 
 /** Date de la dernière mise à jour de la politique (à changer avec le texte). */
-const UPDATED = '2026-10-19';
+const UPDATED = '2026-10-20';
 
-const DATA = ['account', 'fleet', 'media', 'journal', 'contact', 'ideas', 'reminders', 'prospects', 'technical'] as const;
+const DATA = ['account', 'fleet', 'media', 'location', 'journal', 'contact', 'ideas', 'reminders', 'ai', 'prospects', 'technical'] as const;
 const PURPOSES = ['service', 'emails', 'contact', 'prospecting', 'security'] as const;
-const PROCESSORS = ['supabase', 'vercel', 'email'] as const;
+const PROCESSORS = ['supabase', 'vercel', 'email', 'stripe', 'anthropic'] as const;
 const RIGHTS = ['access', 'rectify', 'erase', 'portability', 'restrict', 'consent'] as const;
 
 export default async function ConfidentialitePage({ params }: { params: LocaleParams }) {
@@ -133,6 +133,11 @@ export default async function ConfidentialitePage({ params }: { params: LocalePa
               <span>{num()}</span> {t('security.title')}
             </h2>
             <p>{t('security.text')}</p>
+            <p>
+              <Link className="s-link" href="/securite">
+                {t('securityPage.title')}
+              </Link>
+            </p>
 
             <h2>
               <span>{num()}</span> {t('retention.title')}

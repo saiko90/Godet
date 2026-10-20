@@ -943,5 +943,17 @@
     "send": "Senden",
     "disclaimer": "Die KI kann sich irren: Prüfen Sie wichtige Zahlen im Serviceheft.",
     "usage": "{used} / {limit} Fragen diesen Monat"
+  },
+  "geo": {
+    "attach": "Standort anhängen (genau auf {meters} m)",
+    "attachNoAccuracy": "Standort anhängen",
+    "locating": "Standort wird gesucht…",
+    "denied": "Standort auf diesem Gerät abgelehnt: Der Eintrag wird ohne Standort gespeichert.",
+    "unavailable": "Standort nicht verfügbar: Der Eintrag wird ohne Standort gespeichert.",
+    "entryMap": "Ort des Eintrags",
+    "newTab": "(neuer Tab)",
+    "last": "Letzter Standort: {date}",
+    "accuracy": "± {meters} m",
+    "openMap": "Auf der Karte ansehen"
   }
 }

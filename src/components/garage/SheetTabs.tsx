@@ -22,6 +22,7 @@ import { daysBetween } from '@/lib/format';
 import type { Entry, EntryKind, Machine, MachineFile, RepairStatus } from '@/lib/types';
 import { useDomainText } from '@/lib/use-domain-text';
 import { CostChart } from './CostChart';
+import { mapUrl } from '@/lib/geo';
 import { useGarage } from './context';
 import { useErrorText } from './errors';
 import { canEditEntry, costWindowStart, kindForSchedule, machineStats } from './helpers';
@@ -126,6 +127,12 @@ function EntryItem({ entry, file, compact = false }: { entry: Entry; file: Machi
           {cost > 0 ? <span className="cost">{f.money(cost)}</span> : null}
         </div>
         <div className="tl-meta">{meta.join(' · ')}</div>
+        {entry.lat != null && entry.lng != null && !compact ? (
+          <a className="g-tl-geo" href={mapUrl(entry.lat, entry.lng)} target="_blank" rel="noopener noreferrer">
+            <Icon name="pin" /> {t('geo.entryMap')}
+            <span className="g-sr"> {t('geo.newTab')}</span>
+          </a>
+        ) : null}
         {entry.details && !compact ? <p>{entry.details}</p> : null}
         {media.length && !compact ? (
           <div className="tl-photos">
@@ -241,6 +248,20 @@ export function OverviewTab({ machine, file, health }: { machine: Machine; file:
           </DueGauge>
           {rate ? <p className="g-note">{t('overview.rate', { rate: f.num(rate, rate < 10 ? 1 : 0) })}</p> : null}
         </div>
+      ) : null}
+
+      {machine.last_lat != null && machine.last_lng != null ? (
+        <p className="g-geo-last">
+          <Icon name="pin" />
+          <span>
+            {t('geo.last', { date: f.dateTime(machine.last_located_at) })}
+            {machine.last_loc_accuracy != null ? ` · ${t('geo.accuracy', { meters: f.num(Math.round(machine.last_loc_accuracy)) })}` : ''}
+          </span>
+          <a href={mapUrl(machine.last_lat, machine.last_lng)} target="_blank" rel="noopener noreferrer">
+            {t('geo.openMap')}
+            <span className="g-sr"> {t('geo.newTab')}</span>
+          </a>
+        </p>
       ) : null}
 
       {open.length ? (

@@ -18,10 +18,12 @@
       "account": "<strong>Account</strong>: nome, indirizzo e-mail, password (mai memorizzata in chiaro), lingua scelta, imprese di cui è membro e ruolo in ciascuna.",
       "fleet": "<strong>Dati del parco macchine</strong>: macchine, interventi, scadenze, letture del contaore, costi e note inseriti dalla Sua impresa, con il nome della persona che ha effettuato ogni registrazione.",
       "media": "<strong>Media caricati</strong>: foto, video e documenti (fatture, rapporti) aggiunti alle macchine.",
+      "location": "<strong>Posizione delle registrazioni</strong>: se la vostra azienda la attiva, la posizione GPS del dispositivo al momento di un intervento o di una lettura delle ore (mai in continuo; ogni persona può toglierla a ogni registrazione).",
       "journal": "<strong>Registro delle modifiche</strong>: chi ha creato, modificato o ritirato cosa, e quando.",
       "contact": "<strong>Modulo di contatto</strong>: nome, indirizzo e-mail, impresa, telefono, paese, dimensione del parco macchine, oggetto e messaggio, oltre alla Sua scelta di ricevere o no un nuovo contatto.",
       "ideas": "<strong>Cassetta delle idee</strong>: la Sua idea, il suo ambito e i dettagli, il Suo indirizzo e-mail o il Suo account, e le risposte del nostro team.",
       "reminders": "<strong>Promemoria via e-mail</strong>: le Sue preferenze (attivi o no, frequenza, preavvisi) e la traccia degli invii.",
+      "ai": "<strong>Assistente IA</strong>: le domande poste all’assistente, le foto del contaore inviate per la lettura e il numero di utilizzi al mese.",
       "prospects": "<strong>Prospezione commerciale</strong>: dati di contatto professionali di imprese (nome, indirizzo, sito web, telefono ed e-mail professionali, settore di attività) tratti da fonti pubbliche, e lo storico dei nostri contatti.",
       "technical": "<strong>Dati tecnici</strong>: informazioni necessarie al funzionamento e alla sicurezza, come l’indirizzo IP e il tipo di browser nei registri dei server."
     },
@@ -57,7 +59,9 @@
     "items": {
       "supabase": "<strong>Supabase</strong>: database, autenticazione e archiviazione dei file. I dati sono ospitati nell’Unione europea (Irlanda).",
       "vercel": "<strong>Vercel</strong>: hosting e distribuzione del sito.",
-      "email": "<strong>Fornitore per l’invio di e-mail</strong>: e-mail legate all’account e promemoria."
+      "email": "<strong>Fornitore per l’invio di e-mail</strong>: e-mail legate all’account e promemoria.",
+      "stripe": "<strong>Stripe</strong>: pagamento degli abbonamenti e fatture. I dati della carta vengono inseriti da Stripe; Godet non li riceve mai.",
+      "anthropic": "<strong>Anthropic</strong>: modello di IA (Claude) dell’assistente e della lettura del contaore da foto. Riceve la domanda o la foto e i dati del parco necessari solo al momento di una richiesta; questi dati non servono ad addestrare i suoi modelli."
     },
     "transfers": "Questi fornitori possono avere sede fuori dalla Svizzera e dall’UE, ad esempio negli Stati Uniti. Quando vi vengono trasmessi dati, ci basiamo su una decisione di adeguatezza (del Consiglio federale o della Commissione europea) o su garanzie contrattuali riconosciute, come le clausole contrattuali tipo."
   },
@@ -86,5 +90,60 @@
   "changes": {
     "title": "Modifiche",
     "text": "Possiamo adattare questa informativa, ad esempio se il servizio evolve. La data dell’ultimo aggiornamento figura in cima a questa pagina."
+  },
+  "securityPage": {
+    "meta": {
+      "title": "Sicurezza e protezione dei dati",
+      "description": "Dove si trovano i vostri dati, come sono protetti, salvati e separati, e come recuperarli in ogni momento."
+    },
+    "eyebrow": "Fiducia",
+    "title": "I vostri dati sono al sicuro",
+    "intro": "Il libretto di manutenzione del vostro parco è una prova durante un controllo e un valore alla rivendita. Ecco, concretamente, come Godet lo protegge.",
+    "hosting": {
+      "title": "Ospitati in Europa",
+      "text": "La banca dati e i file (foto, video, fatture) sono ospitati nell’Unione europea, in Irlanda. Il sito è servito da Dublino."
+    },
+    "encryption": {
+      "title": "Cifrati",
+      "text": "Tutti gli scambi passano in HTTPS. I dati sono cifrati sui dischi dell’hosting. Le password non sono mai salvate in chiaro."
+    },
+    "isolation": {
+      "title": "Separati per azienda",
+      "text": "Ogni azienda vede solo i propri dati: le regole d’accesso sono applicate dalla banca dati stessa, non solo dall’applicazione. I file sono privati e si aprono solo con link temporanei."
+    },
+    "roles": {
+      "title": "Ognuno secondo il suo ruolo",
+      "text": "Proprietario, amministratore, meccanico, macchinista: ogni persona ha solo i diritti del suo ruolo. Una partenza si gestisce con un clic in Impostazioni → Squadra."
+    },
+    "backups": {
+      "title": "Salvati ogni giorno",
+      "text": "Ogni giorno viene fatta una copia completa della banca dati, conservata sette giorni."
+    },
+    "kept": {
+      "title": "Nulla si cancella",
+      "text": "Una registrazione errata viene ritirata con il suo motivo e resta visibile nello storico; ogni modifica è registrata. Dopo la prova o in caso di disdetta, il garage passa in sola lettura: nulla viene eliminato."
+    },
+    "yours": {
+      "title": "I vostri dati restano vostri",
+      "text": "Esportate in ogni momento tutto il parco e tutto il libretto in un file Excel, e ogni libretto in PDF. Non vendiamo i vostri dati e non li usiamo per la pubblicità. Su richiesta, li cancelliamo."
+    },
+    "ai": {
+      "title": "IA sotto controllo",
+      "text": "L’assistente e la lettura del contaore da foto inviano al modello di IA (Claude, di Anthropic) solo la domanda o la foto e i dati necessari, al momento della richiesta. Questi dati non servono ad addestrare i suoi modelli. L’assistente non può modificare nulla."
+    },
+    "location": {
+      "title": "Posizione: solo se lo volete",
+      "text": "La posizione GPS delle registrazioni è disattivata per impostazione predefinita. Se l’azienda la attiva, è presa solo al momento di una registrazione, mai in continuo, e ogni persona può toglierla."
+    },
+    "payments": {
+      "title": "Pagamento sicuro",
+      "text": "Gli abbonamenti si pagano presso Stripe. Godet non riceve né conserva alcun dato della carta."
+    },
+    "devices": {
+      "title": "Dispositivi condivisi",
+      "text": "La modalità senza rete conserva una copia del parco sul dispositivo; viene cancellata alla disconnessione."
+    },
+    "report": "Una domanda sulla sicurezza, una richiesta di cancellazione o un problema da segnalare? <contact>Scriveteci</contact>. Dettagli giuridici: <privacy>informativa sulla privacy</privacy>.",
+    "footer": "Sicurezza dei dati"
   }
 }

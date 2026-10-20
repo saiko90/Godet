@@ -4,14 +4,14 @@
 //   puis envoyés dans l'ordre au retour du réseau (une saisie garde son identifiant : jamais de doublon).
 // - Les autres actions (machines, échéances, photos) demandent le réseau : erreur « network » habituelle.
 import { GarageError, isGarageError } from '@/lib/repo/supabase';
-import type { GarageRepo, NewEntry } from '@/lib/repo/types';
+import type { GarageRepo, GeoFix, NewEntry } from '@/lib/repo/types';
 import { todayISO } from '@/lib/format';
 import type { Entry, FleetSnapshot, HourReading, MachineFile } from '@/lib/types';
 import { idbClear, idbGet, idbSet } from './idb';
 
 export type QueuedOp =
   | { type: 'entry'; id: string; at: string; input: NewEntry }
-  | { type: 'reading'; id: string; at: string; machineId: string; hours: number };
+  | { type: 'reading'; id: string; at: string; machineId: string; hours: number; location?: GeoFix | null };
 
 export interface SyncResult {
   sent: number;
@@ -58,6 +58,9 @@ function entryRow(op: Extract<QueuedOp, { type: 'entry' }>, orgId: string, userI
     cost_labour: i.costLabour ?? 0,
     downtime_hours: i.downtimeHours ?? null,
     repair_status: i.kind === 'reparation' ? (i.repairStatus ?? 'fait') : null,
+    lat: i.location?.lat ?? null,
+    lng: i.location?.lng ?? null,
+    loc_accuracy: i.location?.accuracy ?? null,
     part_ref: clean(i.partRef),
     part_qty: i.partQty ?? null,
     supplier: clean(i.supplier),
@@ -135,7 +138,19 @@ export function createOfflineRepo(inner: GarageRepo, ctx: { orgId: string; userI
   }
 
   function readingRow(op: QueuedOp, machineId: string, hours: number): HourReading {
-    return { id: readingSeq--, org_id: ctx.orgId, machine_id: machineId, hours, read_at: op.at, source: op.type === 'entry' ? 'intervention' : 'saisie', created_by: ctx.userId };
+    const l = op.type === 'entry' ? op.input.location : op.location;
+    return {
+      id: readingSeq--,
+      org_id: ctx.orgId,
+      machine_id: machineId,
+      hours,
+      read_at: op.at,
+      source: op.type === 'entry' ? 'intervention' : 'saisie',
+      created_by: ctx.userId,
+      lat: l?.lat ?? null,
+      lng: l?.lng ?? null,
+      loc_accuracy: l?.accuracy ?? null,
+    };
   }
 
   function applyFile(base: MachineFile): MachineFile {
@@ -258,11 +273,11 @@ export function createOfflineRepo(inner: GarageRepo, ctx: { orgId: string; userI
       return entryRow(op, ctx.orgId, ctx.userId);
     },
 
-    async addReading(machineId, hours) {
+    async addReading(machineId, hours, location) {
       await ready();
       if (online && !queue.length) {
         try {
-          return await inner.addReading(machineId, hours);
+          return await inner.addReading(machineId, hours, location);
         } catch (e) {
           if (!isOfflineError(e)) throw e;
           markOnline(false);
@@ -271,7 +286,7 @@ export function createOfflineRepo(inner: GarageRepo, ctx: { orgId: string; userI
       if (!Number.isFinite(hours) || hours < 0) throw new GarageError('hoursInvalid');
       const current = await currentMeter(machineId);
       if (current && hours < current.hours) throw new GarageError('hoursBackwards', current);
-      await enqueue({ type: 'reading', id: crypto.randomUUID(), at: new Date().toISOString(), machineId, hours });
+      await enqueue({ type: 'reading', id: crypto.randomUUID(), at: new Date().toISOString(), machineId, hours, location: location ?? null });
     },
 
     async sync() {
@@ -285,7 +300,7 @@ export function createOfflineRepo(inner: GarageRepo, ctx: { orgId: string; userI
           const op = queue[0];
           try {
             if (op.type === 'entry') await inner.addEntry({ ...op.input, id: op.id });
-            else await inner.addReading(op.machineId, op.hours);
+            else await inner.addReading(op.machineId, op.hours, op.location);
             result.sent++;
           } catch (e) {
             // Lecture seule (essai terminé) : on garde la file, elle partira une fois l'abonnement actif.

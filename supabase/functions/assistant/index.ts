@@ -107,7 +107,7 @@ async function fleetContext(db: SupabaseClient, org: Record<string, unknown>, fo
   const since = new Date(Date.now() - 730 * 86400000).toISOString().slice(0, 10);
   const readingsSince = new Date(Date.now() - 120 * 86400000).toISOString();
   const [machines, schedules, entries, openRepairs, readings] = await Promise.all([
-    db.from('machines').select('id, code, kind, brand, model, year, serial, plate, weight_t, hours, hours_at, notes, archived_at').eq('org_id', orgId).order('code'),
+    db.from('machines').select('id, code, kind, brand, model, year, serial, plate, weight_t, hours, hours_at, notes, archived_at, last_lat, last_lng, last_located_at').eq('org_id', orgId).order('code'),
     db.from('schedules').select('machine_id, label, basis, interval_hours, interval_days, due_hours, due_date, last_hours, last_date').eq('org_id', orgId).eq('active', true),
     db
       .from('entries')
@@ -151,10 +151,10 @@ async function fleetContext(db: SupabaseClient, org: Record<string, unknown>, fo
   if (focus) lines.push(`Machine ouverte à l'écran : ${focus}`);
   lines.push('');
   lines.push(`## Machines actives (${active.length})`);
-  lines.push('code\ttype\tmarque\tmodèle\tannée\tn° série\tplaque\tpoids t\tcompteur h\trelevé le\trythme h/sem\tnotes');
+  lines.push('code\ttype\tmarque\tmodèle\tannée\tn° série\tplaque\tpoids t\tcompteur h\trelevé le\trythme h/sem\tdernière position (lat, lng, le)\tnotes');
   for (const m of active) {
     lines.push(
-      [m.code, m.kind, m.brand, m.model, m.year, m.serial, m.plate, m.weight_t, Number(m.hours), day(m.hours_at), rate.get(m.id) ?? '', m.notes]
+      [m.code, m.kind, m.brand, m.model, m.year, m.serial, m.plate, m.weight_t, Number(m.hours), day(m.hours_at), rate.get(m.id) ?? '', m.last_lat != null ? `${m.last_lat}, ${m.last_lng}, ${day(m.last_located_at)}` : '', m.notes]
         .map(clean)
         .join('\t'),
     );
@@ -220,6 +220,7 @@ Règles :
 - Pour un coût, additionne pièces + main-d'œuvre des saisies concernées et précise la période.
 - Questions sans rapport avec Godet, l'entretien ou les machines de chantier : réponds poliment que tu es là pour Godet.
 - Conseils techniques d'entretien : généraux et prudents ; renvoie au manuel du constructeur et à un mécanicien.
+- Position d'une machine : donne la date et le lien https://www.openstreetmap.org/?mlat=LAT&mlon=LNG (sans inventer de lieu).
 - Problème de compte, de paiement ou bug : propose la page Contact (https://godet.app/contact).
 
 Date du jour : ${today}.`;

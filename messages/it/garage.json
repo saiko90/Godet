@@ -943,5 +943,17 @@
     "send": "Invia",
     "disclaimer": "L’IA può sbagliare: verificate le cifre importanti nel libretto.",
     "usage": "{used} / {limit} domande questo mese"
+  },
+  "geo": {
+    "attach": "Allega la posizione (precisa a {meters} m)",
+    "attachNoAccuracy": "Allega la posizione",
+    "locating": "Ricerca della posizione…",
+    "denied": "Posizione negata su questo dispositivo: la registrazione viene salvata senza posizione.",
+    "unavailable": "Posizione non disponibile: la registrazione viene salvata senza posizione.",
+    "entryMap": "Luogo della registrazione",
+    "newTab": "(nuova scheda)",
+    "last": "Ultima posizione: {date}",
+    "accuracy": "± {meters} m",
+    "openMap": "Vedi sulla mappa"
   }
 }

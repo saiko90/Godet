@@ -191,6 +191,7 @@ export default async function ParametresPage({ params }: { params: LocaleParams 
                     country: ctx.org.country,
                     canton: ctx.org.canton,
                     currency: ctx.org.currency,
+                    trackLocation: ctx.org.track_location,
                   }}
                   planLabel={planLabel(ctx.org, f, Date.parse(nowIso))}
                   createdLabel={f.date(ctx.org.created_at)}

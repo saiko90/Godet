@@ -43,7 +43,12 @@
     "yourCompanies": "Ihre Unternehmen",
     "active": "Aktives Unternehmen",
     "switch": "In diesem Unternehmen arbeiten",
-    "switching": "Unternehmen wird gewechselt…"
+    "switching": "Unternehmen wird gewechselt…",
+    "position": "Standort der Einträge",
+    "positionOn": "Wird gespeichert",
+    "positionOff": "Wird nicht gespeichert",
+    "positionLabel": "GPS-Standort der Einträge speichern",
+    "positionHint": "Bei einem Eintrag oder einer Zählerablesung hängt das Gerät seinen Standort an (mit Zustimmung der Person, die ihn bei jedem Eintrag entfernen kann). Nie eine laufende Ortung. Informieren Sie Ihr Team vor dem Aktivieren."
   },
   "billing": {
     "title": "Abonnement",

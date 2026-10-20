@@ -18,10 +18,12 @@
       "account": "<strong>Account</strong>: name, email address, password (never stored in plain text), chosen language, the companies you belong to and your role in each.",
       "fleet": "<strong>Fleet data</strong>: machines, work, due dates, hour meter readings, costs and notes entered by your company, with the name of the person who made each entry.",
       "media": "<strong>Uploaded media</strong>: photos, videos and documents (invoices, reports) added to machines.",
+      "location": "<strong>Entry location</strong>: if your company switches it on, the device’s GPS location when work or an hour reading is logged (never continuous; each person can remove it on each entry).",
       "journal": "<strong>Change log</strong>: who created, edited or withdrew what, and when.",
       "contact": "<strong>Contact form</strong>: name, email address, company, phone, country, fleet size, subject and message, and whether you agree to be contacted again.",
       "ideas": "<strong>Ideas box</strong>: your idea, its area and details, your email address or account, and our team’s replies.",
       "reminders": "<strong>Email reminders</strong>: your preferences (on or off, frequency, lead times) and a record of what was sent.",
+      "ai": "<strong>AI assistant</strong>: questions asked to the assistant, meter photos sent for reading, and the number of uses per month.",
       "prospects": "<strong>Business prospecting</strong>: business contact details of companies (name, address, website, business phone and email, line of business) taken from public sources, and the history of our contacts with them.",
       "technical": "<strong>Technical data</strong>: information needed for operation and security, such as the IP address and browser type in server logs."
     },
@@ -57,7 +59,9 @@
     "items": {
       "supabase": "<strong>Supabase</strong>: database, authentication and file storage. Data is hosted in the European Union (Ireland).",
       "vercel": "<strong>Vercel</strong>: hosting and delivery of the website.",
-      "email": "<strong>Email delivery provider</strong>: account emails and reminders."
+      "email": "<strong>Email delivery provider</strong>: account emails and reminders.",
+      "stripe": "<strong>Stripe</strong>: subscription payments and invoices. Card details are entered at Stripe; Godet never receives them.",
+      "anthropic": "<strong>Anthropic</strong>: AI model (Claude) behind the assistant and photo meter reading. It receives the question or photo and the fleet data needed only when a request is made; this data is not used to train its models."
     },
     "transfers": "These providers may be based outside Switzerland and the EU, for example in the United States. Where data is transferred there, we rely on an adequacy decision (by the Swiss Federal Council or the European Commission) or on recognised contractual safeguards such as the standard contractual clauses."
   },
@@ -86,5 +90,60 @@
   "changes": {
     "title": "Changes",
     "text": "We may update this policy, for example as the service evolves. The date of the last update is shown at the top of this page."
+  },
+  "securityPage": {
+    "meta": {
+      "title": "Security and data protection",
+      "description": "Where your data lives, how it is protected, backed up and kept separate, and how to get it out at any time."
+    },
+    "eyebrow": "Trust",
+    "title": "Your data is safe",
+    "intro": "Your fleet’s maintenance log is proof during an inspection and adds value when you sell a machine. Here is, concretely, how Godet protects it.",
+    "hosting": {
+      "title": "Hosted in Europe",
+      "text": "The database and files (photos, videos, invoices) are hosted in the European Union, in Ireland. The website is served from Dublin."
+    },
+    "encryption": {
+      "title": "Encrypted",
+      "text": "All traffic uses HTTPS. Data is encrypted on the hosting provider’s disks. Passwords are never stored in plain text."
+    },
+    "isolation": {
+      "title": "Kept separate per company",
+      "text": "Each company sees only its own data: access rules are enforced by the database itself, not just the app. Files are private and open only through short-lived links."
+    },
+    "roles": {
+      "title": "Everyone by role",
+      "text": "Owner, admin, mechanic, operator: each person has only the rights of their role. When someone leaves, one click in Settings → Team is enough."
+    },
+    "backups": {
+      "title": "Backed up every day",
+      "text": "A full copy of the database is made every day and kept for seven days."
+    },
+    "kept": {
+      "title": "Nothing gets erased",
+      "text": "A wrong entry is withdrawn with a reason and stays visible in the history; every change is logged. After the trial or if you cancel, the garage becomes read-only: nothing is deleted."
+    },
+    "yours": {
+      "title": "Your data stays yours",
+      "text": "Export your whole fleet and log to an Excel workbook at any time, and each machine’s log as a PDF. We don’t sell your data or use it for advertising. On request, we delete it."
+    },
+    "ai": {
+      "title": "AI under control",
+      "text": "The assistant and photo meter reading send the AI model (Claude, by Anthropic) only the question or photo and the data needed, at the moment of the request. This data is not used to train its models. The assistant can’t change anything."
+    },
+    "location": {
+      "title": "Location: only if you want it",
+      "text": "GPS location of entries is off by default. If the company switches it on, it is captured only when an entry is logged, never continuously, and each person can remove it."
+    },
+    "payments": {
+      "title": "Secure payment",
+      "text": "Subscriptions are paid at Stripe. Godet never receives or stores card details."
+    },
+    "devices": {
+      "title": "Shared devices",
+      "text": "Offline mode keeps a copy of the fleet on the device; it is wiped when you sign out."
+    },
+    "report": "A security question, a deletion request or a problem to report? <contact>Write to us</contact>. Legal details: <privacy>privacy policy</privacy>.",
+    "footer": "Data security"
   }
 }

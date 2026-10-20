@@ -15,6 +15,14 @@ import type {
   ScheduleBasis,
 } from '@/lib/types';
 
+/** Position GPS prise au moment d'une saisie (jamais en continu). */
+export interface GeoFix {
+  lat: number;
+  lng: number;
+  /** Précision en mètres (rayon), si connue. */
+  accuracy: number | null;
+}
+
 export interface NewMachine {
   code: string;
   kind: MachineKind;
@@ -51,6 +59,8 @@ export interface NewEntry {
   warrantyUntil?: string | null;
   /** Échéance accomplie par cette intervention : elle est renouvelée automatiquement. */
   scheduleId?: string | null;
+  /** Position au moment de la saisie (si l'entreprise l'a activée). */
+  location?: GeoFix | null;
 }
 
 export interface NewSchedule {
@@ -95,7 +105,7 @@ export interface GarageRepo {
   removeEntry(id: string, reason: string): Promise<void>;
 
   /** Nouveau relevé du compteur d'heures. */
-  addReading(machineId: string, hours: number): Promise<void>;
+  addReading(machineId: string, hours: number, location?: GeoFix | null): Promise<void>;
 
   addSchedule(input: NewSchedule): Promise<Schedule>;
   updateSchedule(id: string, patch: Partial<Omit<NewSchedule, 'machineId'>> & { active?: boolean }): Promise<Schedule>;
