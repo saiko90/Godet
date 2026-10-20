@@ -498,7 +498,24 @@
     "save": "Ablesung speichern",
     "errBackwards": "Der Zähler kann nicht zurücklaufen: Die letzte Ablesung beträgt {hours}. Einen Eingabefehler korrigieren Sie unter «Maschine bearbeiten».",
     "saved": "Betriebsstunden von {code}: {hours}",
-    "savedDiff": "Betriebsstunden von {code}: {hours} (+{diff})"
+    "savedDiff": "Betriebsstunden von {code}: {hours} (+{diff})",
+    "photo": {
+      "button": "Vom Foto ablesen",
+      "reading": "Zähler wird gelesen…",
+      "hint": "Fotografieren Sie den Betriebsstundenzähler: Die KI liest den Wert, Sie prüfen ihn vor dem Speichern.",
+      "read": "Vom Foto abgelesen: {hours}. Prüfen und speichern.",
+      "unsure": "Unsichere Ablesung: {hours}. Bitte Wert genau prüfen.",
+      "unreadable": "Der Zähler ist auf diesem Foto nicht lesbar. Näher heran, Spiegelungen vermeiden.",
+      "demo": "Das Ablesen vom Foto ist in Ihrer Garage verfügbar, nicht in der Demo.",
+      "errors": {
+        "offline": "Kein Netz: Das Ablesen vom Foto braucht eine Verbindung.",
+        "subscription_inactive": "Das Ablesen vom Foto ist während der Testphase und mit einem Abonnement verfügbar.",
+        "limit_reached": "Die Anzahl Ablesungen dieses Monats ist erreicht.",
+        "not_configured": "Das Ablesen vom Foto ist noch nicht aktiviert.",
+        "forbidden": "Sie haben keinen Zugang zu dieser Firma.",
+        "generic": "Das Foto konnte nicht gelesen werden. Erneut versuchen oder Wert eintippen."
+      }
+    }
   },
   "scheduleForm": {
     "titleNew": "Neuer Termin",
@@ -892,5 +909,39 @@
     "cta": "Abo wählen",
     "manage": "Aktualisieren",
     "askOwner": "Bitten Sie den Inhaber, ein Abo zu wählen."
+  },
+  "assistant": {
+    "open": "KI-Assistent",
+    "short": "Assistent",
+    "title": "Godet-Assistent",
+    "sub": "Fragen zu Godet und zu Ihrem Maschinenpark",
+    "subMachine": "Fragen zu Godet und zu Ihrem Maschinenpark · {code} geöffnet",
+    "reset": "Neues Gespräch",
+    "close": "Assistent schliessen",
+    "intro": "Stellen Sie Ihre Frage: Fälligkeiten, Kosten, Verlauf einer Maschine oder wie etwas in Godet funktioniert.",
+    "introDemo": "In Ihrer Garage kennt der Assistent Ihren ganzen Maschinenpark: Fälligkeiten, Kosten, Verlauf und die Bedienung von Godet. In der Demo ist er nicht verfügbar.",
+    "demoCta": "Meine Garage erstellen",
+    "suggest": {
+      "late": "Welche Fälligkeiten sind überfällig oder bald fällig?",
+      "cost": "Wie viel hat {code} dieses Jahr gekostet?",
+      "next": "Was ist die nächste Fälligkeit von {code}?",
+      "invite": "Wie lade ich einen Mechaniker ein?"
+    },
+    "thinking": "Denkt nach…",
+    "seePlans": "Zum Abonnement",
+    "errors": {
+      "offline": "Kein Netz: Der Assistent braucht eine Verbindung.",
+      "subscription_inactive": "Der Assistent ist während der Testphase und mit einem Abonnement verfügbar.",
+      "limit_reached": "Die Anzahl Fragen dieses Monats ist für Ihr Abo erreicht.",
+      "not_configured": "Der Assistent ist noch nicht aktiviert. Bitte später erneut versuchen.",
+      "forbidden": "Sie haben keinen Zugang zu dieser Firma.",
+      "generic": "Der Assistent konnte nicht antworten. Bitte gleich nochmals versuchen."
+    },
+    "label": "Ihre Frage",
+    "placeholder": "Ihre Frage…",
+    "placeholderDemo": "In Ihrer Garage verfügbar",
+    "send": "Senden",
+    "disclaimer": "Die KI kann sich irren: Prüfen Sie wichtige Zahlen im Serviceheft.",
+    "usage": "{used} / {limit} Fragen diesen Monat"
   }
 }

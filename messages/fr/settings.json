@@ -47,7 +47,7 @@
   },
   "billing": {
     "title": "Abonnement",
-    "text": "Toutes les formules comprennent les utilisateurs illimités, les étiquettes QR, l’import et l’export Excel et le mode sans réseau. Sans engagement : résiliable en tout temps.",
+    "text": "Toutes les formules comprennent les utilisateurs illimités, les étiquettes QR, l’import et l’export Excel, le mode sans réseau et l’assistant IA (avec la lecture du compteur sur photo). Sans engagement : résiliable en tout temps.",
     "status": {
       "trial": "Essai gratuit : encore {days, plural, one {# jour} other {# jours}} (jusqu’au {date}). Toutes les fonctions sont ouvertes.",
       "trialEnded": "Votre essai est terminé : le garage est en lecture seule. Choisissez une formule pour continuer à saisir.",

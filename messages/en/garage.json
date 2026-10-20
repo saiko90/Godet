@@ -498,7 +498,24 @@
     "save": "Save reading",
     "errBackwards": "The hour meter cannot go backwards: the last reading is {hours}. To fix an input error, use “Edit machine”.",
     "saved": "Hour meter for {code}: {hours}",
-    "savedDiff": "Hour meter for {code}: {hours} (+{diff})"
+    "savedDiff": "Hour meter for {code}: {hours} (+{diff})",
+    "photo": {
+      "button": "Read from a photo",
+      "reading": "Reading the meter…",
+      "hint": "Take a photo of the hour meter: the AI reads the figure, you check it before saving.",
+      "read": "Read from the photo: {hours}. Check, then save.",
+      "unsure": "Uncertain reading: {hours}. Check the figure carefully.",
+      "unreadable": "The meter can’t be read on this photo. Move closer and avoid glare.",
+      "demo": "Reading from a photo is available in your garage, not in the demo.",
+      "errors": {
+        "offline": "No network: reading from a photo needs a connection.",
+        "subscription_inactive": "Reading from a photo is available during the trial and with a subscription.",
+        "limit_reached": "This month’s reading limit has been reached.",
+        "not_configured": "Reading from a photo isn’t switched on yet.",
+        "forbidden": "You don’t have access to this company.",
+        "generic": "The photo couldn’t be read. Try again, or type the figure."
+      }
+    }
   },
   "scheduleForm": {
     "titleNew": "New due date",
@@ -892,5 +909,39 @@
     "cta": "Choose a plan",
     "manage": "Update",
     "askOwner": "Ask the owner to choose a plan."
+  },
+  "assistant": {
+    "open": "AI assistant",
+    "short": "Assistant",
+    "title": "Godet assistant",
+    "sub": "Questions about Godet and your fleet",
+    "subMachine": "Questions about Godet and your fleet · {code} open",
+    "reset": "New conversation",
+    "close": "Close the assistant",
+    "intro": "Ask your question: due services, costs, a machine’s history, or how to do something in Godet.",
+    "introDemo": "In your garage, the assistant knows your whole fleet: due services, costs, history, and how Godet works. It isn’t available in the demo.",
+    "demoCta": "Create my garage",
+    "suggest": {
+      "late": "Which services are overdue or coming up?",
+      "cost": "How much did {code} cost this year?",
+      "next": "What’s the next due service for {code}?",
+      "invite": "How do I invite a mechanic?"
+    },
+    "thinking": "Thinking…",
+    "seePlans": "See subscription",
+    "errors": {
+      "offline": "No network: the assistant needs a connection.",
+      "subscription_inactive": "The assistant is available during the trial and with a subscription.",
+      "limit_reached": "This month’s question limit for your plan has been reached.",
+      "not_configured": "The assistant isn’t switched on yet. Please try again later.",
+      "forbidden": "You don’t have access to this company.",
+      "generic": "The assistant couldn’t answer. Please try again in a moment."
+    },
+    "label": "Your question",
+    "placeholder": "Your question…",
+    "placeholderDemo": "Available in your garage",
+    "send": "Send",
+    "disclaimer": "AI can make mistakes: check important figures in the log.",
+    "usage": "{used} / {limit} questions this month"
   }
 }

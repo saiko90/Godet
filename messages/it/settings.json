@@ -47,7 +47,7 @@
   },
   "billing": {
     "title": "Abbonamento",
-    "text": "Tutte le formule comprendono utenti illimitati, etichette QR, importazione ed esportazione Excel e modalità senza rete. Senza vincoli: disdicibile in ogni momento.",
+    "text": "Tutte le formule comprendono utenti illimitati, etichette QR, importazione ed esportazione Excel, modalità senza rete e l’assistente IA (con lettura del contaore da foto). Senza vincoli: disdicibile in ogni momento.",
     "status": {
       "trial": "Prova gratuita: ancora {days, plural, one {# giorno} other {# giorni}} (fino al {date}). Tutte le funzioni sono aperte.",
       "trialEnded": "La prova è terminata: il garage è in sola lettura. Scelga una formula per continuare a registrare.",

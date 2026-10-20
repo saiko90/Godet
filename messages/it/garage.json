@@ -498,7 +498,24 @@
     "save": "Salva la lettura",
     "errBackwards": "Il contaore non può tornare indietro: l’ultima lettura è di {hours}. In caso di errore di inserimento, lo corregga in «Modifica la macchina».",
     "saved": "Contaore di {code}: {hours}",
-    "savedDiff": "Contaore di {code}: {hours} (+{diff})"
+    "savedDiff": "Contaore di {code}: {hours} (+{diff})",
+    "photo": {
+      "button": "Leggi da una foto",
+      "reading": "Lettura del contaore…",
+      "hint": "Fotografate il contaore: l’IA legge la cifra, voi la verificate prima di salvare.",
+      "read": "Letto dalla foto: {hours}. Verificate e salvate.",
+      "unsure": "Lettura incerta: {hours}. Verificate bene la cifra.",
+      "unreadable": "Il contaore non è leggibile su questa foto. Avvicinatevi, evitate i riflessi.",
+      "demo": "La lettura da foto è disponibile nel vostro garage, non nella demo.",
+      "errors": {
+        "offline": "Nessuna rete: la lettura da foto ha bisogno di una connessione.",
+        "subscription_inactive": "La lettura da foto è disponibile durante la prova e con un abbonamento.",
+        "limit_reached": "Il numero di letture del mese è raggiunto.",
+        "not_configured": "La lettura da foto non è ancora attiva.",
+        "forbidden": "Non avete accesso a questa azienda.",
+        "generic": "Non è stato possibile leggere la foto. Riprovate o inserite la cifra."
+      }
+    }
   },
   "scheduleForm": {
     "titleNew": "Nuova scadenza",
@@ -892,5 +909,39 @@
     "cta": "Scegli una formula",
     "manage": "Aggiorna",
     "askOwner": "Chieda al titolare di scegliere una formula."
+  },
+  "assistant": {
+    "open": "Assistente IA",
+    "short": "Assistente",
+    "title": "Assistente Godet",
+    "sub": "Domande su Godet e sul vostro parco macchine",
+    "subMachine": "Domande su Godet e sul vostro parco macchine · {code} aperta",
+    "reset": "Nuova conversazione",
+    "close": "Chiudi l’assistente",
+    "intro": "Fate la vostra domanda: scadenze, costi, storico di una macchina, o come fare qualcosa in Godet.",
+    "introDemo": "Nel vostro garage l’assistente conosce tutto il parco: scadenze, costi, storico e il funzionamento di Godet. Non è disponibile nella demo.",
+    "demoCta": "Crea il mio garage",
+    "suggest": {
+      "late": "Quali scadenze sono in ritardo o vicine?",
+      "cost": "Quanto è costata {code} quest’anno?",
+      "next": "Qual è la prossima scadenza di {code}?",
+      "invite": "Come invito un meccanico?"
+    },
+    "thinking": "Sto pensando…",
+    "seePlans": "Vedi l’abbonamento",
+    "errors": {
+      "offline": "Nessuna rete: l’assistente ha bisogno di una connessione.",
+      "subscription_inactive": "L’assistente è disponibile durante la prova e con un abbonamento.",
+      "limit_reached": "Il numero di domande del mese è raggiunto per il vostro piano.",
+      "not_configured": "L’assistente non è ancora attivo. Riprovate più tardi.",
+      "forbidden": "Non avete accesso a questa azienda.",
+      "generic": "L’assistente non ha potuto rispondere. Riprovate tra un attimo."
+    },
+    "label": "La vostra domanda",
+    "placeholder": "La vostra domanda…",
+    "placeholderDemo": "Disponibile nel vostro garage",
+    "send": "Invia",
+    "disclaimer": "L’IA può sbagliare: verificate le cifre importanti nel libretto.",
+    "usage": "{used} / {limit} domande questo mese"
   }
 }

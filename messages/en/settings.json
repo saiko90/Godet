@@ -47,7 +47,7 @@
   },
   "billing": {
     "title": "Subscription",
-    "text": "Every plan includes unlimited users, QR labels, Excel import and export, and offline mode. No commitment: cancel at any time.",
+    "text": "Every plan includes unlimited users, QR labels, Excel import and export, offline mode and the AI assistant (including hour-meter reading from a photo). No commitment: cancel at any time.",
     "status": {
       "trial": "Free trial: {days, plural, one {# day} other {# days}} left (until {date}). Every feature is unlocked.",
       "trialEnded": "Your trial has ended: the garage is read-only. Choose a plan to keep logging work.",

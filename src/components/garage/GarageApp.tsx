@@ -15,6 +15,7 @@ import type { GarageRepo } from '@/lib/repo/types';
 import type { FleetSnapshot, MachineFile, MediaItem } from '@/lib/types';
 import { useDomainText } from '@/lib/use-domain-text';
 import type { Showroom, ShowroomEffect, ShowroomMachine } from '@/engine/types';
+import { AssistantPanel } from './AssistantPanel';
 import { Atelier } from './Atelier';
 import { GarageContext, type GarageApi, type ModalSpec, type UploadOutcome, type UploadProgress } from './context';
 import { Dock } from './Dock';
@@ -89,6 +90,7 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
   const [introDone, setIntroDone] = useState(false);
   const [selectedOnce, setSelectedOnce] = useState(false);
   const [modal, setModal] = useState<ModalSpec | null>(null);
+  const [assistant, setAssistant] = useState(false);
   const [lightbox, setLightbox] = useState<{ machineId: string; mediaId: string } | null>(null);
   const [toast, setToast] = useState<{ id: number; message: string; tone: 'ok' | 'error' } | null>(null);
   const [uploads, setUploads] = useState<UploadProgress | null>(null);
@@ -651,6 +653,7 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
     if (e.key === 'Escape') {
       if (lightbox) setLightbox(null);
       else if (modal) setModal(null);
+      else if (assistant) setAssistant(false);
       else if (sheetVisible) closeSheet();
       else if (groupVisible) closeGroup();
       else return;
@@ -835,6 +838,8 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
             showToast(next ? t('groups.on') : t('groups.off'));
           }}
           onExcel={fleet ? () => setModal({ type: 'excel' }) : undefined}
+          onAssistant={() => setAssistant((v) => !v)}
+          assistantOpen={assistant}
           onSignOut={() => onSignOut?.()}
         />
         {status}
@@ -926,6 +931,7 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
               }}
               fileError={shownId ? (fileErrors[shownId] ?? null) : null}
             />
+            <AssistantPanel open={assistant} onClose={() => setAssistant(false)} machineId={sheetVisible ? shownId : null} />
           </GarageContext.Provider>
         ) : null}
       </div>

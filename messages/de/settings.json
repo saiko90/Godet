@@ -47,7 +47,7 @@
   },
   "billing": {
     "title": "Abonnement",
-    "text": "Alle Abos enthalten unbegrenzt viele Benutzer, QR-Etiketten, Excel-Import und -Export sowie den Offline-Modus. Ohne Bindung: jederzeit kündbar.",
+    "text": "Alle Abos enthalten unbegrenzt viele Benutzer, QR-Etiketten, Excel-Import und -Export, den Offline-Modus und den KI-Assistenten (mit Ablesen des Zählers vom Foto). Ohne Bindung: jederzeit kündbar.",
     "status": {
       "trial": "Gratis-Test: noch {days, plural, one {# Tag} other {# Tage}} (bis {date}). Alle Funktionen sind offen.",
       "trialEnded": "Ihr Test ist abgelaufen: Die Garage ist schreibgeschützt. Wählen Sie ein Abo, um weiter zu erfassen.",

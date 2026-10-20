@@ -98,6 +98,12 @@ Navigateur de test : Chromium de Playwright dans `/opt/pw-browsers` (ne pas lanc
   (`supabase/functions/facturation/stripe.ts`, recopié dans `stripe-webhook/`). Hors essai/abonnement actif : lecture
   seule (déclencheurs `*_guard_writable`, erreur `subscription_inactive`) ; limite de machines (`plan_limit`).
   Interface : `AbonnementPanel` (paramètres), bandeau du garage (`CloudGarage`), grille sur l'accueil ; `src/lib/billing.ts`.
+- Assistant IA (fonction Supabase `assistant`, Claude via `ANTHROPIC_API_KEY`, modèle `ANTHROPIC_MODEL` ou
+  claude-haiku-5-5) : `chat` (mode d'emploi `assistant/aide.ts` + parc de l'entreprise lu avec la clé de service,
+  lecture seule) et `meter` (compteur d'heures lu sur photo, valeur proposée puis vérifiée par la personne).
+  Compteur mensuel `ai_usage` (rpc `ai_consume`, clé de service seulement) ; limites dans `LIMITS` (essai 30/50,
+  essentiel 100, pro 300, parc 800 questions ; 500 photos). Interface : `AssistantPanel` (bouton « Assistant » de la
+  barre du haut), bouton « Lire sur une photo » de `HoursModal` ; client `src/lib/ai.ts`. Garder `aide.ts` à jour.
 - Abonnement : `plan` et `trial_ends_at` d'une entreprise (et `created_by`, `created_at`) ne se modifient pas depuis
   l'application (déclencheur `organizations_guard_billing`, erreur `billing_locked`) : seulement la clé de service,
   une fonction SECURITY DEFINER ou l'administration de la plateforme.

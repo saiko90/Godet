@@ -29,6 +29,8 @@ export function Topbar({
   groups,
   onGroups,
   onExcel,
+  onAssistant,
+  assistantOpen,
   onSignOut,
 }: {
   orgName: string;
@@ -51,6 +53,9 @@ export function Topbar({
   onGroups: () => void;
   /** Import / export Excel (absent tant que le parc n'est pas chargé). */
   onExcel?: () => void;
+  /** Assistant IA (tiroir à droite). */
+  onAssistant: () => void;
+  assistantOpen: boolean;
   onSignOut: () => void;
 }) {
   const t = useTranslations('garage');
@@ -135,6 +140,17 @@ export function Topbar({
             </span>
           </button>
         ) : null}
+        <button
+          type="button"
+          className="icon-btn g-ai-btn"
+          aria-pressed={assistantOpen}
+          aria-label={t('assistant.open')}
+          title={t('assistant.open')}
+          onClick={onAssistant}
+        >
+          <Icon name="spark" />
+          <span className="lbl">{t('assistant.short')}</span>
+        </button>
         <button
           type="button"
           className="icon-btn"

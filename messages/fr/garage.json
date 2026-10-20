@@ -498,7 +498,24 @@
     "save": "Enregistrer le relevé",
     "errBackwards": "Le compteur ne peut pas reculer : le dernier relevé est de {hours}. En cas d’erreur de saisie, corrigez-le dans « Modifier la machine ».",
     "saved": "Compteur de {code} : {hours}",
-    "savedDiff": "Compteur de {code} : {hours} (+{diff})"
+    "savedDiff": "Compteur de {code} : {hours} (+{diff})",
+    "photo": {
+      "button": "Lire sur une photo",
+      "reading": "Lecture du compteur…",
+      "hint": "Photographiez le compteur : l’IA lit le chiffre, vous vérifiez avant d’enregistrer.",
+      "read": "Lu sur la photo : {hours}. Vérifiez puis enregistrez.",
+      "unsure": "Lecture incertaine : {hours}. Vérifiez bien le chiffre.",
+      "unreadable": "Le compteur n’est pas lisible sur cette photo. Rapprochez-vous, évitez les reflets.",
+      "demo": "La lecture sur photo est disponible dans votre garage, pas dans la démo.",
+      "errors": {
+        "offline": "Pas de réseau : la lecture sur photo a besoin d’une connexion.",
+        "subscription_inactive": "La lecture sur photo est disponible pendant l’essai et avec un abonnement.",
+        "limit_reached": "Le nombre de lectures du mois est atteint.",
+        "not_configured": "La lecture sur photo n’est pas encore activée.",
+        "forbidden": "Vous n’avez pas accès à cette entreprise.",
+        "generic": "La photo n’a pas pu être lue. Réessayez, ou saisissez le chiffre."
+      }
+    }
   },
   "scheduleForm": {
     "titleNew": "Nouvelle échéance",
@@ -892,5 +909,39 @@
     "cta": "Choisir une formule",
     "manage": "Mettre à jour",
     "askOwner": "Demandez au propriétaire de choisir une formule."
+  },
+  "assistant": {
+    "open": "Assistant IA",
+    "short": "Assistant",
+    "title": "Assistant Godet",
+    "sub": "Questions sur Godet et sur votre parc",
+    "subMachine": "Questions sur Godet et sur votre parc · {code} ouverte",
+    "reset": "Nouvelle conversation",
+    "close": "Fermer l’assistant",
+    "intro": "Posez votre question : échéances, coûts, historique d’une machine, ou comment faire quelque chose dans Godet.",
+    "introDemo": "Dans votre garage, l’assistant connaît tout votre parc : échéances, coûts, historique, et le mode d’emploi de Godet. Il n’est pas disponible dans la démo.",
+    "demoCta": "Créer mon garage",
+    "suggest": {
+      "late": "Quelles échéances sont en retard ou proches ?",
+      "cost": "Combien a coûté {code} cette année ?",
+      "next": "Quelle est la prochaine échéance de {code} ?",
+      "invite": "Comment inviter un mécanicien ?"
+    },
+    "thinking": "Réflexion…",
+    "seePlans": "Voir l’abonnement",
+    "errors": {
+      "offline": "Pas de réseau : l’assistant a besoin d’une connexion.",
+      "subscription_inactive": "L’assistant est disponible pendant l’essai et avec un abonnement.",
+      "limit_reached": "Le nombre de questions du mois est atteint pour votre formule.",
+      "not_configured": "L’assistant n’est pas encore activé. Réessayez plus tard.",
+      "forbidden": "Vous n’avez pas accès à cette entreprise.",
+      "generic": "L’assistant n’a pas pu répondre. Réessayez dans un instant."
+    },
+    "label": "Votre question",
+    "placeholder": "Votre question…",
+    "placeholderDemo": "Disponible dans votre garage",
+    "send": "Envoyer",
+    "disclaimer": "L’IA peut se tromper : vérifiez les chiffres importants dans le carnet.",
+    "usage": "{used} / {limit} questions ce mois"
   }
 }

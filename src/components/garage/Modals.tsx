@@ -2,10 +2,11 @@
 
 // Modales du garage : machine (ajout / modification), compteur d'heures, échéance, retrait d'une saisie,
 // confirmations (archivage, suppression d'échéance).
-import { useMessages, useTranslations } from 'next-intl';
+import { useLocale, useMessages, useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { useFormat } from '@/components/FormatProvider';
 import { Icon } from '@/components/Icons';
+import { AiError, readMeter } from '@/lib/ai';
 import { can, PAINTS } from '@/lib/domain';
 import { addDays } from '@/lib/format';
 import { categoryOf, MACHINE_CATEGORIES, TYPICAL_WEIGHT, type MachineCategory } from '@/lib/machine-kinds';
@@ -17,6 +18,7 @@ import { useErrorText } from './errors';
 import { aria, Field, focusFirstError, type Errors } from './fields';
 import { nextCode } from './helpers';
 import { KindIcon } from './KindIcon';
+import { FileButton } from './MediaTab';
 import { parseLocalNumber } from './numbers';
 import { useGarageText } from './text';
 import { Modal } from './ui';
@@ -414,7 +416,40 @@ export function HoursModal({ machineId, onClose }: { machineId: string; onClose:
   const [value, setValue] = useState(machine ? String(Number(machine.hours)) : '');
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [reading, setReading] = useState(false);
+  const [photoNote, setPhotoNote] = useState<{ text: string; tone: 'ok' | 'warn' } | null>(null);
+  const locale = useLocale();
   if (!machine) return null;
+
+  /** Lecture du compteur sur une photo : la valeur est proposée, la personne vérifie avant d'enregistrer. */
+  async function fromPhoto(file: File | undefined) {
+    if (!file || !machine) return;
+    setError(null);
+    setPhotoNote(null);
+    if (g.mode === 'demo') {
+      setPhotoNote({ text: t('hoursForm.photo.demo'), tone: 'warn' });
+      return;
+    }
+    setReading(true);
+    try {
+      const r = await readMeter({ orgId: g.org.id, locale, file, machineId: machine.id });
+      if (r.hours == null) {
+        setPhotoNote({ text: r.note || t('hoursForm.photo.unreadable'), tone: 'warn' });
+      } else {
+        setValue(String(r.hours));
+        const sure = r.confidence === 'high';
+        setPhotoNote({
+          text: `${sure ? t('hoursForm.photo.read', { hours: f.hours(r.hours) }) : t('hoursForm.photo.unsure', { hours: f.hours(r.hours) })}${r.note ? ` ${r.note}` : ''}`,
+          tone: sure ? 'ok' : 'warn',
+        });
+        document.getElementById('hr-value')?.focus();
+      }
+    } catch (e) {
+      setPhotoNote({ text: t(`hoursForm.photo.errors.${e instanceof AiError ? e.code : 'generic'}`), tone: 'warn' });
+    } finally {
+      setReading(false);
+    }
+  }
 
   const current = Number(machine.hours);
   const n = parseLocalNumber(value, f);
@@ -498,6 +533,25 @@ export function HoursModal({ machineId, onClose }: { machineId: string; onClose:
                   ? t('hoursForm.hintBig', { hours: f.hours(diff) })
                   : t('hoursForm.hintDiff', { hours: f.hours(diff ?? 0) })}
         </p>
+      </div>
+      <div className="g-meter-photo">
+        <FileButton
+          accept="image/*"
+          capture="environment"
+          className="btn btn-soft"
+          disabled={reading || busy}
+          onFiles={(files) => void fromPhoto(files[0])}
+        >
+          {reading ? <span className="g-spinner" aria-hidden="true" /> : <Icon name="camera" />}
+          {reading ? t('hoursForm.photo.reading') : t('hoursForm.photo.button')}
+        </FileButton>
+        {photoNote ? (
+          <p className={`g-hint${photoNote.tone === 'warn' ? ' is-warn' : ''}`} role="status">
+            {photoNote.text}
+          </p>
+        ) : (
+          <p className="g-hint">{t('hoursForm.photo.hint')}</p>
+        )}
       </div>
       {recent.length ? (
         <div>

@@ -5,7 +5,7 @@ export type IconName =
   | 'plus' | 'close' | 'sound' | 'mute' | 'gauge' | 'wrench' | 'camera' | 'video' | 'upload' | 'drop'
   | 'shield' | 'cog' | 'note' | 'search' | 'power' | 'garage' | 'chevron-left' | 'chevron-right'
   | 'clock' | 'chf' | 'calendar' | 'users' | 'logout' | 'edit' | 'trash' | 'archive' | 'check'
-  | 'alert' | 'list' | 'cube' | 'file' | 'print' | 'link' | 'copy' | 'mail' | 'menu' | 'download' | 'qr' | 'table' | 'offline';
+  | 'alert' | 'list' | 'cube' | 'file' | 'print' | 'link' | 'copy' | 'mail' | 'menu' | 'download' | 'qr' | 'table' | 'offline' | 'spark';
 
 export function Icon({ name, className, title }: { name: IconName; className?: string; title?: string }) {
   return (
@@ -37,6 +37,7 @@ export function IconSprite() {
         <symbol id="i-cog" viewBox="0 0 24 24"><g {...stroke}><circle cx="12" cy="12" r="3" /><path d="M12 3v2.5M12 18.5V21M3 12h2.5M18.5 12H21M5.6 5.6l1.8 1.8M16.6 16.6l1.8 1.8M5.6 18.4l1.8-1.8M16.6 7.4l1.8-1.8" /></g></symbol>
         <symbol id="i-note" viewBox="0 0 24 24"><g {...stroke}><path d="M5 19h3.8L19 8.8 15.2 5 5 15.2z" /><path d="M13.5 6.7l3.8 3.8" /></g></symbol>
         <symbol id="i-edit" viewBox="0 0 24 24"><g {...stroke}><path d="M5 19h3.8L19 8.8 15.2 5 5 15.2z" /><path d="M13.5 6.7l3.8 3.8" /></g></symbol>
+        <symbol id="i-spark" viewBox="0 0 24 24"><g {...stroke}><path d="M11 3.5l1.7 4.8 4.8 1.7-4.8 1.7L11 16.5l-1.7-4.8L4.5 10l4.8-1.7z" /><path d="M18 14.5l.8 2.2 2.2.8-2.2.8L18 20.5l-.8-2.2-2.2-.8 2.2-.8z" /></g></symbol>
         <symbol id="i-search" viewBox="0 0 24 24"><g {...stroke}><circle cx="10.5" cy="10.5" r="5.5" /><path d="M15 15l5 5" /></g></symbol>
         <symbol id="i-power" viewBox="0 0 24 24"><g {...stroke} strokeWidth={2}><path d="M12 3.5V11" /><path d="M6.6 6.8a7.5 7.5 0 1 0 10.8 0" /></g></symbol>
         <symbol id="i-garage" viewBox="0 0 24 24"><g {...stroke}><path d="M3 10l9-6 9 6v10H3z" /><path d="M7 20v-6h10v6M7 17h10" /></g></symbol>
