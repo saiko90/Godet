@@ -217,8 +217,20 @@ export interface Subscription {
   current_period_end?: number;
   metadata?: Record<string, string>;
   items: { data: { current_period_end?: number; price: { lookup_key: string | null } }[] };
-  discount?: { coupon?: { id: string } } | null;
-  discounts?: ({ coupon?: { id: string } } | string)[];
+  discount?: Discount | null;
+  discounts?: (Discount | string)[];
+}
+
+/** Remise : coupon sous `coupon` (anciennes versions de l'API) ou sous `source.coupon` (depuis 2025-09-30). */
+interface Discount {
+  coupon?: { id: string } | string | null;
+  source?: { coupon?: { id: string } | string | null } | null;
+}
+
+function couponOf(d: Discount | string | null | undefined): string | null {
+  if (!d || typeof d === 'string') return null;
+  const c = d.source?.coupon ?? d.coupon ?? null;
+  return typeof c === 'string' ? c : (c?.id ?? null);
 }
 
 /** État Stripe → plan Godet (actif : écriture permise ; suspendu : lecture seule). null : ne rien changer. */
@@ -247,10 +259,7 @@ export async function applySubscription(db: Db, sub: Subscription, knownOrgId?: 
   const item = sub.items.data[0];
   const parsed = parseLookupKey(item?.price.lookup_key);
   const periodEnd = item?.current_period_end ?? sub.current_period_end ?? null;
-  const coupons = [
-    ...(sub.discounts ?? []).map((d) => (typeof d === 'string' ? null : d.coupon?.id ?? null)),
-    sub.discount?.coupon?.id ?? null,
-  ];
+  const coupons = [...(sub.discounts ?? []).map(couponOf), couponOf(sub.discount)];
   const plan = planFor(sub.status);
 
   const { data: current } = await db.from('organizations').select('founder, stripe_subscription_id').eq('id', orgId).single();
