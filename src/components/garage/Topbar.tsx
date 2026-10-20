@@ -9,6 +9,7 @@ import { useFormat } from '@/components/FormatProvider';
 import type { MemberRole } from '@/lib/types';
 import { useDomainText } from '@/lib/use-domain-text';
 import type { QualityPref } from './prefs';
+import { useRentalStatus } from './rental';
 import { Menu, type MenuEntry } from './ui';
 
 export function Topbar({
@@ -63,6 +64,7 @@ export function Topbar({
   const f = useFormat();
   const dt = useDomainText();
   const qualityLabel = t(`quality.${quality}`);
+  const rental = useRentalStatus();
 
   const shared: MenuEntry[] = [
     ...(show3dControls ? [{ key: 'groups', label: t('groups.menu'), icon: 'garage' as const, checked: groups, onSelect: onGroups }] : []),
@@ -85,6 +87,7 @@ export function Topbar({
             heading: person?.name || person?.email || orgName,
             sub: t('menu.roleOrg', { role: dt.role(role), org: orgName }),
           },
+          ...(rental ? [{ key: 'location', label: t('rental.menu'), icon: 'calendar' as const, href: '/location' }] : []),
           { key: 'parametres', label: t('menu.settings'), icon: 'cog', href: '/parametres' },
           { key: 'etiquettes', label: t('menu.labels'), icon: 'qr', href: '/etiquettes' },
           ...shared,

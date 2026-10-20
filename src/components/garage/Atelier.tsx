@@ -11,6 +11,7 @@ import { useDomainText } from '@/lib/use-domain-text';
 import { useGarage } from './context';
 import { machineCost12 } from './helpers';
 import { KindIcon } from './KindIcon';
+import { RentalPill } from './rental';
 import { useGarageText } from './text';
 import type { EngineFailure } from './useShowroom';
 
@@ -163,6 +164,7 @@ export function Atelier({
                       {gt.state(state)}
                     </span>
                   </div>
+                  <RentalPill machineId={m.id} />
                   <dl className="a-meta g-ameta">
                     <div>
                       <dt>{t('atelier.meter')}</dt>

@@ -497,7 +497,8 @@
     "source": {
       "saisie": "lettura",
       "intervention": "intervento",
-      "creation": "creazione"
+      "creation": "creazione",
+      "location": "Verbale di noleggio"
     },
     "save": "Salva la lettura",
     "errBackwards": "Il contaore non può tornare indietro: l’ultima lettura è di {hours}. In caso di errore di inserimento, lo corregga in «Modifica la macchina».",
@@ -972,5 +973,17 @@
     "cancel": "Annulla",
     "titlePhoto": "Aggiungi una foto",
     "titleVideo": "Aggiungi un video"
+  },
+  "rental": {
+    "menu": "Noleggio",
+    "louee": "Noleggiata",
+    "reservee": "Prenotata",
+    "disponible": "Disponibile",
+    "late": "Riconsegna in ritardo",
+    "outTo": "Noleggiata a {client} fino al {date}",
+    "lateTo": "Riconsegna in ritardo: {client}, prevista il {date}",
+    "bookedBy": "Prenotata da {client} dal {date}",
+    "nextFrom": "Disponibile · prossima prenotazione il {date}",
+    "freeAction": "Disponibile · prenota"
   }
 }

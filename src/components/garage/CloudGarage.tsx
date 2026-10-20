@@ -12,6 +12,7 @@ import { createOfflineRepo, forgetDevice, type OfflineRepo, type OfflineState } 
 import { createSupabaseRepo } from '@/lib/repo/supabase';
 import { supabaseBrowser } from '@/lib/supabase/client';
 import type { FleetSnapshot, SessionContext } from '@/lib/types';
+import { RentalStatusContext, type RentalStatus } from './rental';
 import { GarageApp } from './GarageApp';
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -62,7 +63,18 @@ function BillingBanner({ session }: { session: SessionContext }) {
   );
 }
 
-export function CloudGarage({ session, fleet, machineId }: { session: SessionContext; fleet: FleetSnapshot; machineId: string | null }) {
+export function CloudGarage({
+  session,
+  fleet,
+  machineId,
+  rentals = null,
+}: {
+  session: SessionContext;
+  fleet: FleetSnapshot;
+  machineId: string | null;
+  /** Option Location : statut des machines (null sans l'option). */
+  rentals?: RentalStatus | null;
+}) {
   const router = useRouter();
   const locale = useLocale();
   const t = useTranslations('garage.schedules.defaults');
@@ -166,6 +178,7 @@ export function CloudGarage({ session, fleet, machineId }: { session: SessionCon
   }
 
   return (
+    <RentalStatusContext.Provider value={rentals}>
     <GarageApp
       mode="cloud"
       makeRepo={getRepo}
@@ -183,5 +196,6 @@ export function CloudGarage({ session, fleet, machineId }: { session: SessionCon
         </div>
       }
     />
+    </RentalStatusContext.Provider>
   );
 }

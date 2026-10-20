@@ -451,6 +451,8 @@ export function createDemoRepo({ texts, defaultSchedules, seed }: DemoRepoOption
         org_id: db.org.id,
         machine_id: m.id,
         entry_id: opts.entryId ?? null,
+        rental_check_id: opts.rentalCheckId ?? null,
+        slot: opts.slot ?? null,
         kind: opts.kind,
         path: `${db.org.id}/${m.id}/${id}.${extForMime(mime, opts.fileName)}`,
         mime,

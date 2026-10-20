@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { LogoMark } from '@/components/Logo';
 import { DeviceGlyph } from '@/components/site/aide/DeviceGlyph';
-import { DEVICES, START_STEPS, TASKS } from '@/components/site/aide/content';
+import { DEVICES, RENTAL_STEPS, START_STEPS, TASKS } from '@/components/site/aide/content';
 import { checkLocale, NO_INDEX, type LocaleParams } from '@/components/site/seo';
 
 // Guide de démarrage, mis en page pour l'impression A4 : source des PDF de public/guides
@@ -71,6 +71,20 @@ export default async function GuidePage({ params }: { params: LocaleParams }) {
             <div key={key}>
               <dt>{t(`tasks.items.${key}.q`)}</dt>
               <dd>{t(`tasks.items.${key}.a`)}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+      <section>
+        <h2>{t('rental.title')}</h2>
+        <p>{t('rental.intro')}</p>
+        <dl className="s-guide-tasks">
+          {RENTAL_STEPS.map((key, i) => (
+            <div key={key}>
+              <dt>
+                {i + 1}. {t(`rental.steps.${key}.title`)}
+              </dt>
+              <dd>{t(`rental.steps.${key}.text`)}</dd>
             </div>
           ))}
         </dl>

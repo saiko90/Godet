@@ -510,6 +510,8 @@ export type Database = {
           path: string
           size_bytes: number | null
           taken_at: string
+          rental_check_id: string | null
+          slot: string | null
         }
         Insert: {
           caption?: string | null
@@ -524,6 +526,8 @@ export type Database = {
           path: string
           size_bytes?: number | null
           taken_at?: string
+          rental_check_id?: string | null
+          slot?: string | null
         }
         Update: {
           caption?: string | null
@@ -538,6 +542,8 @@ export type Database = {
           path?: string
           size_bytes?: number | null
           taken_at?: string
+          rental_check_id?: string | null
+          slot?: string | null
         }
         Relationships: [
           {
@@ -690,6 +696,10 @@ export type Database = {
           plan: string
           trial_ends_at: string
           track_location: boolean
+          rental_addon: boolean
+          rental_report_cc: string | null
+          rental_terms_path: string | null
+          rental_terms_updated_at: string | null
         }
         Insert: {
           billing_interval?: string | null
@@ -710,6 +720,10 @@ export type Database = {
           plan?: string
           trial_ends_at?: string
           track_location?: boolean
+          rental_addon?: boolean
+          rental_report_cc?: string | null
+          rental_terms_path?: string | null
+          rental_terms_updated_at?: string | null
         }
         Update: {
           billing_interval?: string | null
@@ -730,6 +744,10 @@ export type Database = {
           plan?: string
           trial_ends_at?: string
           track_location?: boolean
+          rental_addon?: boolean
+          rental_report_cc?: string | null
+          rental_terms_path?: string | null
+          rental_terms_updated_at?: string | null
         }
         Relationships: []
       }
@@ -891,6 +909,165 @@ export type Database = {
           status?: string
           updated_at?: string
           website?: string | null
+        }
+        Relationships: []
+      }
+      rental_checks: {
+        Row: {
+          accessories: string | null
+          accident: boolean
+          accident_note: string | null
+          charges: Json
+          client_signature: string
+          client_signer: string
+          created_at: string
+          created_by: string | null
+          emailed_at: string | null
+          fuel_level: string | null
+          hours: number | null
+          id: string
+          items: Json
+          keys_count: number | null
+          kind: string
+          lat: number | null
+          lng: number | null
+          machine_id: string
+          org_id: string
+          remarks: string | null
+          rental_id: string
+          report_path: string | null
+          reserves: boolean | null
+          safety_until: string | null
+          safety_valid: boolean | null
+          staff_signature: string | null
+          staff_signer: string | null
+          terms_accepted: boolean
+          terms_path: string | null
+        }
+        Insert: {
+          accessories?: string | null
+          accident?: boolean
+          accident_note?: string | null
+          charges?: Json
+          client_signature: string
+          client_signer: string
+          created_at?: string
+          created_by?: string | null
+          emailed_at?: string | null
+          fuel_level?: string | null
+          hours?: number | null
+          id?: string
+          items?: Json
+          keys_count?: number | null
+          kind: string
+          lat?: number | null
+          lng?: number | null
+          machine_id: string
+          org_id: string
+          remarks?: string | null
+          rental_id: string
+          report_path?: string | null
+          reserves?: boolean | null
+          safety_until?: string | null
+          safety_valid?: boolean | null
+          staff_signature?: string | null
+          staff_signer?: string | null
+          terms_accepted?: boolean
+          terms_path?: string | null
+        }
+        Update: {
+          accessories?: string | null
+          accident?: boolean
+          accident_note?: string | null
+          charges?: Json
+          client_signature?: string
+          client_signer?: string
+          created_at?: string
+          created_by?: string | null
+          emailed_at?: string | null
+          fuel_level?: string | null
+          hours?: number | null
+          id?: string
+          items?: Json
+          keys_count?: number | null
+          kind?: string
+          lat?: number | null
+          lng?: number | null
+          machine_id?: string
+          org_id?: string
+          remarks?: string | null
+          rental_id?: string
+          report_path?: string | null
+          reserves?: boolean | null
+          safety_until?: string | null
+          safety_valid?: boolean | null
+          staff_signature?: string | null
+          staff_signer?: string | null
+          terms_accepted?: boolean
+          terms_path?: string | null
+        }
+        Relationships: []
+      }
+      rentals: {
+        Row: {
+          back_at: string | null
+          client_company: string | null
+          client_email: string | null
+          client_name: string
+          client_phone: string | null
+          created_at: string
+          created_by: string | null
+          delivery: string
+          end_at: string
+          id: string
+          machine_id: string
+          notes: string | null
+          org_id: string
+          out_at: string | null
+          site: string | null
+          start_at: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          back_at?: string | null
+          client_company?: string | null
+          client_email?: string | null
+          client_name: string
+          client_phone?: string | null
+          created_at?: string
+          created_by?: string | null
+          delivery?: string
+          end_at: string
+          id?: string
+          machine_id: string
+          notes?: string | null
+          org_id: string
+          out_at?: string | null
+          site?: string | null
+          start_at: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          back_at?: string | null
+          client_company?: string | null
+          client_email?: string | null
+          client_name?: string
+          client_phone?: string | null
+          created_at?: string
+          created_by?: string | null
+          delivery?: string
+          end_at?: string
+          id?: string
+          machine_id?: string
+          notes?: string | null
+          org_id?: string
+          out_at?: string | null
+          site?: string | null
+          start_at?: string
+          status?: string
+          updated_at?: string
         }
         Relationships: []
       }

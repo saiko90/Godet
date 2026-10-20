@@ -1929,3 +1929,11 @@
 .g-zoom-btns { position: absolute; right: 8px; bottom: 8px; display: flex; gap: 6px; }
 .g-zoom-btns .icon-btn { background: rgba(10, 11, 13, 0.75); font-size: 1.25rem; line-height: 1; }
 .g-zoom-btns .g-zoom-reset { font-size: var(--t-sm); padding: 0 12px; }
+
+/* option Location : statut de la machine */
+.g-rent-pill { text-decoration: none; cursor: pointer; }
+.g-rent-pill:hover { filter: brightness(1.15); }
+.g-rent-pill.is-rent-out { background: var(--paint-soft); color: var(--paint); }
+.g-rent-pill.is-rent-booked { background: rgba(111, 168, 255, 0.15); color: #9cc2ff; }
+.g-rent-pill.is-rent-free { background: var(--ok-soft); color: var(--ok); }
+.g-acard > .g-rent-pill { justify-self: start; align-self: start; margin-top: -4px; }

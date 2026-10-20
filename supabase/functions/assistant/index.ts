@@ -204,6 +204,30 @@ async function fleetContext(db: SupabaseClient, org: Record<string, unknown>, fo
         .join('\t'),
     );
   }
+
+  // Option Location : réservations et locations en cours ou à venir, dernières locations terminées.
+  const rentalOn = (org.plan === 'essai' && Date.parse(String(org.trial_ends_at)) > Date.now()) || (org.plan === 'actif' && org.rental_addon === true);
+  lines.push('');
+  if (!rentalOn) lines.push('## Option Location : non activée pour cette entreprise (Paramètres → Abonnement).');
+  else {
+    const since90 = new Date(Date.now() - 90 * 86400000).toISOString();
+    const { data: rentals, error } = await db
+      .from('rentals')
+      .select('machine_id, status, client_company, client_name, site, start_at, end_at, out_at, back_at')
+      .eq('org_id', orgId)
+      .neq('status', 'annulee')
+      .or(`status.in.(reservee,en_cours),end_at.gte.${since90}`)
+      .order('start_at')
+      .limit(500);
+    if (error) console.error('[assistant] locations :', error.code, error.message);
+    lines.push(`## Locations (option Location active ; maintenant : ${new Date().toISOString().slice(0, 16)} UTC)`);
+    lines.push('machine\tstatut\tclient\tchantier\tdépart prévu\tretour prévu\tparti le\trendu le');
+    for (const r of rentals ?? []) {
+      const late = r.status === 'en_cours' && Date.parse(r.end_at) < Date.now() ? ' (retour en retard)' : '';
+      lines.push([c(r.machine_id), `${r.status}${late}`, [r.client_company, r.client_name].filter(Boolean).join(' · '), r.site, r.start_at.slice(0, 16), r.end_at.slice(0, 16), r.out_at?.slice(0, 16), r.back_at?.slice(0, 16)].map(clean).join('\t'));
+    }
+    if (!(rentals ?? []).length) lines.push('(aucune)');
+  }
   return lines.join('\n');
 }
 

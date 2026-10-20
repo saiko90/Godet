@@ -497,7 +497,8 @@
     "source": {
       "saisie": "reading",
       "intervention": "entry",
-      "creation": "creation"
+      "creation": "creation",
+      "location": "Rental report"
     },
     "save": "Save reading",
     "errBackwards": "The hour meter cannot go backwards: the last reading is {hours}. To fix an input error, use “Edit machine”.",
@@ -972,5 +973,17 @@
     "cancel": "Cancel",
     "titlePhoto": "Add a photo",
     "titleVideo": "Add a video"
+  },
+  "rental": {
+    "menu": "Rental",
+    "louee": "On hire",
+    "reservee": "Booked",
+    "disponible": "Available",
+    "late": "Return overdue",
+    "outTo": "On hire to {client} until {date}",
+    "lateTo": "Return overdue: {client}, due {date}",
+    "bookedBy": "Booked by {client} from {date}",
+    "nextFrom": "Available · next booking on {date}",
+    "freeAction": "Available · book"
   }
 }

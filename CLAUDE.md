@@ -11,7 +11,7 @@ pièces, contrôles, notes), ses échéances, ses relevés d'heures, ses coûts,
 - Toutes les pages sont sous `src/app/[locale]/` ; `params` est une Promise (`const { locale } = await params`) et
   chaque page/layout appelle `setRequestLocale(locale)`.
 - Textes : `messages/<langue>/<zone>.json` (zones : common, domain, site, auth, settings, carnet, contact, ideas, garage,
-  demo, notifications, emails, admin, legal, excel). Le français fait foi ; `node scripts/check-messages.mjs` vérifie que
+  demo, notifications, emails, admin, legal, excel, help, rental). Le français fait foi ; `node scripts/check-messages.mjs` vérifie que
   chaque langue a les mêmes clés et les mêmes variables. Syntaxe ICU (`{count, plural, one {…} other {…}}`).
 - Côté client : `useTranslations('zone')` ; le layout racine ne fournit que `common` et `domain` au navigateur :
   chaque zone pose son propre `NextIntlClientProvider` avec `pickMessages(messages, [...])`.
@@ -110,6 +110,18 @@ Navigateur de test : Chromium de Playwright dans `/opt/pw-browsers` (ne pas lanc
   `hour_readings`, dernière position sur `machines.last_*` (déclencheurs `*_last_position`). Lien carte OpenStreetMap.
   `Permissions-Policy` : `geolocation=(self)`. Page publique `/securite` (textes `legal.securityPage`) : chaque
   garantie doit rester vraie (sauvegardes = plan Supabase Pro, 7 jours).
+- Option Location (+29 CHF/mois, comprise dans l'essai ; migrations `*_location*.sql`) : `organizations.rental_addon`
+  (écrit par Stripe : élément `godet_location_*` de l'abonnement, action `update` de `facturation`),
+  `private.rental_enabled` / `rentalEnabled()` (`src/lib/billing.ts`). Tables `rentals` (réservée → en cours → terminée,
+  annulée ; chevauchement refusé : contrainte d'exclusion, code 23P01) et `rental_checks` (état des lieux départ / retour,
+  jamais modifié ; l'insertion fait avancer la location et crée un relevé `source = 'location'`). Conditions de location :
+  `organizations.rental_terms_path` (PDF dans `medias`, acceptation obligatoire au départ, version gardée dans
+  `rental_checks.terms_path`) ; copie des rapports : `rental_report_cc`. Médias rattachés : `media.rental_check_id`,
+  `media.slot`. Pages : `/location` (agenda), `/location/[id]/depart|retour` (formulaire), `/location/[id]/rapport` ;
+  Paramètres → Location (`LocationPanel`) ; pastilles du garage (`components/garage/rental.tsx`). Règles et points de
+  contrôle : `src/lib/rental.ts`. Fonction Supabase `location` : PDF (pdf-lib, vignettes JPEG `<check>-pdf-NN-<slot>.jpg`
+  faites par l'appareil), rangé en document de la machine, e-mail Resend au client ; textes copiés par
+  `node scripts/sync-location-i18n.mjs` (à relancer après un changement de `rental.json`, puis redéployer).
 - Aide : page `/aide` (textes `help`, structure `src/components/site/aide/content.ts`, tutoriel d'installation par
   appareil), guide imprimable `/aide/guide` → PDF `public/guides/godet-guide-<langue>.pdf` à régénérer après un
   changement de texte : `BASE=http://localhost:3000 node scripts/guides/make-guides.mjs`.

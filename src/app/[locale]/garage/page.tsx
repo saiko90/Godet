@@ -6,6 +6,10 @@ import { FormatProvider } from '@/components/FormatProvider';
 import { CloudGarage } from '@/components/garage/CloudGarage';
 import { getPathname, redirect } from '@/i18n/navigation';
 import { routing } from '@/i18n/routing';
+import type { RentalBadge } from '@/components/garage/rental';
+import { rentalEnabled } from '@/lib/billing';
+import { nowMs } from '@/lib/clock';
+import { machineRentalState, type Rental } from '@/lib/rental';
 import { loadFleet } from '@/lib/repo/supabase';
 import { getSession } from '@/lib/session';
 import { supabaseServer } from '@/lib/supabase/server';
@@ -46,10 +50,37 @@ export default async function GaragePage({ params, searchParams }: Props) {
 
   // Échéances par défaut dans la langue de la page (comme le dépôt du navigateur, cf. CloudGarage).
   const td = await getTranslations({ locale, namespace: 'garage.schedules.defaults' });
-  const fleet = await loadFleet(await supabaseServer(), session.ctx, { service: td('service'), safety: td('safety') });
+  const supabase = await supabaseServer();
+  const fleet = await loadFleet(supabase, session.ctx, { service: td('service'), safety: td('safety') });
+
+  // Option Location : statut de chaque machine (louée, réservée aujourd'hui, disponible avec la prochaine réservation).
+  let rentals: { byMachine: Record<string, RentalBadge> } | null = null;
+  const now = nowMs();
+  if (rentalEnabled(session.ctx.org, now)) {
+    const { data } = await supabase
+      .from('rentals')
+      .select('*')
+      .eq('org_id', session.ctx.org.id)
+      .in('status', ['reservee', 'en_cours'])
+      .limit(2000);
+    const list = (data ?? []) as Rental[];
+    const byMachine: Record<string, RentalBadge> = {};
+    for (const m of fleet.machines) {
+      const st = machineRentalState(list, m.id, now);
+      const r = st.state === 'disponible' ? st.next : st.rental;
+      byMachine[m.id] = {
+        state: st.state,
+        late: st.state === 'louee' ? st.late : undefined,
+        rentalId: r?.id,
+        client: r ? r.client_company || r.client_name : undefined,
+        at: r ? (st.state === 'louee' ? r.end_at : r.start_at) : undefined,
+      };
+    }
+    rentals = { byMachine };
+  }
   return (
     <FormatProvider locale={locale} country={session.ctx.org.country} currency={session.ctx.org.currency}>
-      <CloudGarage session={session.ctx} fleet={fleet} machineId={machineId} />
+      <CloudGarage session={session.ctx} fleet={fleet} machineId={machineId} rentals={rentals} />
     </FormatProvider>
   );
 }

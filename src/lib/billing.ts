@@ -11,6 +11,14 @@ export const TIERS: readonly { id: Tier; limit: number; monthly: number }[] = [
   { id: 'parc', limit: 50, monthly: 99 },
 ];
 
+/** Option Location : prix mensuel (même montant en CHF et en EUR), comme RENTAL_ADDON dans la fonction « facturation ». */
+export const RENTAL_ADDON_MONTHLY = 29;
+
+/** Module Location disponible : pendant l'essai, ou avec l'option sur un abonnement actif (= private.rental_enabled). */
+export function rentalEnabled(org: Pick<Org, 'plan' | 'trial_ends_at' | 'rental_addon'>, now: number): boolean {
+  return (org.plan === 'essai' && Date.parse(org.trial_ends_at) > now) || (org.plan === 'actif' && org.rental_addon);
+}
+
 /** Remise du pack fondateur (10 premières entreprises, à vie). */
 export const FOUNDER_DISCOUNT = 0.3;
 /** L'année vaut 10 mois. */

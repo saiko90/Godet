@@ -497,7 +497,8 @@
     "source": {
       "saisie": "Ablesung",
       "intervention": "Eintrag",
-      "creation": "Erfassung"
+      "creation": "Erfassung",
+      "location": "Mietprotokoll"
     },
     "save": "Ablesung speichern",
     "errBackwards": "Der Zähler kann nicht zurücklaufen: Die letzte Ablesung beträgt {hours}. Einen Eingabefehler korrigieren Sie unter «Maschine bearbeiten».",
@@ -972,5 +973,17 @@
     "cancel": "Abbrechen",
     "titlePhoto": "Foto hinzufügen",
     "titleVideo": "Video hinzufügen"
+  },
+  "rental": {
+    "menu": "Vermietung",
+    "louee": "Vermietet",
+    "reservee": "Reserviert",
+    "disponible": "Verfügbar",
+    "late": "Rückgabe überfällig",
+    "outTo": "Vermietet an {client} bis {date}",
+    "lateTo": "Rückgabe überfällig: {client}, geplant am {date}",
+    "bookedBy": "Reserviert von {client} ab {date}",
+    "nextFrom": "Verfügbar · nächste Reservation am {date}",
+    "freeAction": "Verfügbar · reservieren"
   }
 }

@@ -7,7 +7,7 @@ import { SUPABASE_PUBLISHABLE_KEY, SUPABASE_URL } from '@/lib/env';
 const handleI18n = createIntlMiddleware(routing);
 
 // Pages réservées aux personnes connectées (chemins sans la langue).
-const PRIVATE = ['/garage', '/bienvenue', '/parametres', '/carnet', '/etiquettes', '/admin'];
+const PRIVATE = ['/garage', '/bienvenue', '/parametres', '/carnet', '/etiquettes', '/admin', '/location'];
 
 type CookieToSet = { name: string; value: string; options?: Parameters<NextResponse['cookies']['set']>[2] };
 

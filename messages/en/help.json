@@ -15,7 +15,8 @@
     "start": "Start in 5 steps",
     "install": "Install the app",
     "tasks": "Day to day",
-    "contact": "Need help?"
+    "contact": "Need help?",
+    "rental": "Rental option"
   },
   "pdf": {
     "title": "Getting-started guide as PDF",
@@ -131,6 +132,10 @@
       "billing": {
         "q": "After the trial",
         "a": "Settings → Subscription: choose the plan by number of machines (from CHF 29 a month). Without a subscription the garage becomes read-only: nothing is deleted."
+      },
+      "rental": {
+        "q": "Hire out a machine (Rental option)",
+        "a": "Calendar: menu → Rental. Booking, check-out report signed by the customer, then check-in report compared with check-out; the PDF report goes to the customer. In the garage, the machine sheet shows whether it is on hire, booked or available."
       }
     }
   },
@@ -142,5 +147,35 @@
     "title": "Getting-started guide",
     "subtitle": "The digital maintenance log for your machinery fleet",
     "footer": "godet.app · Swiss Digital Studio, Valais"
+  },
+  "rental": {
+    "title": "Rental option",
+    "intro": "For machine hire companies: a rental calendar and check-out and check-in reports signed on site. Option at +29 CHF per month, included in the 15-day trial.",
+    "steps": {
+      "enable": {
+        "title": "Turn on the option",
+        "text": "Settings → Subscription → “Rental option”. During the trial it is already on. The garage menu then shows “Rental”."
+      },
+      "settings": {
+        "title": "Set up rental",
+        "text": "Settings → Rental: upload your general rental terms as a PDF (the customer must accept them before signing) and, if you wish, an address that receives a copy of every report."
+      },
+      "book": {
+        "title": "Book a machine",
+        "text": "Rental → “New booking”, or tap an empty cell in the calendar: machine, dates, customer, site, delivery or collection. Godet refuses a machine already booked or on hire for that period."
+      },
+      "out": {
+        "title": "Check-out report",
+        "text": "On the day: check items (OK, Defect, N/A), fuel, hour meter read from the photo, accessories, required photos (front, rear, sides, hour meter, fuel gauge) and up to 20 photos and 2 videos. The customer accepts the terms and signs on screen, and so do you: the machine is now “On hire”."
+      },
+      "in": {
+        "title": "Check-in report",
+        "text": "On return, each item is compared with check-out: a new defect shows in red, hire hours are calculated. Add charges (fuel, cleaning, damage) and reservations, then have it signed: the rental is closed and the machine’s hour meter is updated."
+      },
+      "report": {
+        "title": "PDF report",
+        "text": "After each signature a PDF report is emailed to the customer (with the accepted terms) and filed in the machine’s documents. Rental → the rental → “Report” to view, print or resend it."
+      }
+    }
   }
 }

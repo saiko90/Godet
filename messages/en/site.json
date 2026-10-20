@@ -199,6 +199,7 @@
       "perMonth": "CHF\u00a0{chf} or \u20ac{eur} per month",
       "yearly": "2 months free with yearly billing. Cancel at any time.",
       "founder": "Founder pack: 30% off for life for the first 10 subscribing companies.",
+      "rental": "Rental option (+{chf} CHF or €{eur} per month): rental calendar, check-out and check-in reports signed on site, PDF report sent to the customer.",
       "tiers": {
         "essentiel": {
           "name": "Essentiel",

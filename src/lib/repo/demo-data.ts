@@ -74,6 +74,10 @@ export function buildDemoSeed(today: string, texts: DemoTexts): DemoSeed {
     stripe_subscription_id: null,
     // Positions affichées dans la démo (aucune position n'est demandée à l'appareil).
     track_location: true,
+    rental_addon: false,
+    rental_report_cc: null,
+    rental_terms_path: null,
+    rental_terms_updated_at: null,
   };
 
   const machines: Machine[] = [];

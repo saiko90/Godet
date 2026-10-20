@@ -14,7 +14,8 @@
       "reminders": "Rappels",
       "archives": "Machines archivées",
       "ideas": "Boîte à idées",
-      "billing": "Abonnement"
+      "billing": "Abonnement",
+      "rental": "Location"
     }
   },
   "plan": {
@@ -109,7 +110,22 @@
     },
     "activated": "Abonnement actif : merci, bienvenue dans Godet !",
     "refresh": "Déjà payé et rien n’a changé ? Actualiser",
-    "refreshing": "Vérification…"
+    "refreshing": "Vérification…",
+    "addon": {
+      "title": "Option Location",
+      "on": "Active : agenda des locations et états des lieux départ / retour avec photos et signature.",
+      "text": "Agenda des locations, états des lieux départ / retour avec photos, vidéo et signature du client. {price} par mois.",
+      "confirmRemove": "Retirer l’option Location ? L’agenda et les nouveaux états des lieux ne seront plus accessibles ; ceux déjà faits restent dans le carnet.",
+      "remove": "Retirer l’option",
+      "add": "Ajouter l’option",
+      "pick": "Ajouter l’option Location : +{price} {period}",
+      "pickHint": "Agenda des machines louées, réservées ou disponibles, et états des lieux départ / retour avec photos, vidéo et signature."
+    },
+    "switchTitle": "Changer de formule",
+    "switchTo": "Passer à {name} ({machines} machines)",
+    "perYearShort": "par an",
+    "perMonthShort": "par mois",
+    "updated": "Abonnement mis à jour."
   },
   "team": {
     "title": "Équipe",
@@ -262,5 +278,40 @@
     "restoreFailed": "La machine n’a pas pu être restaurée.",
     "restored": "{code} est de retour au garage.",
     "offline": "Connexion au serveur impossible. Vérifiez votre réseau, puis réessayez."
+  },
+  "rental": {
+    "title": "Location",
+    "text": "Réglages de l’option Location : conditions de location et copie des rapports.",
+    "offText": "L’option Location (+29 CHF/mois) ajoute l’agenda des locations, les états des lieux signés et les rapports PDF.",
+    "enable": "Voir l’abonnement",
+    "agenda": "Ouvrir l’agenda des locations",
+    "terms": {
+      "title": "Conditions de location",
+      "hint": "Déposez vos conditions générales de location en PDF. À l’état des lieux de départ, le client les ouvre et coche « J’ai lu et j’accepte les conditions de location » avant de signer. Chaque état des lieux garde la version acceptée.",
+      "current": "Conditions de location (PDF)",
+      "updated": "Version du {date}",
+      "none": "Aucune condition déposée : la case d’acceptation n’apparaît pas.",
+      "upload": "Déposer le PDF",
+      "replace": "Remplacer le PDF",
+      "remove": "Retirer"
+    },
+    "cc": {
+      "title": "Copie des rapports",
+      "hint": "Chaque rapport PDF envoyé au client part aussi en copie à cette adresse.",
+      "placeholder": "location@entreprise.ch",
+      "save": "Enregistrer"
+    },
+    "saving": "Envoi…",
+    "saved": "Enregistré.",
+    "removed": "Conditions retirées.",
+    "confirmRemove": "Retirer les conditions de location ? Les états des lieux déjà signés gardent leur version.",
+    "readOnly": "Seuls le propriétaire et les administrateurs modifient ces réglages.",
+    "errors": {
+      "type": "Choisissez un fichier PDF.",
+      "size": "Le PDF dépasse 10 Mo.",
+      "upload": "Le fichier n’a pas pu être envoyé. Vérifiez le réseau.",
+      "save": "L’enregistrement n’a pas abouti. Réessayez.",
+      "email": "Cette adresse e-mail n’est pas valable."
+    }
   }
 }

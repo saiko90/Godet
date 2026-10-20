@@ -15,7 +15,8 @@
     "start": "Démarrer en 5 étapes",
     "install": "Installer l’application",
     "tasks": "Au quotidien",
-    "contact": "Besoin d’aide\u00a0?"
+    "contact": "Besoin d’aide\u00a0?",
+    "rental": "Option Location"
   },
   "pdf": {
     "title": "Guide de démarrage en PDF",
@@ -131,6 +132,10 @@
       "billing": {
         "q": "Après l’essai",
         "a": "Paramètres → Abonnement\u00a0: choisissez la formule selon le nombre de machines (dès 29 CHF par mois). Sans abonnement, le garage passe en lecture seule\u00a0: rien n’est effacé."
+      },
+      "rental": {
+        "q": "Louer une machine (option Location)",
+        "a": "Agenda\u00a0: menu → Location. Réservation, état des lieux de départ signé par le client, puis état des lieux de retour comparé au départ\u00a0; le rapport PDF part au client. Dans le garage, la fiche indique si la machine est louée, réservée ou disponible."
       }
     }
   },
@@ -142,5 +147,35 @@
     "title": "Guide de démarrage",
     "subtitle": "Le carnet d’entretien numérique de votre parc d’engins",
     "footer": "godet.app · Swiss Digital Studio, Valais"
+  },
+  "rental": {
+    "title": "Option Location",
+    "intro": "Pour les loueurs de machines\u00a0: un agenda des locations et des états des lieux signés sur place, au départ et au retour. Option à +29\u00a0CHF par mois, comprise dans l’essai de 15 jours.",
+    "steps": {
+      "enable": {
+        "title": "Activez l’option",
+        "text": "Paramètres → Abonnement → «\u00a0Option Location\u00a0». Pendant l’essai, elle est déjà active. Le menu du garage affiche alors «\u00a0Location\u00a0»."
+      },
+      "settings": {
+        "title": "Réglez la location",
+        "text": "Paramètres → Location\u00a0: déposez vos conditions générales de location en PDF (le client devra les accepter avant de signer) et, si vous le souhaitez, une adresse qui reçoit une copie de chaque rapport."
+      },
+      "book": {
+        "title": "Réservez une machine",
+        "text": "Location → «\u00a0Nouvelle réservation\u00a0», ou touchez une case vide de l’agenda\u00a0: machine, dates, client, chantier, livraison ou enlèvement. Godet refuse une machine déjà réservée ou louée sur la période."
+      },
+      "out": {
+        "title": "État des lieux de départ",
+        "text": "Le jour du départ\u00a0: points de contrôle (OK, Défaut, Sans objet), carburant, compteur lu sur la photo, accessoires, photos imposées (avant, arrière, côtés, compteur, jauge) et jusqu’à 20 photos et 2 vidéos. Le client accepte les conditions, signe sur l’écran, vous aussi\u00a0: la machine passe «\u00a0Louée\u00a0»."
+      },
+      "in": {
+        "title": "État des lieux de retour",
+        "text": "Au retour, chaque point est comparé au départ\u00a0: un nouveau défaut ressort en rouge, les heures de location sont calculées. Ajoutez les frais (plein, nettoyage, dégâts) et les réserves, puis faites signer\u00a0: la location est close et le compteur de la machine est mis à jour."
+      },
+      "report": {
+        "title": "Rapport PDF",
+        "text": "Après chaque signature, un rapport PDF part au client par e-mail (avec les conditions acceptées) et se range dans les documents de la machine. Location → la location → «\u00a0Rapport\u00a0» pour le revoir, l’imprimer ou le renvoyer."
+      }
+    }
   }
 }

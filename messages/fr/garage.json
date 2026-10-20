@@ -497,7 +497,8 @@
     "source": {
       "saisie": "relevé",
       "intervention": "intervention",
-      "creation": "création"
+      "creation": "création",
+      "location": "État des lieux de location"
     },
     "save": "Enregistrer le relevé",
     "errBackwards": "Le compteur ne peut pas reculer : le dernier relevé est de {hours}. En cas d’erreur de saisie, corrigez-le dans « Modifier la machine ».",
@@ -972,5 +973,17 @@
     "cancel": "Annuler",
     "titlePhoto": "Ajouter une photo",
     "titleVideo": "Ajouter une vidéo"
+  },
+  "rental": {
+    "menu": "Location",
+    "louee": "Louée",
+    "reservee": "Réservée",
+    "disponible": "Disponible",
+    "late": "Retour en retard",
+    "outTo": "Louée à {client} jusqu’au {date}",
+    "lateTo": "Retour en retard : {client}, prévu le {date}",
+    "bookedBy": "Réservée par {client} dès le {date}",
+    "nextFrom": "Disponible · prochaine réservation le {date}",
+    "freeAction": "Disponible · réserver"
   }
 }

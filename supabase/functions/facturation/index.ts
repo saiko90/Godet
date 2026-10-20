@@ -6,6 +6,8 @@
 //   → { url }  (page de paiement Stripe ; ou portail si un abonnement existe déjà)
 // POST { action: 'portal', orgId, locale } → { url }
 // POST { action: 'sync', orgId } → { synced, status }  (relit l'abonnement chez Stripe)
+// POST { action: 'update', orgId, tier?, addon? } → { updated }  (changer de formule, ajouter / retirer l'option Location)
+// checkout accepte aussi addon: true (option Location ajoutée à l'abonnement).
 // Erreurs : { error: code } avec code parmi unauthorized, forbidden, bad_request, tier_too_small, not_configured,
 // no_customer, stripe.
 import { createClient } from 'npm:@supabase/supabase-js@2.118.0';
@@ -14,6 +16,9 @@ import {
   ensureFounderCoupon,
   ensurePortalConfiguration,
   ensurePrice,
+  ensureRentalPrice,
+  isRentalKey,
+  parseLookupKey,
   FOUNDER_COUPON,
   stripe,
   StripeError,
@@ -84,7 +89,7 @@ Deno.serve(async (req) => {
   const user = auth?.user;
   if (authError || !user) return json(req, 401, { error: 'unauthorized' });
 
-  let body: { action?: string; orgId?: string; tier?: string; interval?: string; locale?: string };
+  let body: { action?: string; orgId?: string; tier?: string; interval?: string; locale?: string; addon?: boolean };
   try {
     body = await req.json();
   } catch {
@@ -137,6 +142,32 @@ Deno.serve(async (req) => {
       if (result.error) console.error('[facturation] sync :', result.error);
       return json(req, 200, { synced: !result.error, status: latest.status });
     }
+    // Abonnement en cours : changer de formule (même périodicité) ou ajouter / retirer l'option Location, au prorata.
+    if (body.action === 'update') {
+      if (!org.stripe_subscription_id || !LIVE.has(org.subscription_status ?? '')) return json(req, 400, { error: 'no_subscription' });
+      const sub = await stripe<Subscription>('GET', `subscriptions/${org.stripe_subscription_id}`);
+      const tierItem = sub.items.data.find((i) => parseLookupKey(i.price.lookup_key));
+      const current = parseLookupKey(tierItem?.price.lookup_key);
+      if (!tierItem?.id || !current) return json(req, 400, { error: 'bad_request' });
+      const rentalItem = sub.items.data.find((i) => isRentalKey(i.price.lookup_key));
+      const proration = { proration_behavior: 'create_prorations' };
+      if (body.tier && body.tier !== current.tier) {
+        const tier = body.tier as Tier;
+        if (!(tier in TIERS)) return json(req, 400, { error: 'bad_request' });
+        const { count } = await db.from('machines').select('id', { count: 'exact', head: true }).eq('org_id', orgId).is('archived_at', null);
+        if ((count ?? 0) > TIERS[tier].limit) return json(req, 400, { error: 'tier_too_small' });
+        await stripe('POST', `subscription_items/${tierItem.id}`, { price: await ensurePrice(tier, current.interval, current.currency), ...proration });
+      }
+      if (body.addon === true && !rentalItem) {
+        await stripe('POST', 'subscription_items', { subscription: sub.id, price: await ensureRentalPrice(current.interval, current.currency), ...proration });
+      } else if (body.addon === false && rentalItem?.id) {
+        await stripe('DELETE', `subscription_items/${rentalItem.id}`, proration);
+      }
+      const fresh = await stripe<Subscription>('GET', `subscriptions/${sub.id}`, { 'expand[]': 'discounts' });
+      const result = await applySubscription(db, fresh, orgId);
+      if (result.error) console.error('[facturation] update :', result.error);
+      return json(req, 200, { updated: !result.error });
+    }
     if (body.action !== 'checkout') return json(req, 400, { error: 'bad_request' });
 
     const tier = body.tier as Tier;
@@ -173,7 +204,7 @@ Deno.serve(async (req) => {
       mode: 'subscription',
       customer,
       client_reference_id: orgId,
-      line_items: [{ price, quantity: 1 }],
+      line_items: [{ price, quantity: 1 }, ...(body.addon ? [{ price: await ensureRentalPrice(interval, currency), quantity: 1 }] : [])],
       ...(founder ? { discounts: [{ coupon: FOUNDER_COUPON }] } : { allow_promotion_codes: true }),
       subscription_data: { metadata: { org_id: orgId, app: 'godet' } },
       metadata: { org_id: orgId, app: 'godet' },

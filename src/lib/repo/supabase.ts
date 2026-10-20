@@ -799,6 +799,8 @@ export function createSupabaseRepo(client: GarageClient, ctx: RepoContext, optio
         org_id: orgId,
         machine_id: machineId,
         entry_id: opts.entryId ?? null,
+        rental_check_id: opts.rentalCheckId ?? null,
+        slot: opts.slot ?? null,
         kind: opts.kind,
         path,
         mime,

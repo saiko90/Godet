@@ -79,6 +79,9 @@ export interface UploadOptions {
   kind: MediaKind;
   caption?: string | null;
   entryId?: string | null;
+  /** État des lieux de location et emplacement de la photo (avant, arrière, compteur…). */
+  rentalCheckId?: string | null;
+  slot?: string | null;
   /** Nom d'origine du fichier (sert à garder l'extension). */
   fileName?: string;
   /** Date de prise de vue (par défaut : maintenant). */

@@ -14,7 +14,8 @@
       "reminders": "Reminders",
       "archives": "Archived machines",
       "ideas": "Ideas box",
-      "billing": "Subscription"
+      "billing": "Subscription",
+      "rental": "Rental"
     }
   },
   "plan": {
@@ -109,7 +110,22 @@
     },
     "activated": "Subscription active: thank you, welcome to Godet!",
     "refresh": "Already paid and nothing changed? Refresh",
-    "refreshing": "Checking…"
+    "refreshing": "Checking…",
+    "addon": {
+      "title": "Rental option",
+      "on": "Active: rental calendar and check-out / check-in reports with photos and signature.",
+      "text": "Rental calendar, check-out / check-in reports with photos, video and the customer’s signature. {price} a month.",
+      "confirmRemove": "Remove the Rental option? The calendar and new reports will no longer be available; existing ones stay in the log.",
+      "remove": "Remove the option",
+      "add": "Add the option",
+      "pick": "Add the Rental option: +{price} {period}",
+      "pickHint": "Calendar of rented, booked or available machines, and check-out / check-in reports with photos, video and signature."
+    },
+    "switchTitle": "Change plan",
+    "switchTo": "Switch to {name} ({machines} machines)",
+    "perYearShort": "a year",
+    "perMonthShort": "a month",
+    "updated": "Subscription updated."
   },
   "team": {
     "title": "Team",
@@ -262,5 +278,40 @@
     "restoreFailed": "The machine could not be restored.",
     "restored": "{code} is back in the garage.",
     "offline": "Unable to reach the server. Check your network, then try again."
+  },
+  "rental": {
+    "title": "Rental",
+    "text": "Rental option settings: rental terms and report copies.",
+    "offText": "The Rental option (+29 CHF/month) adds the rental calendar, signed check-out and check-in reports and PDF reports.",
+    "enable": "See subscription",
+    "agenda": "Open the rental calendar",
+    "terms": {
+      "title": "Rental terms",
+      "hint": "Upload your general rental terms as a PDF. At check-out the customer opens them and ticks “I have read and accept the rental terms” before signing. Each report keeps the accepted version.",
+      "current": "Rental terms (PDF)",
+      "updated": "Version of {date}",
+      "none": "No terms uploaded: the acceptance box is not shown.",
+      "upload": "Upload PDF",
+      "replace": "Replace PDF",
+      "remove": "Remove"
+    },
+    "cc": {
+      "title": "Report copies",
+      "hint": "Every PDF report sent to the customer is also copied to this address.",
+      "placeholder": "rental@company.ch",
+      "save": "Save"
+    },
+    "saving": "Sending…",
+    "saved": "Saved.",
+    "removed": "Terms removed.",
+    "confirmRemove": "Remove the rental terms? Reports already signed keep their version.",
+    "readOnly": "Only the owner and administrators can change these settings.",
+    "errors": {
+      "type": "Choose a PDF file.",
+      "size": "The PDF is larger than 10 MB.",
+      "upload": "The file could not be sent. Check your connection.",
+      "save": "Saving failed. Please try again.",
+      "email": "This email address is not valid."
+    }
   }
 }

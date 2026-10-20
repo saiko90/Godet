@@ -17,6 +17,11 @@ export const TIER_IDS = Object.keys(TIERS) as Tier[];
 export const FOUNDER_COUPON = 'godet-fondateur-30';
 export const FOUNDER_SLOTS = 10;
 
+/** Option Location (états des lieux, agenda) : prix mensuel en centimes, même montant en CHF et en EUR. */
+export const RENTAL_ADDON = { name: 'Godet — option Location', monthly: 2900 };
+export const rentalLookupKey = (interval: Interval, cur: Currency) => `godet_location_${interval === 'annee' ? 'year' : 'month'}_${cur}`;
+export const isRentalKey = (key: string | null | undefined) => /^godet_location_(month|year)_(chf|eur)$/.test(key ?? '');
+
 export class StripeError extends Error {
   constructor(
     readonly status: number,
@@ -101,6 +106,39 @@ async function ensureProduct(tier: Tier): Promise<string> {
     );
   }
   return id;
+}
+
+/** Prix de l'option Location (produit et prix créés au premier besoin). */
+export async function ensureRentalPrice(interval: Interval, cur: Currency): Promise<string> {
+  const key = rentalLookupKey(interval, cur);
+  const found = await stripe<{ data: { id: string }[] }>('GET', 'prices', { 'lookup_keys[]': key, active: true, limit: 1 });
+  if (found.data[0]) return found.data[0].id;
+  const id = 'godet_location';
+  try {
+    await stripe('GET', `products/${id}`);
+  } catch (e) {
+    if (!(e instanceof StripeError) || e.status !== 404) throw e;
+    await stripe(
+      'POST',
+      'products',
+      { id, name: RENTAL_ADDON.name, description: 'États des lieux départ / retour, agenda des locations.', metadata: { app: 'godet', addon: 'location' } },
+      'godet-product-location',
+    );
+  }
+  const price = await stripe<{ id: string }>(
+    'POST',
+    'prices',
+    {
+      product: id,
+      currency: cur,
+      unit_amount: RENTAL_ADDON.monthly * (interval === 'annee' ? 10 : 1),
+      recurring: { interval: interval === 'annee' ? 'year' : 'month' },
+      lookup_key: key,
+      metadata: { app: 'godet', addon: 'location', interval },
+    },
+    `godet-price-${key}`,
+  );
+  return price.id;
 }
 
 /** Identifiant du prix (créé s'il n'existe pas encore). */
@@ -216,7 +254,7 @@ export interface Subscription {
   cancel_at_period_end: boolean;
   current_period_end?: number;
   metadata?: Record<string, string>;
-  items: { data: { current_period_end?: number; price: { lookup_key: string | null } }[] };
+  items: { data: { id?: string; current_period_end?: number; price: { id?: string; lookup_key: string | null } }[] };
   discount?: Discount | null;
   discounts?: (Discount | string)[];
 }
@@ -256,8 +294,10 @@ export async function applySubscription(db: Db, sub: Subscription, knownOrgId?: 
   }
   if (!orgId) return { orgId: null, error: 'no_org' };
 
-  const item = sub.items.data[0];
+  // Formule : l'élément dont le prix est une formule Godet ; l'option Location est un élément à part.
+  const item = sub.items.data.find((i) => parseLookupKey(i.price.lookup_key)) ?? sub.items.data[0];
   const parsed = parseLookupKey(item?.price.lookup_key);
+  const rental = sub.items.data.some((i) => isRentalKey(i.price.lookup_key));
   const periodEnd = item?.current_period_end ?? sub.current_period_end ?? null;
   const coupons = [...(sub.discounts ?? []).map(couponOf), couponOf(sub.discount)];
   const plan = planFor(sub.status);
@@ -273,6 +313,7 @@ export async function applySubscription(db: Db, sub: Subscription, knownOrgId?: 
     cancel_at_period_end: sub.cancel_at_period_end,
     current_period_end: periodEnd ? new Date(periodEnd * 1000).toISOString() : null,
     founder: Boolean(current?.founder) || coupons.includes(FOUNDER_COUPON),
+    rental_addon: rental,
   };
   if (parsed) {
     patch.billing_tier = parsed.tier;

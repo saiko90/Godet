@@ -404,7 +404,7 @@ export function MachineModal({ machineId, onClose }: { machineId?: string; onClo
 // ------------------------------------------------------------------ compteur d'heures
 
 /** Origine d'un relevé (garage.hoursForm.source.*). */
-const SOURCES = ['saisie', 'intervention', 'creation'] as const;
+const SOURCES = ['saisie', 'intervention', 'creation', 'location'] as const;
 const isSource = (s: string): s is (typeof SOURCES)[number] => (SOURCES as readonly string[]).includes(s);
 
 export function HoursModal({ machineId, onClose }: { machineId: string; onClose: () => void }) {

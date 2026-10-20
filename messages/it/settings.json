@@ -14,7 +14,8 @@
       "reminders": "Promemoria",
       "archives": "Macchine archiviate",
       "ideas": "Cassetta delle idee",
-      "billing": "Abbonamento"
+      "billing": "Abbonamento",
+      "rental": "Noleggio"
     }
   },
   "plan": {
@@ -109,7 +110,22 @@
     },
     "activated": "Abbonamento attivo: grazie e benvenuto in Godet!",
     "refresh": "Ha già pagato ma non è cambiato nulla? Aggiorna",
-    "refreshing": "Verifica…"
+    "refreshing": "Verifica…",
+    "addon": {
+      "title": "Opzione Noleggio",
+      "on": "Attiva: agenda dei noleggi e verbali di consegna / riconsegna con foto e firma.",
+      "text": "Agenda dei noleggi, verbali di consegna / riconsegna con foto, video e firma del cliente. {price} al mese.",
+      "confirmRemove": "Rimuovere l’opzione Noleggio? L’agenda e i nuovi verbali non saranno più accessibili; quelli già fatti restano nel libretto.",
+      "remove": "Rimuovi l’opzione",
+      "add": "Aggiungi l’opzione",
+      "pick": "Aggiungi l’opzione Noleggio: +{price} {period}",
+      "pickHint": "Agenda delle macchine noleggiate, riservate o disponibili, e verbali di consegna / riconsegna con foto, video e firma."
+    },
+    "switchTitle": "Cambia piano",
+    "switchTo": "Passa a {name} ({machines} macchine)",
+    "perYearShort": "all’anno",
+    "perMonthShort": "al mese",
+    "updated": "Abbonamento aggiornato."
   },
   "team": {
     "title": "Squadra",
@@ -262,5 +278,40 @@
     "restoreFailed": "Non è stato possibile ripristinare la macchina.",
     "restored": "{code} è di nuovo in garage.",
     "offline": "Connessione al server impossibile. Verifichi la rete, poi riprovi."
+  },
+  "rental": {
+    "title": "Noleggio",
+    "text": "Impostazioni dell’opzione Noleggio: condizioni di noleggio e copia dei verbali.",
+    "offText": "L’opzione Noleggio (+29 CHF/mese) aggiunge l’agenda dei noleggi, i verbali firmati e i rapporti PDF.",
+    "enable": "Vedi l’abbonamento",
+    "agenda": "Apri l’agenda dei noleggi",
+    "terms": {
+      "title": "Condizioni di noleggio",
+      "hint": "Carichi le Sue condizioni generali di noleggio in PDF. Alla consegna il cliente le apre e spunta «Ho letto e accetto le condizioni di noleggio» prima di firmare. Ogni verbale conserva la versione accettata.",
+      "current": "Condizioni di noleggio (PDF)",
+      "updated": "Versione del {date}",
+      "none": "Nessuna condizione caricata: la casella di accettazione non compare.",
+      "upload": "Carica il PDF",
+      "replace": "Sostituisci il PDF",
+      "remove": "Rimuovi"
+    },
+    "cc": {
+      "title": "Copia dei verbali",
+      "hint": "Ogni rapporto PDF inviato al cliente parte anche in copia a questo indirizzo.",
+      "placeholder": "noleggio@azienda.ch",
+      "save": "Salva"
+    },
+    "saving": "Invio…",
+    "saved": "Salvato.",
+    "removed": "Condizioni rimosse.",
+    "confirmRemove": "Rimuovere le condizioni di noleggio? I verbali già firmati conservano la loro versione.",
+    "readOnly": "Solo il titolare e gli amministratori modificano queste impostazioni.",
+    "errors": {
+      "type": "Scelga un file PDF.",
+      "size": "Il PDF supera 10 MB.",
+      "upload": "Il file non è stato inviato. Verifichi la connessione.",
+      "save": "Salvataggio non riuscito. Riprovi.",
+      "email": "Questo indirizzo e-mail non è valido."
+    }
   }
 }

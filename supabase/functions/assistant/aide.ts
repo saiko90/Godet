@@ -98,8 +98,38 @@ Une machine vendue ou hors service s'archive : elle quitte le showroom, son carn
   l'abonnement.
 - Paramètres → Abonnement : choisir une formule (paiement par carte via Stripe), puis « Gérer l'abonnement » pour
   changer de formule, de carte, télécharger les factures ou résilier. Seuls le propriétaire et les administrateurs.
+- Option Location : +29 CHF / mois (voir plus bas).
 - Assistant IA compris : questions par mois selon la formule (essai 30, Essentiel 100, Pro 300, Parc 800) et lectures
   de compteur sur photo (essai 50, sinon 500 par mois).
+
+## Option Location (loueurs de machines)
+- Option payante : +29 CHF (ou 29 €) par mois, l'année = 10 mois, pack fondateur −30 % aussi ; comprise dans l'essai de
+  15 jours. Paramètres → Abonnement → « Option Location » (ajout ou retrait au prorata). Sans l'option, rien ne
+  s'affiche.
+- Paramètres → Location : déposer les conditions générales de location (PDF, 10 Mo au plus ; chaque nouvelle version
+  est gardée, les états des lieux signés gardent la leur) et une adresse qui reçoit une copie de chaque rapport.
+- Agenda : menu du garage → « Location » (page /location). Une ligne par machine, une colonne par jour (14, 21 ou 42
+  jours) ; barres : réservée (pointillés bleus), louée (jaune), retour en retard (rouge), rendue (grise). En haut :
+  machines louées, réservées aujourd'hui, disponibles, retours en retard, et les départs et retours du jour.
+- Réserver : « Nouvelle réservation » ou toucher une case vide : machine, départ, retour prévu, client (les clients déjà
+  servis sont proposés), téléphone, e-mail (le rapport y est envoyé), chantier, livraison ou enlèvement, remarques.
+  Une machine déjà réservée ou louée sur la période est refusée. Une réservation se modifie, se prolonge ou s'annule.
+- État des lieux de départ (bouton « État des lieux de départ ») : points de contrôle adaptés à la machine, chacun
+  OK / Défaut (avec description) / Sans objet, bouton « Tout OK » par rubrique (fonctionnement, niveaux et fuites,
+  entretien, carrosserie et cabine, hydraulique, train de roulement, équipement, documents) ; niveau de carburant ;
+  compteur d'heures (lu sur la photo du compteur) ; accident ; contrôle de sécurité (nacelles, chariots, grues) ;
+  accessoires ; clés ; photos imposées (avant, arrière, gauche, droite, compteur, jauge ; plaque de contrôle et vérins
+  si la machine en a), jusqu'à 20 photos et 2 vidéos ; remarques. Si des conditions sont déposées, le client coche
+  « a lu et accepte les conditions de location » ; puis signature du client et du loueur au doigt. La machine passe
+  « Louée ».
+- État des lieux de retour : même formulaire comparé au départ (nouveau défaut en rouge, heures de location
+  calculées), frais (plein, nettoyage, dégâts) et réserves, signatures. La location est close, le compteur de la
+  machine est mis à jour (relevé « État des lieux de location »).
+- Un état des lieux signé ne se modifie plus. Après chaque signature : rapport PDF envoyé au client par e-mail (avec
+  les conditions acceptées), copie à l'adresse réglée, rangé dans les documents de la machine ; photos et vidéos dans
+  ses médias. Page « Rapport » d'une location : les deux états des lieux, imprimer, ouvrir le PDF, renvoyer au client.
+- Dans le garage, la fiche (et le mode atelier) affiche une pastille Louée / Réservée / Disponible qui mène à l'état
+  des lieux ou à l'agenda.
 
 ## Support
 - Page Contact (https://godet.app/contact) : question, démonstration pour l'équipe, offre sur mesure.

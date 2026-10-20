@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
 import { Icon } from '@/components/Icons';
-import { START_STEPS, TASKS, guidePdf } from '@/components/site/aide/content';
+import { RENTAL_STEPS, START_STEPS, TASKS, guidePdf } from '@/components/site/aide/content';
 import { InstallGuide } from '@/components/site/aide/InstallGuide';
 import { checkLocale, metaLocale, ogLocale, type LocaleParams } from '@/components/site/seo';
 import { SiteFooter, SiteHeader, SkipLink } from '@/components/site/SiteChrome';
@@ -55,6 +55,7 @@ export default async function AidePage({ params }: { params: LocaleParams }) {
               <a href="#demarrer">{t('toc.start')}</a>
               <a href="#installer">{t('toc.install')}</a>
               <a href="#quotidien">{t('toc.tasks')}</a>
+              <a href="#location">{t('toc.rental')}</a>
               <a href="#contact">{t('toc.contact')}</a>
             </nav>
 
@@ -100,6 +101,22 @@ export default async function AidePage({ params }: { params: LocaleParams }) {
                 </details>
               ))}
             </div>
+
+            <h2 id="location">{t('rental.title')}</h2>
+            <p>{t('rental.intro')}</p>
+            <ol className="s-help-steps">
+              {RENTAL_STEPS.map((key, i) => (
+                <li key={key}>
+                  <span className="s-help-num" aria-hidden="true">
+                    {i + 1}
+                  </span>
+                  <div>
+                    <h3>{t(`rental.steps.${key}.title`)}</h3>
+                    <p>{t(`rental.steps.${key}.text`)}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
 
             <h2 id="contact">{t('contact.title')}</h2>
             <div className="s-legal-box">

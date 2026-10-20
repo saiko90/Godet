@@ -15,7 +15,8 @@
     "start": "Iniziare in 5 passi",
     "install": "Installare l’app",
     "tasks": "Ogni giorno",
-    "contact": "Serve aiuto?"
+    "contact": "Serve aiuto?",
+    "rental": "Opzione Noleggio"
   },
   "pdf": {
     "title": "Guida introduttiva in PDF",
@@ -131,6 +132,10 @@
       "billing": {
         "q": "Dopo la prova",
         "a": "Impostazioni → Abbonamento: scegliete il piano secondo il numero di macchine (da CHF 29 al mese). Senza abbonamento, il garage passa in sola lettura: nulla viene cancellato."
+      },
+      "rental": {
+        "q": "Noleggiare una macchina (opzione Noleggio)",
+        "a": "Agenda: menu → Noleggio. Prenotazione, verbale di consegna firmato dal cliente, poi verbale di riconsegna confrontato con la consegna; il rapporto PDF parte al cliente. Nel garage la scheda indica se la macchina è noleggiata, prenotata o disponibile."
       }
     }
   },
@@ -142,5 +147,35 @@
     "title": "Guida introduttiva",
     "subtitle": "Il libretto di manutenzione digitale del vostro parco macchine",
     "footer": "godet.app · Swiss Digital Studio, Vallese"
+  },
+  "rental": {
+    "title": "Opzione Noleggio",
+    "intro": "Per i noleggiatori di macchine: un’agenda dei noleggi e verbali firmati sul posto alla consegna e alla riconsegna. Opzione a +29 CHF al mese, inclusa nella prova di 15 giorni.",
+    "steps": {
+      "enable": {
+        "title": "Attivi l’opzione",
+        "text": "Impostazioni → Abbonamento → «Opzione Noleggio». Durante la prova è già attiva. Il menu del garage mostra allora «Noleggio»."
+      },
+      "settings": {
+        "title": "Imposti il noleggio",
+        "text": "Impostazioni → Noleggio: carichi le Sue condizioni generali di noleggio in PDF (il cliente dovrà accettarle prima di firmare) e, se vuole, un indirizzo che riceve una copia di ogni rapporto."
+      },
+      "book": {
+        "title": "Prenoti una macchina",
+        "text": "Noleggio → «Nuova prenotazione», o tocchi una casella vuota dell’agenda: macchina, date, cliente, cantiere, consegna o ritiro. Godet rifiuta una macchina già prenotata o noleggiata nel periodo."
+      },
+      "out": {
+        "title": "Verbale di consegna",
+        "text": "Il giorno della consegna: punti di controllo (OK, Difetto, Non applicabile), carburante, contaore letto sulla foto, accessori, foto obbligatorie (davanti, dietro, lati, contaore, indicatore) e fino a 20 foto e 2 video. Il cliente accetta le condizioni e firma sullo schermo, anche Lei: la macchina passa a «Noleggiata»."
+      },
+      "in": {
+        "title": "Verbale di riconsegna",
+        "text": "Alla riconsegna ogni punto è confrontato con la consegna: un nuovo difetto appare in rosso, le ore di noleggio sono calcolate. Aggiunga le spese (pieno, pulizia, danni) e le riserve, poi faccia firmare: il noleggio è chiuso e il contaore della macchina aggiornato."
+      },
+      "report": {
+        "title": "Rapporto PDF",
+        "text": "Dopo ogni firma un rapporto PDF parte al cliente per e-mail (con le condizioni accettate) e viene archiviato nei documenti della macchina. Noleggio → il noleggio → «Rapporto» per rivederlo, stamparlo o reinviarlo."
+      }
+    }
   }
 }

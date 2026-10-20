@@ -8,16 +8,17 @@ import { useEffect, useState } from 'react';
 import { useFormat } from '@/components/FormatProvider';
 import { Icon } from '@/components/Icons';
 import { Link, useRouter } from '@/i18n/navigation';
-import { billingState, tierFor, tierPrice, TIERS, trialDaysLeft, type BillingInterval, type Tier } from '@/lib/billing';
+import { billingState, RENTAL_ADDON_MONTHLY, tierFor, tierPrice, TIERS, trialDaysLeft, type BillingInterval, type Tier } from '@/lib/billing';
 import { supabaseBrowser } from '@/lib/supabase/client';
 import type { Org } from '@/lib/types';
 
-type Notice = 'thanks' | 'activated' | 'canceled' | null;
+type Notice = 'thanks' | 'activated' | 'canceled' | 'updated' | null;
 type ErrorKey = 'generic' | 'notConfigured' | 'tooSmall' | 'forbidden';
 
 const ERROR_FOR: Record<string, ErrorKey> = {
   not_configured: 'notConfigured',
   tier_too_small: 'tooSmall',
+  no_subscription: 'generic',
   forbidden: 'forbidden',
 };
 
@@ -34,6 +35,7 @@ interface Props {
     | 'cancel_at_period_end'
     | 'founder'
     | 'stripe_customer_id'
+    | 'rental_addon'
   >;
   machines: number;
   founderSlots: number;
@@ -51,6 +53,8 @@ export function AbonnementPanel({ org, machines, founderSlots, canManage, nowIso
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<ErrorKey | null>(null);
   const [notice, setNotice] = useState<Notice>(null);
+  /** Option Location ajoutée au paiement (cochée d'office : le loueur l'a déjà essayée pendant l'essai). */
+  const [addon, setAddon] = useState(true);
 
   const router = useRouter();
   const [syncing, setSyncing] = useState(false);
@@ -109,12 +113,12 @@ export function AbonnementPanel({ org, machines, founderSlots, canManage, nowIso
   const money = (n: number) => (Number.isInteger(n) ? f.money(n) : f.money2(n));
   const tierName = (id: string | null) => (id === 'essentiel' || id === 'pro' || id === 'parc' ? t(`tiers.${id}.name`) : '—');
 
-  async function call(action: 'checkout' | 'portal', tier?: Tier) {
-    setBusy(tier ?? action);
+  async function call(action: 'checkout' | 'portal' | 'update', tier?: Tier, addonChange?: boolean) {
+    setBusy(tier ?? (addonChange === undefined ? action : 'addon'));
     setError(null);
     try {
-      const { data, error: fnError } = await supabaseBrowser().functions.invoke<{ url?: string; error?: string }>('facturation', {
-        body: { action, orgId: org.id, tier, interval, locale },
+      const { data, error: fnError } = await supabaseBrowser().functions.invoke<{ url?: string; updated?: boolean; error?: string }>('facturation', {
+        body: { action, orgId: org.id, tier, interval, locale, addon: action === 'checkout' ? addon : addonChange },
       });
       if (fnError) {
         let code = '';
@@ -123,6 +127,13 @@ export function AbonnementPanel({ org, machines, founderSlots, canManage, nowIso
           code = body.error ?? '';
         }
         throw new Error(code);
+      }
+      if (action === 'update') {
+        if (!data?.updated) throw new Error('');
+        router.refresh();
+        setNotice('updated');
+        setBusy(null);
+        return;
       }
       if (!data?.url) throw new Error('');
       window.location.assign(data.url);
@@ -175,9 +186,43 @@ export function AbonnementPanel({ org, machines, founderSlots, canManage, nowIso
       ) : subscribed ? (
         <div className="s-billing-manage">
           {org.founder ? <p className="s-billing-founder">{t('founderYou')}</p> : null}
+          <div className="s-billing-addon">
+            <div>
+              <b>{t('addon.title')}</b>
+              <p className="muted">{org.rental_addon ? t('addon.on') : t('addon.text', { price: money(tierPrice(RENTAL_ADDON_MONTHLY, 'mois', org.founder)) })}</p>
+            </div>
+            <button
+              type="button"
+              className={`btn ${org.rental_addon ? 'btn-ghost' : 'btn-soft'} s-btn-sm`}
+              disabled={Boolean(busy)}
+              onClick={() => {
+                if (org.rental_addon && !window.confirm(t('addon.confirmRemove'))) return;
+                void call('update', undefined, !org.rental_addon);
+              }}
+            >
+              {busy === 'addon' ? t('opening') : org.rental_addon ? t('addon.remove') : t('addon.add')}
+            </button>
+          </div>
+          <div className="s-billing-switch">
+            <b>{t('switchTitle')}</b>
+            <div className="s-billing-switch-row">
+              {TIERS.filter((tier) => tier.id !== org.billing_tier).map((tier) => (
+                <button
+                  key={tier.id}
+                  type="button"
+                  className="btn btn-soft s-btn-sm"
+                  disabled={Boolean(busy) || machines > tier.limit}
+                  title={machines > tier.limit ? t('tooSmall', { count: machines }) : undefined}
+                  onClick={() => void call('update', tier.id)}
+                >
+                  {busy === tier.id ? t('opening') : t('switchTo', { name: t(`tiers.${tier.id}.name`), machines: tier.limit })}
+                </button>
+              ))}
+            </div>
+          </div>
           <button type="button" className="btn btn-primary s-btn-sm" disabled={Boolean(busy)} onClick={() => void call('portal')}>
             <Icon name="cog" />
-            {busy ? t('opening') : t('manage')}
+            {busy === 'portal' ? t('opening') : t('manage')}
           </button>
           <p className="muted">{t('manageHint')}</p>
         </div>
@@ -193,6 +238,13 @@ export function AbonnementPanel({ org, machines, founderSlots, canManage, nowIso
               </button>
             ))}
           </div>
+          <label className="s-check s-billing-addon-pick">
+            <input type="checkbox" checked={addon} onChange={(e) => setAddon(e.target.checked)} />
+            <span>
+              <b>{t('addon.pick', { price: money(tierPrice(RENTAL_ADDON_MONTHLY, interval, founderPrice)), period: interval === 'annee' ? t('perYearShort') : t('perMonthShort') })}</b>
+              <span className="s-field-hint">{t('addon.pickHint')}</span>
+            </span>
+          </label>
           <ul className="s-billing-tiers">
             {TIERS.map((tier) => {
               const tooSmall = machines > tier.limit;

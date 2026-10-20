@@ -14,7 +14,8 @@
       "reminders": "Erinnerungen",
       "archives": "Archivierte Maschinen",
       "ideas": "Ideenbox",
-      "billing": "Abonnement"
+      "billing": "Abonnement",
+      "rental": "Vermietung"
     }
   },
   "plan": {
@@ -109,7 +110,22 @@
     },
     "activated": "Abo aktiv: Danke und willkommen bei Godet!",
     "refresh": "Schon bezahlt, aber nichts hat sich geändert? Aktualisieren",
-    "refreshing": "Wird geprüft…"
+    "refreshing": "Wird geprüft…",
+    "addon": {
+      "title": "Option Vermietung",
+      "on": "Aktiv: Mietkalender und Übergabeprotokolle bei Abholung / Rückgabe mit Fotos und Unterschrift.",
+      "text": "Mietkalender, Übergabeprotokolle bei Abholung / Rückgabe mit Fotos, Video und Unterschrift des Kunden. {price} pro Monat.",
+      "confirmRemove": "Option Vermietung entfernen? Kalender und neue Protokolle sind dann nicht mehr zugänglich; bestehende bleiben im Wartungsheft.",
+      "remove": "Option entfernen",
+      "add": "Option hinzufügen",
+      "pick": "Option Vermietung hinzufügen: +{price} {period}",
+      "pickHint": "Kalender der vermieteten, reservierten oder verfügbaren Maschinen und Übergabeprotokolle mit Fotos, Video und Unterschrift."
+    },
+    "switchTitle": "Abo wechseln",
+    "switchTo": "Zu {name} wechseln ({machines} Maschinen)",
+    "perYearShort": "pro Jahr",
+    "perMonthShort": "pro Monat",
+    "updated": "Abonnement aktualisiert."
   },
   "team": {
     "title": "Team",
@@ -262,5 +278,40 @@
     "restoreFailed": "Die Maschine konnte nicht zurückgeholt werden.",
     "restored": "{code} ist zurück in der Garage.",
     "offline": "Keine Verbindung zum Server. Prüfen Sie Ihr Netzwerk und versuchen Sie es erneut."
+  },
+  "rental": {
+    "title": "Vermietung",
+    "text": "Einstellungen der Option Vermietung: Mietbedingungen und Kopie der Protokolle.",
+    "offText": "Die Option Vermietung (+29 CHF/Monat) bringt den Mietkalender, unterschriebene Übergabeprotokolle und PDF-Berichte.",
+    "enable": "Zum Abonnement",
+    "agenda": "Mietkalender öffnen",
+    "terms": {
+      "title": "Mietbedingungen",
+      "hint": "Laden Sie Ihre allgemeinen Mietbedingungen als PDF hoch. Bei der Übergabe öffnet der Kunde sie und bestätigt «Ich habe die Mietbedingungen gelesen und akzeptiere sie», bevor er unterschreibt. Jedes Protokoll behält die akzeptierte Fassung.",
+      "current": "Mietbedingungen (PDF)",
+      "updated": "Fassung vom {date}",
+      "none": "Keine Mietbedingungen hinterlegt: Das Feld zur Zustimmung erscheint nicht.",
+      "upload": "PDF hochladen",
+      "replace": "PDF ersetzen",
+      "remove": "Entfernen"
+    },
+    "cc": {
+      "title": "Kopie der Protokolle",
+      "hint": "Jeder PDF-Bericht an den Kunden geht auch in Kopie an diese Adresse.",
+      "placeholder": "vermietung@firma.ch",
+      "save": "Speichern"
+    },
+    "saving": "Wird gesendet…",
+    "saved": "Gespeichert.",
+    "removed": "Mietbedingungen entfernt.",
+    "confirmRemove": "Mietbedingungen entfernen? Bereits unterschriebene Protokolle behalten ihre Fassung.",
+    "readOnly": "Nur der Inhaber und die Administratoren ändern diese Einstellungen.",
+    "errors": {
+      "type": "Wählen Sie eine PDF-Datei.",
+      "size": "Das PDF ist grösser als 10 MB.",
+      "upload": "Die Datei konnte nicht gesendet werden. Prüfen Sie die Verbindung.",
+      "save": "Speichern fehlgeschlagen. Versuchen Sie es erneut.",
+      "email": "Diese E-Mail-Adresse ist ungültig."
+    }
   }
 }

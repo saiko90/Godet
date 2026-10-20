@@ -15,7 +15,8 @@
     "start": "In 5 Schritten starten",
     "install": "App installieren",
     "tasks": "Im Alltag",
-    "contact": "Brauchen Sie Hilfe?"
+    "contact": "Brauchen Sie Hilfe?",
+    "rental": "Option Vermietung"
   },
   "pdf": {
     "title": "Einstiegsanleitung als PDF",
@@ -131,6 +132,10 @@
       "billing": {
         "q": "Nach der Testphase",
         "a": "Einstellungen → Abonnement: Wählen Sie das Abo nach Anzahl Maschinen (ab CHF 29 pro Monat). Ohne Abo wird die Garage schreibgeschützt: Nichts wird gelöscht."
+      },
+      "rental": {
+        "q": "Eine Maschine vermieten (Option Vermietung)",
+        "a": "Kalender: Menü → Vermietung. Reservation, vom Kunden unterschriebenes Übergabeprotokoll, dann Rücknahmeprotokoll mit Vergleich zur Übergabe; der PDF-Bericht geht an den Kunden. In der Garage zeigt die Maschinenkarte, ob die Maschine vermietet, reserviert oder verfügbar ist."
       }
     }
   },
@@ -142,5 +147,35 @@
     "title": "Einstiegsanleitung",
     "subtitle": "Das digitale Wartungsheft Ihres Maschinenparks",
     "footer": "godet.app · Swiss Digital Studio, Wallis"
+  },
+  "rental": {
+    "title": "Option Vermietung",
+    "intro": "Für Maschinenvermieter: ein Mietkalender und vor Ort unterschriebene Protokolle bei Übergabe und Rücknahme. Option für +29 CHF pro Monat, im 15-tägigen Test enthalten.",
+    "steps": {
+      "enable": {
+        "title": "Option aktivieren",
+        "text": "Einstellungen → Abonnement → «Option Vermietung». Während des Tests ist sie bereits aktiv. Im Menü der Garage erscheint dann «Vermietung»."
+      },
+      "settings": {
+        "title": "Vermietung einrichten",
+        "text": "Einstellungen → Vermietung: Laden Sie Ihre allgemeinen Mietbedingungen als PDF hoch (der Kunde muss sie vor der Unterschrift akzeptieren) und auf Wunsch eine Adresse, die eine Kopie jedes Berichts erhält."
+      },
+      "book": {
+        "title": "Maschine reservieren",
+        "text": "Vermietung → «Neue Reservation» oder auf ein leeres Feld im Kalender tippen: Maschine, Daten, Kunde, Baustelle, Lieferung oder Abholung. Godet lehnt eine Maschine ab, die im Zeitraum bereits reserviert oder vermietet ist."
+      },
+      "out": {
+        "title": "Übergabeprotokoll",
+        "text": "Am Tag der Übergabe: Prüfpunkte (OK, Mangel, Entfällt), Treibstoff, Zähler per Foto gelesen, Zubehör, Pflichtfotos (vorne, hinten, Seiten, Zähler, Tankanzeige) und bis zu 20 Fotos und 2 Videos. Der Kunde akzeptiert die Bedingungen und unterschreibt auf dem Bildschirm, Sie ebenfalls: Die Maschine ist «Vermietet»."
+      },
+      "in": {
+        "title": "Rücknahmeprotokoll",
+        "text": "Bei der Rücknahme wird jeder Punkt mit der Übergabe verglichen: Ein neuer Mangel erscheint rot, die Mietstunden werden berechnet. Kosten (Tanken, Reinigung, Schäden) und Vorbehalte erfassen, dann unterschreiben lassen: Die Miete ist abgeschlossen und der Zähler der Maschine aktualisiert."
+      },
+      "report": {
+        "title": "PDF-Bericht",
+        "text": "Nach jeder Unterschrift geht ein PDF-Bericht per E-Mail an den Kunden (mit den akzeptierten Bedingungen) und wird bei den Dokumenten der Maschine abgelegt. Vermietung → die Miete → «Bericht», um ihn anzusehen, zu drucken oder erneut zu senden."
+      }
+    }
   }
 }

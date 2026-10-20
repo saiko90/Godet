@@ -15,6 +15,7 @@ import type { FleetView } from './groups';
 import { TABS, type SheetTab } from './helpers';
 import { CaptureButton } from './CaptureButton';
 import { MediaTab, UploadStatus, useSendFiles } from './MediaTab';
+import { RentalPill } from './rental';
 import { CostsTab, LogbookTab, OverviewTab, PartsTab, RepairsTab, SchedulesTab, tabCounts } from './SheetTabs';
 import { useGarageText } from './text';
 import { Menu, type MenuEntry } from './ui';
@@ -329,6 +330,7 @@ export function Sheet({
           <Icon name="clock" className="g-pill-icon" />
           {f.hours(Number(machine.hours))}
         </span>
+        <RentalPill machineId={machine.id} detailed />
       </div>
 
       <div className="quick g-quick">

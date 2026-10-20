@@ -13,6 +13,8 @@ import { ArchivesPanel } from '@/components/site/parametres/ArchivesPanel';
 import { ComptePanel } from '@/components/site/parametres/ComptePanel';
 import { EntreprisePanel } from '@/components/site/parametres/EntreprisePanel';
 import { EquipePanel } from '@/components/site/parametres/EquipePanel';
+import { LocationPanel } from '@/components/site/parametres/LocationPanel';
+import { rentalEnabled } from '@/lib/billing';
 import { checkLocale, metaLocale, NO_INDEX, type LocaleParams } from '@/components/site/seo';
 import { AppHeader, SkipLink } from '@/components/site/SiteChrome';
 import type { ArchivedMachine, PendingInvitation } from '@/components/site/types';
@@ -127,6 +129,12 @@ export default async function ParametresPage({ params }: { params: LocaleParams 
     supabase.rpc('founder_slots_left'),
   ]);
   const activeMachines = machinesRes.count ?? 0;
+  // Location : conditions de location (lien signé) si l'option est active.
+  const rentalOn = rentalEnabled(ctx.org, Date.parse(nowIso));
+  const termsUrl =
+    rentalOn && ctx.org.rental_terms_path
+      ? ((await supabase.storage.from('medias').createSignedUrl(ctx.org.rental_terms_path, 3600)).data?.signedUrl ?? null)
+      : null;
   const founderSlots = typeof slotsRes.data === 'number' ? slotsRes.data : 0;
   const myName = ctx.fullName?.trim() || members.find((m) => m.userId === ctx.userId)?.fullName || '';
   const mainCountry = (code: MainCountry) => tc(`countries.${code}`);
@@ -142,6 +150,7 @@ export default async function ParametresPage({ params }: { params: LocaleParams 
   const sections = [
     { href: '#entreprise', icon: 'garage', label: t('page.sections.company') },
     { href: '#abonnement', icon: 'chf', label: t('page.sections.billing') },
+    { href: '#location', icon: 'calendar', label: t('page.sections.rental') },
     { href: '#equipe', icon: 'users', label: t('page.sections.team') },
     { href: '#compte', icon: 'edit', label: t('page.sections.account') },
     { href: '#rappels', icon: 'calendar', label: t('page.sections.reminders') },
@@ -208,6 +217,14 @@ export default async function ParametresPage({ params }: { params: LocaleParams 
                   founderSlots={founderSlots}
                   canManage={can.manageTeam(ctx.role)}
                   nowIso={nowIso}
+                />
+                <LocationPanel
+                  orgId={ctx.org.id}
+                  enabled={rentalOn}
+                  canEdit={can.manageTeam(ctx.role)}
+                  termsUrl={termsUrl}
+                  termsUpdatedLabel={ctx.org.rental_terms_updated_at ? f.date(ctx.org.rental_terms_updated_at) : null}
+                  reportCc={ctx.org.rental_report_cc}
                 />
                 <EquipePanel
                   members={members}
