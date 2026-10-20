@@ -59,6 +59,9 @@ Navigateur de test : Chromium de Playwright dans `/opt/pw-browsers` (ne pas lanc
 - `docs/prospection` : prospection par pays (Suisse d'abord) et consignes des agents. Règle absolue : les agents
   cherchent et rédigent, une personne relit et envoie (aucun envoi automatique, cf. UWG/LCD, RGPD, AI Act art. 50).
 - `docs/notifications.md` : rappels et e-mails (activation de Resend, tests).
+- `scripts/film` : films de présentation (showroom 3D et suivi, 4 langues) tournés image par image, et images de
+  l'accueil par langue ; mode d'emploi dans son README. Fichiers servis : `public/videos/godet-<film>-<langue>.mp4`
+  (+ affiche `.webp`) et `public/images/showroom-hero-<langue>.webp` ; un fichier absent n'est pas proposé.
 
 ## Données et sécurité
 - Tables : organizations, profiles, memberships (rôles owner/admin/mechanic/operator), invitations, machines,

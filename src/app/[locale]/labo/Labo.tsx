@@ -10,7 +10,8 @@
 //   reduced=1    mouvement réduit               wake=1            réveil de la machine visée
 //   standby=1    (avec test=1) hall laissé éteint, avant l'allumage
 //   dt=0.066     (avec test=1) pas de temps fixe par image : filmer un vol image par image
-//   signage=…    nom sur l'enseigne
+//   signage=…    nom sur l'enseigne               sub=…             ligne sous le nom (enseigne)
+//   fleet=demo   parc d'exemple de /demo          states=warn2,ok…  états et alertes de ce parc, dans l'ordre
 import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useFormat } from '@/components/FormatProvider';
@@ -22,7 +23,7 @@ import { MACHINE_KIND_ORDER } from '@/lib/machine-kinds';
 import type { MachineKind } from '@/lib/types';
 import { useDomainText } from '@/lib/use-domain-text';
 import type { MachineState, Showroom, ShowroomEffect, ShowroomMachine, ShowroomQuality } from '@/engine/types';
-import { demoFleet, isLaboModel, type LaboModel } from './fleet';
+import { demoFleet, demoSiteFleet, isLaboModel, type LaboModel } from './fleet';
 import './labo.css';
 
 interface Params {
@@ -39,6 +40,9 @@ interface Params {
   dt: number | null;
   kinds: MachineKind[] | undefined;
   signage: string;
+  sub: string | null;
+  demo: boolean;
+  states: string[];
 }
 
 const KINDS: readonly MachineKind[] = MACHINE_KIND_ORDER;
@@ -73,6 +77,9 @@ function readParams(defaultSignage: string): Params {
     dt: num('dt'),
     kinds: kinds.length ? kinds : undefined,
     signage: sp.get('signage') ?? defaultSignage,
+    sub: sp.get('sub'),
+    demo: sp.get('fleet') === 'demo',
+    states: (sp.get('states') ?? '').split(',').map((s) => s.trim()),
   };
 }
 
@@ -151,12 +158,12 @@ export function Labo() {
       const tt = tRef.current;
       applyShowroomTexts(canvas, labelsRef.current, {
         canvas: tt('labo.canvas'),
-        signageSub: tt('engine.signage'),
+        signageSub: p.sub ?? tt('engine.signage'),
         signageFallback: tt('engine.signageFallback'),
         alertOne: tt('engine.alertOne'),
         alertOther: tt('engine.alertOther'),
       });
-      const machines = demoFleet(p.n, labelRef.current, p.kinds);
+      const machines = p.demo ? demoSiteFleet(labelRef.current, p.states) : demoFleet(p.n, labelRef.current, p.kinds);
       fleetRef.current = machines;
       setFleet(machines);
       setQualityState(p.q);

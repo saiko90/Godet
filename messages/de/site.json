@@ -127,6 +127,22 @@
         }
       }
     },
+    "videos": {
+      "eyebrow": "Im Video",
+      "title": "Godet in Aktion",
+      "text": "Zwei kurze Filme ohne Ton, mit Untertiteln: der 3D-Showroom, dann eine Maschine im Werkstattmodus.",
+      "download": "Video herunterladen (MP4)",
+      "items": {
+        "garage": {
+          "title": "Die 3D-Garage",
+          "text": "Die Halle geht an, ein Bagger und eine Gelenkbühne erwachen, dann erscheint der ganze Park mit dem Zustand jeder Maschine."
+        },
+        "suivi": {
+          "title": "Die Wartung im Blick",
+          "text": "Ein Dumper mit überfälliger Wartung: sein Maschinenblatt, der Eintrag in wenigen Sekunden, das Wartungsheft, der nächste Termin und die Kosten."
+        }
+      }
+    },
     "compliance": {
       "eyebrow": "Konformität",
       "title": "Ein Wartungsheft, das jeder Prüfung standhält",

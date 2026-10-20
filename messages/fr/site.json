@@ -127,6 +127,22 @@
         }
       }
     },
+    "videos": {
+      "eyebrow": "En vidéo",
+      "title": "Godet en action",
+      "text": "Deux courts films sans son, sous-titrés : le showroom 3D, puis le suivi d’une machine en mode atelier.",
+      "download": "Télécharger la vidéo (MP4)",
+      "items": {
+        "garage": {
+          "title": "Le garage 3D",
+          "text": "Le hall s’allume, une pelle et une nacelle se réveillent, puis tout le parc apparaît avec l’état de chaque machine."
+        },
+        "suivi": {
+          "title": "Le suivi des machines",
+          "text": "Un dumper en retard de service : sa fiche, l’intervention saisie en quelques secondes, le carnet, la prochaine échéance et les coûts."
+        }
+      }
+    },
     "compliance": {
       "eyebrow": "Conformité",
       "title": "Un carnet qui tient devant un contrôle",

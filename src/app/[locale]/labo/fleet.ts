@@ -1,6 +1,7 @@
 // Parcs de test variés (types, peintures, poids, états, alertes) pour le laboratoire du moteur 3D.
 // Les noms des modèles sont traduits (garage.labo.models.*) : `label` reçoit le nom et le poids, et compose l'étiquette.
 import { KIND_PREFIX } from '@/components/garage/helpers';
+import { DEMO_FLEET } from '@/lib/demo-content/fleet';
 import type { MachineKind } from '@/lib/types';
 import type { MachineState, ShowroomMachine } from '@/engine/types';
 
@@ -67,4 +68,26 @@ export function demoFleet(n: number, label: (name: LaboModel | MachineKind, weig
     });
   }
   return out;
+}
+
+/**
+ * Le parc d'exemple de /demo (codes, types, peintures, poids), pour filmer ou capturer le showroom tel que les visiteurs
+ * le découvrent. Les états viennent de l'URL, une machine après l'autre : « warn2,ok,warn1,bad2… » (état puis nombre
+ * d'alertes) ; à défaut, la machine est à jour.
+ */
+export function demoSiteFleet(label: (name: MachineKind, weight: number) => string, states: readonly string[]): ShowroomMachine[] {
+  return DEMO_FLEET.map((d, i) => {
+    const m = /^(ok|warn|bad)(\d{0,2})$/.exec(states[i] ?? '');
+    const state: MachineState = m ? (m[1] as MachineState) : 'ok';
+    return {
+      id: `m${i + 1}`,
+      code: d.code,
+      kind: d.kind,
+      color: d.color,
+      label: label(d.kind, d.weight),
+      state,
+      alerts: m?.[2] ? Number(m[2]) : 0,
+      weightT: d.weight,
+    };
+  });
 }

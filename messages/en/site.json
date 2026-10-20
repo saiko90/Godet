@@ -127,6 +127,22 @@
         }
       }
     },
+    "videos": {
+      "eyebrow": "On video",
+      "title": "Godet in action",
+      "text": "Two short silent films with subtitles: the 3D showroom, then a machine followed up in workshop mode.",
+      "download": "Download the video (MP4)",
+      "items": {
+        "garage": {
+          "title": "The 3D garage",
+          "text": "The hall lights up, an excavator and a boom lift wake up, then the whole fleet appears with the status of every machine."
+        },
+        "suivi": {
+          "title": "Keeping maintenance on track",
+          "text": "A dumper overdue for its service: its record, the entry logged in seconds, the log, the next due date and the costs."
+        }
+      }
+    },
     "compliance": {
       "eyebrow": "Compliance",
       "title": "A log that stands up to an inspection",

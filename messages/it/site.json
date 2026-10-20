@@ -127,6 +127,22 @@
         }
       }
     },
+    "videos": {
+      "eyebrow": "In video",
+      "title": "Godet in azione",
+      "text": "Due brevi filmati senza audio, con sottotitoli: lo showroom 3D, poi una macchina seguita in modalità officina.",
+      "download": "Scarica il video (MP4)",
+      "items": {
+        "garage": {
+          "title": "Il garage 3D",
+          "text": "Il capannone si accende, un escavatore e una piattaforma articolata si risvegliano, poi appare tutto il parco con lo stato di ogni macchina."
+        },
+        "suivi": {
+          "title": "La manutenzione sotto controllo",
+          "text": "Un dumper con la manutenzione scaduta: la sua scheda, l’intervento registrato in pochi secondi, il libretto, la prossima scadenza e i costi."
+        }
+      }
+    },
     "compliance": {
       "eyebrow": "Conformità",
       "title": "Un libretto che regge a un controllo",

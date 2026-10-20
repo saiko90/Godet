@@ -1,0 +1,242 @@
+{
+  "fr": {
+    "garage": [
+      {
+        "eyebrow": "Le garage",
+        "text": "Votre parc d’engins, dans un showroom 3D"
+      },
+      {
+        "eyebrow": "Chaque machine",
+        "text": "Sur son plateau, avec son code, son état et son carnet"
+      },
+      {
+        "eyebrow": "Tout le parc",
+        "text": "Pelles, chargeuses, camions, nacelles : 33 types de machines"
+      },
+      {
+        "eyebrow": "En un coup d’œil",
+        "text": "Vert, orange, rouge : l’état de chaque machine"
+      }
+    ],
+    "suivi": [
+      {
+        "eyebrow": "Mode atelier",
+        "text": "Tout le parc sur une page, avec de gros boutons"
+      },
+      {
+        "eyebrow": "En retard",
+        "text": "Ce qui est en retard saute aux yeux"
+      },
+      {
+        "eyebrow": "Fiche machine",
+        "text": "Compteur, coûts, disponibilité : tout sur une fiche"
+      },
+      {
+        "eyebrow": "Intervention",
+        "text": "Un service saisi en quelques secondes"
+      },
+      {
+        "eyebrow": "Échéances",
+        "text": "Godet calcule seul la prochaine échéance"
+      },
+      {
+        "eyebrow": "Carnet",
+        "text": "Chaque saisie est conservée : rien ne se perd"
+      },
+      {
+        "eyebrow": "Coûts",
+        "text": "Vous savez enfin ce que coûte chaque machine"
+      }
+    ],
+    "end": {
+      "tagline": "Le carnet d’entretien numérique des machines de chantier",
+      "cta": "Démo sans compte · essai gratuit de 30 jours",
+      "maker": "Swiss Digital Studio · Valais"
+    },
+    "typing": {
+      "details": "Huile moteur, filtres, graissage",
+      "parts": "420",
+      "labour": "180"
+    }
+  },
+  "de": {
+    "garage": [
+      {
+        "eyebrow": "Die Garage",
+        "text": "Ihr Maschinenpark in einem 3D-Showroom"
+      },
+      {
+        "eyebrow": "Jede Maschine",
+        "text": "Auf ihrer Plattform, mit Code, Zustand und Wartungsheft"
+      },
+      {
+        "eyebrow": "Der ganze Park",
+        "text": "Bagger, Radlader, Lastwagen, Arbeitsbühnen: 33 Maschinentypen"
+      },
+      {
+        "eyebrow": "Auf einen Blick",
+        "text": "Grün, Orange, Rot: der Zustand jeder Maschine"
+      }
+    ],
+    "suivi": [
+      {
+        "eyebrow": "Werkstattmodus",
+        "text": "Der ganze Park auf einer Seite, mit grossen Tasten"
+      },
+      {
+        "eyebrow": "Überfällig",
+        "text": "Was überfällig ist, fällt sofort auf"
+      },
+      {
+        "eyebrow": "Maschinenblatt",
+        "text": "Betriebsstunden, Kosten, Verfügbarkeit: alles auf einem Blatt"
+      },
+      {
+        "eyebrow": "Eintrag",
+        "text": "Eine Wartung in wenigen Sekunden erfasst"
+      },
+      {
+        "eyebrow": "Termine",
+        "text": "Godet berechnet den nächsten Termin selbst"
+      },
+      {
+        "eyebrow": "Wartungsheft",
+        "text": "Jeder Eintrag bleibt erhalten: nichts geht verloren"
+      },
+      {
+        "eyebrow": "Kosten",
+        "text": "Sie wissen endlich, was jede Maschine kostet"
+      }
+    ],
+    "end": {
+      "tagline": "Das digitale Wartungsheft für Baumaschinen",
+      "cta": "Demo ohne Konto · 30 Tage kostenlos testen",
+      "maker": "Swiss Digital Studio · Wallis"
+    },
+    "typing": {
+      "details": "Motoröl, Filter, Abschmieren",
+      "parts": "420",
+      "labour": "180"
+    }
+  },
+  "it": {
+    "garage": [
+      {
+        "eyebrow": "Il garage",
+        "text": "Il vostro parco macchine in uno showroom 3D"
+      },
+      {
+        "eyebrow": "Ogni macchina",
+        "text": "Sulla sua pedana, con codice, stato e libretto"
+      },
+      {
+        "eyebrow": "Tutto il parco",
+        "text": "Escavatori, pale, camion, piattaforme aeree: 33 tipi di macchine"
+      },
+      {
+        "eyebrow": "A colpo d’occhio",
+        "text": "Verde, arancione, rosso: lo stato di ogni macchina"
+      }
+    ],
+    "suivi": [
+      {
+        "eyebrow": "Modalità officina",
+        "text": "Tutto il parco su una pagina, con pulsanti grandi"
+      },
+      {
+        "eyebrow": "In ritardo",
+        "text": "Ciò che è in ritardo salta subito all’occhio"
+      },
+      {
+        "eyebrow": "Scheda macchina",
+        "text": "Contaore, costi, disponibilità: tutto in una scheda"
+      },
+      {
+        "eyebrow": "Intervento",
+        "text": "Una manutenzione registrata in pochi secondi"
+      },
+      {
+        "eyebrow": "Scadenze",
+        "text": "Godet calcola da solo la prossima scadenza"
+      },
+      {
+        "eyebrow": "Libretto",
+        "text": "Ogni registrazione resta: non si perde nulla"
+      },
+      {
+        "eyebrow": "Costi",
+        "text": "Finalmente sapete quanto costa ogni macchina"
+      }
+    ],
+    "end": {
+      "tagline": "Il libretto di manutenzione digitale per le macchine edili",
+      "cta": "Demo senza account · 30 giorni di prova gratuita",
+      "maker": "Swiss Digital Studio · Vallese"
+    },
+    "typing": {
+      "details": "Olio motore, filtri, ingrassaggio",
+      "parts": "420",
+      "labour": "180"
+    }
+  },
+  "en": {
+    "garage": [
+      {
+        "eyebrow": "The garage",
+        "text": "Your equipment fleet in a 3D showroom"
+      },
+      {
+        "eyebrow": "Every machine",
+        "text": "On its own platform, with its code, status and log"
+      },
+      {
+        "eyebrow": "The whole fleet",
+        "text": "Excavators, loaders, trucks, access platforms: 33 machine types"
+      },
+      {
+        "eyebrow": "At a glance",
+        "text": "Green, amber, red: the status of every machine"
+      }
+    ],
+    "suivi": [
+      {
+        "eyebrow": "Workshop mode",
+        "text": "Your whole fleet on one page, with big buttons"
+      },
+      {
+        "eyebrow": "Overdue",
+        "text": "Anything overdue stands out at once"
+      },
+      {
+        "eyebrow": "Machine record",
+        "text": "Hour meter, costs, availability: all in one place"
+      },
+      {
+        "eyebrow": "Entry",
+        "text": "A service logged in a few seconds"
+      },
+      {
+        "eyebrow": "Due dates",
+        "text": "Godet works out when the next service is due"
+      },
+      {
+        "eyebrow": "Log",
+        "text": "Every entry is kept: nothing gets lost"
+      },
+      {
+        "eyebrow": "Costs",
+        "text": "At last you know what each machine really costs"
+      }
+    ],
+    "end": {
+      "tagline": "The digital maintenance log for construction machinery",
+      "cta": "Demo without an account · free 30-day trial",
+      "maker": "Swiss Digital Studio · Valais, Switzerland"
+    },
+    "typing": {
+      "details": "Engine oil, filters, greasing",
+      "parts": "420",
+      "labour": "180"
+    }
+  }
+}

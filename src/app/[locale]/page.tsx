@@ -3,26 +3,27 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Icon, type IconName } from '@/components/Icons';
 import { currencyFor } from '@/components/site/countries';
 import { HeroStage } from '@/components/site/HeroStage';
-import { HERO_IMAGE, heroImageAvailable } from '@/components/site/hero-image';
+import { heroImage } from '@/components/site/hero-image';
 import { RefTracker } from '@/components/site/RefTracker';
 import { checkLocale, metaLocale, ogLocale, type LocaleParams } from '@/components/site/seo';
 import { SiteFooter, SiteHeader, SkipLink } from '@/components/site/SiteChrome';
 import { SiteIcon, type SiteIconName } from '@/components/site/SiteIcons';
+import { SiteVideos } from '@/components/site/SiteVideos';
+import { siteVideos } from '@/components/site/videos';
 import { Link } from '@/i18n/navigation';
 import { localizedAlternates } from '@/i18n/metadata';
 import type { AppLocale } from '@/i18n/routing';
 import { makeFormat } from '@/lib/format';
 
-// Page générée au déploiement (une par langue) : rapide, et la présence de l'image du héros y est vérifiée une fois.
-// Le code de suivi ?ref= est traité dans le navigateur (RefTracker) pour que la page reste statique.
+// Page générée au déploiement (une par langue) : rapide, et la présence des images du héros et des films y est
+// vérifiée une fois. Le code de suivi ?ref= est traité dans le navigateur (RefTracker) pour que la page reste statique.
 export const dynamic = 'force-static';
-
-const hasHero = heroImageAvailable();
 
 export async function generateMetadata({ params }: { params: LocaleParams }): Promise<Metadata> {
   const locale = metaLocale((await params).locale);
   const t = await getTranslations({ locale, namespace: 'site.meta' });
   const alternates = localizedAlternates('/', locale);
+  const hero = heroImage(locale);
   return {
     title: { absolute: t('title') },
     description: t('description'),
@@ -34,7 +35,7 @@ export async function generateMetadata({ params }: { params: LocaleParams }): Pr
       locale: ogLocale(locale),
       type: 'website',
       siteName: 'Godet',
-      ...(hasHero ? { images: [{ url: HERO_IMAGE, width: 1600, height: 900, alt: t('ogImageAlt') }] } : {}),
+      ...(hero ? { images: [{ url: hero.src, width: hero.width, height: hero.height, alt: t('ogImageAlt') }] } : {}),
     },
   };
 }
@@ -137,7 +138,7 @@ export default async function HomePage({ params }: { params: LocaleParams }) {
                 {t('hero.assure.hosting')}
               </li>
             </ul>
-            <HeroStage image={hasHero ? HERO_IMAGE : null} />
+            <HeroStage image={heroImage(locale)?.src ?? null} />
           </div>
         </section>
 
@@ -188,6 +189,9 @@ export default async function HomePage({ params }: { params: LocaleParams }) {
             </div>
           </div>
         </section>
+
+        {/* ---------- en vidéo ---------- */}
+        <SiteVideos locale={locale} videos={siteVideos(locale)} />
 
         {/* ---------- conformité ---------- */}
         <section className="s-section s-section-line" aria-labelledby="titre-conformite" id="conformite">
