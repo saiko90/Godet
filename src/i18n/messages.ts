@@ -17,6 +17,7 @@ export const NAMESPACES = [
   'admin',
   'legal',
   'excel',
+  'help',
 ] as const;
 
 export type Namespace = (typeof NAMESPACES)[number];
@@ -55,4 +56,5 @@ export type AppMessages = {
   admin: typeof import('../../messages/fr/admin.json');
   legal: typeof import('../../messages/fr/legal.json');
   excel: typeof import('../../messages/fr/excel.json');
+  help: typeof import('../../messages/fr/help.json');
 };

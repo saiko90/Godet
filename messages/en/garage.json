@@ -93,7 +93,8 @@
     "ideas": "Suggestion box",
     "signOut": "Sign out",
     "newTab": "(opens in a new tab)",
-    "labels": "QR labels"
+    "labels": "QR labels",
+    "help": "Help and guide"
   },
   "state": {
     "ok": "Up to date",

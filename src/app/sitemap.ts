@@ -12,6 +12,7 @@ const PAGES: { path: string; changeFrequency: 'monthly' | 'yearly'; priority: nu
   { path: '/connexion', changeFrequency: 'yearly', priority: 0.4 },
   { path: '/confidentialite', changeFrequency: 'yearly', priority: 0.2 },
   { path: '/securite', changeFrequency: 'yearly', priority: 0.3 },
+  { path: '/aide', changeFrequency: 'monthly', priority: 0.5 },
 ];
 
 /** Chaque page publique dans les 4 langues, avec ses variantes (hreflang) et la version par défaut. */

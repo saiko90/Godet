@@ -93,7 +93,8 @@
     "ideas": "Boîte à idées",
     "signOut": "Déconnexion",
     "newTab": "(nouvel onglet)",
-    "labels": "Étiquettes QR"
+    "labels": "Étiquettes QR",
+    "help": "Aide et guide"
   },
   "state": {
     "ok": "À jour",

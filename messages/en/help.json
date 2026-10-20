@@ -1,0 +1,146 @@
+{
+  "meta": {
+    "title": "Help and getting-started guide",
+    "description": "Get started with Godet in 5 steps, install the app on phone, tablet and computer, and answers to common questions."
+  },
+  "nav": {
+    "footer": "Help and guide",
+    "menu": "Help and guide"
+  },
+  "eyebrow": "Help",
+  "title": "Getting started with Godet",
+  "intro": "Everything you need to keep your fleet’s log from today: first steps, installing on each device and answers to common questions.",
+  "toc": {
+    "label": "On this page",
+    "start": "Start in 5 steps",
+    "install": "Install the app",
+    "tasks": "Day to day",
+    "contact": "Need help?"
+  },
+  "pdf": {
+    "title": "Getting-started guide as PDF",
+    "text": "Print it for the workshop or send it to your team.",
+    "button": "Download the guide (PDF)"
+  },
+  "start": {
+    "title": "Start in 5 steps",
+    "steps": {
+      "account": {
+        "title": "Create your garage",
+        "text": "“Create my garage” on godet.app: your name, your email, then the company name, country and currency. The 15-day trial starts right away, no credit card needed."
+      },
+      "machine": {
+        "title": "Add your machines",
+        "text": "“+ Machine”: a short code (PE-01), the type, make, model and the current hour meter. Two due dates are created automatically: service and the annual safety check. Already have a log in Excel? Import it in one go (menu → Excel)."
+      },
+      "dues": {
+        "title": "Set the due dates",
+        "text": "In the machine card → Due dates: service every 250 or 500 h, inspection every year… Godet works out the next date from each machine’s real usage and turns it orange, then red."
+      },
+      "entry": {
+        "title": "Log the first job",
+        "text": "The “Entry” button in the machine card or in workshop mode: type, date, hour meter, costs, photos. Linked to a due date, the entry renews it automatically."
+      },
+      "team": {
+        "title": "Invite your team",
+        "text": "Settings → Team: one invitation link per person, with their role (admin, mechanic, operator). Then stick a QR label in each cab (menu → QR labels)."
+      }
+    }
+  },
+  "install": {
+    "title": "Install the app",
+    "intro": "Godet installs straight from the website, no app store needed. An icon appears on your home screen and Godet opens full screen, like an app. Updates are automatic.",
+    "detected": "Your device",
+    "devices": {
+      "iphone": {
+        "name": "iPhone and iPad",
+        "browser": "With Safari",
+        "steps": [
+          "Open godet.app in Safari and sign in.",
+          "Tap the Share button (the square with an arrow pointing up).",
+          "Scroll down and tap “Add to Home Screen”.",
+          "Tap “Add”: the Godet icon appears on your home screen."
+        ]
+      },
+      "android": {
+        "name": "Android",
+        "browser": "With Chrome",
+        "steps": [
+          "Open godet.app in Chrome and sign in.",
+          "Tap the ⋮ menu at the top right.",
+          "Tap “Install app” (or “Add to Home screen”).",
+          "Confirm: the Godet icon appears with your apps."
+        ]
+      },
+      "computer": {
+        "name": "Computer",
+        "browser": "With Chrome or Edge",
+        "steps": [
+          "Open godet.app and sign in.",
+          "Click the install icon at the right of the address bar (a screen with an arrow).",
+          "Click “Install”.",
+          "Godet opens in its own window and shows up in the Start menu or the Dock."
+        ]
+      }
+    },
+    "note": "Firefox and other browsers work too: just bookmark godet.app."
+  },
+  "tasks": {
+    "title": "Day to day",
+    "items": {
+      "hours": {
+        "q": "Read the hour meter",
+        "a": "Machine card → “Hours”, or the “Hours” button in workshop mode. The meter can only go up. Tip: “Read from a photo” reads the figure for you; check it before saving."
+      },
+      "workshop": {
+        "q": "Log quickly on site",
+        "a": "The “Workshop mode” button shows the fleet as a list, without 3D: big buttons for an entry or a reading, even with gloves on. A scanned QR label opens the right machine directly."
+      },
+      "offline": {
+        "q": "No network",
+        "a": "On a device you’ve used before, the garage opens even offline. Entries and readings are sent automatically when the network is back (badge “2 entries waiting”)."
+      },
+      "remove": {
+        "q": "Fix a mistake",
+        "a": "An entry can be edited or withdrawn with a reason. Once withdrawn it stays visible, struck through: that’s what makes the log count during an inspection."
+      },
+      "costs": {
+        "q": "Know what a machine costs",
+        "a": "Machine card → Costs: parts, labour and downtime over 12 months, month by month. The card’s overview also shows the cost per operating hour."
+      },
+      "print": {
+        "q": "Print a log",
+        "a": "Machine card menu → “Print the log”: the full log as a PDF, for an inspection, an appraisal or a sale."
+      },
+      "reminders": {
+        "q": "Get reminded of due dates",
+        "a": "Settings → Reminders: an email in the morning or a summary on Monday, only when there’s something to do."
+      },
+      "assistant": {
+        "q": "Ask the assistant",
+        "a": "The “Assistant” button at the top of the garage: “Which services are overdue?”, “How much did CH-02 cost this year?”, “How do I invite a mechanic?”."
+      },
+      "gps": {
+        "q": "Know where a machine is",
+        "a": "Switch on entry location (Settings → Company). The machine card then shows the last known location, with a link to the map."
+      },
+      "archive": {
+        "q": "A machine is sold",
+        "a": "Machine card menu → “Archive machine”: it leaves the showroom, its log stays viewable and printable (Settings → Archived machines)."
+      },
+      "billing": {
+        "q": "After the trial",
+        "a": "Settings → Subscription: choose the plan by number of machines (from CHF 29 a month). Without a subscription the garage becomes read-only: nothing is deleted."
+      }
+    }
+  },
+  "contact": {
+    "title": "Need help?",
+    "text": "First ask the garage assistant: it knows Godet and your fleet. Otherwise <contact>write to us</contact>; an idea for an improvement? That’s what the <ideas>ideas box</ideas> is for."
+  },
+  "guide": {
+    "title": "Getting-started guide",
+    "subtitle": "The digital maintenance log for your machinery fleet",
+    "footer": "godet.app · Swiss Digital Studio, Valais"
+  }
+}

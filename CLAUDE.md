@@ -110,6 +110,9 @@ Navigateur de test : Chromium de Playwright dans `/opt/pw-browsers` (ne pas lanc
   `hour_readings`, dernière position sur `machines.last_*` (déclencheurs `*_last_position`). Lien carte OpenStreetMap.
   `Permissions-Policy` : `geolocation=(self)`. Page publique `/securite` (textes `legal.securityPage`) : chaque
   garantie doit rester vraie (sauvegardes = plan Supabase Pro, 7 jours).
+- Aide : page `/aide` (textes `help`, structure `src/components/site/aide/content.ts`, tutoriel d'installation par
+  appareil), guide imprimable `/aide/guide` → PDF `public/guides/godet-guide-<langue>.pdf` à régénérer après un
+  changement de texte : `BASE=http://localhost:3000 node scripts/guides/make-guides.mjs`.
 - Abonnement : `plan` et `trial_ends_at` d'une entreprise (et `created_by`, `created_at`) ne se modifient pas depuis
   l'application (déclencheur `organizations_guard_billing`, erreur `billing_locked`) : seulement la clé de service,
   une fonction SECURITY DEFINER ou l'administration de la plateforme.

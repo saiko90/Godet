@@ -1,0 +1,146 @@
+{
+  "meta": {
+    "title": "Hilfe und Einstiegsanleitung",
+    "description": "Mit Godet in 5 Schritten starten, die App auf Handy, Tablet und Computer installieren, und Antworten auf häufige Fragen."
+  },
+  "nav": {
+    "footer": "Hilfe und Anleitung",
+    "menu": "Hilfe und Anleitung"
+  },
+  "eyebrow": "Hilfe",
+  "title": "Gut starten mit Godet",
+  "intro": "Alles, um das Wartungsheft Ihres Maschinenparks ab heute zu führen: die ersten Schritte, die Installation auf jedem Gerät und Antworten auf häufige Fragen.",
+  "toc": {
+    "label": "Auf dieser Seite",
+    "start": "In 5 Schritten starten",
+    "install": "App installieren",
+    "tasks": "Im Alltag",
+    "contact": "Brauchen Sie Hilfe?"
+  },
+  "pdf": {
+    "title": "Einstiegsanleitung als PDF",
+    "text": "Zum Ausdrucken für die Werkstatt oder zum Senden an Ihr Team.",
+    "button": "Anleitung herunterladen (PDF)"
+  },
+  "start": {
+    "title": "In 5 Schritten starten",
+    "steps": {
+      "account": {
+        "title": "Erstellen Sie Ihre Garage",
+        "text": "«Garage eröffnen» auf godet.app: Ihr Name, Ihre E-Mail, dann Firmenname, Land und Währung. Die 15-tägige Testphase beginnt sofort, ohne Kreditkarte."
+      },
+      "machine": {
+        "title": "Fügen Sie Ihre Maschinen hinzu",
+        "text": "«+ Maschine»: ein kurzer Code (PE-01), Typ, Marke, Modell und der aktuelle Betriebsstundenzähler. Zwei Termine werden automatisch angelegt: Service und jährliche Sicherheitskontrolle. Sie haben schon ein Wartungsheft in Excel? Importieren Sie es in einem Schritt (Menü → Excel)."
+      },
+      "dues": {
+        "title": "Legen Sie die Termine fest",
+        "text": "In der Maschinenkarte → Termine: Service alle 250 oder 500 h, Kontrolle jedes Jahr… Godet berechnet das nächste Datum nach dem tatsächlichen Einsatz jeder Maschine und färbt sie orange, dann rot."
+      },
+      "entry": {
+        "title": "Erfassen Sie den ersten Eintrag",
+        "text": "Schaltfläche «Eintrag» in der Maschinenkarte oder im Werkstattmodus: Art, Datum, Zähler, Kosten, Fotos. Mit einem Termin verknüpft, erneuert der Eintrag diese automatisch."
+      },
+      "team": {
+        "title": "Laden Sie Ihr Team ein",
+        "text": "Einstellungen → Team: ein Einladungslink pro Person, mit ihrer Rolle (Administrator, Mechaniker, Maschinist). Kleben Sie dann eine QR-Etikette in jede Kabine (Menü → QR-Etiketten)."
+      }
+    }
+  },
+  "install": {
+    "title": "App installieren",
+    "intro": "Godet wird direkt von der Website installiert, ohne App-Store. Ein Symbol erscheint auf dem Startbildschirm und Godet öffnet sich im Vollbild, wie eine App. Updates kommen automatisch.",
+    "detected": "Ihr Gerät",
+    "devices": {
+      "iphone": {
+        "name": "iPhone und iPad",
+        "browser": "Mit Safari",
+        "steps": [
+          "Öffnen Sie godet.app in Safari und melden Sie sich an.",
+          "Tippen Sie auf die Teilen-Taste (Quadrat mit Pfeil nach oben).",
+          "Scrollen Sie und tippen Sie auf «Zum Home-Bildschirm».",
+          "Tippen Sie auf «Hinzufügen»: Das Godet-Symbol erscheint auf dem Startbildschirm."
+        ]
+      },
+      "android": {
+        "name": "Android",
+        "browser": "Mit Chrome",
+        "steps": [
+          "Öffnen Sie godet.app in Chrome und melden Sie sich an.",
+          "Tippen Sie oben rechts auf das Menü ⋮.",
+          "Tippen Sie auf «App installieren» (oder «Zum Startbildschirm hinzufügen»).",
+          "Bestätigen Sie: Das Godet-Symbol erscheint bei Ihren Apps."
+        ]
+      },
+      "computer": {
+        "name": "Computer",
+        "browser": "Mit Chrome oder Edge",
+        "steps": [
+          "Öffnen Sie godet.app und melden Sie sich an.",
+          "Klicken Sie auf das Installationssymbol rechts in der Adressleiste (Bildschirm mit Pfeil).",
+          "Klicken Sie auf «Installieren».",
+          "Godet öffnet sich in einem eigenen Fenster und erscheint im Startmenü oder im Dock."
+        ]
+      }
+    },
+    "note": "Firefox und andere Browser funktionieren ebenfalls: Speichern Sie godet.app einfach als Lesezeichen."
+  },
+  "tasks": {
+    "title": "Im Alltag",
+    "items": {
+      "hours": {
+        "q": "Betriebsstunden ablesen",
+        "a": "Maschinenkarte → «Stunden» oder die Schaltfläche «Stunden» im Werkstattmodus. Der Zähler kann nur vorwärts gehen. Tipp: «Vom Foto ablesen» liest den Wert für Sie; prüfen Sie ihn vor dem Speichern."
+      },
+      "workshop": {
+        "q": "Schnell auf der Baustelle erfassen",
+        "a": "Die Schaltfläche «Werkstattmodus» zeigt den Park als Liste, ohne 3D: grosse Schaltflächen für Einträge oder Ablesungen, auch mit Handschuhen. Eine gescannte QR-Etikette öffnet direkt die richtige Maschine."
+      },
+      "offline": {
+        "q": "Ohne Netz",
+        "a": "Auf einem bereits benutzten Gerät öffnet sich die Garage auch offline. Erfasste Einträge und Ablesungen werden automatisch gesendet, sobald das Netz zurück ist (Anzeige «2 Einträge warten»)."
+      },
+      "remove": {
+        "q": "Einen Fehler korrigieren",
+        "a": "Ein Eintrag lässt sich ändern oder mit Begründung zurückziehen. Zurückgezogen bleibt er durchgestrichen sichtbar: Das macht den Wert des Wartungshefts bei einer Kontrolle aus."
+      },
+      "costs": {
+        "q": "Die Kosten einer Maschine kennen",
+        "a": "Maschinenkarte → Kosten: Teile, Arbeit und Stillstand über 12 Monate, Monat für Monat. Die Übersicht der Karte zeigt auch die Kosten pro Betriebsstunde."
+      },
+      "print": {
+        "q": "Ein Wartungsheft drucken",
+        "a": "Menü der Maschinenkarte → «Wartungsheft drucken»: das ganze Wartungsheft als PDF, für eine Kontrolle, eine Expertise oder einen Verkauf."
+      },
+      "reminders": {
+        "q": "An Termine erinnert werden",
+        "a": "Einstellungen → Erinnerungen: eine E-Mail am Morgen oder eine Zusammenfassung am Montag, nur wenn etwas zu tun ist."
+      },
+      "assistant": {
+        "q": "Den Assistenten fragen",
+        "a": "Schaltfläche «Assistent» oben in der Garage: «Welche Termine sind überfällig?», «Wie viel hat CH-02 dieses Jahr gekostet?», «Wie lade ich einen Mechaniker ein?»."
+      },
+      "gps": {
+        "q": "Wissen, wo eine Maschine steht",
+        "a": "Aktivieren Sie den Standort der Einträge (Einstellungen → Unternehmen). Die Maschinenkarte zeigt dann den letzten bekannten Standort mit Link zur Karte."
+      },
+      "archive": {
+        "q": "Eine Maschine wird verkauft",
+        "a": "Menü der Maschinenkarte → «Maschine archivieren»: Sie verlässt den Showroom, ihr Wartungsheft bleibt einsehbar und druckbar (Einstellungen → Archivierte Maschinen)."
+      },
+      "billing": {
+        "q": "Nach der Testphase",
+        "a": "Einstellungen → Abonnement: Wählen Sie das Abo nach Anzahl Maschinen (ab CHF 29 pro Monat). Ohne Abo wird die Garage schreibgeschützt: Nichts wird gelöscht."
+      }
+    }
+  },
+  "contact": {
+    "title": "Brauchen Sie Hilfe?",
+    "text": "Fragen Sie zuerst den Assistenten in der Garage: Er kennt Godet und Ihren Maschinenpark. Sonst <contact>schreiben Sie uns</contact>; eine Verbesserungsidee? Dafür gibt es die <ideas>Ideenbox</ideas>."
+  },
+  "guide": {
+    "title": "Einstiegsanleitung",
+    "subtitle": "Das digitale Wartungsheft Ihres Maschinenparks",
+    "footer": "godet.app · Swiss Digital Studio, Wallis"
+  }
+}

@@ -60,8 +60,12 @@ export function AssistantPanel({ open, onClose, machineId }: { open: boolean; on
   const logRef = useRef<HTMLDivElement>(null);
   const demo = g.mode === 'demo';
 
+  // Pas de clavier d'office sur téléphone et tablette : il cacherait les réponses.
+  const focusInput = () => {
+    if (!window.matchMedia('(pointer: coarse)').matches) inputRef.current?.focus();
+  };
   useEffect(() => {
-    if (open) inputRef.current?.focus();
+    if (open) focusInput();
   }, [open]);
 
   useEffect(() => {
@@ -85,6 +89,8 @@ export function AssistantPanel({ open, onClose, machineId }: { open: boolean; on
     setInput('');
     setError(null);
     setBusy(true);
+    // Téléphone : le clavier se ferme pour laisser voir la réponse.
+    if (window.matchMedia('(pointer: coarse)').matches) inputRef.current?.blur();
     try {
       const r = await askAssistant({ orgId: g.org.id, locale, messages: next, machineId });
       setTurns([...next, { role: 'assistant', content: r.reply }]);
@@ -96,7 +102,7 @@ export function AssistantPanel({ open, onClose, machineId }: { open: boolean; on
       setInput(question);
     } finally {
       setBusy(false);
-      inputRef.current?.focus();
+      focusInput();
     }
   }
 

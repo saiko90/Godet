@@ -541,7 +541,6 @@ export function HoursModal({ machineId, onClose }: { machineId: string; onClose:
       <div className="g-meter-photo">
         <FileButton
           accept="image/*"
-          capture="environment"
           className="btn btn-soft"
           disabled={reading || busy}
           onFiles={(files) => void fromPhoto(files[0])}

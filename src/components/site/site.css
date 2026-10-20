@@ -926,3 +926,63 @@
 .s-trust-icon svg { width: 22px; height: 22px; }
 .s-legal .s-trust h2 { margin: 2px 0 4px; font-size: var(--t-lg); display: block; }
 .s-legal .s-trust p { margin: 0; }
+
+/* ---------- aide : démarrage, installation, questions ---------- */
+.s-help-toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0 0; }
+.s-help-toc a { padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line); color: var(--chalk); font-size: var(--t-sm); text-decoration: none; }
+.s-help-toc a:hover { border-color: var(--paint); color: var(--paint); }
+.s-help-pdf { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 14px; align-items: center; margin: 24px 0 0; padding: 16px 18px; border-radius: 14px; border: 1px solid color-mix(in srgb, var(--paint) 40%, var(--line)); background: var(--paint-soft); }
+.s-help-pdf > svg { width: 28px; height: 28px; color: var(--paint); }
+.s-help-pdf b { color: var(--chalk); }
+.s-legal .s-help-pdf p { margin: 2px 0 0; font-size: var(--t-sm); }
+@media (max-width: 640px) { .s-help-pdf { grid-template-columns: auto minmax(0, 1fr); } .s-help-pdf .btn { grid-column: 1 / -1; justify-self: start; } }
+.s-legal .s-help-steps { list-style: none; padding: 0; margin: 16px 0 0; display: grid; gap: 16px; }
+.s-help-steps li { display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 14px; }
+.s-help-num, .s-install-num { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--paint); color: #111; font-weight: 700; font-family: var(--f-mono); }
+.s-help-steps h3 { margin: 4px 0 2px; font-size: var(--t-md); color: var(--chalk); }
+.s-legal .s-help-steps p { margin: 0; }
+.s-install { margin-top: 16px; padding: 16px; border-radius: 16px; border: 1px solid var(--line); background: var(--s-surface); }
+.s-install-tabs { display: flex; flex-wrap: wrap; gap: 6px; }
+.s-install-tabs button { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--steel); font: inherit; font-size: var(--t-sm); cursor: pointer; }
+.s-install-tabs button.is-on { border-color: var(--paint); color: var(--chalk); background: var(--paint-soft); }
+.s-install-mine { font-size: var(--t-xs); color: var(--paint); }
+.s-legal .s-install-browser { margin: 14px 0 0; font-size: var(--t-sm); }
+.s-legal .s-install-steps { list-style: none; padding: 0; margin: 10px 0 0; display: grid; gap: 10px; }
+.s-install-steps li { display: grid; grid-template-columns: 36px minmax(0, 1fr) auto; gap: 12px; align-items: center; color: var(--chalk); }
+.s-install-num { width: 30px; height: 30px; font-size: var(--t-sm); }
+.s-install-glyph { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--line-strong); color: var(--paint); }
+.s-install-glyph svg { width: 22px; height: 22px; }
+.s-legal .s-install-note { margin: 14px 0 0; font-size: var(--t-sm); }
+.s-help-faq { display: grid; gap: 8px; margin-top: 16px; }
+.s-help-faq details { border: 1px solid var(--line); border-radius: 12px; padding: 0 16px; background: var(--s-surface); }
+.s-help-faq summary { cursor: pointer; padding: 14px 0; color: var(--chalk); font-weight: 600; }
+.s-legal .s-help-faq p { margin: 0 0 14px; }
+
+/* ---------- guide PDF (impression A4, clair) ---------- */
+.s-guide { background: #fff; color: #1d1f24; font-family: var(--f-body); max-width: 180mm; margin: 0 auto; padding: 8mm 0; line-height: 1.5; font-size: 10.5pt; }
+.s-guide h1 { font-family: var(--f-display); font-weight: 400; font-size: 26pt; margin: 6mm 0 2mm; }
+.s-guide h2 { font-size: 15pt; margin: 8mm 0 3mm; padding-bottom: 2mm; border-bottom: 2px solid #f3b71b; }
+.s-guide h3 { font-size: 11.5pt; margin: 0 0 1mm; display: flex; align-items: center; gap: 3mm; }
+.s-guide p { margin: 0 0 2mm; }
+.s-guide-cover { padding: 18mm 0 10mm; border-bottom: 1px solid #ddd; }
+.s-guide-brand { font-family: var(--f-display); letter-spacing: .3em; margin-top: 4mm; color: #555; }
+.s-guide-sub { font-size: 13pt; color: #555; }
+.s-guide-intro { margin-top: 6mm; font-size: 11.5pt; }
+.s-guide-steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 4mm; }
+.s-guide-steps li { display: grid; grid-template-columns: 10mm 1fr; gap: 3mm; break-inside: avoid; }
+.s-guide-num { display: grid; place-items: center; width: 8mm; height: 8mm; border-radius: 50%; background: #f3b71b; color: #111; font-weight: 700; }
+.s-guide-break { break-before: page; }
+.s-guide-devices { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4mm; margin: 3mm 0; }
+.s-guide-device { border: 1px solid #ddd; border-radius: 3mm; padding: 3mm 4mm; break-inside: avoid; }
+.s-guide-device ol { margin: 2mm 0 0; padding-left: 5mm; font-size: 9.5pt; }
+.s-guide-device li { margin-bottom: 1mm; }
+.s-guide-glyph { display: inline-grid; place-items: center; width: 7mm; height: 7mm; color: #c98f00; }
+.s-guide-glyph svg { width: 6mm; height: 6mm; }
+.s-guide-muted { color: #666; font-size: 9.5pt; }
+.s-guide-tasks { margin: 0; display: grid; gap: 3mm; }
+.s-guide-tasks div { break-inside: avoid; }
+.s-guide-tasks dt { font-weight: 700; }
+.s-guide-tasks dd { margin: 0.5mm 0 0; }
+.s-guide-keep { break-inside: avoid; }
+.s-guide h2 { break-after: avoid; }
+.s-guide-foot { margin-top: 10mm; color: #888; font-size: 9pt; text-align: center; }

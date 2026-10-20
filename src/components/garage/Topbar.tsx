@@ -67,6 +67,7 @@ export function Topbar({
   const shared: MenuEntry[] = [
     ...(show3dControls ? [{ key: 'groups', label: t('groups.menu'), icon: 'garage' as const, checked: groups, onSelect: onGroups }] : []),
     ...(onExcel ? [{ key: 'excel', label: tx('menu'), icon: 'table' as const, onSelect: onExcel }] : []),
+    { key: 'aide', label: t('menu.help'), icon: 'file', href: '/aide' },
     { key: 'contact', label: t('menu.contact'), icon: 'mail', href: '/contact' },
     { key: 'idees', label: t('menu.ideas'), icon: 'note', href: '/idees' },
   ];

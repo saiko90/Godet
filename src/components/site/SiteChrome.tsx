@@ -10,7 +10,7 @@ import './site.css';
 export const STUDIO_URL = 'https://www.swissdigitalstudio.ch';
 
 /** Pages publiques reliées depuis l'en-tête et le pied de page (lien marqué « page actuelle »). */
-export type PublicPage = 'contact' | 'idees' | 'confidentialite' | 'securite';
+export type PublicPage = 'contact' | 'idees' | 'confidentialite' | 'securite' | 'aide';
 
 const currentIf = (current: PublicPage | undefined, page: PublicPage): 'page' | undefined =>
   current === page ? 'page' : undefined;
@@ -75,6 +75,7 @@ export async function SiteHeader({ anchors = false, current }: { anchors?: boole
 export async function SiteFooter({ current }: { current?: PublicPage } = {}) {
   const t = await getTranslations('site.chrome.footer');
   const ts = await getTranslations('legal.securityPage');
+  const th = await getTranslations('help.nav');
   // Chaîne (et non nombre) : un nombre serait mis en forme (« 2 026 »).
   const year = String(new Date().getFullYear());
   return (
@@ -111,6 +112,11 @@ export async function SiteFooter({ current }: { current?: PublicPage } = {}) {
           <nav aria-labelledby="pied-infos">
             <h2 id="pied-infos">{t('info')}</h2>
             <ul>
+              <li>
+                <Link href="/aide" aria-current={currentIf(current, 'aide')}>
+                  {th('footer')}
+                </Link>
+              </li>
               <li>
                 <Link href="/contact" aria-current={currentIf(current, 'contact')}>
                   {t('contact')}

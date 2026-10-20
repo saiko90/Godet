@@ -1,0 +1,146 @@
+{
+  "meta": {
+    "title": "Aiuto e guida introduttiva",
+    "description": "Iniziare con Godet in 5 passi, installare l’app su telefono, tablet e computer, e risposte alle domande frequenti."
+  },
+  "nav": {
+    "footer": "Aiuto e guida",
+    "menu": "Aiuto e guida"
+  },
+  "eyebrow": "Aiuto",
+  "title": "Iniziare bene con Godet",
+  "intro": "Tutto ciò che serve per tenere il libretto del vostro parco da oggi: i primi passi, l’installazione su ogni dispositivo e le risposte alle domande frequenti.",
+  "toc": {
+    "label": "In questa pagina",
+    "start": "Iniziare in 5 passi",
+    "install": "Installare l’app",
+    "tasks": "Ogni giorno",
+    "contact": "Serve aiuto?"
+  },
+  "pdf": {
+    "title": "Guida introduttiva in PDF",
+    "text": "Da stampare per l’officina o da inviare alla vostra squadra.",
+    "button": "Scarica la guida (PDF)"
+  },
+  "start": {
+    "title": "Iniziare in 5 passi",
+    "steps": {
+      "account": {
+        "title": "Create il vostro garage",
+        "text": "«Crea il mio garage» su godet.app: il vostro nome, la vostra e-mail, poi il nome dell’azienda, il paese e la valuta. La prova di 15 giorni inizia subito, senza carta di credito."
+      },
+      "machine": {
+        "title": "Aggiungete le macchine",
+        "text": "«+ Macchina»: un codice breve (PE-01), il tipo, la marca, il modello e il contaore attuale. Due scadenze vengono create d’ufficio: il servizio e il controllo annuale di sicurezza. Avete già un libretto in Excel? Importatelo in un colpo solo (menu → Excel)."
+      },
+      "dues": {
+        "title": "Impostate le scadenze",
+        "text": "Nella scheda → Scadenze: servizio ogni 250 o 500 h, controllo ogni anno… Godet calcola la prossima data secondo l’uso reale di ogni macchina e la colora di arancione, poi di rosso."
+      },
+      "entry": {
+        "title": "Registrate il primo intervento",
+        "text": "Pulsante «Intervento» nella scheda o nella modalità officina: tipo, data, contaore, costi, foto. Collegato a una scadenza, l’intervento la rinnova da solo."
+      },
+      "team": {
+        "title": "Invitate la vostra squadra",
+        "text": "Impostazioni → Squadra: un link d’invito per persona, con il suo ruolo (amministratore, meccanico, macchinista). Poi incollate un’etichetta QR in ogni cabina (menu → Etichette QR)."
+      }
+    }
+  },
+  "install": {
+    "title": "Installare l’app",
+    "intro": "Godet si installa dal sito, senza passare da un negozio di app. Un’icona appare sulla schermata iniziale e Godet si apre a schermo intero, come un’app. Aggiornamenti automatici.",
+    "detected": "Il vostro dispositivo",
+    "devices": {
+      "iphone": {
+        "name": "iPhone e iPad",
+        "browser": "Con Safari",
+        "steps": [
+          "Aprite godet.app in Safari e accedete.",
+          "Toccate il pulsante Condividi (il quadrato con una freccia verso l’alto).",
+          "Scorrete e toccate «Aggiungi alla schermata Home».",
+          "Toccate «Aggiungi»: l’icona Godet appare sulla schermata iniziale."
+        ]
+      },
+      "android": {
+        "name": "Android",
+        "browser": "Con Chrome",
+        "steps": [
+          "Aprite godet.app in Chrome e accedete.",
+          "Toccate il menu ⋮ in alto a destra.",
+          "Toccate «Installa app» (o «Aggiungi a schermata Home»).",
+          "Confermate: l’icona Godet appare tra le vostre app."
+        ]
+      },
+      "computer": {
+        "name": "Computer",
+        "browser": "Con Chrome o Edge",
+        "steps": [
+          "Aprite godet.app e accedete.",
+          "Cliccate sull’icona d’installazione a destra della barra degli indirizzi (uno schermo con una freccia).",
+          "Cliccate su «Installa».",
+          "Godet si apre nella sua finestra e si trova nel menu Start o nel Dock."
+        ]
+      }
+    },
+    "note": "Anche Firefox e gli altri browser funzionano: aggiungete semplicemente godet.app ai preferiti."
+  },
+  "tasks": {
+    "title": "Ogni giorno",
+    "items": {
+      "hours": {
+        "q": "Leggere il contaore",
+        "a": "Scheda → «Contaore», o il pulsante «Contaore» della modalità officina. Il contaore può solo avanzare. Consiglio: «Leggi da una foto» legge la cifra per voi; verificatela prima di salvare."
+      },
+      "workshop": {
+        "q": "Registrare in fretta in cantiere",
+        "a": "Il pulsante «Modalità officina» mostra il parco in lista, senza 3D: grandi pulsanti per un intervento o una lettura, anche con i guanti. Un’etichetta QR scansionata apre direttamente la macchina giusta."
+      },
+      "offline": {
+        "q": "Senza rete",
+        "a": "Su un dispositivo già usato, il garage si apre anche offline. Interventi e letture registrati partono da soli al ritorno della rete (indicatore «2 registrazioni in attesa»)."
+      },
+      "remove": {
+        "q": "Correggere un errore",
+        "a": "Una registrazione si modifica o si ritira con un motivo. Ritirata, resta visibile barrata: è ciò che dà valore al libretto durante un controllo."
+      },
+      "costs": {
+        "q": "Conoscere il costo di una macchina",
+        "a": "Scheda → Costi: pezzi, manodopera e fermo macchina su 12 mesi, mese per mese. La panoramica della scheda indica anche il costo per ora di funzionamento."
+      },
+      "print": {
+        "q": "Stampare un libretto",
+        "a": "Menu della scheda → «Stampa il libretto»: il libretto completo in PDF, per un controllo, una perizia o una rivendita."
+      },
+      "reminders": {
+        "q": "Essere avvisati delle scadenze",
+        "a": "Impostazioni → Promemoria: un’e-mail al mattino o un riepilogo il lunedì, solo se c’è qualcosa da fare."
+      },
+      "assistant": {
+        "q": "Chiedere all’assistente",
+        "a": "Pulsante «Assistente» in alto nel garage: «Quali scadenze sono in ritardo?», «Quanto è costata la CH-02 quest’anno?», «Come invito un meccanico?»."
+      },
+      "gps": {
+        "q": "Sapere dov’è una macchina",
+        "a": "Attivate la posizione delle registrazioni (Impostazioni → Impresa). La scheda mostra allora l’ultima posizione nota, con un link alla mappa."
+      },
+      "archive": {
+        "q": "Una macchina viene venduta",
+        "a": "Menu della scheda → «Archivia la macchina»: lascia lo showroom, il suo libretto resta consultabile e stampabile (Impostazioni → Macchine archiviate)."
+      },
+      "billing": {
+        "q": "Dopo la prova",
+        "a": "Impostazioni → Abbonamento: scegliete il piano secondo il numero di macchine (da CHF 29 al mese). Senza abbonamento, il garage passa in sola lettura: nulla viene cancellato."
+      }
+    }
+  },
+  "contact": {
+    "title": "Serve aiuto?",
+    "text": "Chiedete prima all’assistente del garage: conosce Godet e il vostro parco. Altrimenti <contact>scriveteci</contact>; un’idea di miglioramento? La <ideas>cassetta delle idee</ideas> è fatta apposta."
+  },
+  "guide": {
+    "title": "Guida introduttiva",
+    "subtitle": "Il libretto di manutenzione digitale del vostro parco macchine",
+    "footer": "godet.app · Swiss Digital Studio, Vallese"
+  }
+}

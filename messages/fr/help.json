@@ -1,0 +1,146 @@
+{
+  "meta": {
+    "title": "Aide et guide de démarrage",
+    "description": "Démarrer avec Godet en 5 étapes, installer l’application sur téléphone, tablette et ordinateur, et réponses aux questions courantes."
+  },
+  "nav": {
+    "footer": "Aide et guide",
+    "menu": "Aide et guide"
+  },
+  "eyebrow": "Aide",
+  "title": "Bien démarrer avec Godet",
+  "intro": "Tout ce qu’il faut pour tenir le carnet de votre parc dès aujourd’hui\u00a0: les premiers pas, l’installation sur chaque appareil et les réponses aux questions courantes.",
+  "toc": {
+    "label": "Sur cette page",
+    "start": "Démarrer en 5 étapes",
+    "install": "Installer l’application",
+    "tasks": "Au quotidien",
+    "contact": "Besoin d’aide\u00a0?"
+  },
+  "pdf": {
+    "title": "Guide de démarrage en PDF",
+    "text": "À imprimer pour l’atelier ou à envoyer à votre équipe.",
+    "button": "Télécharger le guide (PDF)"
+  },
+  "start": {
+    "title": "Démarrer en 5 étapes",
+    "steps": {
+      "account": {
+        "title": "Créez votre garage",
+        "text": "«\u00a0Créer mon garage\u00a0» sur godet.app\u00a0: votre nom, votre e-mail, puis le nom de l’entreprise, le pays et la devise. L’essai de 15 jours commence aussitôt, sans carte de crédit."
+      },
+      "machine": {
+        "title": "Ajoutez vos machines",
+        "text": "«\u00a0+ Machine\u00a0»\u00a0: un code court (PE-01), le type, la marque, le modèle et le compteur d’heures actuel. Deux échéances sont créées d’office\u00a0: le service et le contrôle annuel de sécurité. Vous avez déjà un carnet sur Excel\u00a0? Importez-le d’un coup (menu → Excel)."
+      },
+      "dues": {
+        "title": "Réglez les échéances",
+        "text": "Dans la fiche → Échéances\u00a0: service toutes les 250 ou 500 h, contrôle chaque année… Godet calcule la prochaine date au rythme réel de chaque machine et passe la machine en orange, puis en rouge."
+      },
+      "entry": {
+        "title": "Saisissez la première intervention",
+        "text": "Bouton «\u00a0Intervention\u00a0» dans la fiche ou dans le mode atelier\u00a0: type, date, compteur, coûts, photos. Liée à une échéance, l’intervention la renouvelle toute seule."
+      },
+      "team": {
+        "title": "Invitez votre équipe",
+        "text": "Paramètres → Équipe\u00a0: un lien d’invitation par personne, avec son rôle (administrateur, mécanicien, machiniste). Collez ensuite une étiquette QR dans chaque cabine (menu → Étiquettes QR)."
+      }
+    }
+  },
+  "install": {
+    "title": "Installer l’application",
+    "intro": "Godet s’installe depuis le site, sans passer par un magasin d’applications. Une icône apparaît sur l’écran d’accueil et Godet s’ouvre en plein écran, comme une application. Mises à jour automatiques.",
+    "detected": "Votre appareil",
+    "devices": {
+      "iphone": {
+        "name": "iPhone et iPad",
+        "browser": "Avec Safari",
+        "steps": [
+          "Ouvrez godet.app dans Safari et connectez-vous.",
+          "Touchez le bouton Partager (le carré avec une flèche vers le haut).",
+          "Faites défiler et touchez «\u00a0Sur l’écran d’accueil\u00a0».",
+          "Touchez «\u00a0Ajouter\u00a0»\u00a0: l’icône Godet apparaît sur l’écran d’accueil."
+        ]
+      },
+      "android": {
+        "name": "Android",
+        "browser": "Avec Chrome",
+        "steps": [
+          "Ouvrez godet.app dans Chrome et connectez-vous.",
+          "Touchez le menu ⋮ en haut à droite.",
+          "Touchez «\u00a0Installer l’application\u00a0» (ou «\u00a0Ajouter à l’écran d’accueil\u00a0»).",
+          "Confirmez\u00a0: l’icône Godet apparaît avec vos applications."
+        ]
+      },
+      "computer": {
+        "name": "Ordinateur",
+        "browser": "Avec Chrome ou Edge",
+        "steps": [
+          "Ouvrez godet.app et connectez-vous.",
+          "Cliquez sur l’icône d’installation à droite de la barre d’adresse (un écran avec une flèche).",
+          "Cliquez sur «\u00a0Installer\u00a0».",
+          "Godet s’ouvre dans sa propre fenêtre et se retrouve dans le menu Démarrer ou le Dock."
+        ]
+      }
+    },
+    "note": "Firefox et les autres navigateurs fonctionnent aussi\u00a0: ajoutez simplement godet.app à vos favoris."
+  },
+  "tasks": {
+    "title": "Au quotidien",
+    "items": {
+      "hours": {
+        "q": "Relever le compteur d’heures",
+        "a": "Fiche → «\u00a0Compteur\u00a0», ou le bouton «\u00a0Compteur\u00a0» du mode atelier. Le compteur ne peut qu’avancer. Astuce\u00a0: «\u00a0Lire sur une photo\u00a0» lit le chiffre pour vous\u00a0; vérifiez-le avant d’enregistrer."
+      },
+      "workshop": {
+        "q": "Saisir vite sur le chantier",
+        "a": "Le bouton «\u00a0Atelier\u00a0» affiche le parc en liste, sans 3D\u00a0: de gros boutons pour une intervention ou un relevé, même avec des gants. Une étiquette QR scannée ouvre directement la bonne machine."
+      },
+      "offline": {
+        "q": "Sans réseau",
+        "a": "Sur un appareil déjà utilisé, le garage s’ouvre même hors ligne. Les interventions et relevés saisis partent tout seuls au retour du réseau (pastille «\u00a02 saisies en attente\u00a0»)."
+      },
+      "remove": {
+        "q": "Corriger une erreur",
+        "a": "Une saisie se modifie ou se retire avec un motif. Retirée, elle reste visible barrée\u00a0: c’est ce qui donne sa valeur au carnet lors d’un contrôle (art. 32b OPA)."
+      },
+      "costs": {
+        "q": "Connaître le coût d’une machine",
+        "a": "Fiche → Coûts\u00a0: pièces, main-d’œuvre et immobilisation sur 12 mois, mois par mois. L’aperçu de la fiche donne aussi le coût par heure de fonctionnement."
+      },
+      "print": {
+        "q": "Imprimer un carnet",
+        "a": "Menu de la fiche → «\u00a0Imprimer le carnet\u00a0»\u00a0: le carnet complet en PDF, pour un contrôle, une expertise ou une revente."
+      },
+      "reminders": {
+        "q": "Être prévenu des échéances",
+        "a": "Paramètres → Rappels\u00a0: un e-mail le matin ou un résumé le lundi, seulement s’il y a quelque chose à faire."
+      },
+      "assistant": {
+        "q": "Demander à l’assistant",
+        "a": "Bouton «\u00a0Assistant\u00a0» en haut du garage\u00a0: «\u00a0Quelles échéances sont en retard\u00a0?\u00a0», «\u00a0Combien a coûté la CH-02 cette année\u00a0?\u00a0», «\u00a0Comment inviter un mécanicien\u00a0?\u00a0»."
+      },
+      "gps": {
+        "q": "Savoir où est une machine",
+        "a": "Activez la position des saisies (Paramètres → Entreprise). La fiche affiche alors la dernière position connue, avec un lien vers la carte."
+      },
+      "archive": {
+        "q": "Une machine est vendue",
+        "a": "Menu de la fiche → «\u00a0Archiver\u00a0»\u00a0: elle quitte le showroom, son carnet reste consultable et imprimable (Paramètres → Machines archivées)."
+      },
+      "billing": {
+        "q": "Après l’essai",
+        "a": "Paramètres → Abonnement\u00a0: choisissez la formule selon le nombre de machines (dès 29 CHF par mois). Sans abonnement, le garage passe en lecture seule\u00a0: rien n’est effacé."
+      }
+    }
+  },
+  "contact": {
+    "title": "Besoin d’aide\u00a0?",
+    "text": "Posez d’abord votre question à l’assistant du garage\u00a0: il connaît Godet et votre parc. Sinon, <contact>écrivez-nous</contact>\u00a0; une idée d’amélioration\u00a0? La <ideas>boîte à idées</ideas> est faite pour ça."
+  },
+  "guide": {
+    "title": "Guide de démarrage",
+    "subtitle": "Le carnet d’entretien numérique de votre parc d’engins",
+    "footer": "godet.app · Swiss Digital Studio, Valais"
+  }
+}

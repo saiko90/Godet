@@ -8,7 +8,8 @@
 // Erreurs : { error } parmi unauthorized, forbidden, bad_request, not_configured, subscription_inactive,
 // limit_reached, ai_error.
 //
-// Secrets : ANTHROPIC_API_KEY (obligatoire), ANTHROPIC_MODEL (facultatif, défaut claude-haiku-5-5).
+// Secrets : ANTHROPIC_API_KEY (obligatoire), ANTHROPIC_MODEL (facultatif, défaut claude-haiku-5-5),
+// ANTHROPIC_WORKSPACE_ID (si la clé n'est pas rattachée à un espace de travail).
 import { createClient, type SupabaseClient } from 'npm:@supabase/supabase-js@2.118.0';
 import { AIDE } from './aide.ts';
 
@@ -81,7 +82,12 @@ async function claude(body: Record<string, unknown>): Promise<string> {
   if (!key) throw new AiError('not_configured');
   const res = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
-    headers: { 'x-api-key': key, 'anthropic-version': '2023-06-01', 'content-type': 'application/json' },
+    headers: {
+      'x-api-key': key,
+      'anthropic-version': '2023-06-01',
+      'content-type': 'application/json',
+      ...(env('ANTHROPIC_WORKSPACE_ID') ? { 'anthropic-workspace-id': env('ANTHROPIC_WORKSPACE_ID') as string } : {}),
+    },
     body: JSON.stringify({ model: env('ANTHROPIC_MODEL') ?? DEFAULT_MODEL, ...body }),
   });
   const data = (await res.json().catch(() => ({}))) as { content?: ContentBlock[]; error?: { type?: string; message?: string } };
@@ -365,6 +371,9 @@ Deno.serve(async (req) => {
     });
     return json(req, 200, { ...parseMeter(text), used, limit });
   } catch (e) {
+    // L'IA n'a pas répondu : l'appel ne compte pas.
+    const { error: refundError } = await db.rpc('ai_refund', { p_org: orgId, p_kind: kind });
+    if (refundError) console.error('[assistant] remboursement :', refundError.code, refundError.message);
     if (e instanceof AiError) return json(req, e.message === 'not_configured' ? 500 : 502, { error: e.message });
     console.error('[assistant]', e);
     return json(req, 500, { error: 'ai_error' });
