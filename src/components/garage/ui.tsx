@@ -132,8 +132,12 @@ export type MenuEntry =
       newTab?: boolean;
       danger?: boolean;
       disabled?: boolean;
+      /** Réglage à cocher (case affichée, état annoncé) ; le menu reste ouvert après le choix. */
+      checked?: boolean;
     }
   | { key: string; heading: string; sub?: string };
+
+const ITEM_SELECTOR = ':is([role="menuitem"], [role="menuitemcheckbox"]):not([aria-disabled="true"])';
 
 /**
  * Bouton qui ouvre un menu (flèches haut/bas, Échap, clic à l'extérieur).
@@ -165,7 +169,7 @@ export function Menu({
 
   useEffect(() => {
     if (!open) return;
-    const first = wrap.current?.querySelector<HTMLElement>('[role="menuitem"]:not([aria-disabled="true"])');
+    const first = wrap.current?.querySelector<HTMLElement>(ITEM_SELECTOR);
     first?.focus();
     const onDown = (e: PointerEvent) => {
       if (wrap.current && !wrap.current.contains(e.target as Node)) setOpen(false);
@@ -176,7 +180,7 @@ export function Menu({
 
   function onKeyDown(e: KeyboardEvent<HTMLDivElement>) {
     if (!open) return;
-    const items = Array.from(wrap.current?.querySelectorAll<HTMLElement>('[role="menuitem"]:not([aria-disabled="true"])') ?? []);
+    const items = Array.from(wrap.current?.querySelectorAll<HTMLElement>(ITEM_SELECTOR) ?? []);
     const i = items.indexOf(document.activeElement as HTMLElement);
     if (e.key === 'Escape') {
       e.preventDefault();
@@ -239,6 +243,24 @@ export function Menu({
               </>
             );
             const cls = `g-menu-item${it.danger ? ' is-danger' : ''}`;
+            if (it.checked !== undefined) {
+              return (
+                <button
+                  key={it.key}
+                  type="button"
+                  role="menuitemcheckbox"
+                  aria-checked={it.checked}
+                  tabIndex={-1}
+                  className={`${cls} g-menu-check`}
+                  onClick={() => it.onSelect?.()}
+                >
+                  {content}
+                  <i className="g-menu-box" aria-hidden="true">
+                    {it.checked ? <Icon name="check" /> : null}
+                  </i>
+                </button>
+              );
+            }
             return it.href && !it.disabled ? (
               <Link
                 key={it.key}

@@ -11,7 +11,7 @@ import type { Showroom, ShowroomMachine, ShowroomQuality } from '@/engine/types'
 import { hasWebGL2, type QualityPref } from './prefs';
 
 export type EngineStatus = 'loading' | 'ready' | 'failed';
-export type EngineFailure = 'no-webgl' | 'load' | 'start' | 'context-lost';
+export type EngineFailure = 'no-webgl' | 'load' | 'start' | 'context-lost' | 'memory';
 /** Étapes du chargement (libellés : garage.loader.*). */
 export type EngineStep = 'opening' | 'engine' | 'building' | 'hall' | 'machines' | 'lights' | 'materials' | 'ready';
 
@@ -73,6 +73,34 @@ export interface ShowroomOptionsIn {
   texts: ShowroomTexts;
 }
 
+// Garde-fou mémoire : un téléphone à court de mémoire tue l'onglet pendant la construction de la scène, sans
+// aucun événement. Chaque démarrage est noté avant la construction et effacé une fois la 3D stable : un démarrage
+// resté noté au chargement suivant veut dire que l'onglet a été tué. Après un échec, la 3D redémarre en qualité
+// basse ; après deux, le garage s'ouvre en mode atelier (la 3D reste à un clic : « Réessayer la 3D »).
+const GUARD_KEY = 'godet-3d-demarrage';
+const GUARD_TTL = 24 * 60 * 60 * 1000;
+const STABLE_AFTER = 15_000;
+
+function readGuard(): number {
+  try {
+    const raw = window.localStorage.getItem(GUARD_KEY);
+    if (!raw) return 0;
+    const [n, at] = raw.split(':').map(Number);
+    return Number.isFinite(n) && Number.isFinite(at) && Date.now() - at < GUARD_TTL ? n : 0;
+  } catch {
+    return 0;
+  }
+}
+
+function writeGuard(n: number): void {
+  try {
+    if (n <= 0) window.localStorage.removeItem(GUARD_KEY);
+    else window.localStorage.setItem(GUARD_KEY, `${n}:${Date.now()}`);
+  } catch {
+    // Stockage indisponible : pas de garde-fou, la 3D démarre normalement.
+  }
+}
+
 const clamp01 = (n: number) => (Number.isFinite(n) ? Math.min(1, Math.max(0, n)) : 0);
 const nextFrame = () => new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
 
@@ -87,6 +115,9 @@ export function useShowroom(opts: ShowroomOptionsIn) {
   const [progress, setProgress] = useState(0);
   const [step, setStep] = useState<EngineStep>('opening');
   const [attempt, setAttempt] = useState(0);
+  /** Qualité basse imposée après un démarrage interrompu (onglet tué faute de mémoire). */
+  const [forcedLow, setForcedLow] = useState(false);
+  const forcedLowRef = useRef(false);
   const { host, enabled } = opts;
 
   useEffect(() => {
@@ -99,6 +130,8 @@ export function useShowroom(opts: ShowroomOptionsIn) {
     if (!root) return;
     let cancelled = false;
     let instance: Showroom | null = null;
+    let stableTimer: number | undefined;
+    const markStable = () => writeGuard(0);
 
     const canvas = document.createElement('canvas');
     canvas.id = 'scene';
@@ -124,6 +157,18 @@ export function useShowroom(opts: ShowroomOptionsIn) {
         fail('no-webgl');
         return;
       }
+      // Démarrages interrompus : deux de suite → mode atelier ; un → qualité basse.
+      const crashed = attempt === 0 ? readGuard() : 0;
+      if (crashed >= 2) {
+        fail('memory');
+        return;
+      }
+      const low = crashed === 1 || forcedLowRef.current || latest.current.quality === 'low';
+      if (crashed === 1) {
+        forcedLowRef.current = true;
+        setForcedLow(true);
+      }
+      writeGuard(crashed + 1);
       setStep('engine');
       setProgress(0.05);
       let engine: typeof import('@/engine');
@@ -142,7 +187,7 @@ export function useShowroom(opts: ShowroomOptionsIn) {
           canvas,
           labels,
           machines: o.machines,
-          quality: o.quality,
+          quality: low ? 'low' : o.quality,
           reducedMotion: o.reducedMotion,
           sound: o.sound,
           signage: o.signage,
@@ -180,13 +225,20 @@ export function useShowroom(opts: ShowroomOptionsIn) {
         // Parc, qualité, son et pause sont synchronisés par les effets ci-dessous dès l'état « prêt ».
         setProgress(1);
         setStatus('ready');
+        // La scène tourne : le démarrage est réussi au bout de quelques secondes (ou quand on quitte la page).
+        stableTimer = window.setTimeout(markStable, STABLE_AFTER);
+        window.addEventListener('pagehide', markStable);
       } catch {
+        writeGuard(0);
         fail('start');
       }
     })();
 
     return () => {
       cancelled = true;
+      window.clearTimeout(stableTimer);
+      window.removeEventListener('pagehide', markStable);
+      if (instance) writeGuard(0);
       if (showroom.current === instance) showroom.current = null;
       if (instance) {
         try {
@@ -199,6 +251,7 @@ export function useShowroom(opts: ShowroomOptionsIn) {
       labels.remove();
       if (elements.current?.canvas === canvas) elements.current = null;
     };
+    // `attempt` relance la construction (bouton « Réessayer la 3D ») ; une relance ignore le garde-fou.
   }, [enabled, attempt, host]);
 
   // Langue changée sans recréer la scène : description du canvas et infobulles suivent (l'enseigne garde son texte).
@@ -215,8 +268,8 @@ export function useShowroom(opts: ShowroomOptionsIn) {
     if (ready) showroom.current?.setMachines(machines);
   }, [ready, machines]);
   useEffect(() => {
-    if (ready) showroom.current?.setQuality(quality);
-  }, [ready, quality]);
+    if (ready) showroom.current?.setQuality(forcedLow && quality === 'auto' ? 'low' : quality);
+  }, [ready, quality, forcedLow]);
   useEffect(() => {
     if (ready) showroom.current?.setSound(sound);
   }, [ready, sound]);
@@ -231,6 +284,11 @@ export function useShowroom(opts: ShowroomOptionsIn) {
 
   /** Nouvelle tentative (bouton « Réessayer la 3D ») : nouveau canvas, nouveau contexte. */
   function retry() {
+    // Après un manque de mémoire, la nouvelle tentative démarre en qualité basse.
+    if (failure === 'memory' || failure === 'context-lost') {
+      forcedLowRef.current = true;
+      setForcedLow(true);
+    }
     setFailure(null);
     setStatus('loading');
     setProgress(0);

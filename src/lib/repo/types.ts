@@ -30,6 +30,8 @@ export interface NewMachine {
 }
 
 export interface NewEntry {
+  /** Identifiant choisi par l'appareil (saisie hors ligne renvoyée plus tard : pas de doublon). */
+  id?: string;
   machineId: string;
   kind: EntryKind;
   /** AAAA-MM-JJ (par défaut : aujourd'hui). */

@@ -91,7 +91,8 @@
     "contact": "Contattaci",
     "ideas": "Cassetta delle idee",
     "signOut": "Esci",
-    "newTab": "(si apre in una nuova scheda)"
+    "newTab": "(si apre in una nuova scheda)",
+    "labels": "Etichette QR"
   },
   "state": {
     "ok": "In regola",
@@ -105,6 +106,20 @@
     "points": "{count, plural, one {{n} punto da verificare} other {{n} punti da verificare}}",
     "add": "Macchina",
     "addSr": ": aggiungi una macchina al parco"
+  },
+  "groups": {
+    "code": "{prefix} ×{n}",
+    "label": "{kind} · {count, plural, one {{n} macchina} other {{n} macchine}}",
+    "menu": "Raggruppa le macchine dello stesso tipo",
+    "on": "Le macchine dello stesso tipo condividono una pedana",
+    "off": "Una macchina per pedana",
+    "chipSr": "gruppo di {count, plural, one {{n} macchina} other {{n} macchine}}",
+    "eyebrow": "Gruppo · {count, plural, one {{n} macchina} other {{n} macchine}}",
+    "alerts": "{count, plural, one {{n} punto da verificare nel gruppo} other {{n} punti da verificare nel gruppo}}",
+    "allOk": "Tutto il gruppo è in regola",
+    "list": "Macchine del gruppo {kind}",
+    "noDue": "Nessuna scadenza",
+    "back": "Tutte le {n} macchine del gruppo"
   },
   "machine": {
     "eyebrow": "{kind} · {weight} t",
@@ -168,7 +183,8 @@
     "menuEdit": "Modifica la macchina",
     "menuHours": "Registra il contaore",
     "menuPrint": "Stampa il libretto",
-    "menuArchive": "Archivia la macchina"
+    "menuArchive": "Archivia la macchina",
+    "menuLabel": "Etichetta QR"
   },
   "tabs": {
     "apercu": "Panoramica",
@@ -376,7 +392,8 @@
       "noWebgl": "Questo dispositivo o browser non visualizza la vista 3D (WebGL 2). Tutte le schede restano accessibili qui.",
       "load": "Non è stato possibile scaricare la vista 3D. Verifichi la connessione; tutte le schede restano accessibili qui.",
       "start": "La vista 3D non è riuscita ad avviarsi su questo dispositivo. Tutte le schede restano accessibili qui.",
-      "contextLost": "La vista 3D si è interrotta (memoria grafica satura). Tutte le schede restano accessibili qui."
+      "contextLost": "La vista 3D si è interrotta (memoria grafica satura). Tutte le schede restano accessibili qui.",
+      "memory": "La vista 3D ha esaurito la memoria su questo dispositivo: il garage si apre in modalità officina. Tutte le schede restano accessibili qui; «Riprova la 3D» la riavvia in qualità bassa."
     },
     "retry3d": "Riprova la 3D",
     "eyebrow": "Modalità officina",
@@ -822,5 +839,45 @@
       "dumper": "Dumper"
     },
     "label": "{name} {weight} t"
+  },
+  "labels": {
+    "title": "Etichette QR",
+    "back": "Garage",
+    "print": "Stampa",
+    "intro": "Incollate un’etichetta su ogni macchina: scansionando il codice con il telefono si apre direttamente la sua scheda.",
+    "settings": "Impostazioni",
+    "format": "Formato",
+    "large": "Grandi · 8 per pagina",
+    "largeSub": "99 × 68 mm, foglio Avery L7165 o carta normale",
+    "small": "Piccole · 21 per pagina",
+    "smallSub": "64 × 38 mm, foglio Avery L7160",
+    "outline": "Linee di taglio",
+    "outlineSub": "Per carta normale; da togliere su un foglio adesivo.",
+    "copies": "Copie per macchina",
+    "start": "Prima etichetta del foglio",
+    "startSub": "Per riutilizzare un foglio già iniziato.",
+    "machines": "Macchine",
+    "selected": "{n} su {total} scelte",
+    "all": "Tutte",
+    "none": "Nessuna",
+    "summary": "{labels, plural, one {# etichetta} other {# etichette}} su {pages, plural, one {# pagina} other {# pagine}}",
+    "tip": "Nella finestra di stampa: A4, dimensioni reali (100 %), senza margini né intestazioni. Anche «Salva come PDF» funziona.",
+    "empty": "Scegliete almeno una macchina.",
+    "noMachines": "Ancora nessuna macchina nel garage.",
+    "scan": "Scansionate per aprire il libretto",
+    "preview": "Anteprima, pagina {n} di {total}",
+    "pages": "Anteprima delle pagine"
+  },
+  "offline": {
+    "offline": "Offline",
+    "pending": "{count, plural, one {# registrazione in attesa} other {# registrazioni in attesa}}",
+    "syncing": "Invio delle registrazioni…",
+    "sendNow": "Invia",
+    "title": "Senza rete, il garage mostra l’ultima copia del parco. Le registrazioni del libretto e le letture delle ore restano sul dispositivo e partono quando torna la rete.",
+    "wentOffline": "Nessuna rete: registrazioni e letture delle ore restano sul dispositivo e partiranno quando torna la rete.",
+    "backOnline": "Rete di nuovo disponibile.",
+    "synced": "{count, plural, one {# registrazione inviata.} other {# registrazioni inviate.}}",
+    "refused": "{count, plural, one {# registrazione rifiutata dal server (macchina archiviata o contaore superato nel frattempo).} other {# registrazioni rifiutate dal server (macchina archiviata o contaore superato nel frattempo).}}",
+    "signOutPending": "{count, plural, one {Una registrazione non è ancora stata inviata e andrebbe persa uscendo ora.} other {# registrazioni non sono ancora state inviate e andrebbero perse uscendo ora.}} Uscire comunque?"
   }
 }

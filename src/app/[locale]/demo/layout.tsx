@@ -12,7 +12,7 @@ export default async function DemoLayout({ children, params }: { children: React
   setRequestLocale(locale);
   const messages = (await getMessages()) as unknown as AppMessages;
   return (
-    <NextIntlClientProvider locale={locale} messages={garageClientMessages(messages, ['common', 'domain', 'garage', 'demo'])}>
+    <NextIntlClientProvider locale={locale} messages={garageClientMessages(messages, ['common', 'domain', 'garage', 'demo', 'excel'])}>
       {children}
     </NextIntlClientProvider>
   );

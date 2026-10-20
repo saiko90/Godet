@@ -17,7 +17,7 @@ import type { EngineFailure } from './useShowroom';
 type Filter = 'tous' | DueState;
 
 /** Message affiché quand la 3D ne peut pas s'afficher (garage.atelier.failure.*). */
-const FAILURE_KEY = { 'no-webgl': 'noWebgl', load: 'load', start: 'start', 'context-lost': 'contextLost' } as const satisfies Record<
+const FAILURE_KEY = { 'no-webgl': 'noWebgl', load: 'load', start: 'start', 'context-lost': 'contextLost', memory: 'memory' } as const satisfies Record<
   EngineFailure,
   string
 >;

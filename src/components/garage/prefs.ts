@@ -11,15 +11,18 @@ export interface GaragePrefs {
   quality: QualityPref;
   /** Le garage a déjà été allumé une fois sur cet appareil (/garage). */
   lit: boolean;
+  /** Machines du même type regroupées sur un seul plateau du showroom. */
+  groups: boolean;
 }
 
 const KEYS: Record<keyof GaragePrefs, string> = {
   sound: 'godet-son',
   quality: 'godet-qualite',
   lit: 'godet-garage-allume',
+  groups: 'godet-groupes',
 };
 
-const DEFAULTS: GaragePrefs = { sound: true, quality: 'auto', lit: false };
+const DEFAULTS: GaragePrefs = { sound: true, quality: 'auto', lit: false, groups: true };
 const QUALITIES: readonly QualityPref[] = ['auto', 'high', 'medium', 'low'];
 
 let cache: GaragePrefs | null = null;
@@ -44,10 +47,12 @@ function write(key: string, value: string) {
 function load(): GaragePrefs {
   const sound = read(KEYS.sound);
   const quality = read(KEYS.quality);
+  const groups = read(KEYS.groups);
   return {
     sound: sound === null ? DEFAULTS.sound : sound !== 'false',
     quality: QUALITIES.includes(quality as QualityPref) ? (quality as QualityPref) : DEFAULTS.quality,
     lit: read(KEYS.lit) === '1',
+    groups: groups === null ? DEFAULTS.groups : groups !== '0',
   };
 }
 
@@ -58,7 +63,7 @@ export function getPrefs(): GaragePrefs {
 
 export function setPref<K extends keyof GaragePrefs>(key: K, value: GaragePrefs[K]) {
   cache = { ...getPrefs(), [key]: value };
-  write(KEYS[key], key === 'lit' ? (value ? '1' : '0') : String(value));
+  write(KEYS[key], key === 'lit' || key === 'groups' ? (value ? '1' : '0') : String(value));
   listeners.forEach((l) => l());
 }
 

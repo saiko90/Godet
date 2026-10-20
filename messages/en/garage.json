@@ -91,7 +91,8 @@
     "contact": "Contact us",
     "ideas": "Suggestion box",
     "signOut": "Sign out",
-    "newTab": "(opens in a new tab)"
+    "newTab": "(opens in a new tab)",
+    "labels": "QR labels"
   },
   "state": {
     "ok": "Up to date",
@@ -105,6 +106,20 @@
     "points": "{count, plural, one {{n} point to check} other {{n} points to check}}",
     "add": "Machine",
     "addSr": ": add a machine to the fleet"
+  },
+  "groups": {
+    "code": "{prefix} ×{n}",
+    "label": "{kind} · {count, plural, one {{n} machine} other {{n} machines}}",
+    "menu": "Group machines of the same type",
+    "on": "Machines of the same type now share a platform",
+    "off": "One machine per platform",
+    "chipSr": "group of {count, plural, one {{n} machine} other {{n} machines}}",
+    "eyebrow": "Group · {count, plural, one {{n} machine} other {{n} machines}}",
+    "alerts": "{count, plural, one {{n} point to check in the group} other {{n} points to check in the group}}",
+    "allOk": "The whole group is up to date",
+    "list": "Machines in the {kind} group",
+    "noDue": "No due dates",
+    "back": "All {n} machines in the group"
   },
   "machine": {
     "eyebrow": "{kind} · {weight} t",
@@ -168,7 +183,8 @@
     "menuEdit": "Edit machine",
     "menuHours": "Log hours",
     "menuPrint": "Print the log",
-    "menuArchive": "Archive machine"
+    "menuArchive": "Archive machine",
+    "menuLabel": "QR label"
   },
   "tabs": {
     "apercu": "Overview",
@@ -376,7 +392,8 @@
       "noWebgl": "This device or browser cannot display 3D (WebGL 2). All machines remain available here.",
       "load": "The 3D view could not be downloaded. Check your connection; all machines remain available here.",
       "start": "The 3D view could not start on this device. All machines remain available here.",
-      "contextLost": "The 3D view has stopped (graphics memory full). All machines remain available here."
+      "contextLost": "The 3D view has stopped (graphics memory full). All machines remain available here.",
+      "memory": "The 3D view ran out of memory on this device, so the garage opens in workshop mode. Every record is still here; “Retry the 3D view” restarts it in low quality."
     },
     "retry3d": "Retry the 3D view",
     "eyebrow": "Workshop mode",
@@ -822,5 +839,45 @@
       "dumper": "Dumper"
     },
     "label": "{name} {weight} t"
+  },
+  "labels": {
+    "title": "QR labels",
+    "back": "Garage",
+    "print": "Print",
+    "intro": "Stick a label on each machine: scanning the code with a phone opens its record straight away.",
+    "settings": "Settings",
+    "format": "Format",
+    "large": "Large · 8 per page",
+    "largeSub": "99 × 68 mm, Avery L7165 sheet or plain paper",
+    "small": "Small · 21 per page",
+    "smallSub": "64 × 38 mm, Avery L7160 sheet",
+    "outline": "Cutting lines",
+    "outlineSub": "For plain paper; untick on an adhesive label sheet.",
+    "copies": "Copies per machine",
+    "start": "First label on the sheet",
+    "startSub": "To reuse a sheet that has already been started.",
+    "machines": "Machines",
+    "selected": "{n} of {total} selected",
+    "all": "All",
+    "none": "None",
+    "summary": "{labels, plural, one {# label} other {# labels}} on {pages, plural, one {# page} other {# pages}}",
+    "tip": "In the print window: A4, actual size (100%), no margins or headers. “Save as PDF” works too.",
+    "empty": "Choose at least one machine.",
+    "noMachines": "No machines in the garage yet.",
+    "scan": "Scan to open the logbook",
+    "preview": "Preview, page {n} of {total}",
+    "pages": "Page preview"
+  },
+  "offline": {
+    "offline": "Offline",
+    "pending": "{count, plural, one {# entry waiting} other {# entries waiting}}",
+    "syncing": "Sending entries…",
+    "sendNow": "Send",
+    "title": "Without a connection, the garage shows the last copy of the fleet. Logbook entries and hour readings stay on the device and are sent when the connection returns.",
+    "wentOffline": "No connection: your entries and readings stay on the device and will be sent when the connection returns.",
+    "backOnline": "Connection restored.",
+    "synced": "{count, plural, one {# entry sent.} other {# entries sent.}}",
+    "refused": "{count, plural, one {# entry refused by the server (machine archived or hour meter overtaken in the meantime).} other {# entries refused by the server (machine archived or hour meter overtaken in the meantime).}}",
+    "signOutPending": "{count, plural, one {One entry has not been sent yet} other {# entries have not been sent yet}} and would be lost if you sign out now. Sign out anyway?"
   }
 }

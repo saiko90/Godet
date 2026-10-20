@@ -3,8 +3,8 @@
 // Le garage : showroom 3D, barre du haut, dock, fiche machine, modales, mode atelier.
 // Mêmes composants pour /garage (dépôt Supabase) et /demo (dépôt en mémoire) : seul `makeRepo` change.
 import './garage.css';
-import { useTranslations } from 'next-intl';
-import { useEffect, useEffectEvent, useMemo, useRef, useState } from 'react';
+import { useMessages, useTranslations } from 'next-intl';
+import { useEffect, useEffectEvent, useMemo, useRef, useState, type ReactNode } from 'react';
 import { Icon } from '@/components/Icons';
 import { Loader } from '@/components/Loader';
 import { Link } from '@/i18n/navigation';
@@ -20,8 +20,10 @@ import { GarageContext, type GarageApi, type ModalSpec, type UploadOutcome, type
 import { Dock } from './Dock';
 import { EntryModal } from './EntryModal';
 import { useErrorText } from './errors';
+import { fleetViews, groupColor, groupWeight, isGroupId, type FleetView } from './groups';
 import { canDeleteMedia, type SheetTab } from './helpers';
 import { Lightbox } from './Lightbox';
+import { ExcelModal } from './ExcelModal';
 import { ArchiveModal, DeleteScheduleModal, HoursModal, MachineModal, RemoveEntryModal, ScheduleModal } from './Modals';
 import { setPref, useMedia, usePageHidden, usePrefs, type QualityPref } from './prefs';
 import { Sheet } from './Sheet';
@@ -42,6 +44,12 @@ export interface GarageAppProps {
   initialMachineId: string | null;
   person?: { name: string | null; email: string | null } | null;
   onSignOut?: () => void;
+  /** Change quand les données ont changé ailleurs (saisies hors ligne envoyées) : le garage les relit. */
+  syncTick?: number;
+  /** Message à afficher (garage hors ligne) ; un nouvel id l'affiche. */
+  notice?: { id: number; text: string; tone?: 'ok' | 'error' } | null;
+  /** Élément ajouté sous la barre du haut (état du réseau). */
+  status?: ReactNode;
 }
 
 const QUALITY_ORDER: QualityPref[] = ['auto', 'high', 'medium', 'low'];
@@ -53,7 +61,7 @@ function takenAt(file: File): string | undefined {
   return t && t < Date.now() + 60_000 ? new Date(t).toISOString() : undefined;
 }
 
-export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachineId, person, onSignOut }: GarageAppProps) {
+export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachineId, person, onSignOut, syncTick = 0, notice, status }: GarageAppProps) {
   const t = useTranslations('garage');
   const tc = useTranslations('common');
   const dt = useDomainText();
@@ -85,6 +93,9 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
   const [toast, setToast] = useState<{ id: number; message: string; tone: 'ok' | 'error' } | null>(null);
   const [uploads, setUploads] = useState<UploadProgress | null>(null);
   const [flash, setFlashState] = useState<string | null>(null);
+  /** Groupe du showroom dont la liste est ouverte (« grp:pelle »), ou null. */
+  const [groupShown, setGroupShown] = useState<string | null>(null);
+  const codePrefix = useMessages().garage.codePrefix;
 
   const prefs = usePrefs();
   const reducedMotion = useMedia('(prefers-reduced-motion: reduce)');
@@ -101,6 +112,8 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
   const introFor = useRef<Showroom | null>(null);
   const hiddenAt = useRef<number | null>(null);
   const lastInsets = useRef('');
+  /** Dernier plateau réveillé à l'arrivée de la caméra (un réveil par visite). */
+  const wokeFor = useRef<string | null>(null);
 
   // ------------------------------------------------------------------ données dérivées
 
@@ -111,22 +124,40 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
     return map;
   }, [fleet, today]);
 
+  // Plateaux du showroom : une machine, ou toutes celles d'un même type (réglage de l'appareil).
+  const views = useMemo(() => fleetViews(fleet?.machines ?? [], health, prefs.groups), [fleet, health, prefs.groups]);
+
+  const labelOf = useMemo(
+    () =>
+      (v: FleetView): { code: string; title: string } => {
+        if (!v.group) return { code: v.machines[0].code, title: dt.machineTitle(v.machines[0]) };
+        const n = v.machines.length;
+        return {
+          code: t('groups.code', { prefix: codePrefix[v.kind], n }),
+          title: t('groups.label', { kind: dt.kindShort(v.kind), count: n, n: String(n) }),
+        };
+      },
+    [dt, t, codePrefix],
+  );
+
   const showroomMachines = useMemo<ShowroomMachine[]>(
     () =>
-      (fleet?.machines ?? []).map((m) => {
-        const h = health.get(m.id);
+      views.list.map((v) => {
+        const { code, title } = labelOf(v);
+        const m = v.machines[0];
+        const weight = v.group ? groupWeight(v.machines) : m.weight_t != null ? Number(m.weight_t) : null;
         return {
-          id: m.id,
-          code: m.code,
-          kind: m.kind,
-          color: m.color,
-          label: dt.machineTitle(m),
-          state: h?.state ?? 'ok',
-          alerts: h?.alerts ?? 0,
-          weightT: m.weight_t != null ? Number(m.weight_t) : null,
+          id: v.id,
+          code,
+          kind: v.kind,
+          color: v.group ? groupColor(v.machines) : m.color,
+          label: title,
+          state: v.state,
+          alerts: v.alerts,
+          weightT: weight,
         };
       }),
-    [fleet, health, dt],
+    [views, labelOf],
   );
 
   const engineTexts = useMemo<ShowroomTexts>(
@@ -145,6 +176,12 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
   const machines = fleet?.machines ?? [];
   const shownMachine = machines.find((m) => m.id === shownId) ?? null;
   const sheetVisible = sheetOpen && Boolean(shownMachine);
+  const shownGroup = groupShown ? (views.byId.get(groupShown) ?? null) : null;
+  const groupVisible = !sheetVisible && Boolean(shownGroup?.group);
+  const panelVisible = sheetVisible || groupVisible;
+  /** Plateau qui porte une machine (elle-même, ou son groupe). */
+  const viewOf = (id: string | null): string | null => (id ? (views.viewOf.get(id) ?? id) : null);
+  const backGroup = sheetVisible ? (views.byId.get(viewOf(shownId) ?? '') ?? null) : null;
 
   // ------------------------------------------------------------------ notifications
 
@@ -187,16 +224,33 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
         if (modal || lightbox) return;
         if (id) {
           if (!entered) void enter();
-          openSheet(id);
+          if (isGroupId(id)) openGroup(id);
+          else openSheet(id);
         } else if (sheetOpen) closeSheet();
+        else if (groupShown) closeGroup();
       },
       onFocus: (id) => {
-        if (id === lastFocus.current) return;
+        if (id === lastFocus.current) {
+          // La caméra est arrivée devant la machine (ou le groupe) choisie : elle se réveille, une fois par visite.
+          if (id && wokeFor.current !== id && !reducedMotion) {
+            wokeFor.current = id;
+            try {
+              engine.showroom.current?.animate(id, 'wake');
+            } catch {
+              // Mise en scène facultative.
+            }
+          }
+          return;
+        }
         // Le moteur s'est déplacé de lui-même : l'interface suit.
         lastFocus.current = id;
         setFocusedId(id);
-        if (id && sheetOpen && id !== shownId) openSheet(id);
+        const open = sheetVisible || groupVisible;
+        if (id && isGroupId(id)) {
+          if (open && !(sheetVisible && viewOf(shownId) === id) && groupShown !== id) openGroup(id);
+        } else if (id && open && id !== shownId) openSheet(id);
         else if (!id && sheetOpen) closeSheet({ silent: true });
+        else if (!id && groupShown) closeGroup({ silent: true });
       },
       onHover: () => {},
       onQualityChange: () => {
@@ -228,7 +282,7 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
   function animate(machineId: string, action: 'wake' | 'service' | 'repair') {
     if (engine.status !== 'ready' || atelierShown) return;
     try {
-      engine.showroom.current?.animate(machineId, action);
+      engine.showroom.current?.animate(viewOf(machineId) ?? machineId, action);
     } catch {
       // Mise en scène facultative.
     }
@@ -296,7 +350,7 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
       const dock = showDock ? (document.querySelector<HTMLElement>('.g-dock')?.offsetHeight ?? 0) : 0;
       const el = sheetRef.current;
       const next =
-        sheetVisible && el
+        panelVisible && el
           ? mobile
             ? { top, right: 0, bottom: el.offsetHeight }
             : { top, right: el.offsetWidth + 32, bottom: dock }
@@ -318,21 +372,23 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
       ro.disconnect();
       window.removeEventListener('resize', compute);
     };
-  }, [engineReady, sheetVisible, tall, showDock, engine.showroom]);
+  }, [engineReady, panelVisible, tall, showDock, engine.showroom]);
 
-  // La caméra suit la fiche ouverte (et revient à la vue d'ensemble à la fermeture).
+  // La caméra suit la fiche ouverte (ou le groupe dont la liste est ouverte), et revient à la vue d'ensemble à la
+  // fermeture. Une machine d'un groupe : la caméra reste devant le groupe.
+  const cameraTarget = sheetVisible ? viewOf(shownId) : groupVisible ? groupShown : null;
   useEffect(() => {
     const sr = engine.showroom.current;
     if (!engineReady || !sr || atelierShown || !entered) return;
-    const target = sheetVisible ? shownId : null;
-    if (lastFocus.current === target) return;
-    lastFocus.current = target;
+    if (lastFocus.current === cameraTarget) return;
+    lastFocus.current = cameraTarget;
+    wokeFor.current = null;
     try {
-      sr.focus(target);
+      sr.focus(cameraTarget);
     } catch {
       // Moteur arrêté entre-temps.
     }
-  }, [engineReady, atelierShown, entered, sheetVisible, shownId, engine.showroom]);
+  }, [engineReady, atelierShown, entered, cameraTarget, engine.showroom]);
 
   // ------------------------------------------------------------------ chargement des données
 
@@ -377,6 +433,16 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
     else showToast(errorText(fl.reason, 'refresh'), 'error');
   }
 
+  // Données changées hors du garage (file hors ligne envoyée, retour du réseau) : relecture.
+  const onSyncTick = useEffectEvent(() => void refresh(sheetVisible ? shownId : null));
+  useEffect(() => {
+    if (syncTick) onSyncTick();
+  }, [syncTick]);
+  const onNotice = useEffectEvent((n: { text: string; tone?: 'ok' | 'error' }) => showToast(n.text, n.tone));
+  useEffect(() => {
+    if (notice) onNotice(notice);
+  }, [notice]);
+
   // Retour sur l'onglet après une longue absence : liens des photos et données rafraîchis.
   const onVisible = useEffectEvent(() => {
     const since = hiddenAt.current;
@@ -404,8 +470,9 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
   /** Ouvre la fiche d'une machine. L'identifiant peut venir d'être créé : il n'est pas vérifié ici
    *  (le parc affiché peut dater du rendu précédent) ; une machine absente laisse simplement la fiche fermée. */
   function openSheet(id: string, nextTab?: SheetTab) {
-    const wasOpen = sheetVisible;
+    const wasOpen = sheetVisible || groupVisible;
     const changed = id !== shownId;
+    setGroupShown(null);
     setShownId(id);
     setSheetOpen(true);
     setSelectedOnce(true);
@@ -431,19 +498,53 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
       window.setTimeout(() => {
         const sel = CSS.escape(id);
         const target =
-          document.querySelector<HTMLElement>(`.g-dock [data-machine="${sel}"]`) ??
+          document.querySelector<HTMLElement>(`.g-dock [data-machine="${CSS.escape(viewOf(id) ?? id)}"]`) ??
           document.querySelector<HTMLElement>(`.g-atelier [data-fiche="${sel}"]`);
         target?.focus({ preventScroll: true });
       }, 0);
     }
   }
 
+  /** Ouvre la liste d'un groupe du showroom (toutes les machines d'un même type). */
+  function openGroup(id: string) {
+    const wasOpen = sheetVisible || groupVisible;
+    setSheetOpen(false);
+    setGroupShown(id);
+    setSelectedOnce(true);
+    setFocusedId(id);
+    if (!wasOpen || groupShown !== id) effect('open');
+    syncUrl(null);
+    if (!wasOpen) window.setTimeout(() => titleRef.current?.focus({ preventScroll: true }), 0);
+  }
+
+  function closeGroup(opts?: { silent?: boolean }) {
+    const id = groupShown;
+    const hadFocus = Boolean(sheetRef.current && document.activeElement && sheetRef.current.contains(document.activeElement));
+    setGroupShown(null);
+    setTall(false);
+    if (!opts?.silent) effect('close');
+    if (id && hadFocus) {
+      window.setTimeout(() => document.querySelector<HTMLElement>(`.g-dock [data-machine="${CSS.escape(id)}"]`)?.focus({ preventScroll: true }), 0);
+    }
+  }
+
+  /** Plateau suivant / précédent ; dans une fiche, machine suivante / précédente (même au sein d'un groupe). */
   function step(dir: 1 | -1) {
-    if (!machines.length) return;
-    const cur = sheetVisible ? shownId : focusedId;
-    const i = machines.findIndex((m) => m.id === cur);
-    const j = i < 0 ? (dir > 0 ? 0 : machines.length - 1) : (i + dir + machines.length) % machines.length;
-    openSheet(machines[j].id, sheetVisible ? tab : undefined);
+    if (sheetVisible) {
+      if (!machines.length) return;
+      const i = machines.findIndex((m) => m.id === shownId);
+      const j = i < 0 ? (dir > 0 ? 0 : machines.length - 1) : (i + dir + machines.length) % machines.length;
+      openSheet(machines[j].id, tab);
+      return;
+    }
+    const list = views.list;
+    if (!list.length) return;
+    const cur = groupVisible ? groupShown : viewOf(focusedId);
+    const i = list.findIndex((v) => v.id === cur);
+    const j = i < 0 ? (dir > 0 ? 0 : list.length - 1) : (i + dir + list.length) % list.length;
+    const v = list[j];
+    if (v.group) openGroup(v.id);
+    else openSheet(v.id);
   }
 
   // Lien profond : la machine s'ouvre une fois le garage allumé (ou tout de suite en mode atelier).
@@ -518,13 +619,14 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
       if (lightbox) setLightbox(null);
       else if (modal) setModal(null);
       else if (sheetVisible) closeSheet();
+      else if (groupVisible) closeGroup();
       else return;
       e.preventDefault();
       return;
     }
     if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
     if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
-    if (modal || lightbox || !fleet || showWelcome || (atelierShown && !sheetVisible)) return;
+    if (modal || lightbox || !fleet || showWelcome || (atelierShown && !panelVisible)) return;
     const t = e.target instanceof HTMLElement ? e.target : null;
     if (t?.closest('input, textarea, select, video, audio, [contenteditable="true"], [data-own-arrows]')) return;
     e.preventDefault();
@@ -640,6 +742,8 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
         );
       case 'delete-schedule':
         return <DeleteScheduleModal machineId={m.machineId} scheduleId={m.scheduleId} onClose={close} />;
+      case 'excel':
+        return <ExcelModal onClose={close} />;
     }
   }
 
@@ -648,7 +752,7 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
     'g-root',
     mode === 'demo' ? 'is-demo' : '',
     atelierShown ? 'is-atelier' : '',
-    sheetVisible ? 'has-sheet' : '',
+    panelVisible ? 'has-sheet' : '',
   ]
     .filter(Boolean)
     .join(' ');
@@ -691,8 +795,16 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
           show3dControls={!engineFailed}
           atelier={atelierShown}
           onAtelier={toggleAtelier}
+          groups={prefs.groups}
+          onGroups={() => {
+            const next = !prefs.groups;
+            setPref('groups', next);
+            showToast(next ? t('groups.on') : t('groups.off'));
+          }}
+          onExcel={fleet ? () => setModal({ type: 'excel' }) : undefined}
           onSignOut={() => onSignOut?.()}
         />
+        {status}
 
         {api ? (
           <GarageContext.Provider value={api}>
@@ -700,7 +812,7 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
               <Welcome mode={mode} orgName={displayName} machines={machines.length} leaving={clicked} onEnter={() => void enter()} />
             ) : null}
 
-            {showDock && !sheetVisible && !selectedOnce ? (
+            {showDock && !panelVisible && !selectedOnce ? (
               <p className="hint g-hint-float">{coarse ? t('app.hintTouch') : t('app.hintClick')}</p>
             ) : null}
 
@@ -720,13 +832,16 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
 
             {showDock ? (
               <Dock
-                machines={machines}
-                health={health}
-                current={sheetVisible ? shownId : focusedId}
+                views={views.list}
+                labelOf={labelOf}
+                current={sheetVisible ? viewOf(shownId) : groupVisible ? groupShown : viewOf(focusedId)}
                 canAdd={can.manageFleet(role)}
                 reducedMotion={reducedMotion}
                 onOpen={(id) => {
-                  if (sheetVisible && id === shownId) closeSheet();
+                  if (isGroupId(id)) {
+                    if (groupVisible && id === groupShown) closeGroup();
+                    else openGroup(id);
+                  } else if (sheetVisible && id === shownId) closeSheet();
                   else openSheet(id);
                 }}
                 onPrev={() => step(-1)}
@@ -754,14 +869,21 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
             ) : null}
 
             <Sheet
-              machine={shownMachine}
-              open={sheetVisible}
+              machine={groupVisible ? null : shownMachine}
+              group={groupVisible ? shownGroup : null}
+              backGroup={backGroup?.group ? backGroup : null}
+              onOpenMachine={(id) => openSheet(id)}
+              onBackToGroup={() => {
+                const v = viewOf(shownId);
+                if (v && isGroupId(v)) openGroup(v);
+              }}
+              open={panelVisible}
               tall={tall}
               tab={tab}
               several={machines.length > 1}
               sheetRef={sheetRef}
               titleRef={titleRef}
-              onClose={() => closeSheet()}
+              onClose={() => (groupVisible ? closeGroup() : closeSheet())}
               onTall={setTall}
               onPrev={() => step(-1)}
               onNext={() => step(1)}

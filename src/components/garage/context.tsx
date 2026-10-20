@@ -16,7 +16,8 @@ export type ModalSpec =
   | { type: 'schedule'; machineId: string; scheduleId?: string }
   | { type: 'remove-entry'; machineId: string; entryId: string }
   | { type: 'archive'; machineId: string }
-  | { type: 'delete-schedule'; machineId: string; scheduleId: string };
+  | { type: 'delete-schedule'; machineId: string; scheduleId: string }
+  | { type: 'excel' };
 
 export interface UploadProgress {
   machineId: string;

@@ -36,7 +36,11 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   async headers() {
-    return [{ source: '/:path*', headers: SECURITE }];
+    return [
+      { source: '/:path*', headers: SECURITE },
+      // Service worker du garage hors ligne : toujours relu, pour qu'une nouvelle version s'installe vite.
+      { source: '/sw.js', headers: [{ key: 'Cache-Control', value: 'no-cache, no-store, must-revalidate' }] },
+    ];
   },
 };
 

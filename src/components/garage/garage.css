@@ -248,6 +248,29 @@
   opacity: 0.45;
   cursor: not-allowed;
 }
+.g-menu-check > span {
+  flex: 1;
+  white-space: normal;
+  line-height: 1.3;
+}
+.g-menu-box {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  flex: none;
+  border-radius: 6px;
+  border: 1.5px solid var(--line-strong);
+}
+.g-menu-check[aria-checked='true'] .g-menu-box {
+  background: var(--paint);
+  border-color: var(--paint);
+}
+.g-menu-check[aria-checked='true'] .g-menu-box svg {
+  width: 14px;
+  height: 14px;
+  color: var(--night);
+}
 
 /* ---------- accueil, indice, garage vide ---------- */
 .g-welcome {
@@ -339,6 +362,103 @@
 }
 .g-sheet .sheet-title .sub {
   overflow-wrap: anywhere;
+}
+
+/* ---------- groupes : puce du dock, liste du groupe, retour depuis une fiche ---------- */
+.g-dock .chip.is-group b {
+  color: var(--paint);
+}
+.g-back-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 36px;
+  margin-top: 6px;
+  padding: 0 10px 0 4px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: none;
+  color: var(--chalk);
+  font-size: var(--t-sm);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.g-back-group svg {
+  width: 16px;
+  height: 16px;
+  color: var(--paint);
+}
+.g-back-group:hover {
+  background: rgba(236, 232, 222, 0.06);
+}
+.g-group-list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.g-group-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas: 'dot main arrow' 'dot due arrow';
+  align-items: center;
+  column-gap: 12px;
+  row-gap: 4px;
+  width: 100%;
+  min-height: 64px;
+  padding: 12px 12px 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(236, 232, 222, 0.03);
+  color: var(--chalk);
+  text-align: left;
+}
+.g-group-row:hover,
+.g-group-row:focus-visible {
+  background: rgba(236, 232, 222, 0.07);
+  border-color: var(--line-strong);
+}
+.g-group-row > .dot {
+  grid-area: dot;
+}
+.g-group-main {
+  grid-area: main;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  min-width: 0;
+}
+.g-group-main b {
+  font-family: var(--f-display);
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  font-size: 0.95rem;
+  flex: none;
+}
+.g-group-main span {
+  color: var(--steel);
+  font-size: var(--t-sm);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.g-group-due {
+  grid-area: due;
+  font-size: var(--t-sm);
+  color: var(--steel);
+}
+.g-group-due.warn {
+  color: var(--warn);
+}
+.g-group-due.bad {
+  color: var(--bad);
+}
+.g-group-row > svg {
+  grid-area: arrow;
+  width: 18px;
+  height: 18px;
+  color: var(--steel);
 }
 .g-head-actions {
   display: flex;
@@ -1660,3 +1780,33 @@
   -webkit-mask-image: linear-gradient(to bottom, transparent 0, transparent 92px, #000 136px);
   mask-image: linear-gradient(to bottom, transparent 0, transparent 92px, #000 136px);
 }
+
+/* ---------- import / export Excel ---------- */
+.g-excel { width: min(560px, 100%); }
+.g-excel-part { display: grid; gap: 8px; padding-top: 14px; border-top: 1px solid var(--line); }
+.g-excel-part h3 { margin: 0; font-size: var(--t-md); }
+.g-excel-part p { margin: 0; }
+.g-excel-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.g-excel-status:empty { display: none; }
+.g-excel-status p { display: flex; align-items: center; gap: 8px; }
+.g-excel-plan { display: grid; gap: 8px; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); }
+.g-excel-plan ul { margin: 0; padding-left: 18px; display: grid; gap: 2px; }
+.g-excel-problems ul { font-size: var(--t-sm); color: var(--steel); overflow-wrap: anywhere; }
+
+/* ---------- hors ligne : état du réseau et saisies en attente ---------- */
+.g-offline {
+  position: fixed; z-index: 45; left: 50%; transform: translateX(-50%);
+  top: calc(env(safe-area-inset-top, 0px) + 72px);
+  display: flex; align-items: center; gap: 10px; max-width: calc(100% - 32px);
+  padding: 6px 8px 6px 14px; min-height: 40px; border-radius: 999px;
+  background: color-mix(in srgb, var(--night) 88%, transparent); border: 1px solid var(--line);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  font-size: var(--t-sm); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
+}
+.g-offline.is-off { border-color: color-mix(in srgb, var(--warn) 60%, var(--line)); }
+.g-offline > svg { width: 18px; height: 18px; flex: none; color: var(--warn); }
+.g-offline:not(.is-off) > svg { color: var(--paint); }
+.g-offline span { display: flex; gap: 8px; flex-wrap: wrap; }
+.g-offline b { color: var(--warn); }
+.g-offline .btn { min-height: 30px; padding-inline: 12px; }
+.g-offline:not(:has(.btn)) { padding-right: 14px; }

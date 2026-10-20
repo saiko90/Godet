@@ -809,3 +809,73 @@
 /* Lien de la page affichée (en-tête et pied de page). */
 .s-nav-link[aria-current='page'] { background: var(--s-surface-strong); }
 .s-footer li a[aria-current='page'] { color: var(--paint); }
+
+/* ---------- étiquettes QR (planches A4 au millimètre : Avery L7165 et L7160) ---------- */
+.s-labels-page { background: var(--night); }
+.s-labels { display: grid; grid-template-columns: minmax(0, 330px) minmax(0, 1fr); gap: 24px; align-items: start; padding-block: 18px 72px; }
+.s-labels-side { display: grid; gap: 14px; position: sticky; top: calc(var(--s-head-h) + 20px); max-height: calc(100dvh - var(--s-head-h) - 40px); overflow: auto; padding-right: 4px; }
+.s-labels-intro { margin: 0; color: var(--chalk); line-height: 1.5; }
+.s-labels-box { margin: 0; padding: 12px 14px 14px; border: 1px solid var(--line); border-radius: 14px; display: grid; gap: 10px; min-width: 0; }
+.s-labels-box legend { padding: 0 6px; font-size: var(--t-xs); letter-spacing: .14em; text-transform: uppercase; color: var(--steel); font-weight: 650; }
+.s-labels-choice { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; min-height: 44px; }
+.s-labels-choice input { margin-top: 3px; width: 18px; height: 18px; accent-color: var(--paint); flex: none; }
+.s-labels-choice span { display: grid; gap: 2px; }
+.s-labels-choice small { color: var(--steel); font-size: var(--t-xs); }
+.s-labels-nums { display: grid; gap: 10px; }
+.s-labels-nums input { max-width: 120px; }
+.s-labels-nums .field small { font-size: var(--t-xs); }
+.s-labels-pick { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.s-labels-pick .muted { flex: 1 1 auto; font-size: var(--t-sm); }
+.s-labels-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: 320px; overflow: auto; }
+.s-labels-list label { display: grid; grid-template-columns: auto auto minmax(0, 1fr); gap: 10px; align-items: center; min-height: 40px; padding: 2px 6px; border-radius: 8px; cursor: pointer; }
+.s-labels-list label:hover { background: var(--s-surface-strong, rgba(255,255,255,.05)); }
+.s-labels-list input { width: 18px; height: 18px; accent-color: var(--paint); }
+.s-labels-list span { color: var(--steel); font-size: var(--t-sm); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.s-labels-summary { margin: 0; font-weight: 650; }
+.s-labels-tip { margin: 0; font-size: var(--t-xs); line-height: 1.5; }
+.s-labels-pages { min-width: 0; }
+.s-labels-pages > div { width: 210mm; }
+@media (max-width: 900px) {
+  .s-labels { grid-template-columns: minmax(0, 1fr); }
+  .s-labels-side { position: static; max-height: none; overflow: visible; }
+}
+
+.s-label-sheet {
+  box-sizing: border-box; width: 210mm; height: 296.8mm; overflow: hidden; display: grid; align-content: start;
+  background: #fff; color: #0b0d10; margin: 0 0 18px; box-shadow: 0 30px 100px rgba(0, 0, 0, 0.6);
+  font-family: var(--f-body, sans-serif); -webkit-print-color-adjust: exact; print-color-adjust: exact;
+}
+.s-label-sheet.is-large { padding: 13.1mm 4.65mm 0; grid-template-columns: repeat(2, 99.1mm); grid-auto-rows: 67.7mm; column-gap: 2.5mm; }
+.s-label-sheet.is-small { padding: 15.15mm 7.2mm 0; grid-template-columns: repeat(3, 63.5mm); grid-auto-rows: 38.1mm; column-gap: 2.5mm; }
+.s-label { box-sizing: border-box; display: grid; align-items: center; min-width: 0; overflow: hidden; border-radius: 3mm; }
+.s-label-sheet.has-outline .s-label:not(.is-skip) { outline: .25mm dashed #a3a7ad; outline-offset: -.15mm; }
+.s-label-qr { display: block; width: 100%; height: auto; }
+.s-label-text { display: grid; gap: .9mm; min-width: 0; align-content: center; }
+.s-label-text > * { overflow-wrap: anywhere; }
+.s-label-code { font-family: var(--f-display); font-weight: 400; letter-spacing: .08em; line-height: 1.1; }
+.s-label-title { font-weight: 650; line-height: 1.2; }
+.s-label-make { color: #4a4f57; line-height: 1.2; }
+.s-label-org { font-weight: 700; line-height: 1.2; margin-top: .8mm; }
+.s-label-scan { display: flex; align-items: center; gap: 1.4mm; color: #4a4f57; line-height: 1.2; margin-top: 1mm; }
+.s-label-scan svg { width: 5mm; height: 5mm; flex: none; }
+.is-large .s-label { grid-template-columns: 50mm minmax(0, 1fr); gap: 3.5mm; padding: 5mm 5mm 5mm 3.5mm; }
+.is-large .s-label-code { font-size: 17pt; }
+.is-large .s-label-code.is-long { font-size: 11.5pt; letter-spacing: .04em; }
+.is-large .s-label-title { font-size: 10pt; }
+.is-large .s-label-make, .is-large .s-label-org { font-size: 8.5pt; }
+.is-large .s-label-scan { font-size: 7.5pt; }
+.is-small .s-label { grid-template-columns: 31mm minmax(0, 1fr); gap: 1.5mm; padding: 2.5mm 2.5mm 2.5mm 1.5mm; }
+.is-small .s-label-text { gap: .5mm; }
+.is-small .s-label-code { font-size: 10.5pt; }
+.is-small .s-label-code.is-long { font-size: 7.5pt; letter-spacing: .03em; }
+.is-small .s-label-title { font-size: 6.8pt; }
+.is-small .s-label-org { font-size: 6.3pt; margin-top: .4mm; }
+.is-small .s-label-make, .is-small .s-label-scan { display: none; }
+
+@media print {
+  .s-labels-page { background: #fff !important; }
+  .s-labels { display: block; padding: 0; margin: 0; max-width: none; width: auto; }
+  .s-labels-pages > div { zoom: 1 !important; width: auto; }
+  .s-label-sheet { margin: 0; box-shadow: none; break-after: page; }
+  .s-label-sheet:last-child { break-after: auto; }
+}

@@ -26,6 +26,9 @@ export function Topbar({
   show3dControls,
   atelier,
   onAtelier,
+  groups,
+  onGroups,
+  onExcel,
   onSignOut,
 }: {
   orgName: string;
@@ -42,14 +45,22 @@ export function Topbar({
   show3dControls: boolean;
   atelier: boolean;
   onAtelier: () => void;
+  /** Machines du même type sur un seul plateau (réglage de l'appareil). */
+  groups: boolean;
+  onGroups: () => void;
+  /** Import / export Excel (absent tant que le parc n'est pas chargé). */
+  onExcel?: () => void;
   onSignOut: () => void;
 }) {
   const t = useTranslations('garage');
+  const tx = useTranslations('excel');
   const f = useFormat();
   const dt = useDomainText();
   const qualityLabel = t(`quality.${quality}`);
 
   const shared: MenuEntry[] = [
+    ...(show3dControls ? [{ key: 'groups', label: t('groups.menu'), icon: 'garage' as const, checked: groups, onSelect: onGroups }] : []),
+    ...(onExcel ? [{ key: 'excel', label: tx('menu'), icon: 'table' as const, onSelect: onExcel }] : []),
     { key: 'contact', label: t('menu.contact'), icon: 'mail', href: '/contact' },
     { key: 'idees', label: t('menu.ideas'), icon: 'note', href: '/idees' },
   ];
@@ -68,6 +79,7 @@ export function Topbar({
             sub: t('menu.roleOrg', { role: dt.role(role), org: orgName }),
           },
           { key: 'parametres', label: t('menu.settings'), icon: 'cog', href: '/parametres' },
+          { key: 'etiquettes', label: t('menu.labels'), icon: 'qr', href: '/etiquettes' },
           ...shared,
           { key: 'sortie', label: t('menu.signOut'), icon: 'logout', onSelect: onSignOut },
         ];

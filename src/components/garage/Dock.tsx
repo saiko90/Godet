@@ -1,17 +1,16 @@
 'use client';
 
-// Dock des machines : une puce par machine (code, type, pastille d'état), précédente / suivante, « + Machine ».
+// Dock des machines : une puce par plateau du showroom (une machine, ou un groupe du même type : « PE ×10 »),
+// avec pastille d'état, précédente / suivante, « + Machine ».
 import { useTranslations } from 'next-intl';
 import { useEffect, useRef } from 'react';
 import { useFormat } from '@/components/FormatProvider';
 import { Icon } from '@/components/Icons';
-import type { MachineHealth } from '@/lib/domain';
-import type { Machine } from '@/lib/types';
-import { useDomainText } from '@/lib/use-domain-text';
+import type { FleetView } from './groups';
 
 export function Dock({
-  machines,
-  health,
+  views,
+  labelOf,
   current,
   canAdd,
   reducedMotion,
@@ -20,8 +19,9 @@ export function Dock({
   onNext,
   onAdd,
 }: {
-  machines: Machine[];
-  health: Map<string, MachineHealth>;
+  views: FleetView[];
+  /** Code et titre affichés sur la puce (et sur l'étiquette du showroom). */
+  labelOf: (view: FleetView) => { code: string; title: string };
   current: string | null;
   canAdd: boolean;
   reducedMotion: boolean;
@@ -32,7 +32,6 @@ export function Dock({
 }) {
   const t = useTranslations('garage');
   const f = useFormat();
-  const dt = useDomainText();
   const row = useRef<HTMLDivElement>(null);
 
   // La puce de la machine ouverte reste visible dans le dock défilant.
@@ -42,7 +41,7 @@ export function Dock({
     chip?.scrollIntoView({ block: 'nearest', inline: 'center', behavior: reducedMotion ? 'auto' : 'smooth' });
   }, [current, reducedMotion]);
 
-  const several = machines.length > 1;
+  const several = views.length > 1;
 
   return (
     <nav className="dock g-dock" aria-label={t('dock.label')}>
@@ -53,25 +52,23 @@ export function Dock({
           </button>
         ) : null}
         <div className="dock-row" ref={row}>
-          {machines.map((m) => {
-            const h = health.get(m.id);
-            const state = h?.state ?? 'ok';
-            const alerts = h?.alerts ?? 0;
+          {views.map((v) => {
+            const { code, title } = labelOf(v);
             return (
               <button
-                key={m.id}
+                key={v.id}
                 type="button"
-                className="chip"
-                data-machine={m.id}
-                aria-current={current === m.id ? 'true' : undefined}
-                onClick={() => onOpen(m.id)}
+                className={`chip${v.group ? ' is-group' : ''}`}
+                data-machine={v.id}
+                aria-current={current === v.id ? 'true' : undefined}
+                onClick={() => onOpen(v.id)}
               >
-                <i className={`dot ${state}`} aria-hidden="true" />
-                <b>{m.code}</b>
-                <span>{dt.machineTitle(m)}</span>
+                <i className={`dot ${v.state}`} aria-hidden="true" />
+                <b>{code}</b>
+                <span>{title}</span>
                 <span className="g-sr">
-                  , {t(`state.${state}`)}
-                  {alerts ? `, ${t('dock.points', { count: alerts, n: f.num(alerts) })}` : ''}
+                  {v.group ? `, ${t('groups.chipSr', { count: v.machines.length, n: f.num(v.machines.length) })}` : ''}, {t(`state.${v.state}`)}
+                  {v.alerts ? `, ${t('dock.points', { count: v.alerts, n: f.num(v.alerts) })}` : ''}
                 </span>
               </button>
             );

@@ -10,6 +10,8 @@ import { can, isOpenRepair } from '@/lib/domain';
 import type { Machine } from '@/lib/types';
 import { useDomainText } from '@/lib/use-domain-text';
 import { useGarage } from './context';
+import { GroupList } from './GroupList';
+import type { FleetView } from './groups';
 import { TABS, type SheetTab } from './helpers';
 import { FileButton, MediaTab, UploadStatus, useSendFiles } from './MediaTab';
 import { CostsTab, LogbookTab, OverviewTab, PartsTab, RepairsTab, SchedulesTab, tabCounts } from './SheetTabs';
@@ -18,6 +20,10 @@ import { Menu, type MenuEntry } from './ui';
 
 export function Sheet({
   machine,
+  group,
+  backGroup,
+  onOpenMachine,
+  onBackToGroup,
   open,
   tall,
   tab,
@@ -32,6 +38,12 @@ export function Sheet({
   fileError,
 }: {
   machine: Machine | null;
+  /** Groupe du showroom affiché à la place d'une fiche (liste de ses machines). */
+  group: FleetView | null;
+  /** Groupe de la machine ouverte (lien de retour vers sa liste), ou null. */
+  backGroup: FleetView | null;
+  onOpenMachine: (machineId: string) => void;
+  onBackToGroup: () => void;
   open: boolean;
   tall: boolean;
   tab: SheetTab;
@@ -63,6 +75,50 @@ export function Sheet({
   useEffect(() => {
     if (body.current) body.current.scrollTop = 0;
   }, [tab, id]);
+
+  if (!machine && group) {
+    const alerts = group.alerts;
+    return (
+      <aside
+        className={`sheet g-sheet g-sheet-group${open ? ' open' : ''}${tall ? ' tall' : ''}`}
+        ref={sheetRef}
+        aria-labelledby="sheet-title"
+        aria-hidden={open ? undefined : true}
+        inert={!open}
+      >
+        <div className="g-grab-row">
+          <button
+            type="button"
+            className="sheet-grab"
+            aria-label={tall ? t('sheet.shrink') : t('sheet.expand')}
+            aria-expanded={tall}
+            onClick={() => onTall(!tall)}
+          />
+        </div>
+        <div className="sheet-head">
+          <div className="sheet-title">
+            <p className="eyebrow">{t('groups.eyebrow', { count: group.machines.length, n: f.num(group.machines.length) })}</p>
+            <h2 id="sheet-title" ref={titleRef} tabIndex={-1}>
+              {dt.kind(group.kind)}
+            </h2>
+            <p className="sub">
+              {alerts
+                ? t('groups.alerts', { count: alerts, n: f.num(alerts) })
+                : t('groups.allOk')}
+            </p>
+          </div>
+          <div className="g-head-actions">
+            <button type="button" className="icon-btn" aria-label={t('sheet.close')} onClick={onClose}>
+              <Icon name="close" />
+            </button>
+          </div>
+        </div>
+        <div className="sheet-body" ref={body}>
+          <GroupList group={group} onOpen={onOpenMachine} />
+        </div>
+      </aside>
+    );
+  }
 
   if (!machine) {
     return <aside className="sheet g-sheet" ref={sheetRef} aria-hidden="true" inert />;
@@ -99,6 +155,13 @@ export function Sheet({
             label: t('sheet.menuPrint'),
             icon: 'print' as const,
             href: `/carnet/${encodeURIComponent(machine.id)}`,
+            newTab: true,
+          },
+          {
+            key: 'label',
+            label: t('sheet.menuLabel'),
+            icon: 'qr' as const,
+            href: `/etiquettes?ids=${encodeURIComponent(machine.id)}`,
             newTab: true,
           },
         ]
@@ -214,6 +277,12 @@ export function Sheet({
             {machine.code}
           </h2>
           <p className="sub">{gt.details(machine) || t('sheet.noDetails')}</p>
+          {backGroup ? (
+            <button type="button" className="g-back-group" onClick={onBackToGroup}>
+              <Icon name="chevron-left" />
+              {t('groups.back', { n: f.num(backGroup.machines.length) })}
+            </button>
+          ) : null}
         </div>
         <div className="g-head-actions">
           {several ? (

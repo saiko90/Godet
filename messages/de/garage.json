@@ -91,7 +91,8 @@
     "contact": "Kontakt",
     "ideas": "Ideenbox",
     "signOut": "Abmelden",
-    "newTab": "(neuer Tab)"
+    "newTab": "(neuer Tab)",
+    "labels": "QR-Etiketten"
   },
   "state": {
     "ok": "In Ordnung",
@@ -105,6 +106,20 @@
     "points": "{count, plural, one {{n} Punkt zu beachten} other {{n} Punkte zu beachten}}",
     "add": "Maschine",
     "addSr": ": Maschine zum Park hinzufügen"
+  },
+  "groups": {
+    "code": "{prefix} ×{n}",
+    "label": "{kind} · {count, plural, one {{n} Maschine} other {{n} Maschinen}}",
+    "menu": "Maschinen gleichen Typs zusammenfassen",
+    "on": "Maschinen gleichen Typs teilen sich eine Plattform",
+    "off": "Eine Maschine pro Plattform",
+    "chipSr": "Gruppe mit {count, plural, one {{n} Maschine} other {{n} Maschinen}}",
+    "eyebrow": "Gruppe · {count, plural, one {{n} Maschine} other {{n} Maschinen}}",
+    "alerts": "{count, plural, one {{n} Punkt zu beachten in der Gruppe} other {{n} Punkte zu beachten in der Gruppe}}",
+    "allOk": "Die ganze Gruppe ist in Ordnung",
+    "list": "Maschinen der Gruppe {kind}",
+    "noDue": "Keine Termine",
+    "back": "Alle {n} Maschinen der Gruppe"
   },
   "machine": {
     "eyebrow": "{kind} · {weight} t",
@@ -168,7 +183,8 @@
     "menuEdit": "Maschine bearbeiten",
     "menuHours": "Betriebsstunden erfassen",
     "menuPrint": "Wartungsheft drucken",
-    "menuArchive": "Maschine archivieren"
+    "menuArchive": "Maschine archivieren",
+    "menuLabel": "QR-Etikette"
   },
   "tabs": {
     "apercu": "Übersicht",
@@ -376,7 +392,8 @@
       "noWebgl": "Dieses Gerät oder dieser Browser kann keine 3D-Ansicht anzeigen (WebGL 2). Alle Maschinen bleiben hier zugänglich.",
       "load": "Die 3D-Ansicht konnte nicht geladen werden. Prüfen Sie die Verbindung; alle Maschinen bleiben hier zugänglich.",
       "start": "Die 3D-Ansicht konnte auf diesem Gerät nicht starten. Alle Maschinen bleiben hier zugänglich.",
-      "contextLost": "Die 3D-Ansicht wurde beendet (Grafikspeicher voll). Alle Maschinen bleiben hier zugänglich."
+      "contextLost": "Die 3D-Ansicht wurde beendet (Grafikspeicher voll). Alle Maschinen bleiben hier zugänglich.",
+      "memory": "Die 3D-Ansicht hatte auf diesem Gerät zu wenig Speicher: Die Garage öffnet sich im Werkstattmodus. Alle Maschinendetails bleiben hier zugänglich; «3D erneut versuchen» startet sie in niedriger Qualität."
     },
     "retry3d": "3D erneut versuchen",
     "eyebrow": "Werkstattmodus",
@@ -822,5 +839,45 @@
       "dumper": "Dumper"
     },
     "label": "{name} {weight} t"
+  },
+  "labels": {
+    "title": "QR-Etiketten",
+    "back": "Garage",
+    "print": "Drucken",
+    "intro": "Kleben Sie auf jede Maschine eine Etikette: Wer den Code mit dem Handy scannt, öffnet direkt ihre Karte.",
+    "settings": "Einstellungen",
+    "format": "Format",
+    "large": "Gross · 8 pro Seite",
+    "largeSub": "99 × 68 mm, Bogen Avery L7165 oder normales Papier",
+    "small": "Klein · 21 pro Seite",
+    "smallSub": "64 × 38 mm, Bogen Avery L7160",
+    "outline": "Schnittlinien",
+    "outlineSub": "Für normales Papier; bei Klebeetiketten-Bogen ausschalten.",
+    "copies": "Exemplare pro Maschine",
+    "start": "Erste Etikette auf dem Bogen",
+    "startSub": "Um einen angebrochenen Bogen weiterzuverwenden.",
+    "machines": "Maschinen",
+    "selected": "{n} von {total} gewählt",
+    "all": "Alle",
+    "none": "Keine",
+    "summary": "{labels, plural, one {# Etikette} other {# Etiketten}} auf {pages, plural, one {# Seite} other {# Seiten}}",
+    "tip": "Im Druckfenster: A4, tatsächliche Grösse (100 %), ohne Ränder und Kopfzeilen. «Als PDF speichern» geht auch.",
+    "empty": "Wählen Sie mindestens eine Maschine.",
+    "noMachines": "Noch keine Maschine in der Garage.",
+    "scan": "Scannen, um das Serviceheft zu öffnen",
+    "preview": "Vorschau, Seite {n} von {total}",
+    "pages": "Seitenvorschau"
+  },
+  "offline": {
+    "offline": "Offline",
+    "pending": "{count, plural, one {# Eintrag wartet} other {# Einträge warten}}",
+    "syncing": "Einträge werden gesendet…",
+    "sendNow": "Senden",
+    "title": "Ohne Netz zeigt die Garage die letzte Kopie des Maschinenparks. Einträge ins Serviceheft und Stundenstände bleiben auf dem Gerät und werden gesendet, sobald das Netz zurück ist.",
+    "wentOffline": "Kein Netz: Ihre Einträge und Stundenstände bleiben auf dem Gerät und werden gesendet, sobald das Netz zurück ist.",
+    "backOnline": "Netz wieder da.",
+    "synced": "{count, plural, one {# Eintrag gesendet.} other {# Einträge gesendet.}}",
+    "refused": "{count, plural, one {# Eintrag vom Server abgelehnt (Maschine inzwischen archiviert oder Zählerstand überholt).} other {# Einträge vom Server abgelehnt (Maschine inzwischen archiviert oder Zählerstand überholt).}}",
+    "signOutPending": "{count, plural, one {Ein Eintrag ist noch nicht gesendet und ginge beim Abmelden verloren.} other {# Einträge sind noch nicht gesendet und gingen beim Abmelden verloren.}} Trotzdem abmelden?"
   }
 }

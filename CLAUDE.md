@@ -11,7 +11,7 @@ pièces, contrôles, notes), ses échéances, ses relevés d'heures, ses coûts,
 - Toutes les pages sont sous `src/app/[locale]/` ; `params` est une Promise (`const { locale } = await params`) et
   chaque page/layout appelle `setRequestLocale(locale)`.
 - Textes : `messages/<langue>/<zone>.json` (zones : common, domain, site, auth, settings, carnet, contact, ideas, garage,
-  demo, notifications, emails, admin, legal). Le français fait foi ; `node scripts/check-messages.mjs` vérifie que
+  demo, notifications, emails, admin, legal, excel). Le français fait foi ; `node scripts/check-messages.mjs` vérifie que
   chaque langue a les mêmes clés et les mêmes variables. Syntaxe ICU (`{count, plural, one {…} other {…}}`).
 - Côté client : `useTranslations('zone')` ; le layout racine ne fournit que `common` et `domain` au navigateur :
   chaque zone pose son propre `NextIntlClientProvider` avec `pickMessages(messages, [...])`.
@@ -59,6 +59,15 @@ Navigateur de test : Chromium de Playwright dans `/opt/pw-browsers` (ne pas lanc
 - `docs/prospection` : prospection par pays (Suisse d'abord) et consignes des agents. Règle absolue : les agents
   cherchent et rédigent, une personne relit et envoie (aucun envoi automatique, cf. UWG/LCD, RGPD, AI Act art. 50).
 - `docs/notifications.md` : rappels et e-mails (activation de Resend, tests).
+- Étiquettes QR : `/etiquettes` (privée, planches A4 Avery L7165 / L7160, `?ids=` pour une sélection) ; le code contient
+  `<site>/m/<id>` (`src/app/[locale]/m/[id]`) qui ouvre `/garage?m=<id>`. Codes : `src/lib/qr.ts` (qrcode-generator).
+- Excel : `src/components/garage/excel.ts` (chargé à la demande ; read-excel-file / write-excel-file) et `ExcelModal.tsx`.
+  Export machines + carnet + échéances ; import machines (mise à jour par code) et historique (doublons ignorés), en-têtes
+  reconnus dans les 4 langues (zone `excel`).
+- Hors ligne : `public/sw.js` (service worker, enregistré par `CloudGarage` en production : page du garage gardée,
+  fichiers statiques, page « hors ligne », lien QR sans réseau) et `src/lib/offline/` (copie du parc dans IndexedDB,
+  file d'attente des saisies et relevés envoyée au retour du réseau ; une saisie garde son `id` → pas de doublon).
+  Déconnexion = tout est effacé de l'appareil.
 - `scripts/film` : films de présentation (showroom 3D et suivi, 4 langues) tournés image par image, et images de
   l'accueil par langue ; mode d'emploi dans son README. Fichiers servis : `public/videos/godet-<film>-<langue>.mp4`
   (+ affiche `.webp`) et `public/images/showroom-hero-<langue>.webp` ; un fichier absent n'est pas proposé.

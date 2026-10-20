@@ -13,7 +13,7 @@ export default async function GarageLayout({ children, params }: { children: Rea
   setRequestLocale(locale);
   const messages = (await getMessages()) as unknown as AppMessages;
   return (
-    <NextIntlClientProvider locale={locale} messages={garageClientMessages(messages, ['common', 'domain', 'garage'])}>
+    <NextIntlClientProvider locale={locale} messages={garageClientMessages(messages, ['common', 'domain', 'garage', 'excel'])}>
       {children}
     </NextIntlClientProvider>
   );

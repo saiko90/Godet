@@ -74,8 +74,10 @@ export function initialQuality(): ShowroomQuality {
   const small = Math.min(window.screen?.width ?? 1280, window.screen?.height ?? 800) < 700;
   const nav = navigator as Navigator & { deviceMemory?: number };
   const weak = (nav.deviceMemory !== undefined && nav.deviceMemory <= 2) || (navigator.hardwareConcurrency || 8) <= 2;
-  if (weak) return 'low';
-  if (coarse || small) return 'medium';
+  // Téléphones : qualité basse au départ (sans post-traitement, reflets ni ombres). La scène complète a fait
+  // manquer de mémoire des téléphones récents ; la qualité reste réglable à la main (bouton « Qualité »).
+  if (weak || small) return 'low';
+  if (coarse) return 'medium';
   return 'high';
 }
 

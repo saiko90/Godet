@@ -91,7 +91,8 @@
     "contact": "Nous contacter",
     "ideas": "Boîte à idées",
     "signOut": "Déconnexion",
-    "newTab": "(nouvel onglet)"
+    "newTab": "(nouvel onglet)",
+    "labels": "Étiquettes QR"
   },
   "state": {
     "ok": "À jour",
@@ -105,6 +106,20 @@
     "points": "{count, plural, one {{n} point d’attention} other {{n} points d’attention}}",
     "add": "Machine",
     "addSr": " : ajouter une machine au parc"
+  },
+  "groups": {
+    "code": "{prefix} ×{n}",
+    "label": "{kind} · {count, plural, one {{n} machine} other {{n} machines}}",
+    "menu": "Regrouper les machines du même type",
+    "on": "Les machines du même type partagent un plateau",
+    "off": "Une machine par plateau",
+    "chipSr": "groupe de {count, plural, one {{n} machine} other {{n} machines}}",
+    "eyebrow": "Groupe · {count, plural, one {{n} machine} other {{n} machines}}",
+    "alerts": "{count, plural, one {{n} point d’attention dans le groupe} other {{n} points d’attention dans le groupe}}",
+    "allOk": "Tout le groupe est à jour",
+    "list": "Machines du groupe {kind}",
+    "noDue": "Aucune échéance",
+    "back": "Les {n} machines du groupe"
   },
   "machine": {
     "eyebrow": "{kind} · {weight} t",
@@ -168,7 +183,8 @@
     "menuEdit": "Modifier la machine",
     "menuHours": "Relever le compteur",
     "menuPrint": "Imprimer le carnet",
-    "menuArchive": "Archiver la machine"
+    "menuArchive": "Archiver la machine",
+    "menuLabel": "Étiquette QR"
   },
   "tabs": {
     "apercu": "Aperçu",
@@ -376,7 +392,8 @@
       "noWebgl": "Cet appareil ou ce navigateur n’affiche pas la 3D (WebGL 2). Toutes les fiches restent accessibles ici.",
       "load": "La 3D n’a pas pu être téléchargée. Vérifiez la connexion ; toutes les fiches restent accessibles ici.",
       "start": "La 3D n’a pas pu démarrer sur cet appareil. Toutes les fiches restent accessibles ici.",
-      "contextLost": "La 3D s’est arrêtée (mémoire graphique saturée). Toutes les fiches restent accessibles ici."
+      "contextLost": "La 3D s’est arrêtée (mémoire graphique saturée). Toutes les fiches restent accessibles ici.",
+      "memory": "La 3D a manqué de mémoire sur cet appareil : le garage s’ouvre en mode atelier. Toutes les fiches restent accessibles ici ; « Réessayer la 3D » la relance en qualité basse."
     },
     "retry3d": "Réessayer la 3D",
     "eyebrow": "Mode atelier",
@@ -822,5 +839,45 @@
       "dumper": "Dumper"
     },
     "label": "{name} {weight} t"
+  },
+  "labels": {
+    "title": "Étiquettes QR",
+    "back": "Garage",
+    "print": "Imprimer",
+    "intro": "Collez une étiquette sur chaque machine : en scannant le code avec un téléphone, on ouvre directement sa fiche.",
+    "settings": "Réglages",
+    "format": "Format",
+    "large": "Grandes · 8 par page",
+    "largeSub": "99 × 68 mm, planche Avery L7165 ou papier normal",
+    "small": "Petites · 21 par page",
+    "smallSub": "64 × 38 mm, planche Avery L7160",
+    "outline": "Traits de découpe",
+    "outlineSub": "Pour du papier normal ; à décocher sur une planche autocollante.",
+    "copies": "Exemplaires par machine",
+    "start": "Première étiquette de la planche",
+    "startSub": "Pour reprendre une planche déjà entamée.",
+    "machines": "Machines",
+    "selected": "{n} sur {total} choisies",
+    "all": "Toutes",
+    "none": "Aucune",
+    "summary": "{labels, plural, one {# étiquette} other {# étiquettes}} sur {pages, plural, one {# page} other {# pages}}",
+    "tip": "Dans la fenêtre d’impression : format A4, taille réelle (100 %), sans marges ni en-têtes. « Enregistrer au format PDF » fonctionne aussi.",
+    "empty": "Choisissez au moins une machine.",
+    "noMachines": "Aucune machine au garage pour l’instant.",
+    "scan": "Scannez pour ouvrir le carnet",
+    "preview": "Aperçu, page {n} sur {total}",
+    "pages": "Aperçu des pages"
+  },
+  "offline": {
+    "offline": "Hors ligne",
+    "pending": "{count, plural, one {# saisie en attente} other {# saisies en attente}}",
+    "syncing": "Envoi des saisies…",
+    "sendNow": "Envoyer",
+    "title": "Sans réseau, le garage affiche la dernière copie du parc. Les saisies du carnet et les relevés d’heures sont gardés sur l’appareil et partent au retour du réseau.",
+    "wentOffline": "Pas de réseau : vos saisies et relevés sont gardés sur l’appareil et partiront au retour du réseau.",
+    "backOnline": "Réseau retrouvé.",
+    "synced": "{count, plural, one {# saisie envoyée.} other {# saisies envoyées.}}",
+    "refused": "{count, plural, one {# saisie refusée par le serveur (machine archivée ou compteur dépassé entre-temps).} other {# saisies refusées par le serveur (machine archivée ou compteur dépassé entre-temps).}}",
+    "signOutPending": "{count, plural, one {Une saisie n’est pas encore envoyée : elle serait perdue en vous déconnectant maintenant.} other {# saisies ne sont pas encore envoyées : elles seraient perdues en vous déconnectant maintenant.}} Se déconnecter quand même ?"
   }
 }

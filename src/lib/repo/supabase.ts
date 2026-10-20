@@ -473,6 +473,7 @@ export function createSupabaseRepo(client: GarageClient, ctx: RepoContext, optio
 
   function entryInsert(input: NewEntry): TablesInsert<'entries'> {
     return {
+      ...(input.id ? { id: input.id } : {}),
       org_id: orgId,
       machine_id: input.machineId,
       kind: input.kind,
