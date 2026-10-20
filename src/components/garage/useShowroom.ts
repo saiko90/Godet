@@ -77,7 +77,8 @@ export interface ShowroomOptionsIn {
 // aucun événement. Chaque démarrage est noté avant la construction et effacé une fois la 3D stable : un démarrage
 // resté noté au chargement suivant veut dire que l'onglet a été tué. Après un échec, la 3D redémarre en qualité
 // basse ; après deux, le garage s'ouvre en mode atelier (la 3D reste à un clic : « Réessayer la 3D »).
-const GUARD_KEY = 'godet-3d-demarrage';
+// v2 : compteur remis à zéro (les plantages d'avant venaient de la qualité haute, désormais exclue sur écran tactile).
+const GUARD_KEY = 'godet-3d-demarrage-v2';
 const GUARD_TTL = 24 * 60 * 60 * 1000;
 const STABLE_AFTER = 15_000;
 
@@ -163,6 +164,9 @@ export function useShowroom(opts: ShowroomOptionsIn) {
         fail('memory');
         return;
       }
+      // Écran tactile (téléphone, tablette) : qualité basse imposée, quel que soit le réglage enregistré.
+      const touch = window.matchMedia('(pointer: coarse)').matches;
+      if (touch) forcedLowRef.current = true;
       const low = crashed === 1 || forcedLowRef.current || latest.current.quality === 'low';
       if (crashed === 1) {
         forcedLowRef.current = true;
@@ -268,7 +272,8 @@ export function useShowroom(opts: ShowroomOptionsIn) {
     if (ready) showroom.current?.setMachines(machines);
   }, [ready, machines]);
   useEffect(() => {
-    if (ready) showroom.current?.setQuality(forcedLow && quality === 'auto' ? 'low' : quality);
+    // Qualité basse imposée (démarrage interrompu, écran tactile) : elle prime sur tout réglage, même « haute ».
+    if (ready) showroom.current?.setQuality(forcedLow || forcedLowRef.current ? 'low' : quality);
   }, [ready, quality, forcedLow]);
   useEffect(() => {
     if (ready) showroom.current?.setSound(sound);

@@ -220,7 +220,8 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
     enabled: fleet !== null,
     machines: showroomMachines,
     signage: fleet?.org.name ?? orgName,
-    quality: prefs.quality,
+    // Téléphones et tablettes : toujours la 3D légère (la qualité haute peut faire planter l'onglet faute de mémoire).
+    quality: coarse ? 'low' : prefs.quality,
     sound: prefs.sound,
     reducedMotion,
     paused: atelierRequested || hidden,
@@ -823,7 +824,7 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
           sound={prefs.sound}
           onSound={toggleSound}
           quality={prefs.quality}
-          onQuality={cycleQuality}
+          onQuality={coarse ? undefined : cycleQuality}
           show3dControls={!engineFailed}
           atelier={atelierShown}
           onAtelier={toggleAtelier}

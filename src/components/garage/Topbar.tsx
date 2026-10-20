@@ -41,7 +41,8 @@ export function Topbar({
   sound: boolean;
   onSound: () => void;
   quality: QualityPref;
-  onQuality: () => void;
+  /** Absent sur téléphone et tablette : la 3D y reste en qualité basse. */
+  onQuality?: () => void;
   show3dControls: boolean;
   atelier: boolean;
   onAtelier: () => void;
@@ -126,7 +127,7 @@ export function Topbar({
         >
           <Icon name={sound ? 'sound' : 'mute'} />
         </button>
-        {show3dControls ? (
+        {show3dControls && onQuality ? (
           <button type="button" className="icon-btn" onClick={onQuality} aria-label={t('topbar.qualityAria', { quality: qualityLabel })}>
             <Icon name="gauge" />
             <span className="lbl" aria-hidden="true">
