@@ -200,6 +200,7 @@
       "yearly": "2 mois offerts en paiement annuel. R\u00e9siliable en tout temps.",
       "founder": "Pack fondateur\u00a0: \u221230\u00a0% \u00e0 vie pour les 10 premi\u00e8res entreprises abonn\u00e9es.",
       "rental": "Option Location (+{chf} CHF ou {eur} € par mois) : agenda des locations, états des lieux de départ et de retour signés sur place, rapport PDF envoyé au client.",
+      "rentalDemo": "Voir la démo de la location",
       "tiers": {
         "essentiel": {
           "name": "Essentiel",

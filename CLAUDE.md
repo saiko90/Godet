@@ -125,6 +125,9 @@ Navigateur de test : Chromium de Playwright dans `/opt/pw-browsers` (ne pas lanc
   Panne au retour (`rental_checks.breakdown`) : le déclencheur ouvre une réparation « en cours » dans le carnet ; tant
   qu'une réparation est ouverte, les réservations à venir de la machine sont « à risque » (agenda, détail, formulaire,
   pastille du garage).
+  Démonstration : `/demo/location` (agenda, état des lieux, rapport) avec le parc d'exemple ; écritures dans le
+  navigateur (`src/lib/rental-demo.ts`, hook `rental-demo-hook.ts`), branchées par le contexte `RentalBackendContext`
+  (`components/site/location/backend.tsx` : base de données par défaut, mémoire en démo). Rapport commun : `ReportView`.
 - Aide : page `/aide` (textes `help`, structure `src/components/site/aide/content.ts`, tutoriel d'installation par
   appareil), guide imprimable `/aide/guide` → PDF `public/guides/godet-guide-<langue>.pdf` à régénérer après un
   changement de texte : `BASE=http://localhost:3000 node scripts/guides/make-guides.mjs`.

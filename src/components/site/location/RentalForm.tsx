@@ -5,8 +5,8 @@
 import { useTranslations } from 'next-intl';
 import { useId, useState } from 'react';
 import { Icon } from '@/components/Icons';
-import { rentalErrorCode, rentalRow, type Rental, type RentalInput } from '@/lib/rental';
-import { supabaseBrowser } from '@/lib/supabase/client';
+import type { Rental, RentalInput } from '@/lib/rental';
+import { useRentalBackend } from './backend';
 import { Dialog } from './Dialog';
 import type { PlannerMachine } from './Planner';
 
@@ -55,6 +55,7 @@ export function RentalForm({
   const t = useTranslations('rental.form');
   const te = useTranslations('rental.errors');
   const uid = useId();
+  const backend = useRentalBackend();
   const [v, setV] = useState<RentalInput>(() => {
     const startDay = day ?? Date.now();
     return {
@@ -108,20 +109,9 @@ export function RentalForm({
     if (!(e > s)) return setError(te('dates'));
     if (v.clientEmail.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.clientEmail.trim())) return setError(te('email'));
     setBusy(true);
-    const db = supabaseBrowser();
-    const row = rentalRow(v);
-    const { error: dbError } = rental
-      ? await db.from('rentals').update(row).eq('id', rental.id).select('id').single()
-      : await db
-          .from('rentals')
-          .insert({ ...row, org_id: orgId })
-          .select('id')
-          .single();
+    const code = await backend.saveRental(v, { id: rental?.id, orgId });
     setBusy(false);
-    if (dbError) {
-      console.error('[location] réservation :', dbError.code, dbError.message);
-      return setError(te(rentalErrorCode(dbError)));
-    }
+    if (code) return setError(te(code));
     onSaved();
   }
 

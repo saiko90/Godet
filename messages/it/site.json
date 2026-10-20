@@ -200,6 +200,7 @@
       "yearly": "2 mesi in regalo con pagamento annuale. Disdicibile in ogni momento.",
       "founder": "Pacchetto fondatore: \u221230\u00a0% a vita per le prime 10 aziende abbonate.",
       "rental": "Opzione Noleggio (+{chf} CHF o {eur} € al mese): agenda dei noleggi, verbali di consegna e riconsegna firmati sul posto, rapporto PDF inviato al cliente.",
+      "rentalDemo": "Vedi la demo del noleggio",
       "tiers": {
         "essentiel": {
           "name": "Essentiel",

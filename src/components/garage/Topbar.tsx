@@ -79,6 +79,7 @@ export function Topbar({
           { key: 'h', heading: t('menu.demoHeading'), sub: t('menu.demoSub') },
           { key: 'inscription', label: t('menu.signup'), icon: 'plus', href: '/connexion?mode=inscription' },
           { key: 'accueil', label: t('menu.discover'), icon: 'garage', href: '/' },
+          ...(rental ? [{ key: 'location', label: t('rental.menu'), icon: 'calendar' as const, href: rental.base }] : []),
           ...shared,
         ]
       : [
@@ -87,7 +88,7 @@ export function Topbar({
             heading: person?.name || person?.email || orgName,
             sub: t('menu.roleOrg', { role: dt.role(role), org: orgName }),
           },
-          ...(rental ? [{ key: 'location', label: t('rental.menu'), icon: 'calendar' as const, href: '/location' }] : []),
+          ...(rental ? [{ key: 'location', label: t('rental.menu'), icon: 'calendar' as const, href: rental.base }] : []),
           { key: 'parametres', label: t('menu.settings'), icon: 'cog', href: '/parametres' },
           { key: 'etiquettes', label: t('menu.labels'), icon: 'qr', href: '/etiquettes' },
           ...shared,

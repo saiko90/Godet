@@ -193,7 +193,8 @@
         "not_configured": "Lettura automatica non disponibile: inserisca il contaore.",
         "forbidden": "Lettura rifiutata: inserisca il contaore.",
         "generic": "Lettura impossibile: inserisca il contaore."
-      }
+      },
+      "demo": "La lettura da foto è disponibile nel Suo garage, non nella demo."
     },
     "accident": "Incidente o sinistro",
     "accidentNote": "Che cosa è successo?",
@@ -386,5 +387,14 @@
     "text": "Queste macchine sono in riparazione: forse non saranno pronte in tempo. Chiuda la riparazione nel libretto o avvisi il cliente.",
     "item": "{code} · {client}, consegna il {date} · riparazione: {repair}",
     "open": "Vedi la macchina"
+  },
+  "demo": {
+    "label": "Demo",
+    "banner": "Demo: prenoti una macchina, compili un verbale e firmi. Nulla viene inviato o salvato.",
+    "garage": "Garage di prova",
+    "cta": "Crea il mio garage",
+    "noEmail": "Nella demo nessun rapporto viene inviato. Nel Suo account il PDF parte al cliente per e-mail ed è archiviato nel libretto della macchina.",
+    "unavailable": "Questo passaggio non è più disponibile per questo noleggio di esempio.",
+    "staff": "Officina"
   }
 }

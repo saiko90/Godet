@@ -193,7 +193,8 @@
         "not_configured": "Lecture automatique indisponible : saisissez le compteur.",
         "forbidden": "Lecture refusée : saisissez le compteur.",
         "generic": "Lecture impossible : saisissez le compteur."
-      }
+      },
+      "demo": "La lecture sur photo est disponible dans votre garage, pas dans la démo."
     },
     "accident": "Accident ou sinistre",
     "accidentNote": "Que s’est-il passé ?",
@@ -386,5 +387,14 @@
     "text": "Ces machines sont en réparation : elles ne seront peut-être pas prêtes à temps. Terminez la réparation dans le carnet ou prévenez le client.",
     "item": "{code} · {client}, départ le {date} · réparation : {repair}",
     "open": "Voir la machine"
+  },
+  "demo": {
+    "label": "Démo",
+    "banner": "Démonstration : réservez une machine, faites un état des lieux et signez. Rien n’est envoyé ni enregistré.",
+    "garage": "Garage de démonstration",
+    "cta": "Créer mon garage",
+    "noEmail": "En démo, aucun rapport n’est envoyé. Dans votre compte, le PDF part au client par e-mail et se range dans le carnet de la machine.",
+    "unavailable": "Cette étape n’est plus disponible pour cette location d’exemple.",
+    "staff": "Atelier"
   }
 }

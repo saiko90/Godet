@@ -32,6 +32,7 @@ import {
 import { createSupabaseRepo } from '@/lib/repo/supabase';
 import { supabaseBrowser } from '@/lib/supabase/client';
 import type { MachineKind, MemberRole, Org } from '@/lib/types';
+import { useRentalBackend } from './backend';
 import { SignaturePad, type SignatureHandle } from './SignaturePad';
 
 export interface PreviousCheck {
@@ -111,6 +112,7 @@ export function RentalCheckForm({
   const f = useFormat();
   const locale = useLocale();
   const router = useRouter();
+  const backend = useRentalBackend();
   const groups = useMemo(() => checkGroups(machine.kind), [machine.kind]);
   const slots = useMemo(() => photoSlots(machine.kind), [machine.kind]);
   const safety = hasSafetyCheck(machine.kind);
@@ -179,6 +181,7 @@ export function RentalCheckForm({
 
   /** Lecture du compteur sur la photo de l'emplacement « compteur ». */
   async function readFromPhoto(file: File) {
+    if (backend.demo) return setReading(t('meter.demo'));
     setReading(t('meter.reading'));
     try {
       const r = await readMeter({
@@ -221,6 +224,75 @@ export function RentalCheckForm({
     return null;
   }
 
+  /** Démonstration : l'état des lieux reste dans le navigateur (photos et signatures en liens locaux). */
+  async function submitDemo() {
+    const toUrl = (blob: Blob | null | undefined) =>
+      blob
+        ? new Promise<string>((resolve) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(String(reader.result));
+            reader.readAsDataURL(blob);
+          })
+        : Promise.resolve(null);
+    const clientSigUrl = await toUrl(await clientPad.current?.toBlob());
+    if (!clientSigUrl) {
+      setBusy(false);
+      return setError(t('errors.signature'));
+    }
+    const staffSigUrl = await toUrl(await staffPad.current?.toBlob());
+    const clean = (s: string) => (s.trim() ? s.trim() : null);
+    const checkId = `demo-check-${Date.now()}`;
+    const code = backend.saveDemoCheck?.({
+      check: {
+        id: checkId,
+        org_id: org.id,
+        rental_id: rental.id,
+        machine_id: machine.id,
+        kind,
+        items: Object.fromEntries(
+          Object.entries(items).map(([k, v]) => [k, v.state === 'defaut' ? { state: v.state, comment: v.comment?.trim() } : { state: v.state }]),
+        ),
+        fuel_level: fuelApplies ? fuel : null,
+        hours: hoursValid ? Math.round(n * 10) / 10 : null,
+        accessories: clean(accessories),
+        accident: Boolean(accident),
+        accident_note: accident ? clean(accidentNote) : null,
+        safety_valid: safety ? safetyValid : null,
+        safety_until: safety && safetyUntil ? safetyUntil : null,
+        keys_count: keys.trim() ? Math.max(0, Math.min(20, Math.round(Number(keys)))) : null,
+        remarks: clean(remarks),
+        charges: charges.filter((c) => c.label.trim() && Number.isFinite(c.amount)).map((c) => ({ label: c.label.trim(), amount: c.amount })),
+        reserves: retour ? reserves : null,
+        breakdown: retour && Boolean(breakdown),
+        breakdown_note: retour && breakdown ? clean(breakdownNote) : null,
+        terms_accepted: needTerms && termsOk,
+        terms_path: null,
+        client_signer: clientSigner.trim(),
+        client_signature: 'demo',
+        staff_signer: clean(staffSigner),
+        staff_signature: staffSigUrl ? 'demo' : null,
+        lat: null,
+        lng: null,
+        report_path: null,
+        emailed_at: null,
+        created_by: userId,
+        created_at: new Date().toISOString(),
+      },
+      photos: [
+        ...slots.filter((s) => slotPhotos[s.key]).map((s) => ({ id: slotPhotos[s.key].key, slot: s.key, kind: 'photo' as const, url: slotPhotos[s.key].url })),
+        ...freePhotos.map((p) => ({ id: p.key, slot: 'libre', kind: 'photo' as const, url: p.url })),
+        ...videos.map((v) => ({ id: v.key, slot: 'video', kind: 'video' as const, url: v.url })),
+      ],
+      clientSigUrl,
+      staffSigUrl,
+    });
+    if (code) {
+      setBusy(false);
+      return setError(t(`errors.db.${code}`));
+    }
+    router.replace(`${backend.base}/${rental.id}/rapport?ok=${kind}`);
+  }
+
   async function submit() {
     const problem = check();
     if (problem) return setError(problem);
@@ -228,6 +300,7 @@ export function RentalCheckForm({
     if (missingPhotos.length && !window.confirm(t('confirmMissingPhotos', { list: missingPhotos.join(', ') }))) return;
     setError(null);
     setBusy(true);
+    if (backend.demo) return submitDemo();
     const db = supabaseBrowser();
     const checkId = crypto.randomUUID();
     const base = `${org.id}/${machine.id}/location/${checkId}`;
@@ -349,7 +422,7 @@ export function RentalCheckForm({
       const params = new URLSearchParams({ ok: kind });
       if (failed.length) params.set('missing', String(failed.length));
       if (fnError) params.set('pdf', '0');
-      router.replace(`/location/${rental.id}/rapport?${params.toString()}`);
+      router.replace(`${backend.base}/${rental.id}/rapport?${params.toString()}`);
     } catch (e) {
       setError(e instanceof Error && e.message ? e.message : t('errors.generic'));
       setBusy(false);

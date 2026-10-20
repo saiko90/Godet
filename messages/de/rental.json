@@ -193,7 +193,8 @@
         "not_configured": "Automatisches Lesen nicht verfügbar. Bitte Zählerstand eingeben.",
         "forbidden": "Lesen verweigert. Bitte Zählerstand eingeben.",
         "generic": "Lesen nicht möglich. Bitte Zählerstand eingeben."
-      }
+      },
+      "demo": "Das Ablesen vom Foto ist in Ihrer Garage verfügbar, nicht in der Demo."
     },
     "accident": "Unfall oder Schaden",
     "accidentNote": "Was ist passiert?",
@@ -386,5 +387,14 @@
     "text": "Diese Maschinen sind in Reparatur: Sie sind vielleicht nicht rechtzeitig bereit. Schliessen Sie die Reparatur im Maschinenheft ab oder informieren Sie den Kunden.",
     "item": "{code} · {client}, Übergabe am {date} · Reparatur: {repair}",
     "open": "Maschine ansehen"
+  },
+  "demo": {
+    "label": "Demo",
+    "banner": "Demo: Reservieren Sie eine Maschine, erstellen Sie ein Protokoll und unterschreiben Sie. Nichts wird gesendet oder gespeichert.",
+    "garage": "Demo-Garage",
+    "cta": "Meine Garage erstellen",
+    "noEmail": "In der Demo wird kein Bericht gesendet. In Ihrem Konto geht das PDF per E-Mail an den Kunden und wird im Maschinenheft abgelegt.",
+    "unavailable": "Dieser Schritt ist für diese Beispielmiete nicht mehr verfügbar.",
+    "staff": "Werkstatt"
   }
 }

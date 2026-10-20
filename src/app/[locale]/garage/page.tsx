@@ -54,7 +54,7 @@ export default async function GaragePage({ params, searchParams }: Props) {
   const fleet = await loadFleet(supabase, session.ctx, { service: td('service'), safety: td('safety') });
 
   // Option Location : statut de chaque machine (louée, réservée aujourd'hui, disponible avec la prochaine réservation).
-  let rentals: { byMachine: Record<string, RentalBadge> } | null = null;
+  let rentals: { byMachine: Record<string, RentalBadge>; base: string } | null = null;
   const now = nowMs();
   if (rentalEnabled(session.ctx.org, now)) {
     const { data } = await supabase
@@ -86,7 +86,7 @@ export default async function GaragePage({ params, searchParams }: Props) {
         risk: st.state === 'reservee' || (st.state === 'disponible' && st.next) ? inRepair.has(m.id) : undefined,
       };
     }
-    rentals = { byMachine };
+    rentals = { byMachine, base: '/location' };
   }
   return (
     <FormatProvider locale={locale} country={session.ctx.org.country} currency={session.ctx.org.currency}>

@@ -21,6 +21,8 @@ export interface RentalBadge {
 
 export interface RentalStatus {
   byMachine: Record<string, RentalBadge>;
+  /** Agenda : /location (compte) ou /demo/location (démonstration). */
+  base: string;
 }
 
 export const RentalStatusContext = createContext<RentalStatus | null>(null);
@@ -35,7 +37,7 @@ export function RentalPill({ machineId, detailed = false }: { machineId: string;
   if (!status) return null;
   const b = status.byMachine[machineId] ?? { state: 'disponible' as const };
   const tone = b.state === 'louee' ? (b.late ? 'bad' : 'is-rent-out') : b.risk ? 'is-rent-risk' : b.state === 'reservee' ? 'is-rent-booked' : 'is-rent-free';
-  const href = b.state === 'louee' && b.rentalId ? `/location/${b.rentalId}/retour` : b.state === 'reservee' && b.rentalId ? `/location/${b.rentalId}/depart` : '/location';
+  const href = b.state === 'louee' && b.rentalId ? `${status.base}/${b.rentalId}/retour` : b.state === 'reservee' && b.rentalId ? `${status.base}/${b.rentalId}/depart` : status.base;
   let label: string = b.late ? t('late') : b.risk ? t('risk') : t(b.state);
   if (detailed) {
     const date = b.at ? f.dateTime(b.at) : '';

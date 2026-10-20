@@ -292,7 +292,10 @@ export default async function HomePage({ params }: { params: LocaleParams }) {
                 ))}
               </ul>
               <p className="s-plans-note">{t('pricing.yearly')} {t('pricing.more')}</p>
-              <p className="s-plans-note">{t('pricing.rental', { chf: RENTAL_ADDON_MONTHLY, eur: RENTAL_ADDON_MONTHLY })}</p>
+              <p className="s-plans-note">
+                {t('pricing.rental', { chf: RENTAL_ADDON_MONTHLY, eur: RENTAL_ADDON_MONTHLY })}{' '}
+                <Link href="/demo/location">{t('pricing.rentalDemo')}</Link>
+              </p>
               <p className="s-plans-founder">{t('pricing.founder')}</p>
               <div className="s-cta">
                 <Link href={{ pathname: '/connexion', query: { mode: 'inscription' } }} className="btn btn-primary">

@@ -7,9 +7,10 @@ import { useTranslations } from 'next-intl';
 import { useMemo, useState } from 'react';
 import { useFormat } from '@/components/FormatProvider';
 import { Icon } from '@/components/Icons';
-import { Link, useRouter } from '@/i18n/navigation';
+import { Link } from '@/i18n/navigation';
 import { machineRentalState, type Rental } from '@/lib/rental';
 import type { MachineKind } from '@/lib/types';
+import { useRentalBackend } from './backend';
 import { RentalDetail } from './RentalDetail';
 import { RentalForm, type ClientSuggestion } from './RentalForm';
 
@@ -59,7 +60,7 @@ export function Planner({
 }) {
   const t = useTranslations('rental');
   const f = useFormat();
-  const router = useRouter();
+  const backend = useRentalBackend();
   const now = Date.parse(nowIso);
   const today = startOfDay(now);
   const [from, setFrom] = useState(() => addDays(today, -2));
@@ -159,7 +160,7 @@ export function Planner({
                       repair: repairs[r.machine_id].title,
                     })}
                   </button>
-                  <Link href={`/garage?m=${r.machine_id}`} className="btn btn-ghost s-btn-sm">
+                  <Link href={`${backend.garage}?m=${r.machine_id}`} className="btn btn-ghost s-btn-sm">
                     {t('risk.open')}
                   </Link>
                 </li>
@@ -183,7 +184,7 @@ export function Planner({
                     time: f.dateTime(r.start_at),
                   })}
                 </span>
-                <Link href={`/location/${r.id}/depart`} className="btn btn-primary s-btn-sm">
+                <Link href={`${backend.base}/${r.id}/depart`} className="btn btn-primary s-btn-sm">
                   {t('actions.checkOut')}
                 </Link>
               </li>
@@ -203,7 +204,7 @@ export function Planner({
                         time: f.dateTime(r.end_at),
                       })}
                 </span>
-                <Link href={`/location/${r.id}/retour`} className="btn btn-soft s-btn-sm">
+                <Link href={`${backend.base}/${r.id}/retour`} className="btn btn-soft s-btn-sm">
                   {t('actions.checkIn')}
                 </Link>
               </li>
@@ -350,7 +351,7 @@ export function Planner({
           }}
           onChanged={() => {
             setOpen(null);
-            router.refresh();
+            backend.refresh();
           }}
         />
       ) : null}
@@ -368,7 +369,7 @@ export function Planner({
           onClose={() => setForm(null)}
           onSaved={() => {
             setForm(null);
-            router.refresh();
+            backend.refresh();
           }}
         />
       ) : null}

@@ -7,8 +7,8 @@ import { useId, useState } from 'react';
 import { useFormat } from '@/components/FormatProvider';
 import { Icon } from '@/components/Icons';
 import { Link } from '@/i18n/navigation';
-import { rentalErrorCode, type Rental } from '@/lib/rental';
-import { supabaseBrowser } from '@/lib/supabase/client';
+import type { Rental } from '@/lib/rental';
+import { useRentalBackend } from './backend';
 import { Dialog } from './Dialog';
 import type { PlannerMachine } from './Planner';
 
@@ -37,6 +37,7 @@ export function RentalDetail({
   const t = useTranslations('rental');
   const f = useFormat();
   const uid = useId();
+  const backend = useRentalBackend();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const late = r.status === 'en_cours' && Date.parse(r.end_at) < now;
@@ -44,11 +45,12 @@ export function RentalDetail({
   async function cancel() {
     if (!window.confirm(t('detail.confirmCancel'))) return;
     setBusy(true);
-    const { error: dbError } = await supabaseBrowser().from('rentals').update({ status: 'annulee' }).eq('id', r.id).select('id').single();
+    const code = await backend.cancelRental(r.id);
     setBusy(false);
-    if (dbError) return setError(t(`errors.${rentalErrorCode(dbError)}`));
+    if (code) return setError(t(`errors.${code}`));
     onChanged();
   }
+
 
   const rows: [string, string | null][] = [
     [t('detail.client'), [r.client_company, r.client_name].filter(Boolean).join(' · ')],
@@ -90,19 +92,19 @@ export function RentalDetail({
 
         <div className="s-rent-actions">
           {r.status === 'reservee' ? (
-            <Link href={`/location/${r.id}/depart`} className="btn btn-primary">
+            <Link href={`${backend.base}/${r.id}/depart`} className="btn btn-primary">
               <Icon name="check" />
               {t('actions.checkOut')}
             </Link>
           ) : null}
           {r.status === 'en_cours' ? (
-            <Link href={`/location/${r.id}/retour`} className="btn btn-primary">
+            <Link href={`${backend.base}/${r.id}/retour`} className="btn btn-primary">
               <Icon name="check" />
               {t('actions.checkIn')}
             </Link>
           ) : null}
           {checks.depart || checks.retour ? (
-            <Link href={`/location/${r.id}/rapport`} className="btn btn-soft">
+            <Link href={`${backend.base}/${r.id}/rapport`} className="btn btn-soft">
               <Icon name="file" />
               {t('actions.report')}
             </Link>

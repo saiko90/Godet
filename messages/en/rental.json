@@ -193,7 +193,8 @@
         "not_configured": "Automatic reading unavailable. Please enter the meter reading.",
         "forbidden": "Reading refused. Please enter the meter reading.",
         "generic": "Reading failed. Please enter the meter reading."
-      }
+      },
+      "demo": "Reading from a photo is available in your garage, not in the demo."
     },
     "accident": "Accident or damage",
     "accidentNote": "What happened?",
@@ -386,5 +387,14 @@
     "text": "These machines are under repair: they may not be ready in time. Finish the repair in the log or warn the customer.",
     "item": "{code} · {client}, check-out {date} · repair: {repair}",
     "open": "View machine"
+  },
+  "demo": {
+    "label": "Demo",
+    "banner": "Demo: book a machine, fill in a report and sign. Nothing is sent or saved.",
+    "garage": "Demo garage",
+    "cta": "Create my garage",
+    "noEmail": "In the demo no report is sent. In your account, the PDF is emailed to the customer and filed in the machine’s log.",
+    "unavailable": "This step is no longer available for this sample rental.",
+    "staff": "Workshop"
   }
 }

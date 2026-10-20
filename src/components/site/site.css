@@ -1238,3 +1238,10 @@
 .s-rent-risk-item:hover { border-color: #ff5b4e; }
 .s-check-breakdown { display: grid; gap: 8px; padding-top: 12px; border-top: 1px solid var(--line); }
 .s-check-breakdown .label { font-size: var(--t-sm); font-weight: 650; }
+
+/* démonstration de l'option Location */
+.s-rent-demo { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; padding: 12px 16px; border-radius: 14px; border: 1px dashed color-mix(in srgb, var(--paint) 55%, var(--line)); background: var(--paint-soft); }
+.s-rent-demo p { margin: 0; display: flex; gap: 8px; align-items: flex-start; font-size: var(--t-sm); line-height: 1.45; flex: 1 1 280px; }
+.s-rent-demo p svg { width: 16px; height: 16px; color: var(--paint); flex: none; margin-top: 2px; }
+.s-rent-demo > div { display: flex; flex-wrap: wrap; gap: 8px; }
+.s-rent-wait { min-height: 40vh; }

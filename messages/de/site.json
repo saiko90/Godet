@@ -200,6 +200,7 @@
       "yearly": "2 Monate geschenkt bei j\u00e4hrlicher Zahlung. Jederzeit k\u00fcndbar.",
       "founder": "Gr\u00fcnderpaket: \u221230\u00a0% lebenslang f\u00fcr die ersten 10 Unternehmen mit Abo.",
       "rental": "Option Vermietung (+{chf} CHF oder {eur} € pro Monat): Mietkalender, vor Ort unterschriebene Übergabe- und Rücknahmeprotokolle, PDF-Bericht an den Kunden.",
+      "rentalDemo": "Demo der Vermietung ansehen",
       "tiers": {
         "essentiel": {
           "name": "Essentiel",
