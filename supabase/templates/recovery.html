@@ -1,0 +1,95 @@
+{{ $l := printf "%v" .Data.locale }}<!doctype html>
+<html lang="{{ if eq $l "de" }}de-CH{{ else if eq $l "it" }}it-CH{{ else if eq $l "en" }}en{{ else }}fr-CH{{ end }}" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="x-apple-disable-message-reformatting">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark">
+<title>{{ if eq $l "de" }}Setzen Sie Ihr Godet-Passwort zurück{{ else if eq $l "it" }}Reimposti la password di Godet{{ else if eq $l "en" }}Reset your Godet password{{ else }}Réinitialisez votre mot de passe Godet{{ end }}</title>
+<style>
+  body { margin: 0; padding: 0; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+  a { color: #1d1f24; }
+  @media (max-width: 620px) {
+    .g-pad { padding-left: 20px !important; padding-right: 20px !important; }
+  }
+  @media (prefers-color-scheme: dark) {
+    .g-page { background: #08090b !important; }
+    .g-card { background: #121418 !important; border-color: #2a2d33 !important; }
+    .g-text, .g-text a { color: #ece8de !important; }
+    .g-muted, .g-muted a { color: #a2a6ad !important; }
+    .g-rule { border-color: #2a2d33 !important; }
+    .g-text a.g-btn { color: #08090b !important; }
+  }
+</style>
+</head>
+<body class="g-page" style="margin:0;padding:0;background:#f4f2ec;">
+<div style="display:none;max-height:0;max-width:0;overflow:hidden;opacity:0;mso-hide:all;font-size:1px;line-height:1px;color:#f4f2ec;">{{ if eq $l "de" }}Wählen Sie mit einem Klick ein neues Passwort.{{ else if eq $l "it" }}Scelga una nuova password con un clic.{{ else if eq $l "en" }}Choose a new password in one click.{{ else }}Choisissez un nouveau mot de passe en un clic.{{ end }}&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;</div>
+<table role="presentation" class="g-page" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f4f2ec;">
+<tr><td align="center" style="padding:24px 12px 32px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;">
+<tr><td class="g-pad" style="background:#08090b;border-radius:14px 14px 0 0;padding:22px 32px;">
+<table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
+<td style="width:8px;background:#f3b71b;border-radius:2px;font-size:0;line-height:0;">&nbsp;</td>
+<td style="padding-left:14px;">
+<div style="font-family:'Arial Black', Arial, Helvetica, sans-serif;font-size:20px;line-height:24px;font-weight:900;letter-spacing:6px;color:#ece8de;">GODET</div>
+<div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:12px;line-height:16px;color:#a2a6ad;margin-top:4px;">{{ if eq $l "de" }}Das Serviceheft Ihrer Maschinen{{ else if eq $l "it" }}Il libretto di manutenzione delle sue macchine{{ else if eq $l "en" }}The maintenance logbook for your machines{{ else }}Le carnet d’entretien de vos machines{{ end }}</div>
+</td>
+</tr></table>
+</td></tr>
+<tr><td style="height:4px;background:#f3b71b;font-size:0;line-height:0;">&nbsp;</td></tr>
+<tr><td class="g-card g-pad g-text" style="background:#ffffff;border:1px solid #e3dfd4;border-top:0;border-radius:0 0 14px 14px;padding:28px 32px 32px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:15px;line-height:23px;color:#1d1f24;">
+{{ if eq $l "de" }}
+<h1 class="g-text" style="margin:0 0 16px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:22px;line-height:28px;font-weight:700;color:#1d1f24;">Neues Passwort</h1>
+<p class="g-text" style="margin:0 0 14px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:15px;line-height:23px;color:#1d1f24;">Sie haben beantragt, das Passwort Ihres Godet-Kontos zurückzusetzen. Klicken Sie auf die Schaltfläche, um ein neues zu wählen.</p>
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:24px 0 20px;">
+<tr><td bgcolor="#f3b71b" style="background:#f3b71b;border-radius:10px;">
+<a class="g-btn" href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&amp;type=recovery&amp;suite={{ .RedirectTo }}" style="display:inline-block;padding:14px 24px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:15px;line-height:18px;font-weight:700;color:#08090b;text-decoration:none;border-radius:10px;">Neues Passwort wählen</a>
+</td></tr>
+</table>
+<p class="g-muted" style="margin:0 0 10px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:13px;line-height:20px;color:#5b6068;">Falls die Schaltfläche nicht funktioniert, kopieren Sie diesen Link in Ihren Browser:</p>
+<p class="g-muted" style="margin:0 0 14px;font-family:'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;font-size:12px;line-height:18px;color:#5b6068;word-break:break-all;"><a href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&amp;type=recovery&amp;suite={{ .RedirectTo }}" style="color:#5b6068;text-decoration:underline;">{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&amp;type=recovery&amp;suite={{ .RedirectTo }}</a></p>
+<p class="g-muted" style="margin:0 0 10px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:13px;line-height:20px;color:#5b6068;">Dieser Link funktioniert nur einmal und nur begrenzte Zeit. Falls Sie nichts angefordert haben, ignorieren Sie diese E-Mail: Ihr aktuelles Passwort bleibt gültig.</p>
+{{ else if eq $l "it" }}
+<h1 class="g-text" style="margin:0 0 16px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:22px;line-height:28px;font-weight:700;color:#1d1f24;">Nuova password</h1>
+<p class="g-text" style="margin:0 0 14px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:15px;line-height:23px;color:#1d1f24;">Ha chiesto di reimpostare la password del suo account Godet. Clicchi sul pulsante per sceglierne una nuova.</p>
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:24px 0 20px;">
+<tr><td bgcolor="#f3b71b" style="background:#f3b71b;border-radius:10px;">
+<a class="g-btn" href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&amp;type=recovery&amp;suite={{ .RedirectTo }}" style="display:inline-block;padding:14px 24px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:15px;line-height:18px;font-weight:700;color:#08090b;text-decoration:none;border-radius:10px;">Scegli una nuova password</a>
+</td></tr>
+</table>
+<p class="g-muted" style="margin:0 0 10px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:13px;line-height:20px;color:#5b6068;">Se il pulsante non funziona, copi questo link nel browser:</p>
+<p class="g-muted" style="margin:0 0 14px;font-family:'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;font-size:12px;line-height:18px;color:#5b6068;word-break:break-all;"><a href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&amp;type=recovery&amp;suite={{ .RedirectTo }}" style="color:#5b6068;text-decoration:underline;">{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&amp;type=recovery&amp;suite={{ .RedirectTo }}</a></p>
+<p class="g-muted" style="margin:0 0 10px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:13px;line-height:20px;color:#5b6068;">Questo link funziona una sola volta e per un tempo limitato. Se non ha richiesto nulla, ignori questa e-mail: la password attuale resta valida.</p>
+{{ else if eq $l "en" }}
+<h1 class="g-text" style="margin:0 0 16px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:22px;line-height:28px;font-weight:700;color:#1d1f24;">New password</h1>
+<p class="g-text" style="margin:0 0 14px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:15px;line-height:23px;color:#1d1f24;">You asked to reset the password of your Godet account. Click the button to choose a new one.</p>
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:24px 0 20px;">
+<tr><td bgcolor="#f3b71b" style="background:#f3b71b;border-radius:10px;">
+<a class="g-btn" href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&amp;type=recovery&amp;suite={{ .RedirectTo }}" style="display:inline-block;padding:14px 24px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:15px;line-height:18px;font-weight:700;color:#08090b;text-decoration:none;border-radius:10px;">Choose a new password</a>
+</td></tr>
+</table>
+<p class="g-muted" style="margin:0 0 10px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:13px;line-height:20px;color:#5b6068;">If the button doesn’t work, copy this link into your browser:</p>
+<p class="g-muted" style="margin:0 0 14px;font-family:'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;font-size:12px;line-height:18px;color:#5b6068;word-break:break-all;"><a href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&amp;type=recovery&amp;suite={{ .RedirectTo }}" style="color:#5b6068;text-decoration:underline;">{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&amp;type=recovery&amp;suite={{ .RedirectTo }}</a></p>
+<p class="g-muted" style="margin:0 0 10px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:13px;line-height:20px;color:#5b6068;">This link works only once and for a limited time. If you didn’t request it, ignore this email: your current password stays valid.</p>
+{{ else }}
+<h1 class="g-text" style="margin:0 0 16px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:22px;line-height:28px;font-weight:700;color:#1d1f24;">Nouveau mot de passe</h1>
+<p class="g-text" style="margin:0 0 14px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:15px;line-height:23px;color:#1d1f24;">Vous avez demandé à réinitialiser le mot de passe de votre compte Godet. Cliquez sur le bouton pour en choisir un nouveau.</p>
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:24px 0 20px;">
+<tr><td bgcolor="#f3b71b" style="background:#f3b71b;border-radius:10px;">
+<a class="g-btn" href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&amp;type=recovery&amp;suite={{ .RedirectTo }}" style="display:inline-block;padding:14px 24px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:15px;line-height:18px;font-weight:700;color:#08090b;text-decoration:none;border-radius:10px;">Choisir un nouveau mot de passe</a>
+</td></tr>
+</table>
+<p class="g-muted" style="margin:0 0 10px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:13px;line-height:20px;color:#5b6068;">Si le bouton ne fonctionne pas, copiez ce lien dans votre navigateur :</p>
+<p class="g-muted" style="margin:0 0 14px;font-family:'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;font-size:12px;line-height:18px;color:#5b6068;word-break:break-all;"><a href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&amp;type=recovery&amp;suite={{ .RedirectTo }}" style="color:#5b6068;text-decoration:underline;">{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&amp;type=recovery&amp;suite={{ .RedirectTo }}</a></p>
+<p class="g-muted" style="margin:0 0 10px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:13px;line-height:20px;color:#5b6068;">Ce lien ne fonctionne qu’une fois et pendant une durée limitée. Si vous n’avez rien demandé, ignorez cet e-mail : votre mot de passe actuel reste valable.</p>
+{{ end }}
+</td></tr>
+<tr><td class="g-pad g-muted" style="padding:20px 32px 0;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:12px;line-height:18px;color:#5b6068;">
+{{ if eq $l "de" }}Sie erhalten diese E-Mail, weil auf Godet mit dieser Adresse eine Aktion angefordert wurde.<br>Godet · Swiss Digital Studio · Wallis, Schweiz · <a href="https://godet.app/de" style="color:inherit;text-decoration:underline;">godet.app</a>{{ else if eq $l "it" }}Riceve questa e-mail perché su Godet è stata richiesta un’azione con questo indirizzo.<br>Godet · Swiss Digital Studio · Vallese, Svizzera · <a href="https://godet.app/it" style="color:inherit;text-decoration:underline;">godet.app</a>{{ else if eq $l "en" }}You are receiving this email because an action was requested on Godet with this address.<br>Godet · Swiss Digital Studio · Valais, Switzerland · <a href="https://godet.app/en" style="color:inherit;text-decoration:underline;">godet.app</a>{{ else }}Vous recevez cet e-mail parce qu’une action a été demandée sur Godet avec cette adresse.<br>Godet · Swiss Digital Studio · Valais, Suisse · <a href="https://godet.app" style="color:inherit;text-decoration:underline;">godet.app</a>{{ end }}
+</td></tr>
+</table>
+</td></tr>
+</table>
+</body>
+</html>

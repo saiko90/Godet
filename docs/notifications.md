@@ -171,3 +171,15 @@ statut HTTP et le code d'erreur de Resend.
 - **Volume** : une exécution traite quelques centaines de personnes (Resend : 10 requêtes par seconde, la fonction
   espace ses envois de 250 ms et s'arrête de commencer des envois après 110 s ; limites des fonctions : 150 s et 2 s
   de calcul). Au-delà : utiliser l'envoi groupé de Resend (`/emails/batch`) ou découper l'exécution par entreprise.
+
+## E-mails de connexion (Supabase Auth) via Resend
+
+Les e-mails d'inscription, de mot de passe oublié, de changement d'adresse, etc. partent de Supabase Auth.
+Ils passent par Resend en SMTP (Authentication › Emails › SMTP Settings) :
+hôte `smtp.resend.com`, port `465`, utilisateur `resend`, mot de passe = clé d'API Resend,
+expéditeur `noreply@godet.app` (nom « Godet »). Domaine `godet.app` vérifié dans Resend (région eu-west-1).
+
+Modèles dans les 4 langues : `supabase/templates/*.html` (objets dans `supabase/templates/README.md`), générés par
+`node --experimental-strip-types scripts/emails/supabase-templates.mjs` à partir du gabarit `src/lib/email/layout.ts`.
+À recopier dans Authentication › Emails › Templates après chaque modification. La langue suit `locale` dans les
+métadonnées du compte (enregistrée à l'inscription), sinon français ; les liens passent par `/auth/confirm`.
