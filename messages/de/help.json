@@ -170,7 +170,7 @@
       },
       "in": {
         "title": "Rücknahmeprotokoll",
-        "text": "Bei der Rücknahme wird jeder Punkt mit der Übergabe verglichen: Ein neuer Mangel erscheint rot, die Mietstunden werden berechnet. Kosten (Tanken, Reinigung, Schäden) und Vorbehalte erfassen, dann unterschreiben lassen: Die Miete ist abgeschlossen und der Zähler der Maschine aktualisiert."
+        "text": "Bei der Rücknahme wird jeder Punkt mit der Übergabe verglichen: Ein neuer Mangel erscheint rot, die Mietstunden werden berechnet. Kosten (Tanken, Reinigung, Schäden) und Vorbehalte erfassen, dann unterschreiben lassen: Die Miete ist abgeschlossen und der Zähler der Maschine aktualisiert. Maschine defekt? Wählen Sie «Defekt»: Im Maschinenheft wird eine Reparatur eröffnet, und die nächsten Reservationen erscheinen im Kalender rot schraffiert, bis die Reparatur abgeschlossen ist."
       },
       "report": {
         "title": "PDF-Bericht",

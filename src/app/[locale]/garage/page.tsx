@@ -64,6 +64,15 @@ export default async function GaragePage({ params, searchParams }: Props) {
       .in('status', ['reservee', 'en_cours'])
       .limit(2000);
     const list = (data ?? []) as Rental[];
+    // Machine en réparation avec une réservation à venir : risque de retard.
+    const { data: open } = await supabase
+      .from('entries')
+      .select('machine_id')
+      .eq('org_id', session.ctx.org.id)
+      .eq('kind', 'reparation')
+      .in('repair_status', ['en_cours', 'attente_piece'])
+      .is('deleted_at', null);
+    const inRepair = new Set((open ?? []).map((e) => e.machine_id));
     const byMachine: Record<string, RentalBadge> = {};
     for (const m of fleet.machines) {
       const st = machineRentalState(list, m.id, now);
@@ -74,6 +83,7 @@ export default async function GaragePage({ params, searchParams }: Props) {
         rentalId: r?.id,
         client: r ? r.client_company || r.client_name : undefined,
         at: r ? (st.state === 'louee' ? r.end_at : r.start_at) : undefined,
+        risk: st.state === 'reservee' || (st.state === 'disponible' && st.next) ? inRepair.has(m.id) : undefined,
       };
     }
     rentals = { byMachine };

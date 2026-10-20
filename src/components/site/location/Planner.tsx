@@ -40,6 +40,7 @@ export function Planner({
   rentals,
   checks,
   clients,
+  repairs,
   nowIso,
   canManage,
   userId,
@@ -50,6 +51,8 @@ export function Planner({
   rentals: Rental[];
   checks: Record<string, { depart?: string; retour?: string }>;
   clients: ClientSuggestion[];
+  /** Réparations ouvertes par machine : leurs réservations à venir sont signalées. */
+  repairs: Record<string, { title: string; date: string }>;
   nowIso: string;
   canManage: boolean;
   userId: string;
@@ -87,6 +90,8 @@ export function Planner({
   const departures = rentals.filter((r) => r.status === 'reservee' && startOfDay(Date.parse(r.start_at)) <= today);
   const returns = rentals.filter((r) => r.status === 'en_cours' && startOfDay(Date.parse(r.end_at)) <= today);
   const late = returns.filter((r) => Date.parse(r.end_at) < now);
+  // Réservations à venir d'une machine en réparation : elle ne sera peut-être pas prête à temps.
+  const atRisk = rentals.filter((r) => r.status === 'reservee' && repairs[r.machine_id]).sort((a, b) => a.start_at.localeCompare(b.start_at));
 
   const machineOf = (id: string) => machines.find((m) => m.id === id);
   const selected = open ? rentals.find((r) => r.id === open) : undefined;
@@ -134,6 +139,35 @@ export function Planner({
           </li>
         ) : null}
       </ul>
+
+      {atRisk.length ? (
+        <section className="s-rent-risk" aria-labelledby="rent-risk" role="alert">
+          <h2 id="rent-risk">
+            <Icon name="alert" /> {t('risk.title', { count: atRisk.length })}
+          </h2>
+          <p>{t('risk.text')}</p>
+          <ul>
+            {atRisk.map((r) => {
+              const m = machineOf(r.machine_id);
+              return (
+                <li key={r.id}>
+                  <button type="button" className="s-rent-risk-item" onClick={() => setOpen(r.id)}>
+                    {t('risk.item', {
+                      code: m?.code ?? '',
+                      client: r.client_company || r.client_name,
+                      date: f.dateTime(r.start_at),
+                      repair: repairs[r.machine_id].title,
+                    })}
+                  </button>
+                  <Link href={`/garage?m=${r.machine_id}`} className="btn btn-ghost s-btn-sm">
+                    {t('risk.open')}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      ) : null}
 
       {departures.length || returns.length ? (
         <section className="s-rent-today" aria-labelledby="rent-today">
@@ -213,6 +247,11 @@ export function Planner({
         <span>
           <i className="is-done" /> {t('legend.done')}
         </span>
+        {atRisk.length ? (
+          <span>
+            <i className="is-risk" /> {t('legend.risk')}
+          </span>
+        ) : null}
       </div>
 
       {machines.length === 0 ? (
@@ -239,7 +278,13 @@ export function Planner({
                   <div className="s-rent-machine">
                     <b>{m.code}</b>
                     <span>{m.title}</span>
-                    <span className={`s-rent-pill is-${st.state === 'louee' && st.late ? 'late' : st.state}`}>{t(`state.${st.state}`)}</span>
+                    {repairs[m.id] && st.state !== 'louee' ? (
+                      <span className="s-rent-pill is-repair" title={repairs[m.id].title}>
+                        {t('state.repair')}
+                      </span>
+                    ) : (
+                      <span className={`s-rent-pill is-${st.state === 'louee' && st.late ? 'late' : st.state}`}>{t(`state.${st.state}`)}</span>
+                    )}
                   </div>
                   <div className="s-rent-track">
                     {days.map((d, i) => {
@@ -263,7 +308,8 @@ export function Planner({
                       const p = place(r);
                       if (!p) return null;
                       const lateBar = r.status === 'en_cours' && Date.parse(r.end_at) < now;
-                      const kind = r.status === 'reservee' ? 'booked' : r.status === 'en_cours' ? (lateBar ? 'late' : 'out') : 'done';
+                      const risk = r.status === 'reservee' && Boolean(repairs[r.machine_id]);
+                      const kind = r.status === 'reservee' ? (risk ? 'risk' : 'booked') : r.status === 'en_cours' ? (lateBar ? 'late' : 'out') : 'done';
                       return (
                         <button
                           key={r.id}
@@ -274,8 +320,9 @@ export function Planner({
                             width: `calc(${p.width} * var(--col))`,
                           }}
                           onClick={() => setOpen(r.id)}
-                          title={`${r.client_company || r.client_name} · ${f.dateTime(r.start_at)} → ${f.dateTime(r.end_at)}`}
+                          title={`${r.client_company || r.client_name} · ${f.dateTime(r.start_at)} → ${f.dateTime(r.end_at)}${risk ? ` · ${t('legend.risk')}` : ''}`}
                         >
+                          {risk ? <Icon name="alert" /> : null}
                           <span>{r.client_company || r.client_name}</span>
                         </button>
                       );
@@ -292,6 +339,7 @@ export function Planner({
         <RentalDetail
           rental={selected}
           machine={machineOf(selected.machine_id)}
+          repair={selected.status === 'reservee' ? (repairs[selected.machine_id] ?? null) : null}
           checks={checks[selected.id] ?? {}}
           canEdit={canManage || selected.created_by === userId}
           now={now}
@@ -313,6 +361,7 @@ export function Planner({
           machines={machines}
           rentals={rentals}
           clients={clients}
+          repairs={repairs}
           rental={form.rental}
           machineId={form.machineId}
           day={form.day}

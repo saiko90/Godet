@@ -1218,3 +1218,23 @@
 .s-rent-settings-block h3 { margin: 0; font-size: var(--t-md); }
 .s-rent-terms-file { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: var(--t-sm); }
 .s-rent-terms-file svg { width: 18px; height: 18px; color: var(--paint); }
+
+/* location : machine en réparation avec des réservations à venir */
+.s-rent-bar.is-risk {
+  color: #fff; border: 2px solid #ff5b4e;
+  background: repeating-linear-gradient(135deg, rgba(255, 91, 78, 0.55) 0 8px, rgba(243, 183, 27, 0.45) 8px 16px);
+  gap: 4px;
+}
+.s-rent-bar.is-risk svg { width: 13px; height: 13px; flex: none; }
+.s-rent-legend i.is-risk { background: repeating-linear-gradient(135deg, #ff5b4e 0 4px, #f3b71b 4px 8px); }
+.s-rent-pill.is-repair { background: var(--bad-soft); color: var(--bad); }
+.s-rent-risk { padding: 16px; border-radius: 16px; border: 1px solid rgba(255, 91, 78, 0.5); background: var(--bad-soft); display: grid; gap: 8px; }
+.s-rent-risk h2 { margin: 0; display: flex; align-items: center; gap: 8px; font-size: var(--t-md); color: #ff8a80; }
+.s-rent-risk h2 svg { width: 18px; height: 18px; }
+.s-rent-risk p { margin: 0; font-size: var(--t-sm); color: var(--chalk); }
+.s-rent-risk ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.s-rent-risk li { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.s-rent-risk-item { flex: 1 1 240px; min-height: 40px; padding: 8px 10px; border-radius: 10px; border: 1px solid rgba(255, 91, 78, 0.35); background: rgba(8, 9, 11, 0.4); color: var(--chalk); font: inherit; font-size: var(--t-sm); text-align: left; cursor: pointer; }
+.s-rent-risk-item:hover { border-color: #ff5b4e; }
+.s-check-breakdown { display: grid; gap: 8px; padding-top: 12px; border-top: 1px solid var(--line); }
+.s-check-breakdown .label { font-size: var(--t-sm); font-weight: 650; }

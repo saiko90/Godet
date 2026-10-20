@@ -33,12 +33,14 @@
     "booked": "Réservée",
     "out": "Louée",
     "late": "En retard",
-    "done": "Rendue"
+    "done": "Rendue",
+    "risk": "Réservée · machine en réparation"
   },
   "state": {
     "louee": "Louée",
     "reservee": "Réservée",
-    "disponible": "Disponible"
+    "disponible": "Disponible",
+    "repair": "En réparation"
   },
   "status": {
     "reservee": "Réservée",
@@ -88,7 +90,8 @@
     "cancel": "Annuler",
     "saving": "Enregistrement…",
     "save": "Réserver",
-    "saveEdit": "Enregistrer"
+    "saveEdit": "Enregistrer",
+    "risk": "Cette machine est en réparation ({repair}) : vérifiez qu’elle sera prête à temps."
   },
   "errors": {
     "clientName": "Indiquez le nom du client.",
@@ -111,7 +114,8 @@
     "planned": "Prévu",
     "out": "Départ",
     "back": "Retour",
-    "notes": "Remarques"
+    "notes": "Remarques",
+    "risk": "Machine en réparation ({repair}) : elle ne sera peut-être pas prête pour cette location."
   },
   "items": {
     "demarre": "La machine démarre et fonctionne",
@@ -287,10 +291,17 @@
         "generic": "L’état des lieux n’a pas pu être enregistré. Réessayez.",
         "terms": "Le client doit accepter les conditions de location."
       },
-      "terms": "Le client doit accepter les conditions de location."
+      "terms": "Le client doit accepter les conditions de location.",
+      "breakdown": "Indiquez si la machine est en panne.",
+      "breakdownNote": "Décrivez la panne."
     },
     "termsRead": "Lire les conditions de location (PDF)",
-    "termsAccept": "Le client a lu et accepte les conditions de location ci-dessus."
+    "termsAccept": "Le client a lu et accepte les conditions de location ci-dessus.",
+    "breakdown": "La machine est-elle en panne (à réparer avant la prochaine location) ?",
+    "breakdownYes": "En panne",
+    "breakdownNo": "Utilisable",
+    "breakdownNote": "Que faut-il réparer ?",
+    "breakdownHint": "Une réparation « en cours » sera ouverte dans le carnet de la machine. Tant qu’elle n’est pas terminée, ses prochaines réservations sont signalées dans l’agenda."
   },
   "report": {
     "title": "Rapport de location",
@@ -339,7 +350,9 @@
     "map": "Voir sur la carte",
     "terms": "Conditions de location",
     "termsAccepted": "Acceptées par le client",
-    "termsLink": "Voir la version acceptée"
+    "termsLink": "Voir la version acceptée",
+    "breakdown": "Panne au retour",
+    "breakdownYes": "Oui · réparation ouverte dans le carnet"
   },
   "pdf": {
     "machine": "Machine",
@@ -367,5 +380,11 @@
     "thanks": "Merci de votre confiance.",
     "sign": "Meilleures salutations,",
     "footer": "Message envoyé par Godet pour le compte de {org}. Pour toute question, répondez à ce message ou contactez directement {org}."
+  },
+  "risk": {
+    "title": "{count, plural, one {Une réservation à risque} other {# réservations à risque}}",
+    "text": "Ces machines sont en réparation : elles ne seront peut-être pas prêtes à temps. Terminez la réparation dans le carnet ou prévenez le client.",
+    "item": "{code} · {client}, départ le {date} · réparation : {repair}",
+    "open": "Voir la machine"
   }
 }

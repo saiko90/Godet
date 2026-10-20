@@ -33,12 +33,14 @@
     "booked": "Booked",
     "out": "On hire",
     "late": "Overdue",
-    "done": "Returned"
+    "done": "Returned",
+    "risk": "Booked · machine under repair"
   },
   "state": {
     "louee": "On hire",
     "reservee": "Booked",
-    "disponible": "Available"
+    "disponible": "Available",
+    "repair": "Under repair"
   },
   "status": {
     "reservee": "Booked",
@@ -88,7 +90,8 @@
     "cancel": "Cancel",
     "saving": "Saving…",
     "save": "Book",
-    "saveEdit": "Save"
+    "saveEdit": "Save",
+    "risk": "This machine is under repair ({repair}): check it will be ready in time."
   },
   "errors": {
     "clientName": "Enter the customer’s name.",
@@ -111,7 +114,8 @@
     "planned": "Planned",
     "out": "Check-out",
     "back": "Return",
-    "notes": "Notes"
+    "notes": "Notes",
+    "risk": "Machine under repair ({repair}): it may not be ready for this hire."
   },
   "items": {
     "demarre": "Machine starts and runs",
@@ -287,10 +291,17 @@
         "generic": "The report could not be saved. Please try again.",
         "terms": "The customer must accept the rental terms."
       },
-      "terms": "The customer must accept the rental terms."
+      "terms": "The customer must accept the rental terms.",
+      "breakdown": "State whether the machine is broken down.",
+      "breakdownNote": "Describe the breakdown."
     },
     "termsRead": "Read the rental terms (PDF)",
-    "termsAccept": "The customer has read and accepts the rental terms above."
+    "termsAccept": "The customer has read and accepts the rental terms above.",
+    "breakdown": "Is the machine broken down (to be repaired before the next hire)?",
+    "breakdownYes": "Broken down",
+    "breakdownNo": "Usable",
+    "breakdownNote": "What needs repairing?",
+    "breakdownHint": "A repair “in progress” will be opened in the machine’s log. Until it is finished, the machine’s next bookings are flagged in the calendar."
   },
   "report": {
     "title": "Rental report",
@@ -339,7 +350,9 @@
     "map": "View on map",
     "terms": "Rental terms",
     "termsAccepted": "Accepted by the customer",
-    "termsLink": "View the accepted version"
+    "termsLink": "View the accepted version",
+    "breakdown": "Breakdown at check-in",
+    "breakdownYes": "Yes · repair opened in the log"
   },
   "pdf": {
     "machine": "Machine",
@@ -367,5 +380,11 @@
     "thanks": "Thank you for your trust.",
     "sign": "Kind regards,",
     "footer": "Message sent by Godet on behalf of {org}. For any question, reply to this message or contact {org} directly."
+  },
+  "risk": {
+    "title": "{count, plural, one {One booking at risk} other {# bookings at risk}}",
+    "text": "These machines are under repair: they may not be ready in time. Finish the repair in the log or warn the customer.",
+    "item": "{code} · {client}, check-out {date} · repair: {repair}",
+    "open": "View machine"
   }
 }

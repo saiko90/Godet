@@ -122,6 +122,9 @@ Navigateur de test : Chromium de Playwright dans `/opt/pw-browsers` (ne pas lanc
   contrôle : `src/lib/rental.ts`. Fonction Supabase `location` : PDF (pdf-lib, vignettes JPEG `<check>-pdf-NN-<slot>.jpg`
   faites par l'appareil), rangé en document de la machine, e-mail Resend au client ; textes copiés par
   `node scripts/sync-location-i18n.mjs` (à relancer après un changement de `rental.json`, puis redéployer).
+  Panne au retour (`rental_checks.breakdown`) : le déclencheur ouvre une réparation « en cours » dans le carnet ; tant
+  qu'une réparation est ouverte, les réservations à venir de la machine sont « à risque » (agenda, détail, formulaire,
+  pastille du garage).
 - Aide : page `/aide` (textes `help`, structure `src/components/site/aide/content.ts`, tutoriel d'installation par
   appareil), guide imprimable `/aide/guide` → PDF `public/guides/godet-guide-<langue>.pdf` à régénérer après un
   changement de texte : `BASE=http://localhost:3000 node scripts/guides/make-guides.mjs`.

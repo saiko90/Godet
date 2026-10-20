@@ -9,12 +9,13 @@ for (const l of ['fr', 'de', 'it', 'en']) {
   const out = {
     check: pick(r.check, ['titleOut', 'titleIn', 'groups', 'states', 'fuelLevels', 'slots', 'yes', 'no', 'valid', 'invalid', 'withReserves', 'noReserves', 'agreeOut', 'agreeIn']),
     items: r.items,
-    report: pick(r.report, ['item', 'result', 'worse', 'hours', 'worked', 'fuel', 'accident', 'safety', 'accessories', 'keys', 'remarks', 'terms', 'termsAccepted', 'total', 'reserves', 'signatures']),
+    report: pick(r.report, ['item', 'result', 'worse', 'hours', 'worked', 'fuel', 'accident', 'safety', 'accessories', 'keys', 'remarks', 'terms', 'termsAccepted', 'total', 'reserves', 'signatures', 'breakdown', 'breakdownYes']),
     pdf: r.pdf,
     mail: r.mail,
     form: { deliveries: r.form.deliveries },
     kinds: Object.fromEntries(Object.entries(d.machineKinds).map(([k, v]) => [k, v.label])),
   };
-  writeFileSync(`supabase/functions/location/i18n/${l}.json`, JSON.stringify(out) + '\n');
+  // Espaces insécables remplacées (le PDF et l'e-mail n'en ont pas besoin ; fichiers plus simples à déployer).
+  writeFileSync(`supabase/functions/location/i18n/${l}.json`, JSON.stringify(out).replace(/\u00a0/g, ' ') + '\n');
 }
 console.log('Textes de la fonction « location » à jour.');

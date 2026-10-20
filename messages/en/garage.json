@@ -984,6 +984,8 @@
     "lateTo": "Return overdue: {client}, due {date}",
     "bookedBy": "Booked by {client} from {date}",
     "nextFrom": "Available · next booking on {date}",
-    "freeAction": "Available · book"
+    "freeAction": "Available · book",
+    "risk": "Booked · under repair",
+    "riskDetailed": "Booked by {client} from {date} · machine under repair"
   }
 }

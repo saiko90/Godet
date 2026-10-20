@@ -33,12 +33,14 @@
     "booked": "Prenotata",
     "out": "Noleggiata",
     "late": "In ritardo",
-    "done": "Riconsegnata"
+    "done": "Riconsegnata",
+    "risk": "Prenotata · macchina in riparazione"
   },
   "state": {
     "louee": "Noleggiata",
     "reservee": "Prenotata",
-    "disponible": "Disponibile"
+    "disponible": "Disponibile",
+    "repair": "In riparazione"
   },
   "status": {
     "reservee": "Prenotata",
@@ -88,7 +90,8 @@
     "cancel": "Annulla",
     "saving": "Salvataggio…",
     "save": "Prenota",
-    "saveEdit": "Salva"
+    "saveEdit": "Salva",
+    "risk": "Questa macchina è in riparazione ({repair}): verifichi che sia pronta in tempo."
   },
   "errors": {
     "clientName": "Indichi il nome del cliente.",
@@ -111,7 +114,8 @@
     "planned": "Previsto",
     "out": "Consegna",
     "back": "Riconsegna",
-    "notes": "Osservazioni"
+    "notes": "Osservazioni",
+    "risk": "Macchina in riparazione ({repair}): forse non sarà pronta per questo noleggio."
   },
   "items": {
     "demarre": "La macchina si avvia e funziona",
@@ -287,10 +291,17 @@
         "generic": "Non è stato possibile salvare il verbale. Riprovi.",
         "terms": "Il cliente deve accettare le condizioni di noleggio."
       },
-      "terms": "Il cliente deve accettare le condizioni di noleggio."
+      "terms": "Il cliente deve accettare le condizioni di noleggio.",
+      "breakdown": "Indichi se la macchina è guasta.",
+      "breakdownNote": "Descriva il guasto."
     },
     "termsRead": "Leggi le condizioni di noleggio (PDF)",
-    "termsAccept": "Il cliente ha letto e accetta le condizioni di noleggio qui sopra."
+    "termsAccept": "Il cliente ha letto e accetta le condizioni di noleggio qui sopra.",
+    "breakdown": "La macchina è guasta (da riparare prima del prossimo noleggio)?",
+    "breakdownYes": "Guasta",
+    "breakdownNo": "Utilizzabile",
+    "breakdownNote": "Cosa bisogna riparare?",
+    "breakdownHint": "Nel libretto della macchina verrà aperta una riparazione «in corso». Finché non è terminata, le prossime prenotazioni sono segnalate nell’agenda."
   },
   "report": {
     "title": "Rapporto di noleggio",
@@ -339,7 +350,9 @@
     "map": "Vedi sulla mappa",
     "terms": "Condizioni di noleggio",
     "termsAccepted": "Accettate dal cliente",
-    "termsLink": "Vedi la versione accettata"
+    "termsLink": "Vedi la versione accettata",
+    "breakdown": "Guasto alla riconsegna",
+    "breakdownYes": "Sì · riparazione aperta nel libretto"
   },
   "pdf": {
     "machine": "Macchina",
@@ -367,5 +380,11 @@
     "thanks": "Grazie per la fiducia.",
     "sign": "Cordiali saluti,",
     "footer": "Messaggio inviato da Godet per conto di {org}. Per qualsiasi domanda risponda a questo messaggio o contatti direttamente {org}."
+  },
+  "risk": {
+    "title": "{count, plural, one {Una prenotazione a rischio} other {# prenotazioni a rischio}}",
+    "text": "Queste macchine sono in riparazione: forse non saranno pronte in tempo. Chiuda la riparazione nel libretto o avvisi il cliente.",
+    "item": "{code} · {client}, consegna il {date} · riparazione: {repair}",
+    "open": "Vedi la macchina"
   }
 }

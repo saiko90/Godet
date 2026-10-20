@@ -15,6 +15,8 @@ export interface RentalBadge {
   client?: string;
   /** Louée : retour prévu ; réservée : départ prévu ; disponible : prochaine réservation. */
   at?: string;
+  /** Réservation à venir alors que la machine est en réparation. */
+  risk?: boolean;
 }
 
 export interface RentalStatus {
@@ -32,18 +34,19 @@ export function RentalPill({ machineId, detailed = false }: { machineId: string;
   const f = useFormat();
   if (!status) return null;
   const b = status.byMachine[machineId] ?? { state: 'disponible' as const };
-  const tone = b.state === 'louee' ? (b.late ? 'bad' : 'is-rent-out') : b.state === 'reservee' ? 'is-rent-booked' : 'is-rent-free';
+  const tone = b.state === 'louee' ? (b.late ? 'bad' : 'is-rent-out') : b.risk ? 'is-rent-risk' : b.state === 'reservee' ? 'is-rent-booked' : 'is-rent-free';
   const href = b.state === 'louee' && b.rentalId ? `/location/${b.rentalId}/retour` : b.state === 'reservee' && b.rentalId ? `/location/${b.rentalId}/depart` : '/location';
-  let label: string = b.late ? t('late') : t(b.state);
+  let label: string = b.late ? t('late') : b.risk ? t('risk') : t(b.state);
   if (detailed) {
     const date = b.at ? f.dateTime(b.at) : '';
     if (b.state === 'louee') label = b.late ? t('lateTo', { client: b.client ?? '', date }) : t('outTo', { client: b.client ?? '', date });
+    else if (b.risk) label = t('riskDetailed', { client: b.client ?? '', date });
     else if (b.state === 'reservee') label = t('bookedBy', { client: b.client ?? '', date });
     else label = b.at ? t('nextFrom', { date }) : t('freeAction');
   }
   return (
     <Link href={href} className={`pill g-rent-pill ${tone}`}>
-      <Icon name="calendar" className="g-pill-icon" />
+      <Icon name={b.risk ? 'alert' : 'calendar'} className="g-pill-icon" />
       {label}
     </Link>
   );

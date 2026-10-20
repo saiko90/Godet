@@ -78,7 +78,7 @@ export default async function LocationPage({ params }: { params: Params }) {
   const supabase = await supabaseServer();
   const since = new Date(now - 60 * 86_400_000).toISOString();
   const until = new Date(now + 365 * 86_400_000).toISOString();
-  const [machines, rentals, clients] = await Promise.all([
+  const [machines, rentals, clients, repairs] = await Promise.all([
     supabase.from('machines').select('id, code, kind, weight_t, brand, model').eq('org_id', ctx.org.id).is('archived_at', null).order('code'),
     supabase
       .from('rentals')
@@ -95,6 +95,15 @@ export default async function LocationPage({ params }: { params: Params }) {
       .eq('org_id', ctx.org.id)
       .order('created_at', { ascending: false })
       .limit(400),
+    // Réparations ouvertes : les réservations à venir de ces machines sont signalées (retard possible).
+    supabase
+      .from('entries')
+      .select('machine_id, title, date, repair_status')
+      .eq('org_id', ctx.org.id)
+      .eq('kind', 'reparation')
+      .in('repair_status', ['en_cours', 'attente_piece'])
+      .is('deleted_at', null)
+      .order('date', { ascending: false }),
   ]);
   if (machines.error || rentals.error) throw new Error(`Location : lecture impossible (${(machines.error ?? rentals.error)?.code})`);
   const ids = (rentals.data ?? []).map((r) => r.id);
@@ -117,6 +126,8 @@ export default async function LocationPage({ params }: { params: Params }) {
       make: [m.brand, m.model].filter(Boolean).join(' '),
     }))
     .sort((a, b) => a.code.localeCompare(b.code, undefined, { numeric: true }));
+  const repairMap: Record<string, { title: string; date: string }> = {};
+  for (const e of repairs.data ?? []) repairMap[e.machine_id] ??= { title: e.title, date: e.date };
   const checkMap: Record<string, { depart?: string; retour?: string }> = {};
   for (const c of checks.data ?? []) (checkMap[c.rental_id] ??= {})[c.kind as 'depart' | 'retour'] = c.id;
   // Clients déjà servis (propositions dans le formulaire), sans doublon.
@@ -143,6 +154,7 @@ export default async function LocationPage({ params }: { params: Params }) {
               rentals={(rentals.data ?? []) as Rental[]}
               checks={checkMap}
               clients={known}
+              repairs={repairMap}
               nowIso={nowIso}
               canManage={can.manageFleet(ctx.role)}
               userId={ctx.userId}

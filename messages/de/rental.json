@@ -33,12 +33,14 @@
     "booked": "Reserviert",
     "out": "Vermietet",
     "late": "Überfällig",
-    "done": "Zurückgegeben"
+    "done": "Zurückgegeben",
+    "risk": "Reserviert · Maschine in Reparatur"
   },
   "state": {
     "louee": "Vermietet",
     "reservee": "Reserviert",
-    "disponible": "Verfügbar"
+    "disponible": "Verfügbar",
+    "repair": "In Reparatur"
   },
   "status": {
     "reservee": "Reserviert",
@@ -88,7 +90,8 @@
     "cancel": "Abbrechen",
     "saving": "Wird gespeichert…",
     "save": "Reservieren",
-    "saveEdit": "Speichern"
+    "saveEdit": "Speichern",
+    "risk": "Diese Maschine ist in Reparatur ({repair}): Prüfen Sie, ob sie rechtzeitig bereit ist."
   },
   "errors": {
     "clientName": "Geben Sie den Namen des Kunden ein.",
@@ -111,7 +114,8 @@
     "planned": "Geplant",
     "out": "Übergabe",
     "back": "Rücknahme",
-    "notes": "Bemerkungen"
+    "notes": "Bemerkungen",
+    "risk": "Maschine in Reparatur ({repair}): Sie ist für diese Miete vielleicht nicht bereit."
   },
   "items": {
     "demarre": "Maschine startet und funktioniert",
@@ -287,10 +291,17 @@
         "generic": "Das Protokoll konnte nicht gespeichert werden. Versuchen Sie es erneut.",
         "terms": "Der Kunde muss die Mietbedingungen akzeptieren."
       },
-      "terms": "Der Kunde muss die Mietbedingungen akzeptieren."
+      "terms": "Der Kunde muss die Mietbedingungen akzeptieren.",
+      "breakdown": "Geben Sie an, ob die Maschine defekt ist.",
+      "breakdownNote": "Beschreiben Sie den Defekt."
     },
     "termsRead": "Mietbedingungen lesen (PDF)",
-    "termsAccept": "Der Kunde hat die obenstehenden Mietbedingungen gelesen und akzeptiert sie."
+    "termsAccept": "Der Kunde hat die obenstehenden Mietbedingungen gelesen und akzeptiert sie.",
+    "breakdown": "Ist die Maschine defekt (vor der nächsten Vermietung zu reparieren)?",
+    "breakdownYes": "Defekt",
+    "breakdownNo": "Einsatzbereit",
+    "breakdownNote": "Was muss repariert werden?",
+    "breakdownHint": "Im Maschinenheft wird eine Reparatur «in Arbeit» eröffnet. Bis sie abgeschlossen ist, werden die nächsten Reservationen im Kalender markiert."
   },
   "report": {
     "title": "Mietbericht",
@@ -339,7 +350,9 @@
     "map": "Auf der Karte anzeigen",
     "terms": "Mietbedingungen",
     "termsAccepted": "Vom Kunden akzeptiert",
-    "termsLink": "Akzeptierte Fassung ansehen"
+    "termsLink": "Akzeptierte Fassung ansehen",
+    "breakdown": "Defekt bei Rücknahme",
+    "breakdownYes": "Ja · Reparatur im Maschinenheft eröffnet"
   },
   "pdf": {
     "machine": "Maschine",
@@ -367,5 +380,11 @@
     "thanks": "Vielen Dank für Ihr Vertrauen.",
     "sign": "Freundliche Grüsse",
     "footer": "Nachricht von Godet im Auftrag von {org}. Bei Fragen antworten Sie auf diese Nachricht oder wenden Sie sich direkt an {org}."
+  },
+  "risk": {
+    "title": "{count, plural, one {Eine gefährdete Reservation} other {# gefährdete Reservationen}}",
+    "text": "Diese Maschinen sind in Reparatur: Sie sind vielleicht nicht rechtzeitig bereit. Schliessen Sie die Reparatur im Maschinenheft ab oder informieren Sie den Kunden.",
+    "item": "{code} · {client}, Übergabe am {date} · Reparatur: {repair}",
+    "open": "Maschine ansehen"
   }
 }

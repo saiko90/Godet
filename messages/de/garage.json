@@ -984,6 +984,8 @@
     "lateTo": "Rückgabe überfällig: {client}, geplant am {date}",
     "bookedBy": "Reserviert von {client} ab {date}",
     "nextFrom": "Verfügbar · nächste Reservation am {date}",
-    "freeAction": "Verfügbar · reservieren"
+    "freeAction": "Verfügbar · reservieren",
+    "risk": "Reserviert · in Reparatur",
+    "riskDetailed": "Reserviert von {client} ab {date} · Maschine in Reparatur"
   }
 }

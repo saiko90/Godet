@@ -170,7 +170,7 @@
       },
       "in": {
         "title": "Check-in report",
-        "text": "On return, each item is compared with check-out: a new defect shows in red, hire hours are calculated. Add charges (fuel, cleaning, damage) and reservations, then have it signed: the rental is closed and the machine’s hour meter is updated."
+        "text": "On return, each item is compared with check-out: a new defect shows in red, hire hours are calculated. Add charges (fuel, cleaning, damage) and reservations, then have it signed: the rental is closed and the machine’s hour meter is updated. Machine broken down? Choose “Broken down”: a repair is opened in the log and its next bookings are shown hatched in red in the calendar until the repair is finished."
       },
       "report": {
         "title": "PDF report",

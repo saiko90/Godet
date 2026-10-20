@@ -984,6 +984,8 @@
     "lateTo": "Riconsegna in ritardo: {client}, prevista il {date}",
     "bookedBy": "Prenotata da {client} dal {date}",
     "nextFrom": "Disponibile · prossima prenotazione il {date}",
-    "freeAction": "Disponibile · prenota"
+    "freeAction": "Disponibile · prenota",
+    "risk": "Prenotata · in riparazione",
+    "riskDetailed": "Prenotata da {client} dal {date} · macchina in riparazione"
   }
 }

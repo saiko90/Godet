@@ -130,6 +130,8 @@ export function RentalCheckForm({
   const [remarks, setRemarks] = useState('');
   const [charges, setCharges] = useState<Charge[]>([]);
   const [reserves, setReserves] = useState<boolean | null>(retour ? null : false);
+  const [breakdown, setBreakdown] = useState<boolean | null>(retour ? null : false);
+  const [breakdownNote, setBreakdownNote] = useState('');
   const [slotPhotos, setSlotPhotos] = useState<Record<string, Shot>>({});
   const [freePhotos, setFreePhotos] = useState<Shot[]>([]);
   const [videos, setVideos] = useState<Shot[]>([]);
@@ -211,6 +213,8 @@ export function RentalCheckForm({
     if (accident && !accidentNote.trim()) return t('errors.accidentNote');
     if (safety && safetyValid === null) return t('errors.safety');
     if (retour && reserves === null) return t('errors.reserves');
+    if (retour && breakdown === null) return t('errors.breakdown');
+    if (breakdown && !breakdownNote.trim()) return t('errors.breakdownNote');
     if (needTerms && !termsOk) return t('errors.terms');
     if (!clientSigner.trim()) return t('errors.signer');
     if (!clientSigned) return t('errors.signature');
@@ -266,6 +270,8 @@ export function RentalCheckForm({
         remarks: clean(remarks),
         charges: charges.filter((c) => c.label.trim() && Number.isFinite(c.amount)).map((c) => ({ label: c.label.trim(), amount: c.amount })),
         reserves: retour ? reserves : null,
+        breakdown: retour && Boolean(breakdown),
+        breakdown_note: retour && breakdown ? clean(breakdownNote) : null,
         terms_accepted: needTerms && termsOk,
         client_signer: clientSigner.trim(),
         client_signature: `${base}-client.png`,
@@ -759,6 +765,38 @@ export function RentalCheckForm({
               </button>
             ))}
           </div>
+          <div className="s-check-breakdown">
+            <span className="label" id="brk-l">
+              {t('breakdown')}
+            </span>
+            <div className="s-check-yn" role="radiogroup" aria-labelledby="brk-l">
+              {[false, true].map((b) => (
+                <button
+                  key={String(b)}
+                  type="button"
+                  role="radio"
+                  aria-checked={breakdown === b}
+                  className={breakdown === b ? (b ? 'is-on is-bad' : 'is-on') : ''}
+                  onClick={() => setBreakdown(b)}
+                >
+                  {b ? t('breakdownYes') : t('breakdownNo')}
+                </button>
+              ))}
+            </div>
+            {breakdown ? (
+              <>
+                <textarea
+                  aria-label={t('breakdownNote')}
+                  placeholder={t('breakdownNote')}
+                  rows={2}
+                  maxLength={1000}
+                  value={breakdownNote}
+                  onChange={(e) => setBreakdownNote(e.target.value)}
+                />
+                <p className="s-field-hint">{t('breakdownHint')}</p>
+              </>
+            ) : null}
+          </div>
         </section>
       ) : null}
 
@@ -776,10 +814,14 @@ export function RentalCheckForm({
               {t('termsRead')}
             </a>
             <label className={`s-check-terms-box${error && !termsOk ? ' is-missing' : ''}`}>
-              <input type="checkbox" checked={termsOk} onChange={(e) => {
+              <input
+                type="checkbox"
+                checked={termsOk}
+                onChange={(e) => {
                   setTermsOk(e.target.checked);
                   setError(null);
-                }} />
+                }}
+              />
               <span>{t('termsAccept')}</span>
             </label>
           </div>

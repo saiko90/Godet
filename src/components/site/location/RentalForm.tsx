@@ -34,6 +34,7 @@ export function RentalForm({
   machines,
   rentals,
   clients,
+  repairs,
   rental,
   machineId,
   day,
@@ -44,6 +45,7 @@ export function RentalForm({
   machines: PlannerMachine[];
   rentals: Rental[];
   clients: ClientSuggestion[];
+  repairs: Record<string, { title: string; date: string }>;
   rental?: Rental;
   machineId?: string;
   day?: number;
@@ -168,6 +170,11 @@ export function RentalForm({
             <input id={`${uid}-e`} type="datetime-local" value={v.endAt} onChange={(ev) => set('endAt', ev.target.value)} />
           </div>
         </div>
+        {repairs[v.machineId] ? (
+          <p className="s-rent-warn" role="status">
+            <Icon name="alert" /> {t('risk', { repair: repairs[v.machineId].title })}
+          </p>
+        ) : null}
         {clash ? (
           <p className="s-rent-warn" role="status">
             <Icon name="alert" /> {t('clash', { client: clash.client_company || clash.client_name })}

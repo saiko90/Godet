@@ -942,6 +942,8 @@ export type Database = {
           staff_signature: string | null
           staff_signer: string | null
           terms_accepted: boolean
+          breakdown: boolean
+          breakdown_note: string | null
           terms_path: string | null
         }
         Insert: {
@@ -973,6 +975,8 @@ export type Database = {
           staff_signature?: string | null
           staff_signer?: string | null
           terms_accepted?: boolean
+          breakdown?: boolean
+          breakdown_note?: string | null
           terms_path?: string | null
         }
         Update: {
@@ -1004,6 +1008,8 @@ export type Database = {
           staff_signature?: string | null
           staff_signer?: string | null
           terms_accepted?: boolean
+          breakdown?: boolean
+          breakdown_note?: string | null
           terms_path?: string | null
         }
         Relationships: []

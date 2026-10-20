@@ -133,6 +133,7 @@ export default async function ReportPage({ params, searchParams }: { params: Par
       ...(c.keys_count != null ? ([[t('report.keys'), String(c.keys_count)]] as [string, string][]) : []),
       ...(c.reserves != null ? ([[t('report.reserves'), c.reserves ? t('check.withReserves') : t('check.noReserves')]] as [string, string][]) : []),
       ...(c.remarks ? ([[t('report.remarks'), c.remarks]] as [string, string][]) : []),
+      ...(c.breakdown ? ([[t('report.breakdown'), `${t('report.breakdownYes')}${c.breakdown_note ? ` · ${c.breakdown_note}` : ''}`]] as [string, string][]) : []),
       ...(c.terms_accepted && !(c.terms_path && url.get(c.terms_path)) ? ([[t('report.terms'), t('report.termsAccepted')]] as [string, string][]) : []),
     ];
     const pdf = c.report_path ? url.get(c.report_path) : null;

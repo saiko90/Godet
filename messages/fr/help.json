@@ -170,7 +170,7 @@
       },
       "in": {
         "title": "État des lieux de retour",
-        "text": "Au retour, chaque point est comparé au départ\u00a0: un nouveau défaut ressort en rouge, les heures de location sont calculées. Ajoutez les frais (plein, nettoyage, dégâts) et les réserves, puis faites signer\u00a0: la location est close et le compteur de la machine est mis à jour."
+        "text": "Au retour, chaque point est comparé au départ\u00a0: un nouveau défaut ressort en rouge, les heures de location sont calculées. Ajoutez les frais (plein, nettoyage, dégâts) et les réserves, puis faites signer\u00a0: la location est close et le compteur de la machine est mis à jour. Machine en panne\u00a0? Répondez «\u00a0En panne\u00a0»\u00a0: une réparation s’ouvre dans le carnet et ses prochaines réservations ressortent hachurées en rouge dans l’agenda jusqu’à la fin de la réparation."
       },
       "report": {
         "title": "Rapport PDF",

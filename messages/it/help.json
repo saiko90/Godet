@@ -170,7 +170,7 @@
       },
       "in": {
         "title": "Verbale di riconsegna",
-        "text": "Alla riconsegna ogni punto è confrontato con la consegna: un nuovo difetto appare in rosso, le ore di noleggio sono calcolate. Aggiunga le spese (pieno, pulizia, danni) e le riserve, poi faccia firmare: il noleggio è chiuso e il contaore della macchina aggiornato."
+        "text": "Alla riconsegna ogni punto è confrontato con la consegna: un nuovo difetto appare in rosso, le ore di noleggio sono calcolate. Aggiunga le spese (pieno, pulizia, danni) e le riserve, poi faccia firmare: il noleggio è chiuso e il contaore della macchina aggiornato. Macchina guasta? Scelga «Guasta»: nel libretto si apre una riparazione e le prossime prenotazioni appaiono tratteggiate in rosso nell’agenda finché la riparazione non è terminata."
       },
       "report": {
         "title": "Rapporto PDF",

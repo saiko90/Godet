@@ -125,6 +125,11 @@ Une machine vendue ou hors service s'archive : elle quitte le showroom, son carn
 - État des lieux de retour : même formulaire comparé au départ (nouveau défaut en rouge, heures de location
   calculées), frais (plein, nettoyage, dégâts) et réserves, signatures. La location est close, le compteur de la
   machine est mis à jour (relevé « État des lieux de location »).
+- Retour : question « La machine est-elle en panne ? ». Si oui (avec la description), une réparation « en cours » est
+  ouverte dans le carnet de la machine. Tant qu'elle n'est pas terminée (statut « fait » dans le carnet), les
+  réservations à venir de cette machine sont hachurées rouge et jaune dans l'agenda, listées dans « Réservations à
+  risque » en haut de l'agenda, signalées dans le détail et le formulaire de réservation, et la pastille du garage
+  devient « Réservée · en réparation ».
 - Un état des lieux signé ne se modifie plus. Après chaque signature : rapport PDF envoyé au client par e-mail (avec
   les conditions acceptées), copie à l'adresse réglée, rangé dans les documents de la machine ; photos et vidéos dans
   ses médias. Page « Rapport » d'une location : les deux états des lieux, imprimer, ouvrir le PDF, renvoyer au client.

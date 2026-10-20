@@ -15,6 +15,7 @@ import type { PlannerMachine } from './Planner';
 export function RentalDetail({
   rental: r,
   machine,
+  repair,
   checks,
   canEdit,
   now,
@@ -24,6 +25,8 @@ export function RentalDetail({
 }: {
   rental: Rental;
   machine: PlannerMachine | undefined;
+  /** Réparation ouverte sur la machine (réservation à venir) : avertissement. */
+  repair: { title: string; date: string } | null;
   checks: { depart?: string; retour?: string };
   canEdit: boolean;
   now: number;
@@ -69,6 +72,11 @@ export function RentalDetail({
         <p className={`s-rent-pill is-${late ? 'late' : r.status === 'reservee' ? 'reservee' : r.status === 'en_cours' ? 'louee' : 'done'}`}>
           {late ? t('status.late') : t(`status.${r.status as 'reservee' | 'en_cours' | 'terminee' | 'annulee'}`)}
         </p>
+        {repair ? (
+          <p className="s-rent-warn" role="alert">
+            <Icon name="alert" /> {t('detail.risk', { repair: repair.title })}
+          </p>
+        ) : null}
         <dl className="s-rent-dl">
           {rows
             .filter(([, value]) => value)

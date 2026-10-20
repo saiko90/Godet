@@ -259,6 +259,8 @@ interface CheckRow {
   staff_signer: string | null;
   staff_signature: string | null;
   terms_accepted: boolean;
+  breakdown: boolean;
+  breakdown_note: string | null;
   terms_path: string | null;
   report_path: string | null;
   emailed_at: string | null;
@@ -364,6 +366,7 @@ async function buildPdf(
   if (c.accessories) rows.push([t('report.accessories'), c.accessories]);
   if (c.keys_count != null) rows.push([t('report.keys'), String(c.keys_count)]);
   if (c.remarks) rows.push([t('report.remarks'), c.remarks]);
+  if (c.breakdown) rows.push([t('report.breakdown'), `${t('report.breakdownYes')}${c.breakdown_note ? ` : ${c.breakdown_note}` : ''}`]);
   if (c.terms_accepted) rows.push([t('report.terms'), t('report.termsAccepted')]);
   w.facts(rows);
 
