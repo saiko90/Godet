@@ -51,7 +51,10 @@ export function fitDistance(r: number, h: number, vp: Viewport, fov: number): nu
   const a = visibleHalfAngles(vp, fov);
   // la sphère englobante doit tenir dans la partie visible, avec une marge (étiquette, respiration)
   const d = Math.max((rs * 0.9) / Math.sin(a.h * 0.86), (rs * 0.84) / Math.sin(a.v * 0.84));
-  return clamp(d, 6, 34);
+  // Téléphone : la sphère englobante (plateau compris) est prudente ; on cadre plus serré pour que la machine
+  // remplisse le petit écran (le bord du plateau peut sortir du cadre).
+  const tight = Math.min(vp.w, vp.h) < 520 ? 0.78 : 1;
+  return clamp(d * tight, 6, 34);
 }
 
 function orbitPos(f: { center: THREE.Vector3; az: number; el: number; dist: number }, out: THREE.Vector3): THREE.Vector3 {

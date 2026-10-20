@@ -143,16 +143,18 @@ export function buildPelle(): MachineTemplate {
     const t = b.clone().sub(a).normalize();
     return p.clone().add(new THREE.Vector2(-t.y, t.x).multiplyScalar(0.06));
   });
+  // Godet rétro : ouverture et dents tournées vers la cabine (−x), dos du godet et biellette côté extérieur (+x).
+  for (const p of [...outer, ...inner]) p.x = -p.x;
   k.extrude(bucket, 'steelDark', new THREE.Shape([...outer, ...inner.slice().reverse()]), 1.0, [0, 0, 0], undefined, 0, 8);
-  const sideShape = new THREE.Shape([...outer, new THREE.Vector2(0.36, -0.2), new THREE.Vector2(0.12, 0.12)]);
+  const sideShape = new THREE.Shape([...outer, new THREE.Vector2(-0.36, -0.2), new THREE.Vector2(-0.12, 0.12)]);
   for (const z of [0.52, -0.52]) k.extrude(bucket, 'steelDark', sideShape, 0.04, [0, 0, z], undefined, 0, 8);
   k.box(bucket, 'trim', [0.3, 0.26, 0.58], [0.02, 0.02, 0]);
   // lame d'usure et dents
-  k.box(bucket, 'steel', [0.08, 0.05, 1.02], [0.47, -0.93, 0], [0, 0, 0.2]);
+  k.box(bucket, 'steel', [0.08, 0.05, 1.02], [-0.47, -0.93, 0], [0, 0, -0.2]);
   for (let i = 0; i < 5; i++) {
-    k.cyl(bucket, 'steel', [0.0, 0.055], 0.22, [0.6, -0.91, -0.42 + i * 0.21], [0, 0, -1.37], 8);
+    k.cyl(bucket, 'steel', [0.0, 0.055], 0.22, [-0.6, -0.91, -0.42 + i * 0.21], [0, 0, 1.37], 8);
   }
-  for (const z of [-0.53, 0.53]) k.box(bucket, 'steel', [0.24, 0.05, 0.04], [0.32, -0.9, z], [0, 0, 0.3]);
+  for (const z of [-0.53, 0.53]) k.box(bucket, 'steel', [0.24, 0.05, 0.04], [-0.32, -0.9, z], [0, 0, -0.3]);
 
   // ---------------------------------------------------------------- vérins et biellette
   k.piston(upper, [upper, [1.22, 0.16, 0.56]], [boom, [bc.x, bc.y, 0.34]], 0.13, 0.075);
@@ -166,16 +168,16 @@ export function buildPelle(): MachineTemplate {
     minScale: 0.86,
     maxScale: 1.18,
     wake: [
-      { pose: { boom: 0.62, stick: -0.55, bucket: 0.35 }, dur: 1.5 },
-      { pose: { boom: 0.48, stick: 0.1, bucket: -0.35 }, dur: 1.4 },
+      { pose: { boom: 0.62, stick: -0.55, bucket: 1.15 }, dur: 1.5 },
+      { pose: { boom: 0.48, stick: 0.1, bucket: 1.85 }, dur: 1.4 },
       { pose: { swing: 0.45 }, dur: 1.5 },
-      { pose: { stick: -0.32, bucket: 0.95 }, dur: 1.1 },
+      { pose: { stick: -0.32, bucket: 0.55 }, dur: 1.1 },
       { pose: { swing: 0, boom: 0.3, stick: -0.82, bucket: 0.75 }, dur: 1.8 },
     ],
     nod: [
-      { pose: { bucket: 1.25 }, dur: 0.45 },
+      { pose: { bucket: 0.25 }, dur: 0.45 },
       { pose: { bucket: 0.75 }, dur: 0.5 },
     ],
-    breathe: { boom: 0.012, stick: -0.01, bucket: 0.012 },
+    breathe: { boom: 0.012, stick: -0.01, bucket: -0.012 },
   });
 }

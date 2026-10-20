@@ -1810,3 +1810,20 @@
 .g-offline b { color: var(--warn); }
 .g-offline .btn { min-height: 30px; padding-inline: 12px; }
 .g-offline:not(:has(.btn)) { padding-right: 14px; }
+
+/* ---------- téléphone en paysage : barres plus fines, plus de place pour le hall ---------- */
+@media (pointer: coarse) and (max-height: 520px) {
+  .g-root { --top-h: 56px; }
+  .g-root.is-demo { --demo-h: 24px; }
+  .g-topbar { padding-top: calc(env(safe-area-inset-top, 0px) + 6px); padding-bottom: 6px; }
+  .is-demo .g-topbar { padding-top: 6px; }
+  .g-topbar .icon-btn { height: 40px; min-width: 40px; }
+  .g-topbar .brand svg { width: 28px; height: 28px; }
+  .g-topbar .brand-sub, .g-topbar .g-stats { display: none; }
+  .g-demo-strip { font-size: 0.7rem; }
+  .g-dock { padding-top: 6px; padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 8px); }
+  .g-dock .chip { min-height: 40px; }
+  .g-dock-nav { height: 40px; min-width: 40px; }
+  .g-hint-float { display: none; }
+}
+.g-hint-float { white-space: normal; text-align: center; width: max-content; max-width: calc(100vw - 32px); }

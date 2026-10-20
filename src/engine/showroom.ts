@@ -967,13 +967,10 @@ export class Engine implements Showroom {
     try {
       void this.lampsTo(e, 1, 0.5);
       v.beacon = 1;
-      this.sfx.engineOn();
       if (wide) this.frameMachine(e, true);
       if (!(await this.tl.delay(this.reduced ? 0.05 : 0.65)) || token !== e.token) return;
-      if (v.tpl.vibrate && !this.reduced) {
-        v.vibration = 1;
-        this.sfx.rumble(2.6);
-      }
+      // Pas de grondement de moteur : seulement les bruits légers des mouvements (vérins, déplacements).
+      if (v.tpl.vibrate && !this.reduced) v.vibration = 1;
       await this.playSteps(e, token, v.tpl.wake);
       v.vibration = 0;
       if (wide) this.frameMachine(e, false);
@@ -1087,7 +1084,6 @@ export class Engine implements Showroom {
   private sleepMachine(e: Entry): void {
     e.view.beacon = 0;
     void this.lampsTo(e, 0, 0.8);
-    this.sfx.engineOff();
     this.settle(e, e.token);
   }
 
@@ -1099,7 +1095,6 @@ export class Engine implements Showroom {
     e.view.beacon = 0;
     e.view.vibration = 0;
     void this.lampsTo(e, 0, 0.6);
-    this.sfx.engineOff();
     this.settle(e, token);
   }
 

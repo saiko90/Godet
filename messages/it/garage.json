@@ -60,7 +60,8 @@
     "fileDeleted": "File eliminato",
     "fileName": "file",
     "prepareFailed": "«{name}» non ha potuto essere preparato su questo dispositivo.",
-    "sendFailed": "«{name}»: {error}"
+    "sendFailed": "«{name}»: {error}",
+    "hintSwipe": "Scorra per passare da una macchina all’altra, la tocchi per aprirne la scheda"
   },
   "quality": {
     "auto": "Qualità automatica",
@@ -105,7 +106,8 @@
     "next": "Macchina successiva (freccia destra)",
     "points": "{count, plural, one {{n} punto da verificare} other {{n} punti da verificare}}",
     "add": "Macchina",
-    "addSr": ": aggiungi una macchina al parco"
+    "addSr": ": aggiungi una macchina al parco",
+    "overview": "Vista d’insieme del capannone"
   },
   "groups": {
     "code": "{prefix} ×{n}",

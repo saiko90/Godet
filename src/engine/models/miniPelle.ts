@@ -123,10 +123,12 @@ export function buildMiniPelle(canopy: boolean): MachineTemplate {
     const t = b.clone().sub(a).normalize();
     return p.clone().add(new THREE.Vector2(-t.y, t.x).multiplyScalar(0.03));
   });
+  // Godet rétro : ouverture et dents tournées vers la cabine (−x), biellette côté extérieur (+x).
+  for (const p of [...outer, ...inner]) p.x = -p.x;
   k.extrude(bucket, 'steelDark', new THREE.Shape([...outer, ...inner.slice().reverse()]), 0.46, [0, 0, 0], undefined, 0, 6);
-  const side = new THREE.Shape([...outer, new THREE.Vector2(0.15, -0.08), new THREE.Vector2(0.05, 0.05)]);
+  const side = new THREE.Shape([...outer, new THREE.Vector2(-0.15, -0.08), new THREE.Vector2(-0.05, 0.05)]);
   for (const z of [0.24, -0.24]) k.extrude(bucket, 'steelDark', side, 0.02, [0, 0, z], undefined, 0, 6);
-  for (let i = 0; i < 4; i++) k.cyl(bucket, 'steel', [0, 0.025], 0.09, [0.25, -0.37, -0.17 + i * 0.113], [0, 0, -1.37], 6);
+  for (let i = 0; i < 4; i++) k.cyl(bucket, 'steel', [0, 0.025], 0.09, [-0.25, -0.37, -0.17 + i * 0.113], [0, 0, 1.37], 6);
 
   k.piston(bracket, [bracket, [0.2, -0.05, 0]], [boom, [bc.x, bc.y, 0]], 0.065, 0.038);
   k.piston(boom, [boom, [sc.x, sc.y, 0]], [stick, [T[0] - 0.02, T[1] + 0.02, 0]], 0.058, 0.034);
@@ -139,13 +141,13 @@ export function buildMiniPelle(canopy: boolean): MachineTemplate {
     maxScale: 1.4,
     wake: [
       { pose: { blade: 0.22 }, dur: 0.7 },
-      { pose: { boom: 0.95, stick: -1.2, bucket: 0.4 }, dur: 1.3 },
+      { pose: { boom: 0.95, stick: -1.2, bucket: 1.8 }, dur: 1.3 },
       { pose: { swing: -0.6, stick: -0.5 }, dur: 1.4 },
-      { pose: { bucket: 1.5, stick: -1.0 }, dur: 1.0 },
+      { pose: { bucket: 0.7, stick: -1.0 }, dur: 1.0 },
       { pose: { swing: 0, boom: 0.6, stick: -0.75, bucket: 1.1, blade: 0 }, dur: 1.6 },
     ],
     nod: [
-      { pose: { bucket: 1.55 }, dur: 0.4 },
+      { pose: { bucket: 0.65 }, dur: 0.4 },
       { pose: { bucket: 1.1 }, dur: 0.45 },
     ],
     breathe: { boom: 0.012, stick: 0.01 },

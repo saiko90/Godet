@@ -1,5 +1,5 @@
-// Sons de synthèse (WebAudio, aucun fichier) : ambiance du hall, interrupteurs des néons, vols de caméra,
-// hydraulique, moteur au ralenti et petits effets d'interface.
+// Sons de synthèse (WebAudio, aucun fichier), légers et ponctuels : interrupteurs des néons, vols de caméra,
+// hydraulique des mouvements et petits effets d'interface. Pas de fond sonore continu (ni souffle du hall, ni moteur).
 // Le contexte audio n'est créé que dans unlock(), appelé pendant un geste : aucun avertissement d'autoplay.
 
 type AudioCtor = typeof AudioContext;
@@ -22,8 +22,6 @@ export class Sfx {
   private master: GainNode | null = null;
   private verb: ConvolverNode | null = null;
   private noise: AudioBuffer | null = null;
-  private amb: { nodes: AudioScheduledSourceNode[]; gain: GainNode } | null = null;
-  private idle: { g: GainNode; nodes: AudioScheduledSourceNode[] } | null = null;
   private enabled: boolean;
   private suspendedByPause = false;
   private disposed = false;
@@ -61,7 +59,6 @@ export class Sfx {
       const d = b.getChannelData(0);
       for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
       this.noise = b;
-      this.ambience();
     } catch {
       this.ctx = null;
     }
@@ -91,17 +88,6 @@ export class Sfx {
 
   dispose(): void {
     this.disposed = true;
-    this.engineOff(true);
-    if (this.amb) {
-      for (const n of this.amb.nodes) {
-        try {
-          n.stop();
-        } catch {
-          /* déjà arrêté */
-        }
-      }
-      this.amb = null;
-    }
     if (this.ctx) void this.ctx.close().catch(() => {});
     this.ctx = null;
   }
@@ -159,32 +145,6 @@ export class Sfx {
     this.route(g, wet);
     o.start(t);
     o.stop(t + a + d + 0.05);
-  }
-
-  // ---------------------------------------------------------------- ambiance
-
-  /** Souffle grave du hall et ronronnement électrique, à peine audibles. */
-  private ambience(): void {
-    if (!this.ctx || !this.master || this.amb) return;
-    const c = this.ctx;
-    const n = this.src(true);
-    const lp = c.createBiquadFilter();
-    const g = c.createGain();
-    lp.type = 'lowpass';
-    lp.frequency.value = 160;
-    g.gain.value = 0.035;
-    n.connect(lp);
-    lp.connect(g);
-    g.connect(this.master);
-    n.start();
-    const o = c.createOscillator();
-    const og = c.createGain();
-    o.frequency.value = 50;
-    og.gain.value = 0.004;
-    o.connect(og);
-    og.connect(this.master);
-    o.start();
-    this.amb = { nodes: [n, o], gain: g };
   }
 
   // ---------------------------------------------------------------- effets
@@ -278,76 +238,6 @@ export class Sfx {
     o.stop(e + 0.05);
   }
 
-  /** Démarreur puis ralenti diesel (s'arrête avec engineOff). */
-  engineOn(): void {
-    if (!this.ok() || this.idle) return;
-    const c = this.ctx as AudioContext;
-    const t = c.currentTime;
-    const s = c.createOscillator();
-    const sl = c.createBiquadFilter();
-    const sg = c.createGain();
-    s.type = 'sawtooth';
-    s.frequency.setValueAtTime(140, t);
-    s.frequency.linearRampToValueAtTime(190, t + 0.7);
-    sl.type = 'lowpass';
-    sl.frequency.value = 900;
-    sg.gain.setValueAtTime(0.0001, t);
-    sg.gain.exponentialRampToValueAtTime(0.045, t + 0.08);
-    sg.gain.exponentialRampToValueAtTime(0.0001, t + 0.8);
-    s.connect(sl);
-    sl.connect(sg);
-    this.route(sg, 0.2);
-    s.start(t);
-    s.stop(t + 0.85);
-    const o1 = c.createOscillator();
-    const o2 = c.createOscillator();
-    const lp = c.createBiquadFilter();
-    const am = c.createGain();
-    const g = c.createGain();
-    const lfo = c.createOscillator();
-    const lg = c.createGain();
-    o1.type = 'sawtooth';
-    o1.frequency.value = 31;
-    o2.type = 'square';
-    o2.frequency.value = 62.5;
-    lp.type = 'lowpass';
-    lp.frequency.value = 250;
-    lp.Q.value = 2;
-    am.gain.value = 0.7;
-    lfo.type = 'sine';
-    lfo.frequency.value = 7.8;
-    lg.gain.value = 0.3;
-    lfo.connect(lg);
-    lg.connect(am.gain);
-    g.gain.setValueAtTime(0.0001, t + 0.55);
-    g.gain.exponentialRampToValueAtTime(0.16, t + 1.1);
-    g.gain.exponentialRampToValueAtTime(0.08, t + 2.2);
-    o1.connect(lp);
-    o2.connect(lp);
-    lp.connect(am);
-    am.connect(g);
-    this.route(g, 0.25);
-    for (const o of [o1, o2, lfo]) o.start(t + 0.5);
-    this.idle = { g, nodes: [o1, o2, lfo] };
-  }
-
-  engineOff(now = false): void {
-    if (!this.idle) return;
-    const { g, nodes } = this.idle;
-    this.idle = null;
-    if (!this.ctx || this.ctx.state === 'closed') return;
-    const t = this.ctx.currentTime;
-    const end = now ? 0.05 : 1.2;
-    try {
-      g.gain.cancelScheduledValues(t);
-      g.gain.setValueAtTime(Math.max(g.gain.value, 0.0001), t);
-      g.gain.exponentialRampToValueAtTime(0.0001, t + end);
-      for (const o of nodes) o.stop(t + end + 0.1);
-    } catch {
-      /* nœuds déjà arrêtés */
-    }
-  }
-
   /** Enregistrement réussi : deux notes claires. */
   chime(): void {
     if (!this.ok()) return;
@@ -424,29 +314,6 @@ export class Sfx {
     const t = (this.ctx as AudioContext).currentTime;
     this.tone('sine', 330, 990, t, 0.2, 0.035, dur, 0.5);
     this.tone('sine', 495, 1485, t + 0.05, 0.2, 0.02, dur, 0.5);
-  }
-
-  /** Vibration du rouleau compacteur. */
-  rumble(dur = 1.5): void {
-    if (!this.ok()) return;
-    const c = this.ctx as AudioContext;
-    const t = c.currentTime;
-    const o = c.createOscillator();
-    const lp = c.createBiquadFilter();
-    const g = c.createGain();
-    o.type = 'square';
-    o.frequency.setValueAtTime(38, t);
-    lp.type = 'lowpass';
-    lp.frequency.value = 180;
-    g.gain.setValueAtTime(0.0001, t);
-    g.gain.exponentialRampToValueAtTime(0.09, t + 0.2);
-    g.gain.setValueAtTime(0.09, t + dur - 0.3);
-    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-    o.connect(lp);
-    lp.connect(g);
-    this.route(g, 0.3);
-    o.start(t);
-    o.stop(t + dur + 0.05);
   }
 
   /** Arrivée d'une machine sur sa plateforme : vérin de levage puis claquement. */

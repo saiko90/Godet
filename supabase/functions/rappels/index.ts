@@ -22,7 +22,7 @@ const MIN_INTERVAL_HOURS = 20;
 const SEND_FROM_HOUR = 5;
 const SEND_UNTIL_HOUR = 20;
 /** Adresse publique du site tant que le secret SITE_URL n'est pas défini (déploiement Vercel de production). */
-const DEFAULT_SITE_URL = 'https://godet-kappa.vercel.app';
+const DEFAULT_SITE_URL = 'https://godet.app';
 
 function env(name: string): string | null {
   const value = Deno.env.get(name)?.trim();

@@ -60,7 +60,8 @@
     "fileDeleted": "Fichier supprimé",
     "fileName": "fichier",
     "prepareFailed": "« {name} » n’a pas pu être préparé sur cet appareil.",
-    "sendFailed": "« {name} » : {error}"
+    "sendFailed": "« {name} » : {error}",
+    "hintSwipe": "Glissez pour passer d’une machine à l’autre, touchez-la pour ouvrir sa fiche"
   },
   "quality": {
     "auto": "Qualité auto",
@@ -105,7 +106,8 @@
     "next": "Machine suivante (flèche droite)",
     "points": "{count, plural, one {{n} point d’attention} other {{n} points d’attention}}",
     "add": "Machine",
-    "addSr": " : ajouter une machine au parc"
+    "addSr": " : ajouter une machine au parc",
+    "overview": "Vue d’ensemble du hall"
   },
   "groups": {
     "code": "{prefix} ×{n}",

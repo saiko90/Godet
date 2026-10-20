@@ -60,7 +60,8 @@
     "fileDeleted": "Datei gelöscht",
     "fileName": "Datei",
     "prepareFailed": "«{name}» konnte auf diesem Gerät nicht vorbereitet werden.",
-    "sendFailed": "«{name}»: {error}"
+    "sendFailed": "«{name}»: {error}",
+    "hintSwipe": "Wischen Sie, um von Maschine zu Maschine zu wechseln; tippen Sie darauf, um die Details zu öffnen"
   },
   "quality": {
     "auto": "Auto-Qualität",
@@ -105,7 +106,8 @@
     "next": "Nächste Maschine (Pfeil rechts)",
     "points": "{count, plural, one {{n} Punkt zu beachten} other {{n} Punkte zu beachten}}",
     "add": "Maschine",
-    "addSr": ": Maschine zum Park hinzufügen"
+    "addSr": ": Maschine zum Park hinzufügen",
+    "overview": "Übersicht der Halle"
   },
   "groups": {
     "code": "{prefix} ×{n}",

@@ -67,7 +67,7 @@ WhatsApp n'est pas encore prévu (la table `notification_log` accepte déjà le 
 | `SUPABASE_URL`, `SUPABASE_SECRET_KEYS` (ou l'ancien `SUPABASE_SERVICE_ROLE_KEY`) | fournis par Supabase | Accès à la base (clé de service). |
 | `RESEND_API_KEY` | pour l'envoi réel | Clé d'API Resend. |
 | `EMAIL_FROM` | pour l'envoi réel | Expéditeur, d'un domaine vérifié : `Godet <rappels@mail.exemple.ch>`. |
-| `SITE_URL` | non | Adresse publique du site pour les liens (par défaut `https://godet-kappa.vercel.app`). |
+| `SITE_URL` | non | Adresse publique du site pour les liens (par défaut `https://godet.app`). |
 | `EMAIL_REPLY_TO` | non | Adresse de réponse. |
 
 ## Activer l'envoi réel

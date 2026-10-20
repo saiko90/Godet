@@ -60,7 +60,8 @@
     "fileDeleted": "File deleted",
     "fileName": "file",
     "prepareFailed": "“{name}” could not be prepared on this device.",
-    "sendFailed": "“{name}”: {error}"
+    "sendFailed": "“{name}”: {error}",
+    "hintSwipe": "Swipe to move from machine to machine; tap one to open its details"
   },
   "quality": {
     "auto": "Auto quality",
@@ -105,7 +106,8 @@
     "next": "Next machine (right arrow)",
     "points": "{count, plural, one {{n} point to check} other {{n} points to check}}",
     "add": "Machine",
-    "addSr": ": add a machine to the fleet"
+    "addSr": ": add a machine to the fleet",
+    "overview": "Whole hall view"
   },
   "groups": {
     "code": "{prefix} ×{n}",

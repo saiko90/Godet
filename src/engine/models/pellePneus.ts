@@ -36,7 +36,7 @@ const P1 = polar(P0, 2.4, 55);
 const P2_ = polar(P1, 2.8, -5);
 const P3 = polar(P2_, 2.34, -100);
 
-/** Godet rétro dans son propre repère (axe du balancier vers +y, dents vers +x) : coque, flancs, oreilles, dents. */
+/** Godet rétro dans son propre repère (axe du balancier vers +y, dents vers −x, côté cabine) : coque, flancs, oreilles, dents. */
 function hoeBucket(k: Kit, part: number, s: number, width: number): P2 {
   const outer = new THREE.SplineCurve(
     [
@@ -54,8 +54,10 @@ function hoeBucket(k: Kit, part: number, s: number, width: number): P2 {
     return p.clone().add(new THREE.Vector2(-t.y, t.x).multiplyScalar(0.055));
   });
   const half = width / 2;
+  // Godet rétro : ouverture et dents tournées vers la cabine (−x), biellette côté extérieur (+x).
+  for (const p of [...outer, ...inner]) p.x = -p.x;
   k.extrude(part, 'steelDark', new THREE.Shape([...outer, ...inner.slice().reverse()]), width, [0, 0, 0], undefined, 0, 8);
-  const side = new THREE.Shape([...outer, new THREE.Vector2(0.36 * s, -0.2 * s), new THREE.Vector2(0.12 * s, 0.12 * s)]);
+  const side = new THREE.Shape([...outer, new THREE.Vector2(-0.36 * s, -0.2 * s), new THREE.Vector2(-0.12 * s, 0.12 * s)]);
   for (const z of [half + 0.02, -half - 0.02]) k.extrude(part, 'steelDark', side, 0.04, [0, 0, z], undefined, 0, 8);
   // oreilles d'attache (axe du balancier et axe de la biellette)
   const link: P2 = [0.3 * s, 0.26 * s];
@@ -74,16 +76,16 @@ function hoeBucket(k: Kit, part: number, s: number, width: number): P2 {
   k.cylZ(part, 'steel', 0.06, 0.52, [link[0], link[1], 0], 12);
   // patins d'usure sous la coque, lame d'usure, couteaux latéraux et dents
   for (const z of [-0.26, 0.26]) {
-    k.box(part, 'steel', [0.34 * s, 0.035, 0.07], [-0.36 * s, -0.95 * s, z], [0, 0, 0.75]);
-    k.box(part, 'steel', [0.34 * s, 0.035, 0.07], [0.1 * s, -1.09 * s, z], [0, 0, 0.12]);
+    k.box(part, 'steel', [0.34 * s, 0.035, 0.07], [0.36 * s, -0.95 * s, z], [0, 0, -0.75]);
+    k.box(part, 'steel', [0.34 * s, 0.035, 0.07], [-0.1 * s, -1.09 * s, z], [0, 0, -0.12]);
   }
-  k.box(part, 'steel', [0.1, 0.05, width + 0.06], [0.47 * s, -0.94 * s, 0], [0, 0, 0.2]);
-  for (const z of [-half - 0.03, half + 0.03]) k.box(part, 'steel', [0.26, 0.06, 0.05], [0.32 * s, -0.9 * s, z], [0, 0, 0.32]);
+  k.box(part, 'steel', [0.1, 0.05, width + 0.06], [-0.47 * s, -0.94 * s, 0], [0, 0, -0.2]);
+  for (const z of [-half - 0.03, half + 0.03]) k.box(part, 'steel', [0.26, 0.06, 0.05], [-0.32 * s, -0.9 * s, z], [0, 0, -0.32]);
   const n = 5;
   for (let i = 0; i < n; i++) {
     const z = -half + 0.09 + (i * (width - 0.18)) / (n - 1);
-    k.box(part, 'steel', [0.14, 0.09, 0.1], [0.55 * s, -0.925 * s, z], [0, 0, 0.2]);
-    k.cyl(part, 'steel', [0.0, 0.05], 0.2, [0.66 * s, -0.9 * s, z], [0, 0, -1.37], 8);
+    k.box(part, 'steel', [0.14, 0.09, 0.1], [-0.55 * s, -0.925 * s, z], [0, 0, -0.2]);
+    k.cyl(part, 'steel', [0.0, 0.05], 0.2, [-0.66 * s, -0.9 * s, z], [0, 0, 1.37], 8);
   }
   return link;
 }
@@ -356,13 +358,13 @@ export function buildPellePneus(): MachineTemplate {
     maxScale: 1.18,
     wake: [
       { pose: { blade: -0.34, outL: -down, outR: down }, dur: 1.5 },
-      { pose: { boom: 0.1, adjust: 0.28, stick: 0.6, bucket: 0.4 }, dur: 1.4 },
-      { pose: { swing: 0.9, boom: 0.24, adjust: 0.08, stick: -0.45, bucket: -0.8 }, dur: 1.7 },
-      { pose: { stick: 0.05, bucket: 0.45 }, dur: 0.9 },
+      { pose: { boom: 0.1, adjust: 0.28, stick: 0.6, bucket: -0.4 }, dur: 1.4 },
+      { pose: { swing: 0.9, boom: 0.24, adjust: 0.08, stick: -0.45, bucket: 0.8 }, dur: 1.7 },
+      { pose: { stick: 0.05, bucket: -0.45 }, dur: 0.9 },
       { pose: { swing: 0, boom: 0, adjust: 0, stick: 0, bucket: 0, blade: 0, outL: 0, outR: 0 }, dur: 2.0 },
     ],
     nod: [
-      { pose: { bucket: -0.4 }, dur: 0.45 },
+      { pose: { bucket: 0.4 }, dur: 0.45 },
       { pose: { bucket: 0 }, dur: 0.5 },
     ],
     breathe: { boom: 0.01, adjust: -0.008, stick: 0.01 },

@@ -12,7 +12,7 @@
 | `NOMBRE` | 25 | Nouvelles entreprises (40 au plus) |
 | `EMAILS_MAX` | 15 | Premiers contacts par e-mail au plus ; les autres par lettre |
 | `RELANCES_MAX` | 15 | Brouillons de relance au plus |
-| `URL_SITE` | `https://godet-kappa.vercel.app` | Adresse publique de Godet |
+| `URL_SITE` | `https://godet.app` | Adresse publique de Godet |
 | `SIGNATURE` | `Michaël Kaeser` puis, à la ligne, `Swiss Digital Studio · Godet` | Signature des messages |
 | `AGENT` | `agent-france` | Valeur de `created_by` |
 | `PROJET` | `cluavztpktcmsynzvojf` | Projet Supabase |

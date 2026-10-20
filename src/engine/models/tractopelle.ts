@@ -23,7 +23,7 @@ const BOOM_UP = 1.42;
 const DIPPER_IN = 0.2; // angle absolu du balancier dans le repère de la potence
 const BUCKET_IN = -0.55;
 
-/** Godet rétro dans son repère (axe du balancier vers +y, dents vers +x) : coque, flancs, oreilles, dents. */
+/** Godet rétro dans son repère (axe du balancier vers +y, dents vers −x) : coque, flancs, oreilles, dents. */
 function hoeBucket(k: Kit, part: number, s: number, width: number): [number, number] {
   const outer = new THREE.SplineCurve(
     [
@@ -41,8 +41,10 @@ function hoeBucket(k: Kit, part: number, s: number, width: number): [number, num
     return p.clone().add(new THREE.Vector2(-t.y, t.x).multiplyScalar(0.04));
   });
   const half = width / 2;
+  // Godet rétro : ouverture et dents tournées vers la machine (−x), dos du godet côté extérieur (+x).
+  for (const p of [...outer, ...inner]) p.x = -p.x;
   k.extrude(part, 'steelDark', new THREE.Shape([...outer, ...inner.slice().reverse()]), width, [0, 0, 0], undefined, 0, 8);
-  const side = new THREE.Shape([...outer, new THREE.Vector2(0.36 * s, -0.2 * s), new THREE.Vector2(0.12 * s, 0.12 * s)]);
+  const side = new THREE.Shape([...outer, new THREE.Vector2(-0.36 * s, -0.2 * s), new THREE.Vector2(-0.12 * s, 0.12 * s)]);
   for (const z of [half + 0.015, -half - 0.015]) k.extrude(part, 'steelDark', side, 0.03, [0, 0, z], undefined, 0, 8);
   const link: [number, number] = [0.3 * s, 0.26 * s];
   const ear = softPolygon(
@@ -58,11 +60,11 @@ function hoeBucket(k: Kit, part: number, s: number, width: number): [number, num
   for (const z of [-0.12, 0.12]) k.extrude(part, 'trim', ear, 0.04, [0, 0, z], undefined, 0, 6);
   k.cylZ(part, 'steel', 0.045, 0.36, [0, 0, 0], 10);
   k.cylZ(part, 'steel', 0.04, 0.34, [link[0], link[1], 0], 10);
-  k.box(part, 'steel', [0.07, 0.035, width + 0.04], [0.47 * s, -0.94 * s, 0], [0, 0, 0.2]);
+  k.box(part, 'steel', [0.07, 0.035, width + 0.04], [-0.47 * s, -0.94 * s, 0], [0, 0, -0.2]);
   const n = 4;
   for (let i = 0; i < n; i++) {
     const z = -half + 0.07 + (i * (width - 0.14)) / (n - 1);
-    k.cyl(part, 'steel', [0.0, 0.035], 0.14, [0.62 * s, -0.9 * s, z], [0, 0, -1.37], 8);
+    k.cyl(part, 'steel', [0.0, 0.035], 0.14, [-0.62 * s, -0.9 * s, z], [0, 0, 1.37], 8);
   }
   return link;
 }
@@ -293,8 +295,8 @@ export function buildTractopelle(): MachineTemplate {
     maxScale: 1.25,
     wake: [
       { pose: { stab: -0.34 }, dur: 1.2 },
-      { pose: { hoe: -0.8, dipper: 0.87, hbucket: 1.25 }, dur: 1.7 },
-      { pose: { slew: -0.5, hoe: -0.6, dipper: 0.45, hbucket: 0.2 }, dur: 1.5 },
+      { pose: { hoe: -0.8, dipper: 0.87, hbucket: -1.25 }, dur: 1.7 },
+      { pose: { slew: -0.5, hoe: -0.6, dipper: 0.45, hbucket: -0.2 }, dur: 1.5 },
       { pose: { slew: 0, hoe: 0, dipper: 0, hbucket: 0, lift: 0.55, tilt: 0.45 }, dur: 1.8 },
       { pose: { lift: 0, tilt: 0, stab: 0 }, dur: 1.5 },
     ],

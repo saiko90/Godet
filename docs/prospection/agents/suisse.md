@@ -12,7 +12,7 @@
 | `NOMBRE` | 25 | Nouvelles entreprises à ajouter (40 au plus) |
 | `RELANCES_MAX` | 15 | Brouillons de relance à préparer au plus |
 | `PHASE` | `romandie` | `romandie` (4 premières semaines) → `mixte` → `complete` |
-| `URL_SITE` | `https://godet-kappa.vercel.app` | Adresse publique de Godet (à changer avec le domaine définitif) |
+| `URL_SITE` | `https://godet.app` | Adresse publique de Godet |
 | `SIGNATURE` | `Michaël Kaeser` puis, à la ligne, `Swiss Digital Studio · Godet` | Signature des messages |
 | `AGENT` | `agent-suisse` | Valeur de `created_by` |
 | `PROJET` | `cluavztpktcmsynzvojf` | Projet Supabase |

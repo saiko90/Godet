@@ -100,6 +100,12 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
   const prefs = usePrefs();
   const reducedMotion = useMedia('(prefers-reduced-motion: reduce)');
   const coarse = useMedia('(pointer: coarse)');
+  // Téléphone (portrait ou paysage) : le hall entier y est trop petit ; après l'allumage, la caméra va de machine en
+  // machine (balayage ou dock) sans ouvrir la fiche. « Vue d'ensemble » revient au hall entier.
+  const compact = useMedia('(pointer: coarse) and (max-width: 760px), (pointer: coarse) and (max-height: 520px)');
+  const [browse, setBrowse] = useState(false);
+  const compactRef = useRef(compact);
+  compactRef.current = compact;
   const hidden = usePageHidden();
 
   const stageRef = useRef<HTMLDivElement>(null);
@@ -309,6 +315,27 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
       // L'allumage est une mise en scène : on continue.
     }
     setIntroDone(true);
+    startBrowse(sr);
+  }
+
+  /** Téléphone : la caméra se pose sur la première machine (le hall entier y serait illisible). */
+  function startBrowse(sr: Showroom) {
+    if (!compactRef.current || initialMachineId) return;
+    const first = views.list[0]?.id;
+    if (!first || lastFocus.current) return;
+    setBrowse(true);
+    lastFocus.current = first;
+    setFocusedId(first);
+    try {
+      sr.focus(first);
+    } catch {
+      // Moteur arrêté entre-temps.
+    }
+  }
+
+  function leaveBrowse() {
+    setBrowse(false);
+    setFocusedId(null);
   }
 
   // Entrée directe (garage déjà allumé sur cet appareil) : allumage sans son, le son se débloque au premier geste.
@@ -317,7 +344,10 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
     window.setTimeout(() => setDockReady(true), 600);
     Promise.race([sr.intro(), sleep(8000)])
       .catch(() => undefined)
-      .then(() => setIntroDone(true));
+      .then(() => {
+        setIntroDone(true);
+        startBrowse(sr);
+      });
   });
   useEffect(() => {
     const sr = engine.showroom.current;
@@ -376,7 +406,7 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
 
   // La caméra suit la fiche ouverte (ou le groupe dont la liste est ouverte), et revient à la vue d'ensemble à la
   // fermeture. Une machine d'un groupe : la caméra reste devant le groupe.
-  const cameraTarget = sheetVisible ? viewOf(shownId) : groupVisible ? groupShown : null;
+  const cameraTarget = sheetVisible ? viewOf(shownId) : groupVisible ? groupShown : browse ? viewOf(focusedId) : null;
   useEffect(() => {
     const sr = engine.showroom.current;
     if (!engineReady || !sr || atelierShown || !entered) return;
@@ -543,7 +573,9 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
     const i = list.findIndex((v) => v.id === cur);
     const j = i < 0 ? (dir > 0 ? 0 : list.length - 1) : (i + dir + list.length) % list.length;
     const v = list[j];
-    if (v.group) openGroup(v.id);
+    // Téléphone, aucune fiche ouverte : la caméra passe simplement à la machine suivante.
+    if (browse && !groupVisible) setFocusedId(v.id);
+    else if (v.group) openGroup(v.id);
     else openSheet(v.id);
   }
 
@@ -813,7 +845,7 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
             ) : null}
 
             {showDock && !panelVisible && !selectedOnce ? (
-              <p className="hint g-hint-float">{coarse ? t('app.hintTouch') : t('app.hintClick')}</p>
+              <p className="hint g-hint-float">{browse ? t('app.hintSwipe') : coarse ? t('app.hintTouch') : t('app.hintClick')}</p>
             ) : null}
 
             {engineReady && !atelierShown && entered && dockReady && machines.length === 0 ? (
@@ -846,6 +878,7 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
                 }}
                 onPrev={() => step(-1)}
                 onNext={() => step(1)}
+                onOverview={browse && !panelVisible ? leaveBrowse : undefined}
                 onAdd={() => setModal({ type: 'machine' })}
               />
             ) : null}

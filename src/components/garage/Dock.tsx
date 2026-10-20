@@ -18,6 +18,7 @@ export function Dock({
   onPrev,
   onNext,
   onAdd,
+  onOverview,
 }: {
   views: FleetView[];
   /** Code et titre affichés sur la puce (et sur l'étiquette du showroom). */
@@ -29,6 +30,8 @@ export function Dock({
   onPrev: () => void;
   onNext: () => void;
   onAdd: () => void;
+  /** Téléphone : retour au hall entier (absent hors du mode « de machine en machine »). */
+  onOverview?: () => void;
 }) {
   const t = useTranslations('garage');
   const f = useFormat();
@@ -46,6 +49,11 @@ export function Dock({
   return (
     <nav className="dock g-dock" aria-label={t('dock.label')}>
       <div className="g-dock-inner">
+        {onOverview ? (
+          <button type="button" className="icon-btn g-dock-nav" aria-label={t('dock.overview')} title={t('dock.overview')} onClick={onOverview}>
+            <Icon name="garage" />
+          </button>
+        ) : null}
         {several ? (
           <button type="button" className="icon-btn g-dock-nav" aria-label={t('dock.prev')} onClick={onPrev}>
             <Icon name="chevron-left" />
