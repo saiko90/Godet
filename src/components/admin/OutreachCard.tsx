@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { useId, useState } from 'react';
-import { cancelDraft, markReply, markSent, reopenDraft, saveDraft, validateDraft } from '@/app/[locale]/admin/actions';
+import { cancelDraft, markReply, markSent, reopenDraft, saveDraft, sendByEmail, validateDraft } from '@/app/[locale]/admin/actions';
 import { Icon } from '@/components/Icons';
 import { Link } from '@/i18n/navigation';
 import { CHANNELS, channelRule, hasPlaceholder, isOneOf, LIMITS, OUTREACH_TONE, pillClass, type OutreachStatus } from './types';
@@ -23,19 +23,26 @@ export interface OutreachView {
 }
 
 /**
- * Un message préparé (par un agent ou à la main). Rien ne part d'ici : on valide le texte, on l'envoie soi-même
- * (lettre imprimée, appel, LinkedIn, e-mail quand c'est permis), puis on le marque comme envoyé.
+ * Un message préparé (par un agent ou à la main). On valide le texte, puis on l'envoie : « Envoyer par e-mail » (pays où
+ * c'est permis, adresse de l'entreprise connue ; l'envoi est enregistré tout seul), ou soi-même (lettre imprimée, appel,
+ * LinkedIn) puis « Marquer comme envoyé ».
  */
 export function OutreachCard({
   o,
   prospectId,
   country,
   blocked,
+  email,
+  emailAllowed,
 }: {
   o: OutreachView;
   prospectId: string;
   country: string;
   blocked: boolean;
+  /** Adresse e-mail de l'entreprise (fiche du prospect). */
+  email: string | null;
+  /** L'e-mail de prospection est-il permis dans ce pays (CH, FR) ? */
+  emailAllowed: boolean;
 }) {
   const t = useTranslations('admin');
   const uid = useId();
@@ -136,6 +143,10 @@ export function OutreachCard({
         </>
       )}
 
+      {o.status === 'valide' && emailAllowed ? (
+        <p className="adm-hint">{email ? t('outreach.emailTo', { email }) : t('outreach.noEmailHint')}</p>
+      ) : null}
+
       {!editing ? (
         <div className="adm-row">
           {o.status === 'brouillon' ? (
@@ -168,6 +179,19 @@ export function OutreachCard({
                 <CopyButton text={o.body} label={t('outreach.copyText')} />
               </>
             )
+          ) : null}
+
+          {o.status === 'valide' && emailAllowed && email ? (
+            <ConfirmButton
+              label={t('outreach.sendEmail')}
+              question={t('outreach.sendEmailQuestion', { email })}
+              confirmLabel={t('outreach.sendEmailConfirm')}
+              icon="mail"
+              danger={false}
+              pending={action.pending}
+              disabled={blocked || !o.subject}
+              onConfirm={() => action.run(() => sendByEmail(o.id))}
+            />
           ) : null}
 
           {o.status === 'valide' ? (

@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation';
 import { AdminChrome } from '@/components/admin/AdminChrome';
 import { COUNTRY_LINE, LETTER_SENDER, senderComplete, windowSide } from '@/components/admin/letter-config';
 import { LetterSheet, type LetterData } from '@/components/admin/LetterSheet';
-import { demoPath, localePrefix, prospectLocale, shortUrl, websiteDomain } from '@/components/admin/links';
+import { demoPath, localePrefix, prospectLocale, readableSource, shortUrl } from '@/components/admin/links';
 import { isOneOf, isUuid, LOCALES } from '@/components/admin/types';
 import { PrintButton } from '@/components/admin/ui';
 import { Icon } from '@/components/Icons';
@@ -23,15 +23,6 @@ const LONG_BODY = 2300;
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const { locale } = await params;
   return { title: await adminPageTitle(locale, 'letter') };
-}
-
-/** Provenance lisible pour la lettre : « Registre du commerce (Zefix) — https://… » → « Registre du commerce (Zefix) ». */
-function readableSource(source: string): string {
-  const head = source.split(/\s+[—|]\s+/)[0] ?? '';
-  const withoutUrls = head.replace(/https?:\/\/\S+/g, '').replace(/\s{2,}/g, ' ').trim();
-  if (withoutUrls) return withoutUrls.slice(0, 90);
-  const url = /https?:\/\/\S+/.exec(source)?.[0];
-  return (url ? websiteDomain(url) : null) ?? source.slice(0, 60);
 }
 
 export default async function AdminLetterPage({ params }: { params: Params }) {

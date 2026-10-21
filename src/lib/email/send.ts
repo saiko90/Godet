@@ -21,6 +21,8 @@ export interface EmailInput {
   text: string;
   /** Adresse de réponse (sinon EMAIL_REPLY_TO, sinon aucune). */
   replyTo?: string;
+  /** Nom affiché de l'expéditeur (l'adresse reste celle d'EMAIL_FROM, domaine vérifié). */
+  fromName?: string;
   /** En-têtes supplémentaires (ex. List-Unsubscribe). */
   headers?: Record<string, string>;
   /** Étiquettes Resend (lettres ASCII, chiffres, « _ » et « - » uniquement). */
@@ -80,6 +82,14 @@ function errorCode(body: unknown): string {
   return typeof name === 'string' && /^[a-z_]{1,40}$/.test(name) ? name : 'unknown';
 }
 
+/** « Godet <rappels@godet.app> » + « Michaël Kaeser » → « Michaël Kaeser <rappels@godet.app> ». */
+function withName(from: string, name: string | undefined): string {
+  const clean = name ? oneLine(name).replace(/[<>"\\]/g, '') : '';
+  if (!clean) return from;
+  const address = /<([^>]+)>/.exec(from)?.[1] ?? from;
+  return `"${clean}" <${address.trim()}>`;
+}
+
 /**
  * Envoie un e-mail. Ne lève jamais d'exception : le résultat dit s'il est parti.
  * Les journaux ne contiennent ni adresse ni contenu, seulement le statut HTTP et le code d'erreur.
@@ -96,7 +106,7 @@ export async function sendEmail(input: EmailInput): Promise<SendEmailResult> {
 
   const replyTo = input.replyTo?.trim() || cfg.replyTo;
   const payload: Record<string, unknown> = {
-    from: cfg.from,
+    from: withName(cfg.from, input.fromName),
     to,
     subject,
     html: input.html,

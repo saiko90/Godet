@@ -53,7 +53,18 @@
     "previous": "Zurück",
     "next": "Weiter"
   },
+  "mail": {
+    "optOut": "Sie möchten keine Nachrichten mehr von mir erhalten? Antworten Sie einfach «stop»: Ich streiche Sie sofort von meiner Liste.",
+    "source": "Herkunft Ihrer Kontaktdaten: {source}.",
+    "privacy": "Datenschutz: {url}"
+  },
   "results": {
+    "mailSent": "E-Mail gesendet. Die Nachfassung ist geplant.",
+    "noEmail": "Keine gültige E-Mail-Adresse für diese Firma.",
+    "noReplyTo": "Keine Antwortadresse: Ergänzen Sie die E-Mail des Absenders.",
+    "emailOff": "Der E-Mail-Versand ist auf dem Server nicht eingerichtet (Resend).",
+    "emailBanned": "In diesem Land braucht Werbung per E-Mail eine vorherige Einwilligung: Senden Sie einen Brief.",
+    "emailFailed": "Die E-Mail wurde nicht gesendet. Versuchen Sie es gleich nochmals.",
     "saved": "Gespeichert.",
     "statusSaved": "Status gespeichert.",
     "validated": "Nachricht freigegeben. Versenden Sie sie selbst und markieren Sie sie danach als versendet.",
@@ -338,6 +349,11 @@
     "markSent": "Als versendet markieren",
     "markSentQuestion": "Haben Sie die Nachricht wirklich versendet?",
     "markSentConfirm": "Ja, versendet",
+    "sendEmail": "Per E-Mail senden",
+    "sendEmailQuestion": "Diese Nachricht an {email} senden?",
+    "sendEmailConfirm": "Ja, senden",
+    "emailTo": "Empfänger: {email}",
+    "noEmailHint": "Keine E-Mail-Adresse für diese Firma: im Profil ergänzen oder den Brief drucken.",
     "reopen": "Wieder als Entwurf öffnen",
     "markReply": "Antwort erhalten",
     "cancel": "Nachricht annullieren",

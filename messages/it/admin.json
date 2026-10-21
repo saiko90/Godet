@@ -53,7 +53,18 @@
     "previous": "Precedente",
     "next": "Successiva"
   },
+  "mail": {
+    "optOut": "Non desidera più ricevere messaggi da me? Risponda semplicemente «stop»: La tolgo subito dalla mia lista.",
+    "source": "Origine dei Suoi dati di contatto: {source}.",
+    "privacy": "Protezione dei dati: {url}"
+  },
   "results": {
+    "mailSent": "E-mail inviata. Il sollecito è pianificato.",
+    "noEmail": "Nessun indirizzo e-mail valido per questa impresa.",
+    "noReplyTo": "Nessun indirizzo di risposta: completi l’e-mail del mittente.",
+    "emailOff": "L’invio di e-mail non è configurato sul server (Resend).",
+    "emailBanned": "In questo Paese l’e-mail promozionale richiede un consenso preventivo: invii una lettera.",
+    "emailFailed": "L’e-mail non è partita. Riprovi tra un istante.",
     "saved": "Salvato.",
     "statusSaved": "Stato salvato.",
     "validated": "Messaggio convalidato. Lo invii personalmente, poi lo segni come inviato.",
@@ -338,6 +349,11 @@
     "markSent": "Segna come inviato",
     "markSentQuestion": "L’ha davvero inviato?",
     "markSentConfirm": "Sì, inviato",
+    "sendEmail": "Invia per e-mail",
+    "sendEmailQuestion": "Inviare questo messaggio a {email}?",
+    "sendEmailConfirm": "Sì, invia",
+    "emailTo": "Destinatario: {email}",
+    "noEmailHint": "Nessun indirizzo e-mail per questa impresa: lo aggiunga nella scheda o stampi la lettera.",
     "reopen": "Riporta a bozza",
     "markReply": "Risposta ricevuta",
     "cancel": "Annulla il messaggio",

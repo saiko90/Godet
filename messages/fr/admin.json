@@ -53,7 +53,18 @@
     "previous": "Précédent",
     "next": "Suivant"
   },
+  "mail": {
+    "optOut": "Vous ne souhaitez plus recevoir de message de ma part ? Répondez simplement « stop » : je vous retire aussitôt de ma liste.",
+    "source": "Origine de vos coordonnées : {source}.",
+    "privacy": "Protection des données : {url}"
+  },
   "results": {
+    "mailSent": "E-mail envoyé. La relance est planifiée.",
+    "noEmail": "Pas d’adresse e-mail valable pour cette entreprise.",
+    "noReplyTo": "Aucune adresse de réponse : complétez l’e-mail de l’expéditeur.",
+    "emailOff": "L’envoi d’e-mails n’est pas configuré sur le serveur (Resend).",
+    "emailBanned": "Dans ce pays, l’e-mail de prospection exige un consentement préalable : envoyez une lettre.",
+    "emailFailed": "L’e-mail n’est pas parti. Réessayez dans un instant.",
     "saved": "Enregistré.",
     "statusSaved": "Statut enregistré.",
     "validated": "Message validé. Envoyez-le vous-même, puis marquez-le comme envoyé.",
@@ -338,6 +349,11 @@
     "markSent": "Marquer comme envoyé",
     "markSentQuestion": "Vous l’avez bien envoyé ?",
     "markSentConfirm": "Oui, envoyé",
+    "sendEmail": "Envoyer par e-mail",
+    "sendEmailQuestion": "Envoyer ce message à {email} ?",
+    "sendEmailConfirm": "Oui, envoyer",
+    "emailTo": "Destinataire : {email}",
+    "noEmailHint": "Pas d’adresse e-mail pour cette entreprise : ajoutez-la dans la fiche, ou imprimez la lettre.",
     "reopen": "Repasser en brouillon",
     "markReply": "Réponse reçue",
     "cancel": "Annuler le message",

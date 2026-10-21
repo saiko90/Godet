@@ -222,6 +222,7 @@ export type AdminResultCode =
   | 'validated'
   | 'reopened'
   | 'sent'
+  | 'mailSent'
   | 'reply'
   | 'cancelled'
   | 'created'
@@ -235,7 +236,12 @@ export type AdminResultCode =
   | 'locked'
   | 'forbidden'
   | 'failed'
-  | 'offline';
+  | 'offline'
+  | 'noEmail'
+  | 'noReplyTo'
+  | 'emailOff'
+  | 'emailBanned'
+  | 'emailFailed';
 
 export type AdminResult = { ok: boolean; code: AdminResultCode; field?: string };
 

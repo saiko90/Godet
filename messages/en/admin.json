@@ -53,7 +53,18 @@
     "previous": "Previous",
     "next": "Next"
   },
+  "mail": {
+    "optOut": "Don’t want to hear from me again? Just reply “stop” and I’ll remove you from my list straight away.",
+    "source": "Where your details come from: {source}.",
+    "privacy": "Data protection: {url}"
+  },
   "results": {
+    "mailSent": "Email sent. The follow-up is scheduled.",
+    "noEmail": "No valid email address for this company.",
+    "noReplyTo": "No reply-to address: fill in the sender’s email.",
+    "emailOff": "Email sending isn’t set up on the server (Resend).",
+    "emailBanned": "In this country, marketing emails need prior consent: send a letter.",
+    "emailFailed": "The email wasn’t sent. Please try again in a moment.",
     "saved": "Saved.",
     "statusSaved": "Status saved.",
     "validated": "Message approved. Send it yourself, then mark it as sent.",
@@ -338,6 +349,11 @@
     "markSent": "Mark as sent",
     "markSentQuestion": "Have you really sent it?",
     "markSentConfirm": "Yes, sent",
+    "sendEmail": "Send by email",
+    "sendEmailQuestion": "Send this message to {email}?",
+    "sendEmailConfirm": "Yes, send",
+    "emailTo": "Recipient: {email}",
+    "noEmailHint": "No email address for this company: add it to the record, or print the letter.",
     "reopen": "Back to draft",
     "markReply": "Reply received",
     "cancel": "Cancel message",

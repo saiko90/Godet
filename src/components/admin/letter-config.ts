@@ -4,6 +4,8 @@
 // manque, la console affiche un avertissement au-dessus de la lettre.
 
 export const LETTER_SENDER = {
+  /** Personne qui signe (nom affiché des e-mails de prospection). */
+  name: 'Michaël Kaeser',
   /** Raison sociale telle qu'inscrite (registre du commerce le cas échéant). */
   company: 'Swiss Digital Studio',
   /** Rue et numéro. */

@@ -3,12 +3,15 @@
 // Actions de la console d'administration. Chacune revérifie que la personne est administratrice de la plateforme
 // et valide ses entrées : la RLS (private.is_platform_admin) protège aussi les tables, mais un code d'erreur clair
 // vaut mieux qu'un refus silencieux. Rien n'est jamais envoyé d'ici : la console enregistre des décisions
-// (valider, marquer comme envoyé…) ; l'envoi lui-même reste fait à la main par Swiss Digital Studio.
+// (valider, marquer comme envoyé…). Seule exception : « Envoyer par e-mail », sur clic de Michaël, pour un message
+// validé, à l'adresse générique d'une entreprise d'un pays où l'e-mail de prospection est permis (CH, FR).
 
 import { revalidatePath } from 'next/cache';
-import { prospectLocale, refPrefix } from '@/components/admin/links';
+import { LETTER_SENDER } from '@/components/admin/letter-config';
+import { localePrefix, prospectLocale, readableSource, refPrefix, shortUrl } from '@/components/admin/links';
 import {
   CHANNELS,
+  channelRule,
   CLOSED_STATUSES,
   CONTACT_STATUSES,
   FLEET_SIZES,
@@ -30,6 +33,9 @@ import {
 import { redirect } from '@/i18n/navigation';
 import { isAppLocale } from '@/i18n/routing';
 import type { TablesUpdate } from '@/lib/database.types';
+import { isEmailAddress, isEmailConfigured, sendEmail } from '@/lib/email';
+import { renderProspectEmail } from '@/lib/email/prospect';
+import { getTranslations } from 'next-intl/server';
 import { getAdmin, zurichDay, type AdminContext } from './guard';
 
 const done = (code: AdminResultCode): AdminResult => ({ ok: true, code });
@@ -343,13 +349,14 @@ type OutreachWithProspect = {
   channel: string;
   subject: string | null;
   body: string;
-  prospects: { status: string; next_action_at: string | null; country: string } | null;
+  locale: string;
+  prospects: { status: string; next_action_at: string | null; country: string; email: string | null; source: string } | null;
 };
 
 async function loadOutreach(supabase: Supabase, id: string): Promise<OutreachWithProspect | null> {
   const { data, error } = await supabase
     .from('outreach')
-    .select('id, prospect_id, status, step, channel, subject, body, prospects(status, next_action_at, country)')
+    .select('id, prospect_id, status, step, channel, subject, body, locale, prospects(status, next_action_at, country, email, source)')
     .eq('id', id)
     .maybeSingle();
   if (error) throw error;
@@ -446,6 +453,36 @@ export async function cancelDraft(id: string): Promise<AdminResult> {
   });
 }
 
+/** Enregistre l'envoi d'un message validé : statut, canal réellement utilisé, prospect et prochaine action. */
+async function recordSent(supabase: Supabase, o: OutreachWithProspect, channel?: string): Promise<boolean> {
+  const { data, error } = await supabase
+    .from('outreach')
+    .update({ status: 'envoye', sent_at: new Date().toISOString(), ...(channel ? { channel } : {}) })
+    .eq('id', o.id)
+    .eq('status', 'valide')
+    .select('id');
+  if (error) throw error;
+  if (!data?.length) return false;
+
+  const current = (o.prospects?.status ?? 'nouveau') as ProspectStatus;
+  const patch: TablesUpdate<'prospects'> = {};
+  const used = channel ?? o.channel;
+  if (isOneOf(CHANNELS, used)) patch.channel = used;
+  if (['nouveau', 'a_valider', 'pret'].includes(current)) patch.status = 'contacte';
+  else if (['contacte', 'relance'].includes(current) && o.step > 1) patch.status = 'relance';
+  // Prochaine action : l'étape suivante de la séquence du pays, sauf si une date plus lointaine est déjà fixée.
+  if (!(CLOSED_STATUSES as readonly string[]).includes(current)) {
+    const planned = zurichDay(nextActionDays(o.prospects?.country ?? '', o.step, used));
+    const existing = o.prospects?.next_action_at ?? null;
+    if (!existing || existing < planned) patch.next_action_at = planned;
+  }
+  if (Object.keys(patch).length) {
+    const { error: pError } = await supabase.from('prospects').update(patch).eq('id', o.prospect_id);
+    if (pError) throw pError;
+  }
+  return true;
+}
+
 /** Michaël a envoyé le message lui-même (poste, téléphone, LinkedIn, e-mail…) : on l'enregistre. */
 export async function markSent(id: string): Promise<AdminResult> {
   if (!isUuid(id)) return fail('notFound');
@@ -454,32 +491,59 @@ export async function markSent(id: string): Promise<AdminResult> {
     if (!o) return fail('notFound');
     if (blocked(o)) return fail('locked');
     if (o.status !== 'valide') return fail('conflict');
-    const { data, error } = await supabase
-      .from('outreach')
-      .update({ status: 'envoye', sent_at: new Date().toISOString() })
-      .eq('id', id)
-      .eq('status', 'valide')
-      .select('id');
-    if (error) throw error;
-    if (!data?.length) return fail('conflict');
-
-    const current = (o.prospects?.status ?? 'nouveau') as ProspectStatus;
-    const patch: TablesUpdate<'prospects'> = {};
-    if (isOneOf(CHANNELS, o.channel)) patch.channel = o.channel;
-    if (['nouveau', 'a_valider', 'pret'].includes(current)) patch.status = 'contacte';
-    else if (['contacte', 'relance'].includes(current) && o.step > 1) patch.status = 'relance';
-    // Prochaine action : l'étape suivante de la séquence du pays, sauf si une date plus lointaine est déjà fixée.
-    if (!(CLOSED_STATUSES as readonly string[]).includes(current)) {
-      const planned = zurichDay(nextActionDays(o.prospects?.country ?? '', o.step, o.channel));
-      const existing = o.prospects?.next_action_at ?? null;
-      if (!existing || existing < planned) patch.next_action_at = planned;
-    }
-    if (Object.keys(patch).length) {
-      const { error: pError } = await supabase.from('prospects').update(patch).eq('id', o.prospect_id);
-      if (pError) throw pError;
-    }
+    if (!(await recordSent(supabase, o))) return fail('conflict');
     refresh();
     return done('sent');
+  });
+}
+
+/**
+ * Envoie le message validé par e-mail (Resend), sur clic de Michaël : à l'adresse de l'entreprise, avec son nom comme
+ * expéditeur, réponse à son adresse, et en pied l'expéditeur, l'origine des coordonnées et le moyen de refuser.
+ * Refusé pour les pays où l'e-mail de prospection exige un consentement (DE, AT, IT).
+ */
+export async function sendByEmail(id: string): Promise<AdminResult> {
+  if (!isUuid(id)) return fail('notFound');
+  if (!isEmailConfigured()) return fail('emailOff');
+  return asAdmin('e-mail', async ({ supabase, email: adminEmail }) => {
+    const o = await loadOutreach(supabase, id);
+    if (!o || !o.prospects) return fail('notFound');
+    if (blocked(o)) return fail('locked');
+    if (o.status !== 'valide') return fail('conflict');
+    const p = o.prospects;
+    if (channelRule(p.country, 'email')?.level === 'no') return fail('emailBanned');
+    const to = p.email?.trim() ?? '';
+    if (!isEmailAddress(to)) return fail('noEmail');
+    if (!o.subject?.trim()) return fail('invalid', 'subject');
+    const replyTo = [LETTER_SENDER.email, adminEmail].find((a) => isEmailAddress(a));
+    if (!replyTo) return fail('noReplyTo');
+
+    const lang = prospectLocale(o.locale, p.country);
+    const tl = await getTranslations({ locale: lang, namespace: 'admin.mail' });
+    const site = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://godet.app').replace(/\/$/, '');
+    const address = [LETTER_SENDER.street, [LETTER_SENDER.postalCode, LETTER_SENDER.city].filter(Boolean).join(' ')].filter(Boolean).join(', ');
+    const footer = [
+      [LETTER_SENDER.name, LETTER_SENDER.company, address, LETTER_SENDER.phone].filter(Boolean).join(' · '),
+      tl('optOut'),
+      tl('source', { source: readableSource(p.source) }),
+      tl('privacy', { url: shortUrl(site, `${localePrefix(lang)}/confidentialite`) }),
+    ];
+    const mail = renderProspectEmail({ subject: o.subject, body: o.body, footer });
+    const sent = await sendEmail({
+      to,
+      subject: mail.subject,
+      html: mail.html,
+      text: mail.text,
+      fromName: LETTER_SENDER.name,
+      replyTo,
+      headers: { 'List-Unsubscribe': `<mailto:${replyTo}?subject=stop>` },
+      tags: [{ name: 'type', value: 'prospection' }],
+      idempotencyKey: `outreach-${o.id}`,
+    });
+    if (!sent.sent) return fail(sent.reason === 'not_configured' ? 'emailOff' : sent.reason === 'invalid_recipient' ? 'noEmail' : 'emailFailed');
+    if (!(await recordSent(supabase, o, 'email'))) return fail('conflict');
+    refresh();
+    return done('mailSent');
   });
 }
 

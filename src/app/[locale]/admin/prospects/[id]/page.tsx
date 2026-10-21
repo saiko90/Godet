@@ -11,6 +11,7 @@ import { ProspectFollowUp } from '@/components/admin/ProspectFollowUp';
 import { DataControls, NewDraftForm, RefCodeButton } from '@/components/admin/ProspectTools';
 import {
   CHANNELS,
+  channelRule,
   CONTACT_KINDS,
   CONTACT_STATUSES,
   CONTACT_TONE,
@@ -241,7 +242,15 @@ export default async function AdminProspectPage({ params }: { params: Params }) 
               {outreach.length ? (
                 <div className="adm-steps">
                   {outreach.map((o) => (
-                    <OutreachCard key={o.id} o={o} prospectId={p.id} country={p.country} blocked={blocked} />
+                    <OutreachCard
+                      key={o.id}
+                      o={o}
+                      prospectId={p.id}
+                      country={p.country}
+                      blocked={blocked}
+                      email={p.email}
+                      emailAllowed={channelRule(p.country, 'email')?.level !== 'no'}
+                    />
                   ))}
                 </div>
               ) : (

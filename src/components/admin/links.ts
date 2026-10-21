@@ -79,3 +79,12 @@ export function safeExternalUrl(url: string | null | undefined): string | null {
     return null;
   }
 }
+
+/** Provenance lisible pour la lettre et l’e-mail : « Registre du commerce (Zefix) — https://… » → « Registre du commerce (Zefix) ». */
+export function readableSource(source: string): string {
+  const head = source.split(/\s+[—|]\s+/)[0] ?? '';
+  const withoutUrls = head.replace(/https?:\/\/\S+/g, '').replace(/\s{2,}/g, ' ').trim();
+  if (withoutUrls) return withoutUrls.slice(0, 90);
+  const url = /https?:\/\/\S+/.exec(source)?.[0];
+  return (url ? websiteDomain(url) : null) ?? source.slice(0, 60);
+}
