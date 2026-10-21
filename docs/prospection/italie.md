@@ -155,7 +155,7 @@ vendete, noleggiate o riparate macchine edili in {regione}. I Vostri clienti ten
 
 Godet è un libretto di manutenzione digitale per tutte le marche: ogni macchina conserva il suo storico completo (manutenzioni, riparazioni, ricambi, ore, verbali, fatture), stampabile in PDF per una perizia o una rivendita.
 
-Cerco alcuni partner in Italia che lo facciano conoscere ai propri clienti, con {vantaggio proposto, da definire} per chi arriva da parte Vostra. Sareste disponibili per un colloquio di 20 minuti?
+Cerco alcuni partner in Italia che lo facciano conoscere ai propri clienti, con {vantaggio proposto, da definire} per chi arriva da parte Vostra. Se la proposta Vi interessa, mi risponda semplicemente per e-mail: Le invio tutti i dettagli.
 
 Cordiali saluti
 

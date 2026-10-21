@@ -325,7 +325,7 @@ Vous vendez, louez ou entretenez des machines de chantier en {région}. Vos clie
 
 Godet est un carnet d’entretien numérique, toutes marques : chaque machine garde son historique complet (services, réparations, pièces, heures, factures), imprimable en PDF pour une expertise ou une revente.
 
-Je cherche quelques partenaires en Suisse pour le faire connaître à leurs clients, avec {avantage proposé, à définir} pour ceux qui viennent de votre part. Seriez-vous ouvert à un échange de 20 minutes ?
+Je cherche quelques partenaires en Suisse pour le faire connaître à leurs clients, avec {avantage proposé, à définir} pour ceux qui viennent de votre part. Si la proposition vous intéresse, répondez-moi simplement par e-mail : je vous envoie tous les détails.
 
 Avec mes meilleures salutations
 
@@ -341,7 +341,7 @@ Sie verkaufen, vermieten oder warten Baumaschinen in {Region}. Ihre Kunden führ
 
 Godet ist ein digitales Wartungsheft für alle Marken: Jede Maschine behält ihre vollständige Historie (Wartungen, Reparaturen, Ersatzteile, Betriebsstunden, Rechnungen), als PDF druckbar für eine Expertise oder einen Wiederverkauf.
 
-Ich suche einige Partner in der Schweiz, die Godet ihren Kunden vorstellen, mit {vorgeschlagener Vorteil, noch festzulegen} für Kunden, die über Sie kommen. Hätten Sie 20 Minuten für ein Gespräch?
+Ich suche einige Partner in der Schweiz, die Godet ihren Kunden vorstellen, mit {vorgeschlagener Vorteil, noch festzulegen} für Kunden, die über Sie kommen. Wenn Sie das interessiert, antworten Sie einfach per E-Mail: Ich schicke Ihnen alle Details.
 
 Freundliche Grüsse
 

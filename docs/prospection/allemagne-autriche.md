@@ -184,7 +184,7 @@ Sie verkaufen, vermieten oder warten Baumaschinen in {Region}. Ihre Kunden führ
 
 Godet ist ein digitales Wartungsheft für alle Marken: Jede Maschine behält ihre vollständige Historie (Wartungen, Reparaturen, Ersatzteile, Betriebsstunden, Prüfberichte, Rechnungen), als PDF druckbar für eine Bewertung oder einen Wiederverkauf.
 
-Ich suche einige Partner in Deutschland und Österreich, die Godet ihren Kunden vorstellen, mit {vorgeschlagener Vorteil, noch festzulegen} für Kunden, die über Sie kommen. Hätten Sie 20 Minuten für ein Gespräch?
+Ich suche einige Partner in Deutschland und Österreich, die Godet ihren Kunden vorstellen, mit {vorgeschlagener Vorteil, noch festzulegen} für Kunden, die über Sie kommen. Wenn Sie das interessiert, antworten Sie einfach per E-Mail: Ich schicke Ihnen alle Details.
 
 Mit freundlichen Grüssen
 

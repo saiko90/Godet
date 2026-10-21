@@ -168,7 +168,7 @@ Vous vendez, louez ou entretenez des engins de chantier en {région}. Vos client
 
 Godet est un carnet d’entretien numérique, toutes marques : chaque machine garde son historique complet (entretiens, réparations, pièces, heures, rapports, factures), imprimable en PDF pour une expertise ou une revente.
 
-Je cherche quelques partenaires en France pour le faire connaître à leurs clients, avec {avantage proposé, à définir} pour ceux qui viennent de votre part. Seriez-vous disponible pour un échange de 20 minutes ?
+Je cherche quelques partenaires en France pour le faire connaître à leurs clients, avec {avantage proposé, à définir} pour ceux qui viennent de votre part. Si la proposition vous intéresse, répondez-moi simplement par e-mail : je vous envoie tous les détails.
 
 Je vous prie d’agréer, Madame, Monsieur, l’expression de mes salutations distinguées.
 
