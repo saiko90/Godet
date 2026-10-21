@@ -3,6 +3,7 @@ import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { AdminChrome } from '@/components/admin/AdminChrome';
+import { NewProspectForm } from '@/components/admin/ProspectTools';
 import { Pager } from '@/components/admin/Pager';
 import {
   CHANNELS,
@@ -126,6 +127,10 @@ export default async function AdminProspectsPage({ params, searchParams }: { par
           <p className="eyebrow">{t('chrome.console')}</p>
           <h1>{t('prospects.title')}</h1>
           <p>{t('prospects.lead')}</p>
+        </div>
+
+        <div className="adm-section">
+          <NewProspectForm />
         </div>
 
         <div className="adm-section">

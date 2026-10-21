@@ -59,6 +59,7 @@
     "privacy": "Datenschutz: {url}"
   },
   "results": {
+    "prospectCreated": "Interessent hinzugefügt, mit Tracking-Code.",
     "mailSent": "E-Mail gesendet. Die Nachfassung ist geplant.",
     "noEmail": "Keine gültige E-Mail-Adresse für diese Firma.",
     "noReplyTo": "Keine Antwortadresse: Ergänzen Sie die E-Mail des Absenders.",
@@ -270,6 +271,14 @@
     "answerHint": "Sichtbar für die Person, welche die Idee eingereicht hat. {count} / {max} Zeichen."
   },
   "prospects": {
+    "new": {
+      "open": "Neuer Interessent",
+      "lead": "Eine empfohlene oder selbst gefundene Firma. Der Tracking-Code wird automatisch erstellt; die Nachricht fügen Sie danach im Profil hinzu.",
+      "create": "Profil erstellen",
+      "creating": "Wird erstellt…",
+      "sourcePlaceholder": "Empfehlung, Messe, Website der Firma…",
+      "close": "Schliessen"
+    },
     "title": "Interessenten",
     "lead": "Die von den Agenten gefundenen und die von Hand erfassten Unternehmen. Öffnen Sie einen Eintrag, um seine Nachrichten zu prüfen und freizugeben.",
     "statusFilter": "Nach Status filtern",

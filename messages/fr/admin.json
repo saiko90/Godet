@@ -59,6 +59,7 @@
     "privacy": "Protection des données : {url}"
   },
   "results": {
+    "prospectCreated": "Prospect ajouté, avec son code de suivi.",
     "mailSent": "E-mail envoyé. La relance est planifiée.",
     "noEmail": "Pas d’adresse e-mail valable pour cette entreprise.",
     "noReplyTo": "Aucune adresse de réponse : complétez l’e-mail de l’expéditeur.",
@@ -270,6 +271,14 @@
     "answerHint": "Visible par la personne qui a proposé l’idée. {count} / {max} caractères."
   },
   "prospects": {
+    "new": {
+      "open": "Nouveau prospect",
+      "lead": "Une entreprise recommandée ou trouvée vous-même. Le code de suivi est créé tout seul ; vous ajoutez ensuite le message depuis la fiche.",
+      "create": "Créer la fiche",
+      "creating": "Création…",
+      "sourcePlaceholder": "Recommandation, salon, site de l’entreprise…",
+      "close": "Fermer"
+    },
     "title": "Prospects",
     "lead": "Les entreprises trouvées par les agents et celles ajoutées à la main. Ouvrez une fiche pour relire et valider ses messages.",
     "statusFilter": "Filtrer par statut",

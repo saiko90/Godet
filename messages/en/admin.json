@@ -59,6 +59,7 @@
     "privacy": "Data protection: {url}"
   },
   "results": {
+    "prospectCreated": "Prospect added, with its tracking code.",
     "mailSent": "Email sent. The follow-up is scheduled.",
     "noEmail": "No valid email address for this company.",
     "noReplyTo": "No reply-to address: fill in the sender’s email.",
@@ -270,6 +271,14 @@
     "answerHint": "Visible to the person who suggested the idea. {count} / {max} characters."
   },
   "prospects": {
+    "new": {
+      "open": "New prospect",
+      "lead": "A company you were referred to or found yourself. The tracking code is created automatically; add the message from the record afterwards.",
+      "create": "Create record",
+      "creating": "Creating…",
+      "sourcePlaceholder": "Referral, trade fair, company website…",
+      "close": "Close"
+    },
     "title": "Prospects",
     "lead": "Companies found by the agents and those added by hand. Open a record to review and approve its messages.",
     "statusFilter": "Filter by status",

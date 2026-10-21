@@ -22,11 +22,13 @@ import {
   isUuid,
   LIMITS,
   LOCALES,
+  MARKETS,
   nextActionDays,
   PROSPECT_STATUSES,
   SEGMENTS,
   type AdminResult,
   type AdminResultCode,
+  type NewProspectInput,
   type ProspectDetailsInput,
   type ProspectStatus,
 } from '@/components/admin/types';
@@ -254,7 +256,26 @@ export async function saveProspectDetails(id: string, input: ProspectDetailsInpu
   });
 }
 
-/** Attribue un code de suivi « ch-2610-0042 » (pays, année et mois, numéro du mois) à un prospect qui n'en a pas. */
+/** Code de suivi « ch-2610-0042 » (pays, année et mois, numéro du mois) pour un prospect qui n'en a pas encore. */
+async function assignRefCode(supabase: Supabase, id: string, country: string): Promise<boolean> {
+  const prefix = refPrefix(country);
+  for (let attempt = 0; attempt < 5; attempt++) {
+    const { data: existing, error: listError } = await supabase.from('prospects').select('ref_code').like('ref_code', `${prefix}%`);
+    if (listError) throw listError;
+    const max = (existing ?? []).reduce((m, r) => {
+      const n = Number((r.ref_code ?? '').slice(prefix.length));
+      return Number.isInteger(n) && n > m ? n : m;
+    }, 0);
+    const code = `${prefix}${String(max + 1 + attempt).padStart(4, '0')}`;
+    const { data, error: updateError } = await supabase.from('prospects').update({ ref_code: code }).eq('id', id).is('ref_code', null).select('id');
+    if (updateError?.code === '23505') continue; // code pris entre-temps : on essaie le suivant
+    if (updateError) throw updateError;
+    return Boolean(data?.length);
+  }
+  return false;
+}
+
+/** Attribue un code de suivi à un prospect qui n'en a pas. */
 export async function createRefCode(id: string): Promise<AdminResult> {
   if (!isUuid(id)) return fail('notFound');
   return asAdmin('code', async ({ supabase }) => {
@@ -262,28 +283,54 @@ export async function createRefCode(id: string): Promise<AdminResult> {
     if (error) throw error;
     if (!prospect) return fail('notFound');
     if (prospect.ref_code) return fail('conflict');
-    const prefix = refPrefix(prospect.country);
-    for (let attempt = 0; attempt < 5; attempt++) {
-      const { data: existing, error: listError } = await supabase.from('prospects').select('ref_code').like('ref_code', `${prefix}%`);
-      if (listError) throw listError;
-      const max = (existing ?? []).reduce((m, r) => {
-        const n = Number((r.ref_code ?? '').slice(prefix.length));
-        return Number.isInteger(n) && n > m ? n : m;
-      }, 0);
-      const code = `${prefix}${String(max + 1 + attempt).padStart(4, '0')}`;
-      const { data, error: updateError } = await supabase
-        .from('prospects')
-        .update({ ref_code: code })
-        .eq('id', id)
-        .is('ref_code', null)
-        .select('id');
-      if (updateError?.code === '23505') continue; // code pris entre-temps : on essaie le suivant
-      if (updateError) throw updateError;
-      if (!data?.length) return fail('conflict');
-      refresh();
-      return done('refCreated');
-    }
-    return fail('conflict');
+    if (!(await assignRefCode(supabase, id, prospect.country))) return fail('conflict');
+    refresh();
+    return done('refCreated');
+  });
+}
+
+/** Nouveau prospect ajouté à la main : fiche au statut « Nouveau », code de suivi attribué aussitôt. */
+export async function createProspect(input: NewProspectInput): Promise<AdminResult> {
+  if (!input || typeof input !== 'object') return fail('invalid');
+  const company = line(input.company, LIMITS.company);
+  if (!company || company.length < 2) return fail('invalid', 'company');
+  const country = typeof input.country === 'string' ? input.country.trim().toUpperCase() : '';
+  if (!isOneOf(MARKETS, country)) return fail('invalid', 'country');
+  if (!isOneOf(SEGMENTS, input.segment)) return fail('invalid', 'segment');
+  const email = line(input.email, LIMITS.email)?.toLowerCase();
+  if (email === undefined || (email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email))) return fail('invalid', 'email');
+  const website = line(input.website, LIMITS.website);
+  if (website === undefined) return fail('invalid', 'website');
+  const postalCode = line(input.postalCode, LIMITS.postalCode);
+  if (postalCode === undefined) return fail('invalid', 'postalCode');
+  const city = line(input.city, LIMITS.city);
+  if (city === undefined) return fail('invalid', 'city');
+  const source = line(input.source, LIMITS.source);
+  if (source === undefined) return fail('invalid', 'source');
+
+  return asAdmin('nouveau prospect', async ({ supabase }) => {
+    const { data, error } = await supabase
+      .from('prospects')
+      .insert({
+        company,
+        country,
+        segment: input.segment,
+        email: email || null,
+        website: website ?? null,
+        postal_code: postalCode ?? null,
+        city: city ?? null,
+        source: source || 'Ajout manuel',
+        status: 'nouveau',
+        created_by: 'manuel',
+      })
+      .select('id')
+      .single();
+    // Même entreprise, même pays et même code postal qu'une fiche existante (index unique).
+    if (error?.code === '23505') return fail('conflict', 'company');
+    if (error) throw error;
+    await assignRefCode(supabase, data.id, country);
+    refresh();
+    return { ok: true, code: 'prospectCreated', id: data.id };
   });
 }
 

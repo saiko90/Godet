@@ -59,6 +59,7 @@
     "privacy": "Protezione dei dati: {url}"
   },
   "results": {
+    "prospectCreated": "Prospect aggiunto, con il codice di tracciamento.",
     "mailSent": "E-mail inviata. Il sollecito è pianificato.",
     "noEmail": "Nessun indirizzo e-mail valido per questa impresa.",
     "noReplyTo": "Nessun indirizzo di risposta: completi l’e-mail del mittente.",
@@ -270,6 +271,14 @@
     "answerHint": "Visibile alla persona che ha proposto l’idea. {count} / {max} caratteri."
   },
   "prospects": {
+    "new": {
+      "open": "Nuovo prospect",
+      "lead": "Un’impresa consigliata o trovata da Lei. Il codice di tracciamento viene creato automaticamente; il messaggio si aggiunge poi dalla scheda.",
+      "create": "Crea la scheda",
+      "creating": "Creazione…",
+      "sourcePlaceholder": "Raccomandazione, fiera, sito dell’impresa…",
+      "close": "Chiudi"
+    },
     "title": "Potenziali clienti",
     "lead": "Le imprese trovate dagli agenti e quelle aggiunte a mano. Apra una scheda per rileggere e convalidare i suoi messaggi.",
     "statusFilter": "Filtra per stato",

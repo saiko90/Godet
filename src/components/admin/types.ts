@@ -215,6 +215,18 @@ export interface ProspectDetailsInput {
   source: string;
 }
 
+/** Prospect ajouté à la main depuis la console (recommandation, salon, entreprise trouvée soi-même). */
+export interface NewProspectInput {
+  company: string;
+  country: string;
+  segment: string;
+  email: string;
+  website: string;
+  postalCode: string;
+  city: string;
+  source: string;
+}
+
 /** Résultat d'une action de la console : un code, traduit par l'interface (admin.results.<code>). */
 export type AdminResultCode =
   | 'saved'
@@ -227,6 +239,7 @@ export type AdminResultCode =
   | 'cancelled'
   | 'created'
   | 'refCreated'
+  | 'prospectCreated'
   | 'erased'
   | 'deleted'
   | 'invalid'
@@ -243,7 +256,7 @@ export type AdminResultCode =
   | 'emailBanned'
   | 'emailFailed';
 
-export type AdminResult = { ok: boolean; code: AdminResultCode; field?: string };
+export type AdminResult = { ok: boolean; code: AdminResultCode; field?: string; id?: string };
 
 // ---------------------------------------------------------------- tons des pastilles
 
