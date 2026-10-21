@@ -8,16 +8,16 @@ import { useId } from 'react';
 import { useFormat } from '@/components/FormatProvider';
 import { Icon } from '@/components/Icons';
 import { Link } from '@/i18n/navigation';
-import type { MachineRentalState } from '@/lib/rental';
+import { legDone, type MachineRentalState } from '@/lib/rental';
 import type { MachineQuickInfo } from '@/lib/rental-machine-info';
 import { useRentalBackend } from './backend';
 import { Dialog } from './Dialog';
 import type { PlannerMachine } from './Planner';
 
-/** Camion rouge : la machine est livrée (ou reprise) sur le chantier, le transport est à organiser. */
-export function Truck({ label }: { label: string }) {
+/** Camion : rouge, transport à organiser ; vert, transport confirmé (locations livrées sur le chantier). */
+export function Truck({ label, done = false }: { label: string; done?: boolean }) {
   return (
-    <span className="s-rent-truck" title={label || undefined} aria-label={label || undefined} role={label ? 'img' : undefined}>
+    <span className={`s-rent-truck${done ? ' is-done' : ''}`} title={label || undefined} aria-label={label || undefined} role={label ? 'img' : undefined}>
       <Icon name="truck" />
     </span>
   );
@@ -75,7 +75,7 @@ export function MachineCard({
             {rental.delivery === 'livraison' ? (
               <>
                 {' '}
-                <Truck label={t('form.deliveries.livraison')} />
+                <Truck label={t('form.deliveries.livraison')} done={legDone(rental, state?.state === 'louee' ? 'back' : 'out')} />
               </>
             ) : null}
           </p>

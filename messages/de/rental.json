@@ -35,7 +35,8 @@
     "late": "Überfällig",
     "done": "Zurückgegeben",
     "risk": "Reserviert · Maschine in Reparatur",
-    "delivery": "Lieferung auf die Baustelle (Transport organisieren)"
+    "transportTodo": "Transport zu organisieren",
+    "transportDone": "Transport organisiert"
   },
   "state": {
     "louee": "Vermietet",
@@ -398,10 +399,6 @@
     "unavailable": "Dieser Schritt ist für diese Beispielmiete nicht mehr verfügbar.",
     "staff": "Werkstatt"
   },
-  "delivery": {
-    "out": "Auf die Baustelle liefern",
-    "back": "Auf der Baustelle abholen"
-  },
   "card": {
     "open": "Kurzinfo zu {code}",
     "ok": "In Ordnung",
@@ -414,5 +411,27 @@
     "noDue": "Keine Fälligkeit in Sicht.",
     "sheet": "Vollständige Maschinenkarte öffnen",
     "book": "Diese Maschine reservieren"
+  },
+  "transport": {
+    "title": "Transport",
+    "out": "Lieferung auf die Baustelle",
+    "back": "Abholung auf der Baustelle",
+    "carrier": "Transporteur oder Fahrer",
+    "carrierPlaceholder": "Eigener Lastwagen · Yves, Transporte Rossier…",
+    "at": "Geplante Zeit",
+    "note": "Bemerkung",
+    "notePlaceholder": "Zufahrt, Kontakt vor Ort, Tieflader…",
+    "done": "Transport bestätigt (der Lastwagen wird grün)",
+    "save": "Speichern",
+    "saving": "Wird gespeichert…",
+    "cancel": "Abbrechen",
+    "organize": "Organisieren",
+    "edit": "Ändern",
+    "open": "Transport von {code}",
+    "statusDone": "Transport organisiert",
+    "statusTodo": "Transport zu organisieren",
+    "errors": {
+      "carrier": "Geben Sie den Transporteur oder Fahrer an."
+    }
   }
 }

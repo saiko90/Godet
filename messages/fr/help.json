@@ -162,7 +162,7 @@
       },
       "book": {
         "title": "Réservez une machine",
-        "text": "Location → «\u00a0Nouvelle réservation\u00a0», ou touchez une case vide de l’agenda\u00a0: machine, dates, client, chantier, livraison ou enlèvement. Godet refuse une machine déjà réservée ou louée sur la période."
+        "text": "Location → «\u00a0Nouvelle réservation\u00a0», ou touchez une case vide de l’agenda\u00a0: machine, dates, client, chantier, livraison ou enlèvement. Godet refuse une machine déjà réservée ou louée sur la période. En livraison, un camion rouge dans l’agenda rappelle d’organiser le transport\u00a0; touchez-le, indiquez le transporteur et cochez «\u00a0Transport confirmé\u00a0»\u00a0: il passe au vert."
       },
       "out": {
         "title": "État des lieux de départ",

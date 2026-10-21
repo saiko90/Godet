@@ -213,7 +213,7 @@ async function fleetContext(db: SupabaseClient, org: Record<string, unknown>, fo
     const since90 = new Date(Date.now() - 90 * 86400000).toISOString();
     const { data: rentals, error } = await db
       .from('rentals')
-      .select('machine_id, status, client_company, client_name, site, start_at, end_at, out_at, back_at')
+      .select('machine_id, status, client_company, client_name, site, delivery, transport, start_at, end_at, out_at, back_at')
       .eq('org_id', orgId)
       .neq('status', 'annulee')
       .or(`status.in.(reservee,en_cours),end_at.gte.${since90}`)
@@ -221,14 +221,22 @@ async function fleetContext(db: SupabaseClient, org: Record<string, unknown>, fo
       .limit(500);
     if (error) console.error('[assistant] locations :', error.code, error.message);
     lines.push(`## Locations (option Location active ; maintenant : ${new Date().toISOString().slice(0, 16)} UTC)`);
-    lines.push('machine\tstatut\tclient\tchantier\tdépart prévu\tretour prévu\tparti le\trendu le');
+    lines.push('machine\tstatut\tclient\tchantier\tdépart prévu\tretour prévu\tparti le\trendu le\ttransport (livraison)');
     for (const r of rentals ?? []) {
       const late = r.status === 'en_cours' && Date.parse(r.end_at) < Date.now() ? ' (retour en retard)' : '';
-      lines.push([c(r.machine_id), `${r.status}${late}`, [r.client_company, r.client_name].filter(Boolean).join(' · '), r.site, r.start_at.slice(0, 16), r.end_at.slice(0, 16), r.out_at?.slice(0, 16), r.back_at?.slice(0, 16)].map(clean).join('\t'));
+      lines.push([c(r.machine_id), `${r.status}${late}`, [r.client_company, r.client_name].filter(Boolean).join(' · '), r.site, r.start_at.slice(0, 16), r.end_at.slice(0, 16), r.out_at?.slice(0, 16), r.back_at?.slice(0, 16), transportText(r)].map(clean).join('\t'));
     }
     if (!(rentals ?? []).length) lines.push('(aucune)');
   }
   return lines.join('\n');
+}
+
+/** Transport d'une location livrée : aller et retour, confirmé (transporteur) ou à organiser. */
+function transportText(r: { delivery?: string | null; transport?: unknown }): string {
+  if (r.delivery !== 'livraison') return 'enlèvement par le client';
+  const t = (r.transport && typeof r.transport === 'object' ? r.transport : {}) as Record<string, { carrier?: string; done?: boolean } | undefined>;
+  const leg = (k: string, label: string) => `${label} ${t[k]?.done ? `confirmé (${clean(t[k]?.carrier)})` : 'à organiser'}`;
+  return `${leg('out', 'aller')}, ${leg('back', 'retour')}`;
 }
 
 // ------------------------------------------------------------------ requêtes

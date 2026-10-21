@@ -2,7 +2,7 @@
 // navigateur (mémoire + sessionStorage pour les textes ; les photos ajoutées ne vivent que le temps de l'onglet).
 // Rien n'est envoyé. Dates relatives au moment de la visite.
 import { useSyncExternalStore } from 'react';
-import { allItems, type CheckItems, type Rental, type RentalCheck, type RentalErrorCode, type RentalInput } from '@/lib/rental';
+import { allItems, type CheckItems, type Rental, type RentalCheck, type RentalErrorCode, type RentalInput, type Transport } from '@/lib/rental';
 import { rentalRow } from '@/lib/rental';
 import type { MachineKind } from '@/lib/types';
 
@@ -92,6 +92,7 @@ function rental(id: string, machine: string, client: [string, string], start: st
     out_at: null,
     back_at: null,
     notes: null,
+    transport: {},
     created_by: DEMO_RENTAL_USER,
     created_at: start,
     updated_at: start,
@@ -159,7 +160,12 @@ function seed(machines: DemoMachine[], inRepair: Set<string>, now: number, day: 
   r2.out_at = r2.start_at;
   checks.push(check(r2, na, 'depart', r2.start_at, na.hours - 22));
   rentals.push(r1, r2);
-  rentals.push(rental('demo-loc-3', ro.id, ['Revêtements Morand SA', 'Luc Morand'], at(now, 0, 7), at(now, 3, 17), 'reservee', { site: 'Martigny' }));
+  rentals.push(
+    rental('demo-loc-3', ro.id, ['Revêtements Morand SA', 'Luc Morand'], at(now, 0, 7), at(now, 3, 17), 'reservee', {
+      site: 'Martigny',
+      transport: { out: { carrier: 'Camion interne · Yves', at: at(now, 0, 6), note: '', done: true } },
+    }),
+  );
   rentals.push(rental('demo-loc-4', ch.id, ['Terrassements Bonvin', 'Anne Bonvin'], at(now, 4, 7), at(now, 9, 17), 'reservee', { delivery: 'enlevement' }));
   rentals.push(rental('demo-loc-5', ca.id, ['Transports Rossier', 'Paul Rossier'], at(now, 12, 7), at(now, 14, 17), 'reservee', { delivery: 'enlevement' }));
   const r6 = rental('demo-loc-6', pe.id, ['Génie civil Crettenand SA', 'David Crettenand'], at(now, -12, 7), at(now, -8, 17), 'terminee', { site: 'Conthey' });
@@ -228,6 +234,12 @@ export const demoRentalActions = {
         ...state,
         rentals: [...state.rentals, { ...rental(`demo-loc-${Date.now()}`, row.machine_id, [row.client_company ?? '', row.client_name], row.start_at, row.end_at, 'reservee'), ...row }],
       };
+    emit();
+    return null;
+  },
+  saveTransport(id: string, transport: Transport): RentalErrorCode | null {
+    if (!state) return 'generic';
+    state = { ...state, rentals: state.rentals.map((r) => (r.id === id ? { ...r, transport: transport as Rental['transport'] } : r)) };
     emit();
     return null;
   },

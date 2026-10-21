@@ -22,6 +22,7 @@ const BACKEND: RentalBackend = {
   demo: true,
   saveRental: async (input, { id }) => demoRentalActions.save(input, id),
   cancelRental: async (id) => demoRentalActions.cancel(id),
+  saveTransport: async (id, transport) => demoRentalActions.saveTransport(id, transport),
   saveDemoCheck: (input) => demoRentalActions.saveCheck(input),
   refresh: () => {},
 };

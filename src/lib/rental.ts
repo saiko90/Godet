@@ -213,3 +213,30 @@ export function rentalErrorCode(error: { code?: string; message?: string } | nul
   if (m.includes('rentals_dates')) return 'dates';
   return 'generic';
 }
+
+// ------------------------------------------------------------------ transport (locations livrées sur le chantier)
+
+export type TransportLegKey = 'out' | 'back';
+export interface TransportLeg {
+  /** Transporteur ou chauffeur (« Camion interne · Pierre », « Transports Rossier »). */
+  carrier: string;
+  /** Passage prévu (date et heure ISO) ; null : pas encore fixé. */
+  at: string | null;
+  note: string;
+  /** Transport confirmé : le camion de l'agenda passe au vert. */
+  done: boolean;
+}
+export type Transport = Partial<Record<TransportLegKey, TransportLeg>>;
+
+export const transportOf = (r: Pick<Rental, 'transport'>): Transport =>
+  r.transport && typeof r.transport === 'object' && !Array.isArray(r.transport) ? (r.transport as unknown as Transport) : {};
+
+/** Trajet à surveiller : la livraison avant le départ, la reprise pendant la location ; null sans livraison. */
+export function currentLeg(r: Pick<Rental, 'delivery' | 'status'>): TransportLegKey | null {
+  if (r.delivery !== 'livraison') return null;
+  if (r.status === 'reservee') return 'out';
+  if (r.status === 'en_cours') return 'back';
+  return null;
+}
+
+export const legDone = (r: Pick<Rental, 'transport'>, leg: TransportLegKey) => Boolean(transportOf(r)[leg]?.done);

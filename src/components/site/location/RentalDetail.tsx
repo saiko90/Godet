@@ -7,15 +7,17 @@ import { useId, useState } from 'react';
 import { useFormat } from '@/components/FormatProvider';
 import { Icon } from '@/components/Icons';
 import { Link } from '@/i18n/navigation';
-import type { Rental } from '@/lib/rental';
+import { transportOf, type Rental, type TransportLegKey } from '@/lib/rental';
 import { useRentalBackend } from './backend';
 import { Dialog } from './Dialog';
+import { Truck } from './MachineCard';
 import type { PlannerMachine } from './Planner';
 
 export function RentalDetail({
   rental: r,
   machine,
   repair,
+  onTransport,
   checks,
   canEdit,
   now,
@@ -27,6 +29,8 @@ export function RentalDetail({
   machine: PlannerMachine | undefined;
   /** Réparation ouverte sur la machine (réservation à venir) : avertissement. */
   repair: { title: string; date: string } | null;
+  /** Ouvre le formulaire de transport sur le trajet choisi. */
+  onTransport: (leg: TransportLegKey) => void;
   checks: { depart?: string; retour?: string };
   canEdit: boolean;
   now: number;
@@ -89,6 +93,35 @@ export function RentalDetail({
               </div>
             ))}
         </dl>
+
+        {r.delivery === 'livraison' && r.status !== 'annulee' ? (
+          <section className="s-transport-sum" aria-label={t('transport.title')}>
+            <h3>{t('transport.title')}</h3>
+            <ul>
+              {(['out', 'back'] as const).map((leg) => {
+                const l = transportOf(r)[leg];
+                const finished = (leg === 'out' && r.status !== 'reservee') || r.status === 'terminee';
+                return (
+                  <li key={leg} className={l?.done ? 'is-done' : finished ? 'is-past' : ''}>
+                    <Truck label="" done={Boolean(l?.done)} />
+                    <span>
+                      <b>{t(`transport.${leg}`)}</b>
+                      {l?.done
+                        ? ` · ${[l.carrier, l.at ? f.dateTime(l.at) : null].filter(Boolean).join(' · ')}`
+                        : ` · ${t('transport.statusTodo')}`}
+                      {l?.note ? <em> · {l.note}</em> : null}
+                    </span>
+                    {!finished || l ? (
+                      <button type="button" className="btn btn-soft s-btn-sm" onClick={() => onTransport(leg)}>
+                        {l ? t('transport.edit') : t('transport.organize')}
+                      </button>
+                    ) : null}
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+        ) : null}
 
         <div className="s-rent-actions">
           {r.status === 'reservee' ? (

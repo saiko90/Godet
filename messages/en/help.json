@@ -162,7 +162,7 @@
       },
       "book": {
         "title": "Book a machine",
-        "text": "Rental → “New booking”, or tap an empty cell in the calendar: machine, dates, customer, site, delivery or collection. Godet refuses a machine already booked or on hire for that period."
+        "text": "Rental → “New booking”, or tap an empty cell in the calendar: machine, dates, customer, site, delivery or collection. Godet refuses a machine already booked or on hire for that period. For a delivery, a red lorry in the calendar reminds you to arrange transport; tap it, enter the haulier and tick “Transport confirmed”: it turns green."
       },
       "out": {
         "title": "Check-out report",

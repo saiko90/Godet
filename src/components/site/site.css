@@ -1271,3 +1271,22 @@
 .s-rent-card-list li.is-warn { border-left-color: var(--warn); }
 .s-rent-card-list li span { color: var(--steel); font-size: var(--t-xs); }
 .s-rent-bar.is-late .s-rent-truck, .s-rent-bar.is-risk .s-rent-truck { box-shadow: 0 0 0 1.5px #fff; }
+
+/* location : transport (camion rouge à organiser, vert organisé) */
+.s-rent-truck.is-done { background: #1f9d55; }
+.s-rent-truck-btn { display: inline-grid; place-items: center; padding: 4px; margin: -4px 0 -4px -4px; border: 0; background: none; cursor: pointer; border-radius: 8px; vertical-align: middle; }
+.s-rent-truck-btn:hover .s-rent-truck { transform: scale(1.12); }
+.s-rent-truck-btn:focus-visible { outline: 2px solid var(--paint); }
+.s-transport-leg { border-left: 3px solid #e5322d; }
+.s-transport-leg.is-done { border-left-color: #1f9d55; }
+.s-transport-leg legend { display: inline-flex; align-items: center; gap: 6px; text-transform: none; letter-spacing: 0; font-size: var(--t-sm); color: var(--chalk); }
+.s-transport-done { display: flex; gap: 10px; align-items: center; min-height: 44px; font-size: var(--t-sm); font-weight: 600; cursor: pointer; }
+.s-transport-done input { width: 22px; height: 22px; accent-color: #1f9d55; margin: 0; }
+.s-transport-sum { display: grid; gap: 6px; }
+.s-transport-sum h3 { margin: 0; font-size: var(--t-sm); color: var(--steel); }
+.s-transport-sum ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.s-transport-sum li { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 10px; background: rgba(229, 50, 45, 0.1); font-size: var(--t-sm); }
+.s-transport-sum li.is-done { background: rgba(31, 157, 85, 0.12); }
+.s-transport-sum li.is-past { background: rgba(236, 232, 222, 0.05); color: var(--steel); }
+.s-transport-sum li > span { flex: 1 1 200px; }
+.s-transport-sum em { color: var(--steel); font-style: normal; }

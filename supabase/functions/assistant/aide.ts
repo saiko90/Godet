@@ -114,6 +114,10 @@ Une machine vendue ou hors service s'archive : elle quitte le showroom, son carn
 - Réserver : « Nouvelle réservation » ou toucher une case vide : machine, départ, retour prévu, client (les clients déjà
   servis sont proposés), téléphone, e-mail (le rapport y est envoyé), chantier, livraison ou enlèvement, remarques.
   Une machine déjà réservée ou louée sur la période est refusée. Une réservation se modifie, se prolonge ou s'annule.
+- Transport (locations en livraison) : un camion sur la barre de l'agenda, rouge tant que le transport n'est pas
+  organisé, vert une fois confirmé (aller au départ, retour pendant la location). Toucher le camion de « Aujourd'hui »
+  ou « Organiser » dans le détail de la réservation : pour la livraison et la reprise, transporteur ou chauffeur,
+  passage prévu, remarque, case « Transport confirmé » (transporteur obligatoire).
 - État des lieux de départ (bouton « État des lieux de départ ») : points de contrôle adaptés à la machine, chacun
   OK / Défaut (avec description) / Sans objet, bouton « Tout OK » par rubrique (fonctionnement, niveaux et fuites,
   entretien, carrosserie et cabine, hydraulique, train de roulement, équipement, documents) ; niveau de carburant ;

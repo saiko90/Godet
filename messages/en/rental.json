@@ -35,7 +35,8 @@
     "late": "Overdue",
     "done": "Returned",
     "risk": "Booked · machine under repair",
-    "delivery": "Delivery to site (transport to arrange)"
+    "transportTodo": "Transport to arrange",
+    "transportDone": "Transport arranged"
   },
   "state": {
     "louee": "On hire",
@@ -398,10 +399,6 @@
     "unavailable": "This step is no longer available for this sample rental.",
     "staff": "Workshop"
   },
-  "delivery": {
-    "out": "To deliver to site",
-    "back": "To collect from site"
-  },
   "card": {
     "open": "Quick view of {code}",
     "ok": "In order",
@@ -414,5 +411,27 @@
     "noDue": "Nothing due soon.",
     "sheet": "Open the full machine sheet",
     "book": "Book this machine"
+  },
+  "transport": {
+    "title": "Transport",
+    "out": "Delivery to site",
+    "back": "Collection from site",
+    "carrier": "Haulier or driver",
+    "carrierPlaceholder": "Own truck · Yves, Rossier Transport…",
+    "at": "Planned time",
+    "note": "Note",
+    "notePlaceholder": "Access, contact on site, low loader…",
+    "done": "Transport confirmed (the truck turns green)",
+    "save": "Save",
+    "saving": "Saving…",
+    "cancel": "Cancel",
+    "organize": "Arrange",
+    "edit": "Edit",
+    "open": "Transport for {code}",
+    "statusDone": "Transport arranged",
+    "statusTodo": "Transport to arrange",
+    "errors": {
+      "carrier": "Enter the haulier or driver."
+    }
   }
 }

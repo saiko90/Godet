@@ -162,7 +162,7 @@
       },
       "book": {
         "title": "Maschine reservieren",
-        "text": "Vermietung → «Neue Reservation» oder auf ein leeres Feld im Kalender tippen: Maschine, Daten, Kunde, Baustelle, Lieferung oder Abholung. Godet lehnt eine Maschine ab, die im Zeitraum bereits reserviert oder vermietet ist."
+        "text": "Vermietung → «Neue Reservation» oder auf ein leeres Feld im Kalender tippen: Maschine, Daten, Kunde, Baustelle, Lieferung oder Abholung. Godet lehnt eine Maschine ab, die im Zeitraum bereits reserviert oder vermietet ist. Bei Lieferung erinnert ein roter Lastwagen im Kalender daran, den Transport zu organisieren; antippen, Transporteur eintragen und «Transport bestätigt» ankreuzen: Er wird grün."
       },
       "out": {
         "title": "Übergabeprotokoll",

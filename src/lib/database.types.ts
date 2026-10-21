@@ -1033,6 +1033,7 @@ export type Database = {
           site: string | null
           start_at: string
           status: string
+          transport: Json
           updated_at: string
         }
         Insert: {
@@ -1053,6 +1054,7 @@ export type Database = {
           site?: string | null
           start_at: string
           status?: string
+          transport?: Json
           updated_at?: string
         }
         Update: {
@@ -1073,6 +1075,7 @@ export type Database = {
           site?: string | null
           start_at?: string
           status?: string
+          transport?: Json
           updated_at?: string
         }
         Relationships: []

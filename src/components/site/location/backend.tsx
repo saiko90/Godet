@@ -4,7 +4,8 @@
 // Les composants (agenda, réservation, état des lieux) passent par ce contexte ; sans fournisseur, c'est la base.
 import { createContext, useContext, useMemo } from 'react';
 import { useRouter } from '@/i18n/navigation';
-import { rentalErrorCode, rentalRow, type RentalErrorCode, type RentalInput } from '@/lib/rental';
+import type { Json } from '@/lib/database.types';
+import { rentalErrorCode, rentalRow, type RentalErrorCode, type RentalInput, type Transport } from '@/lib/rental';
 import { supabaseBrowser } from '@/lib/supabase/client';
 import type { DemoCheckInput } from '@/lib/rental-demo';
 
@@ -16,6 +17,7 @@ export interface RentalBackend {
   demo: boolean;
   saveRental: (input: RentalInput, opts: { id?: string; orgId: string }) => Promise<RentalErrorCode | null>;
   cancelRental: (id: string) => Promise<RentalErrorCode | null>;
+  saveTransport: (id: string, transport: Transport) => Promise<RentalErrorCode | null>;
   /** Démonstration : l'état des lieux est gardé dans le navigateur (aucun envoi). */
   saveDemoCheck?: (input: DemoCheckInput) => RentalErrorCode | null;
   refresh: () => void;
@@ -47,6 +49,16 @@ export function useRentalBackend(): RentalBackend {
           return rentalErrorCode(error);
         }
         return null;
+      },
+      async saveTransport(id, transport) {
+        const { error } = await supabaseBrowser()
+          .from('rentals')
+          .update({ transport: transport as Json })
+          .eq('id', id)
+          .select('id')
+          .single();
+        if (error) console.error('[location] transport :', error.code, error.message);
+        return error ? rentalErrorCode(error) : null;
       },
       async cancelRental(id) {
         const { error } = await supabaseBrowser().from('rentals').update({ status: 'annulee' }).eq('id', id).select('id').single();

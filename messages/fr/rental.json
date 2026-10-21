@@ -35,7 +35,8 @@
     "late": "En retard",
     "done": "Rendue",
     "risk": "Réservée · machine en réparation",
-    "delivery": "Livraison sur le chantier (transport à organiser)"
+    "transportTodo": "Transport à organiser",
+    "transportDone": "Transport organisé"
   },
   "state": {
     "louee": "Louée",
@@ -398,10 +399,6 @@
     "unavailable": "Cette étape n’est plus disponible pour cette location d’exemple.",
     "staff": "Atelier"
   },
-  "delivery": {
-    "out": "À livrer sur le chantier",
-    "back": "À reprendre sur le chantier"
-  },
   "card": {
     "open": "Fiche rapide de {code}",
     "ok": "En ordre",
@@ -414,5 +411,27 @@
     "noDue": "Aucune échéance proche.",
     "sheet": "Ouvrir la fiche complète",
     "book": "Réserver cette machine"
+  },
+  "transport": {
+    "title": "Transport",
+    "out": "Livraison sur le chantier",
+    "back": "Reprise sur le chantier",
+    "carrier": "Transporteur ou chauffeur",
+    "carrierPlaceholder": "Camion interne · Yves, Transports Rossier…",
+    "at": "Passage prévu",
+    "note": "Remarque",
+    "notePlaceholder": "Accès, contact sur place, porte-char…",
+    "done": "Transport confirmé (le camion passe au vert)",
+    "save": "Enregistrer",
+    "saving": "Enregistrement…",
+    "cancel": "Annuler",
+    "organize": "Organiser",
+    "edit": "Modifier",
+    "open": "Transport de {code}",
+    "statusDone": "Transport organisé",
+    "statusTodo": "Transport à organiser",
+    "errors": {
+      "carrier": "Indiquez le transporteur ou le chauffeur."
+    }
   }
 }

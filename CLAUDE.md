@@ -125,6 +125,8 @@ Navigateur de test : Chromium de Playwright dans `/opt/pw-browsers` (ne pas lanc
   Panne au retour (`rental_checks.breakdown`) : le déclencheur ouvre une réparation « en cours » dans le carnet ; tant
   qu'une réparation est ouverte, les réservations à venir de la machine sont « à risque » (agenda, détail, formulaire,
   pastille du garage).
+  Transport des livraisons : `rentals.transport` (jsonb `{out, back}` : transporteur, passage, remarque, `done`) ; camion
+  rouge → vert dans l'agenda (`TransportForm`, helpers `currentLeg` / `legDone` de `src/lib/rental.ts`).
   Démonstration : `/demo/location` (agenda, état des lieux, rapport) avec le parc d'exemple ; écritures dans le
   navigateur (`src/lib/rental-demo.ts`, hook `rental-demo-hook.ts`), branchées par le contexte `RentalBackendContext`
   (`components/site/location/backend.tsx` : base de données par défaut, mémoire en démo). Rapport commun : `ReportView`.

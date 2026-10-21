@@ -162,7 +162,7 @@
       },
       "book": {
         "title": "Prenoti una macchina",
-        "text": "Noleggio → «Nuova prenotazione», o tocchi una casella vuota dell’agenda: macchina, date, cliente, cantiere, consegna o ritiro. Godet rifiuta una macchina già prenotata o noleggiata nel periodo."
+        "text": "Noleggio → «Nuova prenotazione», o tocchi una casella vuota dell’agenda: macchina, date, cliente, cantiere, consegna o ritiro. Godet rifiuta una macchina già prenotata o noleggiata nel periodo. In caso di consegna, un camion rosso nell’agenda ricorda di organizzare il trasporto; lo tocchi, indichi il trasportatore e spunti «Trasporto confermato»: diventa verde."
       },
       "out": {
         "title": "Verbale di consegna",

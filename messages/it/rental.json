@@ -35,7 +35,8 @@
     "late": "In ritardo",
     "done": "Riconsegnata",
     "risk": "Prenotata · macchina in riparazione",
-    "delivery": "Consegna in cantiere (trasporto da organizzare)"
+    "transportTodo": "Trasporto da organizzare",
+    "transportDone": "Trasporto organizzato"
   },
   "state": {
     "louee": "Noleggiata",
@@ -398,10 +399,6 @@
     "unavailable": "Questo passaggio non è più disponibile per questo noleggio di esempio.",
     "staff": "Officina"
   },
-  "delivery": {
-    "out": "Da consegnare in cantiere",
-    "back": "Da ritirare in cantiere"
-  },
   "card": {
     "open": "Scheda rapida di {code}",
     "ok": "In ordine",
@@ -414,5 +411,27 @@
     "noDue": "Nessuna scadenza vicina.",
     "sheet": "Apri la scheda completa",
     "book": "Prenota questa macchina"
+  },
+  "transport": {
+    "title": "Trasporto",
+    "out": "Consegna in cantiere",
+    "back": "Ritiro in cantiere",
+    "carrier": "Trasportatore o autista",
+    "carrierPlaceholder": "Camion interno · Yves, Trasporti Rossier…",
+    "at": "Passaggio previsto",
+    "note": "Osservazione",
+    "notePlaceholder": "Accesso, contatto sul posto, carrellone…",
+    "done": "Trasporto confermato (il camion diventa verde)",
+    "save": "Salva",
+    "saving": "Salvataggio…",
+    "cancel": "Annulla",
+    "organize": "Organizza",
+    "edit": "Modifica",
+    "open": "Trasporto di {code}",
+    "statusDone": "Trasporto organizzato",
+    "statusTodo": "Trasporto da organizzare",
+    "errors": {
+      "carrier": "Indichi il trasportatore o l’autista."
+    }
   }
 }

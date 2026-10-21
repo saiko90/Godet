@@ -8,11 +8,12 @@ import { useMemo, useState } from 'react';
 import { useFormat } from '@/components/FormatProvider';
 import { Icon } from '@/components/Icons';
 import { Link } from '@/i18n/navigation';
-import { machineRentalState, type Rental } from '@/lib/rental';
+import { currentLeg, legDone, machineRentalState, transportOf, type Rental, type TransportLegKey } from '@/lib/rental';
 import type { MachineQuickInfo } from '@/lib/rental-machine-info';
 import type { MachineKind } from '@/lib/types';
 import { useRentalBackend } from './backend';
 import { MachineCard, Truck } from './MachineCard';
+import { TransportForm } from './TransportForm';
 import { RentalDetail } from './RentalDetail';
 import { RentalForm, type ClientSuggestion } from './RentalForm';
 
@@ -72,6 +73,7 @@ export function Planner({
   const [span, setSpan] = useState(21);
   const [open, setOpen] = useState<string | null>(null);
   const [card, setCard] = useState<string | null>(null);
+  const [transport, setTransport] = useState<{ id: string; leg: TransportLegKey } | null>(null);
   const [form, setForm] = useState<{
     rental?: Rental;
     machineId?: string;
@@ -101,6 +103,8 @@ export function Planner({
   const atRisk = rentals.filter((r) => r.status === 'reservee' && repairs[r.machine_id]).sort((a, b) => a.start_at.localeCompare(b.start_at));
 
   const machineOf = (id: string) => machines.find((m) => m.id === id);
+  // Transporteurs déjà utilisés : proposés dans le formulaire de transport.
+  const carriers = [...new Set(rentals.flatMap((r) => Object.values(transportOf(r)).map((l) => l?.carrier?.trim() ?? '')).filter(Boolean))];
   const selected = open ? rentals.find((r) => r.id === open) : undefined;
 
   /** Position d'une barre dans la fenêtre (en fraction de jours), ou null si hors de la fenêtre. */
@@ -184,7 +188,11 @@ export function Planner({
               <li key={r.id}>
                 <span className="s-rent-dot is-booked" aria-hidden="true" />
                 <span>
-                  {r.delivery === 'livraison' ? <Truck label={t('delivery.out')} /> : null}
+                  {r.delivery === 'livraison' ? (
+                    <button type="button" className="s-rent-truck-btn" onClick={() => setTransport({ id: r.id, leg: 'out' })} aria-label={t('transport.open', { code: machineOf(r.machine_id)?.code ?? '' })}>
+                      <Truck label={legDone(r, 'out') ? t('transport.statusDone') : t('transport.statusTodo')} done={legDone(r, 'out')} />
+                    </button>
+                  ) : null}
                   <b>{machineOf(r.machine_id)?.code}</b> ·{' '}
                   {t('today.departure', {
                     client: r.client_company || r.client_name,
@@ -200,7 +208,11 @@ export function Planner({
               <li key={r.id}>
                 <span className={`s-rent-dot ${Date.parse(r.end_at) < now ? 'is-late' : 'is-out'}`} aria-hidden="true" />
                 <span>
-                  {r.delivery === 'livraison' ? <Truck label={t('delivery.back')} /> : null}
+                  {r.delivery === 'livraison' ? (
+                    <button type="button" className="s-rent-truck-btn" onClick={() => setTransport({ id: r.id, leg: 'back' })} aria-label={t('transport.open', { code: machineOf(r.machine_id)?.code ?? '' })}>
+                      <Truck label={legDone(r, 'back') ? t('transport.statusDone') : t('transport.statusTodo')} done={legDone(r, 'back')} />
+                    </button>
+                  ) : null}
                   <b>{machineOf(r.machine_id)?.code}</b> ·{' '}
                   {Date.parse(r.end_at) < now
                     ? t('today.late', {
@@ -257,7 +269,10 @@ export function Planner({
           <i className="is-done" /> {t('legend.done')}
         </span>
         <span>
-          <Truck label="" /> {t('legend.delivery')}
+          <Truck label="" /> {t('legend.transportTodo')}
+        </span>
+        <span>
+          <Truck label="" done /> {t('legend.transportDone')}
         </span>
         {atRisk.length ? (
           <span>
@@ -323,6 +338,7 @@ export function Planner({
                       if (!p) return null;
                       const lateBar = r.status === 'en_cours' && Date.parse(r.end_at) < now;
                       const risk = r.status === 'reservee' && Boolean(repairs[r.machine_id]);
+                      const leg = currentLeg(r);
                       const kind = r.status === 'reservee' ? (risk ? 'risk' : 'booked') : r.status === 'en_cours' ? (lateBar ? 'late' : 'out') : 'done';
                       return (
                         <button
@@ -334,10 +350,10 @@ export function Planner({
                             width: `calc(${p.width} * var(--col))`,
                           }}
                           onClick={() => setOpen(r.id)}
-                          title={`${r.client_company || r.client_name} · ${f.dateTime(r.start_at)} → ${f.dateTime(r.end_at)}${risk ? ` · ${t('legend.risk')}` : ''}${r.delivery === 'livraison' ? ` · ${t('form.deliveries.livraison')}` : ''}`}
+                          title={`${r.client_company || r.client_name} · ${f.dateTime(r.start_at)} → ${f.dateTime(r.end_at)}${risk ? ` · ${t('legend.risk')}` : ''}${leg ? ` · ${legDone(r, leg) ? t('transport.statusDone') : t('transport.statusTodo')}` : ''}`}
                         >
                           {risk ? <Icon name="alert" /> : null}
-                          {r.delivery === 'livraison' && r.status !== 'terminee' ? <Truck label={t('form.deliveries.livraison')} /> : null}
+                          {leg ? <Truck label="" done={legDone(r, leg)} /> : null}
                           <span>{r.client_company || r.client_name}</span>
                         </button>
                       );
@@ -355,6 +371,10 @@ export function Planner({
           rental={selected}
           machine={machineOf(selected.machine_id)}
           repair={selected.status === 'reservee' ? (repairs[selected.machine_id] ?? null) : null}
+          onTransport={(leg) => {
+            setOpen(null);
+            setTransport({ id: selected.id, leg });
+          }}
           checks={checks[selected.id] ?? {}}
           canEdit={canManage || selected.created_by === userId}
           now={now}
@@ -365,6 +385,20 @@ export function Planner({
           }}
           onChanged={() => {
             setOpen(null);
+            backend.refresh();
+          }}
+        />
+      ) : null}
+
+      {transport && rentals.find((r) => r.id === transport.id) ? (
+        <TransportForm
+          rental={rentals.find((r) => r.id === transport.id)!}
+          machineCode={machineOf(rentals.find((r) => r.id === transport.id)!.machine_id)?.code ?? ''}
+          focus={transport.leg}
+          carriers={carriers}
+          onClose={() => setTransport(null)}
+          onSaved={() => {
+            setTransport(null);
             backend.refresh();
           }}
         />
