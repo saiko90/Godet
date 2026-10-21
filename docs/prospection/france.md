@@ -146,6 +146,8 @@ Les résultats des vérifications générales périodiques se consignent au regi
 
 Godet réunit tout au même endroit, machine par machine, et suit les échéances pour vous. Vous voyez enfin ce que coûte chaque engin, et votre parc apparaît dans un showroom 3D : vert, orange ou rouge, d’un coup d’œil.
 
+Déjà un GPS sur vos machines ? Godet le complète : le GPS donne la position et les heures, Godet garde l’historique de l’entretien.
+
 Le plus simple est d’essayer : ouvrez godet.app/demo/{code}, la démo s’ouvre sans compte. L’essai est gratuit pendant 15 jours, sans carte bancaire.
 
 Je vous prie d’agréer, Madame, Monsieur, l’expression de mes salutations distinguées.

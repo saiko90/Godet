@@ -89,6 +89,8 @@ Il D.Lgs. 81/2008 (art. 71) chiede che le attrezzature di lavoro siano oggetto d
 
 Godet riunisce tutto in un unico posto: manutenzioni, riparazioni, ricambi, ore di funzionamento, verbali dei controlli, foto e fatture, macchina per macchina. Le scadenze (manutenzione ogni 500 ore, controlli periodici) sono seguite per Lei, e finalmente sa quanto costa ogni macchina. Il Suo parco macchine appare in uno showroom 3D: verde, arancione o rosso, a colpo d’occhio.
 
+Ha già un GPS sulle Sue macchine? Godet lo completa: il GPS dà la posizione e le ore, Godet conserva la storia della manutenzione.
+
 Il modo più semplice è provarlo: apra godet.app/it/demo/{code}, la demo si apre senza account. La prova è gratuita per 15 giorni, senza carta di credito. La guida introduttiva in PDF è su godet.app/it/aide e rispondo volentieri alle Sue domande per e-mail.
 
 Cordiali saluti

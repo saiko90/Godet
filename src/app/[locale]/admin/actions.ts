@@ -582,6 +582,7 @@ export async function sendByEmail(id: string): Promise<AdminResult> {
       html: mail.html,
       text: mail.text,
       fromName: LETTER_SENDER.name,
+      fromLocalPart: process.env.PROSPECT_FROM_LOCAL?.trim() || 'michael',
       replyTo,
       headers: { 'List-Unsubscribe': `<mailto:${replyTo}?subject=stop>` },
       tags: [{ name: 'type', value: 'prospection' }],

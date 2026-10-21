@@ -277,6 +277,8 @@ Il D.Lgs. 81/2008 (art. 71) chiede che le attrezzature di lavoro siano oggetto d
 
 Godet riunisce tutto in un unico posto: manutenzioni, riparazioni, ricambi, ore di funzionamento, verbali dei controlli, foto e fatture, macchina per macchina. Le scadenze (manutenzione ogni 500 ore, controlli periodici) sono seguite per Lei, e finalmente sa quanto costa ogni macchina. Il Suo parco macchine appare in uno showroom 3D: verde, arancione o rosso, a colpo d’occhio.
 
+Ha già un GPS sulle Sue macchine? Godet lo completa: il GPS dà la posizione e le ore, Godet conserva la storia della manutenzione.
+
 Il modo più semplice è provarlo: apra godet.app/it/demo/{code}, la demo si apre senza account. La prova è gratuita per 15 giorni, senza carta di credito. La guida introduttiva in PDF è su godet.app/it/aide e rispondo volentieri alle Sue domande per e-mail.
 
 Cordiali saluti
@@ -320,6 +322,8 @@ Sehr geehrte Damen und Herren,
 Das GvD 81/2008 (Art. 71) verlangt eine angemessene Instandhaltung der Arbeitsmittel; die Ergebnisse der Kontrollen sind schriftlich festzuhalten und mindestens für die letzten drei Jahre aufzubewahren. In vielen Betrieben liegen diese Nachweise verstreut: Servicehefte in der Kabine, Rechnungen im Ordner, Termine im Kopf des Werkstattleiters.
 
 Godet ist das digitale Wartungsheft für Baumaschinen: Wartungen, Reparaturen, Ersatzteile, Betriebsstunden, Prüfberichte, Fotos und Rechnungen, Maschine für Maschine. Fällige Termine werden für Sie verfolgt, und Sie sehen, was jede Maschine kostet. Ihr Maschinenpark erscheint in einem 3D-Showroom: grün, orange oder rot, auf einen Blick.
+
+Sie haben bereits GPS auf Ihren Maschinen? Godet ergänzt es: Das GPS liefert Standort und Stunden, Godet die Wartungsgeschichte.
 
 Am einfachsten probieren Sie es aus: Öffnen Sie godet.app/de/demo/{code}, die Demo öffnet sich ohne Konto. Danach testen Sie Godet 15 Tage kostenlos, ohne Kreditkarte.
 

@@ -117,6 +117,8 @@ Pour chaque machine, l’OPA (art. 32b) demande un entretien conforme aux indica
 
 Godet réunit tout au même endroit : services, réparations, pièces, heures, photos et factures, machine par machine. Les échéances (service des 500 heures, contrôle annuel) sont suivies pour vous, et vous voyez enfin ce que coûte chaque engin. Votre parc apparaît dans un showroom 3D : vert, orange ou rouge, d’un coup d’œil.
 
+Déjà un GPS sur vos machines ? Godet le complète : le GPS donne la position et les heures, Godet garde l’historique de l’entretien.
+
 Le plus simple est d’essayer : ouvrez godet.app/demo/{code}, la démo s’ouvre sans compte. Si elle vous parle, l’essai est gratuit pendant 15 jours, sans carte de crédit. Le guide de démarrage en PDF est sur godet.app/aide, et je réponds volontiers à vos questions par e-mail.
 
 Avec mes meilleures salutations
@@ -135,6 +137,8 @@ Nach Art. 32b VUV sind Arbeitsmittel gemäss den Angaben des Herstellers instand
 
 Godet bündelt alles an einem Ort: Wartungen, Reparaturen, Ersatzteile, Betriebsstunden, Fotos und Rechnungen, Maschine für Maschine. Fällige Termine (Service alle 500 Stunden, jährliche Kontrolle) werden für Sie verfolgt, und Sie sehen endlich, was jede Maschine kostet. Ihr Maschinenpark erscheint in einem 3D-Showroom: grün, orange oder rot, auf einen Blick.
 
+Sie haben bereits GPS auf Ihren Maschinen? Godet ergänzt es: Das GPS liefert Standort und Stunden, Godet die Wartungsgeschichte.
+
 Am einfachsten probieren Sie es aus: Öffnen Sie godet.app/de/demo/{code}, die Demo öffnet sich ohne Konto. Danach testen Sie Godet 15 Tage kostenlos, ohne Kreditkarte. Die Kurzanleitung als PDF finden Sie unter godet.app/de/aide, und Ihre Fragen beantworte ich gerne per E-Mail.
 
 Freundliche Grüsse
@@ -152,6 +156,8 @@ Gentili Signore e Signori,
 L’art. 32b dell’OPI chiede che le attrezzature di lavoro siano mantenute secondo le indicazioni del fabbricante e che la manutenzione sia documentata. In molte imprese queste informazioni sono sparse: libretti in cabina, fatture in un raccoglitore, scadenze nella memoria del capo officina.
 
 Godet riunisce tutto in un unico posto: manutenzioni, riparazioni, ricambi, ore di funzionamento, foto e fatture, macchina per macchina. Le scadenze (manutenzione ogni 500 ore, controllo annuale) sono seguite per Lei, e finalmente sa quanto costa ogni macchina. Il Suo parco macchine appare in uno showroom 3D: verde, arancione o rosso, a colpo d’occhio.
+
+Ha già un GPS sulle Sue macchine? Godet lo completa: il GPS dà la posizione e le ore, Godet conserva la storia della manutenzione.
 
 Il modo più semplice è provarlo: apra godet.app/it/demo/{code}, la demo si apre senza account. Se Le interessa, la prova è gratuita per 15 giorni, senza carta di credito. La guida introduttiva in PDF è su godet.app/it/aide e rispondo volentieri alle Sue domande per e-mail.
 
@@ -374,6 +380,7 @@ N’affirmez pas que Godet « rend conforme » : il aide à tenir et à prouver 
 |---|---|
 | « On a déjà un classeur, un Excel. » | « Gardez-le si vous voulez : Godet reprend les mêmes informations, mais les échéances se calculent seules et chaque saisie garde sa date et son auteur. Le carnet s’imprime quand il faut. » |
 | « Pas le temps de saisir. » | « Une saisie prend trente secondes sur le téléphone, photo comprise. Le machiniste peut saisir les heures lui-même. » |
+| « On a déjà un GPS sur les machines. » | « Godet le complète : le GPS donne la position et les heures moteur, Godet garde l’entretien (services, réparations, pièces, coûts, contrôles OPA). » |
 | « Notre concessionnaire a déjà un portail, la télématique. » | « Godet est toutes marques et garde aussi les petites et les anciennes machines. Il complète la télématique : coûts, réparations, factures, contrôles. » |
 | « C’est combien ? » | « L’essai de 15 jours est gratuit, sans carte. Les tarifs, par entreprise, vous sont annoncés avant la fin de l’essai. » |
 | « Nos données dans le nuage ? » | « Hébergées dans l’UE, en Irlande ; seule votre entreprise y a accès ; rien ne s’efface ; vous imprimez ou exportez votre carnet en PDF. » |
@@ -381,7 +388,7 @@ N’affirmez pas que Godet « rend conforme » : il aide à tenir et à prouver 
 | « Nous sommes trop petits. » | « Dès trois ou quatre machines, un service oublié coûte plus cher que l’outil. » |
 | « Les machinistes ne l’utiliseront pas. » | « Chacun a un rôle et ne voit que ce qu’il doit saisir. Commencez avec le chef d’atelier ; les autres suivent. » |
 | « Comment avez-vous eu notre adresse ? » | « Par {source}. Si vous préférez ne plus être contacté, je l’enregistre tout de suite. » |
-| « Pas intéressé. » | « Merci, c’est noté, je ne vous relancerai pas. » → statut « Refus » (ou « Ne pas contacter » si demandé). |
+| « Pas intéressé. » | « Merci, c’est noté, je ne vous relancerai pas. Si vous connaissez quelqu’un que cela pourrait intéresser, n’hésitez pas à en parler autour de vous. » → statut « Refus » (ou « Ne pas contacter » si demandé). |
 
 Réponses courtes en allemand : « Gerne behalten Sie Ihr Excel – Godet berechnet die Termine automatisch. » ·
 « Eine Erfassung dauert dreissig Sekunden auf dem Handy, mit Foto. » · « Godet funktioniert für alle Marken und

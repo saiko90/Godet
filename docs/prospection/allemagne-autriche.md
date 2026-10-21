@@ -98,6 +98,8 @@ Nach § 14 BetrSichV sind die Ergebnisse der Prüfungen Ihrer Arbeitsmittel aufz
 
 Godet ist das digitale Wartungsheft für Baumaschinen: Wartungen, Reparaturen, Ersatzteile, Betriebsstunden, Prüfberichte, Fotos und Rechnungen, Maschine für Maschine. Fällige Termine (Service alle 500 Stunden, jährliche Prüfung) werden für Sie verfolgt, und Sie sehen, was jede Maschine kostet. Ihr Maschinenpark erscheint in einem 3D-Showroom: grün, orange oder rot, auf einen Blick.
 
+Sie haben bereits GPS auf Ihren Maschinen? Godet ergänzt es: Das GPS liefert Standort und Stunden, Godet die Wartungsgeschichte.
+
 Am einfachsten probieren Sie es aus: Öffnen Sie godet.app/de/demo/{code}, die Demo öffnet sich ohne Konto. Danach testen Sie Godet 15 Tage kostenlos, ohne Kreditkarte. Die Kurzanleitung als PDF finden Sie unter godet.app/de/aide, und Ihre Fragen beantworte ich gerne per E-Mail.
 
 Mit freundlichen Grüssen
@@ -117,6 +119,8 @@ Sehr geehrte Damen und Herren,
 Die Arbeitsmittelverordnung verlangt, dass Prüfbefunde bis zum Ausscheiden des Arbeitsmittels aufbewahrt werden und am Einsatzort verfügbar sind (§ 11 AM-VO). Dazu kommen Wartungen, Reparaturen und Rechnungen, die oft an verschiedenen Orten liegen.
 
 Godet ist das digitale Wartungsheft für Baumaschinen: Wartungen, Reparaturen, Ersatzteile, Betriebsstunden, Prüfbefunde, Fotos und Rechnungen, Maschine für Maschine, auf der Baustelle am Handy abrufbar. Fällige Termine werden für Sie verfolgt, und Sie sehen, was jede Maschine kostet. Ihr Maschinenpark erscheint in einem 3D-Showroom: grün, orange oder rot, auf einen Blick.
+
+Sie haben bereits GPS auf Ihren Maschinen? Godet ergänzt es: Das GPS liefert Standort und Stunden, Godet die Wartungsgeschichte.
 
 Am einfachsten probieren Sie es aus: Öffnen Sie godet.app/de/demo/{code}, die Demo öffnet sich ohne Konto. Danach testen Sie Godet 15 Tage kostenlos, ohne Kreditkarte. Die Kurzanleitung als PDF finden Sie unter godet.app/de/aide, und Ihre Fragen beantworte ich gerne per E-Mail.
 

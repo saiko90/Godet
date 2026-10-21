@@ -23,6 +23,8 @@ export interface EmailInput {
   replyTo?: string;
   /** Nom affiché de l'expéditeur (l'adresse reste celle d'EMAIL_FROM, domaine vérifié). */
   fromName?: string;
+  /** Partie locale de l'adresse d'expédition (« michael » → michael@<domaine d'EMAIL_FROM>). */
+  fromLocalPart?: string;
   /** En-têtes supplémentaires (ex. List-Unsubscribe). */
   headers?: Record<string, string>;
   /** Étiquettes Resend (lettres ASCII, chiffres, « _ » et « - » uniquement). */
@@ -82,12 +84,16 @@ function errorCode(body: unknown): string {
   return typeof name === 'string' && /^[a-z_]{1,40}$/.test(name) ? name : 'unknown';
 }
 
-/** « Godet <rappels@godet.app> » + « Michaël Kaeser » → « Michaël Kaeser <rappels@godet.app> ». */
-function withName(from: string, name: string | undefined): string {
+/**
+ * « Godet <noreply@godet.app> » + « Michaël Kaeser » + « michael » → « "Michaël Kaeser" <michael@godet.app> ».
+ * Le domaine reste celui d'EMAIL_FROM (vérifié chez Resend).
+ */
+function withName(from: string, name: string | undefined, localPart: string | undefined): string {
   const clean = name ? oneLine(name).replace(/[<>"\\]/g, '') : '';
-  if (!clean) return from;
-  const address = /<([^>]+)>/.exec(from)?.[1] ?? from;
-  return `"${clean}" <${address.trim()}>`;
+  let address = (/<([^>]+)>/.exec(from)?.[1] ?? from).trim();
+  if (localPart && /^[a-z0-9._-]{1,40}$/i.test(localPart) && address.includes('@')) address = `${localPart}@${address.split('@').pop()}`;
+  if (!clean) return address === (/<([^>]+)>/.exec(from)?.[1] ?? from).trim() ? from : address;
+  return `"${clean}" <${address}>`;
 }
 
 /**
@@ -106,7 +112,7 @@ export async function sendEmail(input: EmailInput): Promise<SendEmailResult> {
 
   const replyTo = input.replyTo?.trim() || cfg.replyTo;
   const payload: Record<string, unknown> = {
-    from: withName(cfg.from, input.fromName),
+    from: withName(cfg.from, input.fromName, input.fromLocalPart),
     to,
     subject,
     html: input.html,
