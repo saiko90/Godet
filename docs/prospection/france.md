@@ -69,7 +69,7 @@ est publiée par l’entreprise. Jamais d’adresse « reconstituée » (prénom
 | Étape | Jour | Canal | But |
 |---|---|---|---|
 | 1 | J0 | E-mail personnalisé (ou lettre si pas d’adresse) | Faire ouvrir la démo 3D |
-| 2 | J+7 | Appel (script) | Trouver la bonne personne, proposer une démo de 20 minutes |
+| 2 | J+7 | Appel (script) | Trouver la bonne personne, proposer d’envoyer le guide PDF et le lien de la démo par e-mail |
 | 3 | J+14 | E-mail court | Rappel avec le lien direct |
 | 4 | J+30 | Lettre avec QR code | Dernier contact, sur un autre support |
 
@@ -94,7 +94,7 @@ Entre les services, les réparations, les VGP et les factures, le suivi d’un p
 Godet réunit tout au même endroit, machine par machine : entretiens, réparations, pièces, heures, rapports de vérification, photos et factures. Les échéances (entretien des 500 heures, vérifications périodiques) sont suivies pour vous, et vous voyez enfin ce que coûte chaque engin.
 
 La démo 3D s’ouvre sans compte : {lien démo}
-L’essai est gratuit pendant 15 jours, sans carte bancaire. Je vous présente aussi Godet en 20 minutes, en visioconférence : {lien contact}
+L’essai est gratuit pendant 15 jours, sans carte bancaire. Le guide de démarrage en PDF est sur godet.app/aide, et je réponds volontiers à vos questions par e-mail.
 
 Bien cordialement,
 {Signature}
@@ -110,7 +110,7 @@ Bonjour, {Prénom Nom}, de Swiss Digital Studio. Je vous ai écrit la semaine de
 — Non : « Qui s’en occupe chez vous ? Quand puis-je la joindre ? »
 — Oui : « Aujourd’hui, comment suivez-vous les entretiens, les réparations et les VGP de vos engins ? »
    Écouter. Rebondir sur le point faible : papier, rapports éparpillés, échéances oubliées, coûts flous.
-Proposition : « Je vous propose une démonstration de 20 minutes en visioconférence. Quel moment vous convient ? »
+Proposition : « Je vous envoie le guide PDF et le lien de la démo par e-mail ? Vous pourrez me poser vos questions en réponse. »
 À défaut : « Je vous renvoie le lien de la démo 3D ? Elle s’ouvre sans compte. »
 Refus : « Merci, c’est noté, vous ne serez plus sollicité. »
 ```

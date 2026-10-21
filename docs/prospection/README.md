@@ -30,6 +30,8 @@ et comment Michaël les **relit, valide et envoie lui-même** depuis la console 
   aucun compte créé. Il écrit uniquement dans les tables `prospects` et `outreach` de Supabase.
 - Chaque message est un **brouillon**. Michaël le relit, le corrige si besoin, le **valide**, l’envoie lui-même
   (lettre imprimée, appel, e-mail ou message LinkedIn tapé à la main), puis clique sur **« Marquer comme envoyé »**.
+- **Pas de visite ni de rendez-vous.** Godet se vend à distance : démo sans compte, guide de démarrage en PDF
+  (`godet.app/aide`), réponses par e-mail. Aucun message ne propose de passer sur place ni de fixer une démo en direct.
 - Un prospect au statut **« Ne pas contacter »** n’est plus jamais contacté ni repris par un agent.
 - Les agents ne dialoguent avec personne. Si un jour un agent répondait lui-même à un prospect (chat, e-mail),
   il devrait dire qu’il est une IA (AI Act, art. 50, applicable depuis le 2 août 2026).

@@ -98,7 +98,7 @@ Nach § 14 BetrSichV sind die Ergebnisse der Prüfungen Ihrer Arbeitsmittel aufz
 
 Godet ist das digitale Wartungsheft für Baumaschinen: Wartungen, Reparaturen, Ersatzteile, Betriebsstunden, Prüfberichte, Fotos und Rechnungen, Maschine für Maschine. Fällige Termine (Service alle 500 Stunden, jährliche Prüfung) werden für Sie verfolgt, und Sie sehen, was jede Maschine kostet. Ihr Maschinenpark erscheint in einem 3D-Showroom: grün, orange oder rot, auf einen Blick.
 
-Am einfachsten probieren Sie es aus: Scannen Sie den Code unten auf diesem Brief, die Demo öffnet sich ohne Konto. Danach testen Sie Godet 15 Tage kostenlos, ohne Kreditkarte. Gerne zeige ich Ihnen Godet auch in 20 Minuten online.
+Am einfachsten probieren Sie es aus: Scannen Sie den Code unten auf diesem Brief, die Demo öffnet sich ohne Konto. Danach testen Sie Godet 15 Tage kostenlos, ohne Kreditkarte. Die Kurzanleitung als PDF finden Sie unter godet.app/de/aide, und Ihre Fragen beantworte ich gerne per E-Mail.
 
 Mit freundlichen Grüssen
 
@@ -118,7 +118,7 @@ Die Arbeitsmittelverordnung verlangt, dass Prüfbefunde bis zum Ausscheiden des 
 
 Godet ist das digitale Wartungsheft für Baumaschinen: Wartungen, Reparaturen, Ersatzteile, Betriebsstunden, Prüfbefunde, Fotos und Rechnungen, Maschine für Maschine, auf der Baustelle am Handy abrufbar. Fällige Termine werden für Sie verfolgt, und Sie sehen, was jede Maschine kostet. Ihr Maschinenpark erscheint in einem 3D-Showroom: grün, orange oder rot, auf einen Blick.
 
-Am einfachsten probieren Sie es aus: Scannen Sie den Code unten auf diesem Brief, die Demo öffnet sich ohne Konto. Danach testen Sie Godet 15 Tage kostenlos, ohne Kreditkarte. Gerne zeige ich Ihnen Godet auch in 20 Minuten online.
+Am einfachsten probieren Sie es aus: Scannen Sie den Code unten auf diesem Brief, die Demo öffnet sich ohne Konto. Danach testen Sie Godet 15 Tage kostenlos, ohne Kreditkarte. Die Kurzanleitung als PDF finden Sie unter godet.app/de/aide, und Ihre Fragen beantworte ich gerne per E-Mail.
 
 Mit freundlichen Grüssen
 
@@ -158,7 +158,7 @@ Guten Tag {Anrede} {Nachname},
 
 vielen Dank für Ihre Nachricht. Hier der direkte Link zur 3D-Demo, ohne Konto: {Link Demo}
 
-Gerne zeige ich Ihnen Godet in 20 Minuten online, mit Ihren eigenen Maschinen als Beispiel. Passt Ihnen {Terminvorschlag 1} oder {Terminvorschlag 2}? Einen Termin können Sie auch hier wählen: {Link Kontakt}
+Gerne schicke ich Ihnen die PDF-Anleitung (godet.app/de/aide) und beantworte alle Ihre Fragen per E-Mail.
 
 Mit freundlichen Grüssen
 {Signatur}
@@ -169,7 +169,7 @@ Mit freundlichen Grüssen
 ```text
 Guten Tag, hier ist {Vorname Name} von Swiss Digital Studio. Sie hatten um einen Rückruf zu Godet gebeten, dem digitalen Wartungsheft für Baumaschinen. Passt es Ihnen gerade?
 — Wie verfolgen Sie heute Wartungen, Prüfungen und Reparaturen Ihrer Maschinen?
-— Vorschlag: «Ich zeige Ihnen Godet gerne in 20 Minuten online. Wann passt es Ihnen?»
+— Vorschlag: «Darf ich Ihnen die PDF-Anleitung und den Demo-Link per E-Mail schicken? Ihre Fragen beantworte ich gerne schriftlich.»
 — Kein Interesse: «Danke, ich habe es notiert und melde mich nicht mehr.»
 ```
 

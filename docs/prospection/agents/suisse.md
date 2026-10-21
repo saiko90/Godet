@@ -24,6 +24,9 @@ Répartition par phase : `romandie` = 25 entreprises de Suisse romande ; `mixte`
 
 ## 1. Ta mission
 
+> **Pas de visite ni de rendez-vous.** Ne propose jamais de passer sur place, de démo en direct ou de visioconférence.
+> Propose la démo sans compte, le guide de démarrage en PDF (`godet.app/aide`, `/de/aide`, `/it/aide`) et une réponse par e-mail.
+
 Tu es l’agent de prospection de **Godet**, le carnet d’entretien numérique des machines de chantier, présenté dans
 un showroom 3D (Swiss Digital Studio, Valais). Démo sans compte, essai gratuit de 15 jours sans carte de crédit.
 
@@ -353,7 +356,7 @@ Pour chaque machine, l’OPA (art. 32b) demande un entretien conforme aux indica
 
 Godet réunit tout au même endroit : services, réparations, pièces, heures, photos et factures, machine par machine. Les échéances (service des 500 heures, contrôle annuel) sont suivies pour vous, et vous voyez enfin ce que coûte chaque engin. Votre parc apparaît dans un showroom 3D : vert, orange ou rouge, d’un coup d’œil.
 
-Le plus simple est d’essayer : scannez le code au bas de cette lettre, la démo s’ouvre sans compte. Si elle vous parle, l’essai est gratuit pendant 15 jours, sans carte de crédit. Je vous présente aussi volontiers Godet en 20 minutes, chez vous ou en ligne.
+Le plus simple est d’essayer : scannez le code au bas de cette lettre, la démo s’ouvre sans compte. Si elle vous parle, l’essai est gratuit pendant 15 jours, sans carte de crédit. Le guide de démarrage en PDF est sur godet.app/aide, et je réponds volontiers à vos questions par e-mail.
 
 Avec mes meilleures salutations
 
@@ -371,7 +374,7 @@ Nach Art. 32b VUV sind Arbeitsmittel gemäss den Angaben des Herstellers instand
 
 Godet bündelt alles an einem Ort: Wartungen, Reparaturen, Ersatzteile, Betriebsstunden, Fotos und Rechnungen, Maschine für Maschine. Fällige Termine (Service alle 500 Stunden, jährliche Kontrolle) werden für Sie verfolgt, und Sie sehen endlich, was jede Maschine kostet. Ihr Maschinenpark erscheint in einem 3D-Showroom: grün, orange oder rot, auf einen Blick.
 
-Am einfachsten probieren Sie es aus: Scannen Sie den Code unten auf diesem Brief, die Demo öffnet sich ohne Konto. Danach testen Sie Godet 15 Tage kostenlos, ohne Kreditkarte. Gerne zeige ich Ihnen Godet auch in 20 Minuten, online oder bei Ihnen.
+Am einfachsten probieren Sie es aus: Scannen Sie den Code unten auf diesem Brief, die Demo öffnet sich ohne Konto. Danach testen Sie Godet 15 Tage kostenlos, ohne Kreditkarte. Die Kurzanleitung als PDF finden Sie unter godet.app/de/aide, und Ihre Fragen beantworte ich gerne per E-Mail.
 
 Freundliche Grüsse
 
@@ -389,7 +392,7 @@ L’art. 32b dell’OPI chiede che le attrezzature di lavoro siano mantenute sec
 
 Godet riunisce tutto in un unico posto: manutenzioni, riparazioni, ricambi, ore di funzionamento, foto e fatture, macchina per macchina. Le scadenze (manutenzione ogni 500 ore, controllo annuale) sono seguite per Lei, e finalmente sa quanto costa ogni macchina. Il Suo parco macchine appare in uno showroom 3D: verde, arancione o rosso, a colpo d’occhio.
 
-Il modo più semplice è provarlo: inquadri il codice in fondo a questa lettera, la demo si apre senza account. Se Le interessa, la prova è gratuita per 15 giorni, senza carta di credito. Sarò lieto di presentarLe Godet anche in 20 minuti, online o presso la Sua sede.
+Il modo più semplice è provarlo: inquadri il codice in fondo a questa lettera, la demo si apre senza account. Se Le interessa, la prova è gratuita per 15 giorni, senza carta di credito. La guida introduttiva in PDF è su godet.app/it/aide e rispondo volentieri alle Sue domande per e-mail.
 
 Cordiali saluti
 
@@ -405,7 +408,7 @@ Bonjour, {prénom et nom de la SIGNATURE}, de Swiss Digital Studio, en Valais. J
 — Non : « Qui s’en occupe chez vous ? Quand puis-je la joindre ? »
 — Oui : « Aujourd’hui, comment suivez-vous les services et les réparations de vos machines ? »
    {Point d’accroche tiré des signaux, par exemple le nombre de machines.}
-Proposition : « Je vous propose une démo de 20 minutes, en ligne ou chez vous. Quel moment vous convient ? »
+Proposition : « Je vous envoie le guide PDF et le lien de la démo par e-mail ? Vous pourrez me poser vos questions en réponse. »
 À défaut : « Je vous envoie le lien de la démo 3D ? Elle s’ouvre sans compte. »
 Refus : « Merci, c’est noté, je ne vous relancerai pas. »
 ```
@@ -417,7 +420,7 @@ Grüezi, hier ist {Vor- und Nachname der SIGNATURE} von Swiss Digital Studio aus
 — Nein: «Wer ist bei Ihnen dafür zuständig? Wann erreiche ich die Person am besten?»
 — Ja: «Wie verfolgen Sie heute die Wartungen und Reparaturen Ihrer Maschinen?»
    {Anknüpfungspunkt aus den Hinweisen.}
-Vorschlag: «Ich zeige Ihnen Godet gerne in 20 Minuten, online oder bei Ihnen. Wann passt es Ihnen?»
+Vorschlag: «Darf ich Ihnen die PDF-Anleitung und den Demo-Link per E-Mail schicken? Ihre Fragen beantworte ich gerne schriftlich.»
 Sonst: «Darf ich Ihnen den Link zur 3D-Demo schicken? Sie öffnet sich ohne Konto.»
 Absage: «Danke, ich habe es notiert und melde mich nicht mehr.»
 ```
@@ -429,7 +432,7 @@ Buongiorno, sono {nome e cognome della SIGNATURE} di Swiss Digital Studio, in Va
 — No: «Chi se ne occupa da voi? Quando posso raggiungere questa persona?»
 — Sì: «Oggi come tenete traccia delle manutenzioni e delle riparazioni delle macchine?»
    {Spunto tratto dai segnali.}
-Proposta: «Le propongo una demo di 20 minuti, online o presso di voi. Quando Le farebbe comodo?»
+Proposta: «Posso inviarLe per e-mail la guida PDF e il link della demo? Risponderò volentieri alle Sue domande per iscritto.»
 Altrimenti: «Posso inviarLe il link della demo 3D? Si apre senza account.»
 Rifiuto: «Grazie, ne prendo nota e non La ricontatterò.»
 ```
@@ -445,7 +448,7 @@ Je vous ai écrit récemment au sujet de Godet, le carnet d’entretien numériq
 
 En deux minutes, vous voyez comment chaque machine garde son carnet complet (services, réparations, pièces, heures, coûts) et comment les échéances sont suivies.
 
-Pour une démonstration de 20 minutes, répondez simplement à ce message ou choisissez un moment ici : {lien contact}
+Une question ? Répondez simplement à ce message. Le guide de démarrage en PDF est sur godet.app/aide.
 
 Meilleures salutations
 {SIGNATURE}
@@ -463,7 +466,7 @@ Kürzlich habe ich Ihnen Godet vorgestellt, das digitale Wartungsheft für Bauma
 
 In zwei Minuten sehen Sie, wie jede Maschine ihr vollständiges Wartungsheft behält (Wartungen, Reparaturen, Ersatzteile, Betriebsstunden, Kosten) und wie fällige Termine verfolgt werden.
 
-Für eine Vorführung von 20 Minuten antworten Sie einfach auf diese Nachricht oder wählen Sie hier einen Termin: {Link Kontakt}
+Fragen? Antworten Sie einfach auf diese Nachricht. Die Kurzanleitung als PDF finden Sie unter godet.app/de/aide.
 
 Freundliche Grüsse
 {SIGNATURE}
@@ -481,7 +484,7 @@ di recente Le ho scritto a proposito di Godet, il libretto di manutenzione digit
 
 In due minuti vede come ogni macchina conserva il suo libretto completo (manutenzioni, riparazioni, ricambi, ore, costi) e come vengono seguite le scadenze.
 
-Per una dimostrazione di 20 minuti, risponda semplicemente a questo messaggio o scelga un momento qui: {link contatto}
+Domande? Risponda semplicemente a questo messaggio. La guida introduttiva in PDF è su godet.app/it/aide.
 
 Cordiali saluti
 {SIGNATURE}

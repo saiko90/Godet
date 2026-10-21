@@ -89,7 +89,7 @@ Il D.Lgs. 81/2008 (art. 71) chiede che le attrezzature di lavoro siano oggetto d
 
 Godet riunisce tutto in un unico posto: manutenzioni, riparazioni, ricambi, ore di funzionamento, verbali dei controlli, foto e fatture, macchina per macchina. Le scadenze (manutenzione ogni 500 ore, controlli periodici) sono seguite per Lei, e finalmente sa quanto costa ogni macchina. Il Suo parco macchine appare in uno showroom 3D: verde, arancione o rosso, a colpo d’occhio.
 
-Il modo più semplice è provarlo: inquadri il codice in fondo a questa lettera, la demo si apre senza account. La prova è gratuita per 15 giorni, senza carta di credito. Sarò lieto di presentarLe Godet anche in 20 minuti, in videoconferenza.
+Il modo più semplice è provarlo: inquadri il codice in fondo a questa lettera, la demo si apre senza account. La prova è gratuita per 15 giorni, senza carta di credito. La guida introduttiva in PDF è su godet.app/it/aide e rispondo volentieri alle Sue domande per e-mail.
 
 Cordiali saluti
 
@@ -129,7 +129,7 @@ Buongiorno,
 
 grazie per il Suo messaggio. Ecco il link diretto alla demo 3D, senza account: {link demo}
 
-Sarò lieto di mostrarLe Godet in 20 minuti, in videoconferenza, con le Sue macchine come esempio. Le andrebbe bene {proposta 1} oppure {proposta 2}? Può anche scegliere un momento qui: {link contatto}
+Le invio volentieri la guida PDF (godet.app/it/aide) e rispondo per e-mail a tutte le Sue domande.
 
 Cordiali saluti
 {Firma}
@@ -140,7 +140,7 @@ Cordiali saluti
 ```text
 Buongiorno, sono {Nome Cognome} di Swiss Digital Studio. Aveva chiesto di essere richiamato a proposito di Godet, il libretto di manutenzione digitale delle macchine edili. Ha un momento?
 — Oggi come tenete traccia di manutenzioni, controlli e riparazioni delle macchine?
-— Proposta: «Le propongo una demo di 20 minuti in videoconferenza. Quando Le farebbe comodo?»
+— Proposta: «Posso inviarLe per e-mail la guida PDF e il link della demo? Risponderò volentieri alle Sue domande per iscritto.»
 — Nessun interesse: «Grazie, ne prendo nota e non La ricontatterò.»
 ```
 
