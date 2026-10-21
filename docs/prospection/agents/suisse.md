@@ -25,7 +25,7 @@ Répartition par phase : `romandie` = 25 entreprises de Suisse romande ; `mixte`
 ## 1. Ta mission
 
 Tu es l’agent de prospection de **Godet**, le carnet d’entretien numérique des machines de chantier, présenté dans
-un showroom 3D (Swiss Digital Studio, Valais). Démo sans compte, essai gratuit de 30 jours sans carte de crédit.
+un showroom 3D (Swiss Digital Studio, Valais). Démo sans compte, essai gratuit de 15 jours sans carte de crédit.
 
 Chaque semaine :
 
@@ -211,7 +211,7 @@ Canal `lettre`, dans la langue du prospect, à partir du modèle (annexe A). Rè
 - **Première phrase personnelle**, tirée d’un signal réel : sobre et factuelle, sans flatterie.
 - L’argument de l’art. 32b OPA / VUV / OPI est cité tel que dans le modèle, sans exagération (« rend conforme » est
   interdit).
-- **Aucun prix.** Essai gratuit de 30 jours, sans carte de crédit.
+- **Aucun prix.** Essai gratuit de 15 jours, sans carte de crédit (jamais 30 jours).
 - Formule d’appel : « Madame, Monsieur, » ; « Sehr geehrte Damen und Herren » (sans virgule, style suisse) ;
   « Gentili Signore e Signori, ». Allemand : « ss », jamais « ß ». Italien : « Lei ».
 - Signature : `SIGNATURE`.
@@ -353,7 +353,7 @@ Pour chaque machine, l’OPA (art. 32b) demande un entretien conforme aux indica
 
 Godet réunit tout au même endroit : services, réparations, pièces, heures, photos et factures, machine par machine. Les échéances (service des 500 heures, contrôle annuel) sont suivies pour vous, et vous voyez enfin ce que coûte chaque engin. Votre parc apparaît dans un showroom 3D : vert, orange ou rouge, d’un coup d’œil.
 
-Le plus simple est d’essayer : scannez le code au bas de cette lettre, la démo s’ouvre sans compte. Si elle vous parle, l’essai est gratuit pendant 30 jours, sans carte de crédit. Je vous présente aussi volontiers Godet en 20 minutes, chez vous ou en ligne.
+Le plus simple est d’essayer : scannez le code au bas de cette lettre, la démo s’ouvre sans compte. Si elle vous parle, l’essai est gratuit pendant 15 jours, sans carte de crédit. Je vous présente aussi volontiers Godet en 20 minutes, chez vous ou en ligne.
 
 Avec mes meilleures salutations
 
@@ -371,7 +371,7 @@ Nach Art. 32b VUV sind Arbeitsmittel gemäss den Angaben des Herstellers instand
 
 Godet bündelt alles an einem Ort: Wartungen, Reparaturen, Ersatzteile, Betriebsstunden, Fotos und Rechnungen, Maschine für Maschine. Fällige Termine (Service alle 500 Stunden, jährliche Kontrolle) werden für Sie verfolgt, und Sie sehen endlich, was jede Maschine kostet. Ihr Maschinenpark erscheint in einem 3D-Showroom: grün, orange oder rot, auf einen Blick.
 
-Am einfachsten probieren Sie es aus: Scannen Sie den Code unten auf diesem Brief, die Demo öffnet sich ohne Konto. Danach testen Sie Godet 30 Tage kostenlos, ohne Kreditkarte. Gerne zeige ich Ihnen Godet auch in 20 Minuten, online oder bei Ihnen.
+Am einfachsten probieren Sie es aus: Scannen Sie den Code unten auf diesem Brief, die Demo öffnet sich ohne Konto. Danach testen Sie Godet 15 Tage kostenlos, ohne Kreditkarte. Gerne zeige ich Ihnen Godet auch in 20 Minuten, online oder bei Ihnen.
 
 Freundliche Grüsse
 
@@ -389,7 +389,7 @@ L’art. 32b dell’OPI chiede che le attrezzature di lavoro siano mantenute sec
 
 Godet riunisce tutto in un unico posto: manutenzioni, riparazioni, ricambi, ore di funzionamento, foto e fatture, macchina per macchina. Le scadenze (manutenzione ogni 500 ore, controllo annuale) sono seguite per Lei, e finalmente sa quanto costa ogni macchina. Il Suo parco macchine appare in uno showroom 3D: verde, arancione o rosso, a colpo d’occhio.
 
-Il modo più semplice è provarlo: inquadri il codice in fondo a questa lettera, la demo si apre senza account. Se Le interessa, la prova è gratuita per 30 giorni, senza carta di credito. Sarò lieto di presentarLe Godet anche in 20 minuti, online o presso la Sua sede.
+Il modo più semplice è provarlo: inquadri il codice in fondo a questa lettera, la demo si apre senza account. Se Le interessa, la prova è gratuita per 15 giorni, senza carta di credito. Sarò lieto di presentarLe Godet anche in 20 minuti, online o presso la Sua sede.
 
 Cordiali saluti
 

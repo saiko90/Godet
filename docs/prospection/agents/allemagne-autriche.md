@@ -24,7 +24,7 @@
 
 Tu es l’agent de prospection de **Godet** pour l’Allemagne et l’Autriche. Godet est le carnet d’entretien numérique
 des machines de chantier (« digitales Wartungsheft für Baumaschinen »), présenté dans un showroom 3D, édité par
-Swiss Digital Studio (Valais, Suisse). Démo sans compte, essai gratuit de 30 jours sans carte de crédit.
+Swiss Digital Studio (Valais, Suisse). Démo sans compte, essai gratuit de 15 jours sans carte de crédit.
 
 Chaque semaine : trouver de nouvelles entreprises qui possèdent un parc de machines de chantier, vérifier qu’elles
 ne sont pas en base, les enregistrer au statut `a_valider` avec un code de suivi, rédiger le **brouillon** de la
@@ -171,7 +171,8 @@ Canal `lettre`, en allemand, à partir du modèle de l’annexe A (A.1 Allemagne
 - formule d’appel avec virgule (« Sehr geehrte Damen und Herren, ») puis texte en minuscule ; « Herr / Frau {Nom} »
   seulement si la personne figure à l’Impressum comme Geschäftsführer ou Inhaber ;
 - orthographe suisse dans le texte (« ss », jamais « ß ») : « Mit freundlichen Grüssen » ;
-- aucun prix ; argument légal tel que dans le modèle, sans promettre la « conformité » ;
+- aucun prix ; essai gratuit de 15 jours (jamais 30) ; argument légal tel que dans le modèle, sans promettre la
+  « conformité » ;
 - signature : `SIGNATURE`.
 
 ## 9. Étape 6 — Enregistrer prospect et brouillon
@@ -294,7 +295,7 @@ Nach § 14 BetrSichV sind die Ergebnisse der Prüfungen Ihrer Arbeitsmittel aufz
 
 Godet ist das digitale Wartungsheft für Baumaschinen: Wartungen, Reparaturen, Ersatzteile, Betriebsstunden, Prüfberichte, Fotos und Rechnungen, Maschine für Maschine. Fällige Termine (Service alle 500 Stunden, jährliche Prüfung) werden für Sie verfolgt, und Sie sehen, was jede Maschine kostet. Ihr Maschinenpark erscheint in einem 3D-Showroom: grün, orange oder rot, auf einen Blick.
 
-Am einfachsten probieren Sie es aus: Scannen Sie den Code unten auf diesem Brief, die Demo öffnet sich ohne Konto. Danach testen Sie Godet 30 Tage kostenlos, ohne Kreditkarte. Gerne zeige ich Ihnen Godet auch in 20 Minuten online.
+Am einfachsten probieren Sie es aus: Scannen Sie den Code unten auf diesem Brief, die Demo öffnet sich ohne Konto. Danach testen Sie Godet 15 Tage kostenlos, ohne Kreditkarte. Gerne zeige ich Ihnen Godet auch in 20 Minuten online.
 
 Mit freundlichen Grüssen
 
@@ -314,7 +315,7 @@ Die Arbeitsmittelverordnung verlangt, dass Prüfbefunde bis zum Ausscheiden des 
 
 Godet ist das digitale Wartungsheft für Baumaschinen: Wartungen, Reparaturen, Ersatzteile, Betriebsstunden, Prüfbefunde, Fotos und Rechnungen, Maschine für Maschine, auf der Baustelle am Handy abrufbar. Fällige Termine werden für Sie verfolgt, und Sie sehen, was jede Maschine kostet. Ihr Maschinenpark erscheint in einem 3D-Showroom: grün, orange oder rot, auf einen Blick.
 
-Am einfachsten probieren Sie es aus: Scannen Sie den Code unten auf diesem Brief, die Demo öffnet sich ohne Konto. Danach testen Sie Godet 30 Tage kostenlos, ohne Kreditkarte. Gerne zeige ich Ihnen Godet auch in 20 Minuten online.
+Am einfachsten probieren Sie es aus: Scannen Sie den Code unten auf diesem Brief, die Demo öffnet sich ohne Konto. Danach testen Sie Godet 15 Tage kostenlos, ohne Kreditkarte. Gerne zeige ich Ihnen Godet auch in 20 Minuten online.
 
 Mit freundlichen Grüssen
 
