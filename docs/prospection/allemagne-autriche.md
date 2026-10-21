@@ -98,7 +98,7 @@ Nach § 14 BetrSichV sind die Ergebnisse der Prüfungen Ihrer Arbeitsmittel aufz
 
 Godet ist das digitale Wartungsheft für Baumaschinen: Wartungen, Reparaturen, Ersatzteile, Betriebsstunden, Prüfberichte, Fotos und Rechnungen, Maschine für Maschine. Fällige Termine (Service alle 500 Stunden, jährliche Prüfung) werden für Sie verfolgt, und Sie sehen, was jede Maschine kostet. Ihr Maschinenpark erscheint in einem 3D-Showroom: grün, orange oder rot, auf einen Blick.
 
-Am einfachsten probieren Sie es aus: Scannen Sie den Code unten auf diesem Brief, die Demo öffnet sich ohne Konto. Danach testen Sie Godet 30 Tage kostenlos, ohne Kreditkarte. Gerne zeige ich Ihnen Godet auch in 20 Minuten online.
+Am einfachsten probieren Sie es aus: Scannen Sie den Code unten auf diesem Brief, die Demo öffnet sich ohne Konto. Danach testen Sie Godet 15 Tage kostenlos, ohne Kreditkarte. Gerne zeige ich Ihnen Godet auch in 20 Minuten online.
 
 Mit freundlichen Grüssen
 
@@ -118,7 +118,7 @@ Die Arbeitsmittelverordnung verlangt, dass Prüfbefunde bis zum Ausscheiden des 
 
 Godet ist das digitale Wartungsheft für Baumaschinen: Wartungen, Reparaturen, Ersatzteile, Betriebsstunden, Prüfbefunde, Fotos und Rechnungen, Maschine für Maschine, auf der Baustelle am Handy abrufbar. Fällige Termine werden für Sie verfolgt, und Sie sehen, was jede Maschine kostet. Ihr Maschinenpark erscheint in einem 3D-Showroom: grün, orange oder rot, auf einen Blick.
 
-Am einfachsten probieren Sie es aus: Scannen Sie den Code unten auf diesem Brief, die Demo öffnet sich ohne Konto. Danach testen Sie Godet 30 Tage kostenlos, ohne Kreditkarte. Gerne zeige ich Ihnen Godet auch in 20 Minuten online.
+Am einfachsten probieren Sie es aus: Scannen Sie den Code unten auf diesem Brief, die Demo öffnet sich ohne Konto. Danach testen Sie Godet 15 Tage kostenlos, ohne Kreditkarte. Gerne zeige ich Ihnen Godet auch in 20 Minuten online.
 
 Mit freundlichen Grüssen
 
@@ -204,7 +204,7 @@ Mit freundlichen Grüssen
 4. **Échéances** en heures ou en dates ; rappels avant l’échéance.
 5. **Toutes marques**, anciennes et petites machines comprises ; complète la télématique des constructeurs.
 6. **Formats et monnaie** : 6.842 h, 1.240 € ; interface en allemand ; données dans l’UE (Irlande).
-7. **Sans risque** : démo 3D sans compte, essai de 30 jours sans carte de crédit.
+7. **Sans risque** : démo 3D sans compte, essai de 15 jours sans carte de crédit.
 
 Ne jamais promettre la « conformité » : Godet aide à tenir et à présenter les preuves.
 
@@ -215,7 +215,7 @@ Ne jamais promettre la « conformité » : Godet aide à tenir et à présenter 
 | Nous avons déjà un logiciel (ERP, atelier). | « Godet ersetzt Ihre Buchhaltung nicht. Es ist das Wartungsheft jeder Maschine: Wartungen, Prüfungen, Reparaturen und Kosten, für die Werkstatt und die Baustelle. » |
 | Nos machines ont la télématique. | « Die Telematik liefert Betriebsstunden und Standorte. Godet ergänzt, was dort fehlt: Reparaturen, Prüfberichte, Rechnungen, Kosten, auch für ältere Maschinen und andere Marken. » |
 | Pas le temps. | « Eine Erfassung dauert dreissig Sekunden am Handy, mit Foto. Der Maschinist trägt die Betriebsstunden selbst ein. » |
-| Combien ça coûte ? | « Der Test ist 30 Tage kostenlos, ohne Kreditkarte. Die Preise pro Betrieb erfahren Sie vor Ende des Tests. » |
+| Combien ça coûte ? | « Der Test ist 15 Tage kostenlos, ohne Kreditkarte. Die Preise pro Betrieb erfahren Sie vor Ende des Tests. » |
 | Données, nuage, RGPD ? | « Die Daten liegen in der EU (Irland), nur Ihr Betrieb hat Zugriff, nichts wird gelöscht, und Sie können jedes Wartungsheft als PDF ausdrucken. » |
 | Un fournisseur suisse ? | « Die Anwendung ist vollständig auf Deutsch, rechnet in Euro und mit deutschen Formaten. Fragen beantworten wir schriftlich auf Deutsch. » |
 | D’où vient notre adresse ? | « Aus {Quelle}. Wenn Sie keine Post mehr wünschen, vermerke ich das sofort. » |

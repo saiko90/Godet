@@ -1,7 +1,7 @@
 # Prospection de Godet par agents IA
 
 Godet (Swiss Digital Studio, Valais) est le carnet d’entretien numérique des machines de chantier, présenté dans un
-showroom 3D. Démo sans compte : `/demo` (`/de/demo`, `/it/demo`, `/en/demo`). Essai gratuit de 30 jours, sans carte
+showroom 3D. Démo sans compte : `/demo` (`/de/demo`, `/it/demo`, `/en/demo`). Essai gratuit de 15 jours, sans carte
 de crédit.
 
 Ce dossier décrit comment des agents IA, un par marché, **recherchent** des entreprises et **préparent** des messages,
@@ -167,7 +167,7 @@ moyen simple de refuser, respect immédiat de tout refus.
 | `contacte` | Contacté | console (« Marquer comme envoyé ») | Premier message envoyé ; relance planifiée |
 | `relance` | Relancé | console (envoi d’une étape 2 ou plus) | Séquence en cours |
 | `demo` | Démo | Michaël | Démonstration planifiée ou faite |
-| `essai` | Essai | Michaël | Essai gratuit de 30 jours ouvert |
+| `essai` | Essai | Michaël | Essai gratuit de 15 jours ouvert |
 | `client` | Client | Michaël | Abonnement ; fin de la prospection |
 | `refus` | Refus ou écarté | Michaël | Pas intéressé, sans réponse en fin de séquence, ou hors cible |
 | `ne_pas_contacter` | Ne pas contacter | Michaël | Opposition : plus aucun contact, jamais repris par un agent |

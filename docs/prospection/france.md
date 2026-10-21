@@ -94,7 +94,7 @@ Entre les services, les réparations, les VGP et les factures, le suivi d’un p
 Godet réunit tout au même endroit, machine par machine : entretiens, réparations, pièces, heures, rapports de vérification, photos et factures. Les échéances (entretien des 500 heures, vérifications périodiques) sont suivies pour vous, et vous voyez enfin ce que coûte chaque engin.
 
 La démo 3D s’ouvre sans compte : {lien démo}
-L’essai est gratuit pendant 30 jours, sans carte bancaire. Je vous présente aussi Godet en 20 minutes, en visioconférence : {lien contact}
+L’essai est gratuit pendant 15 jours, sans carte bancaire. Je vous présente aussi Godet en 20 minutes, en visioconférence : {lien contact}
 
 Bien cordialement,
 {Signature}
@@ -146,7 +146,7 @@ Les résultats des vérifications générales périodiques se consignent au regi
 
 Godet réunit tout au même endroit, machine par machine, et suit les échéances pour vous. Vous voyez enfin ce que coûte chaque engin, et votre parc apparaît dans un showroom 3D : vert, orange ou rouge, d’un coup d’œil.
 
-Le plus simple est d’essayer : scannez le code au bas de cette lettre, la démo s’ouvre sans compte. L’essai est gratuit pendant 30 jours, sans carte bancaire.
+Le plus simple est d’essayer : scannez le code au bas de cette lettre, la démo s’ouvre sans compte. L’essai est gratuit pendant 15 jours, sans carte bancaire.
 
 Je vous prie d’agréer, Madame, Monsieur, l’expression de mes salutations distinguées.
 
@@ -186,7 +186,7 @@ Je vous prie d’agréer, Madame, Monsieur, l’expression de mes salutations di
 4. **Toutes marques**, anciennes et petites machines comprises ; complète la télématique.
 5. **L’équipe** : rôles (propriétaire, administrateur, mécanicien, conducteur d’engin), saisie rapide sur téléphone.
 6. **Hébergement dans l’UE** (Irlande), accès réservé à l’entreprise, rien ne s’efface.
-7. **Sans risque** : démo 3D sans compte, essai de 30 jours sans carte bancaire.
+7. **Sans risque** : démo 3D sans compte, essai de 15 jours sans carte bancaire.
 
 Godet ne remplace pas l’organisme de contrôle : il conserve et rappelle.
 
@@ -197,7 +197,7 @@ Godet ne remplace pas l’organisme de contrôle : il conserve et rappelle.
 | « On a déjà une GMAO. » | « Godet est pensé pour les engins : prise en main en dix minutes, sans installation, sur téléphone. Si votre GMAO vous suffit, gardez-la. » |
 | « Les VGP, c’est l’organisme de contrôle qui s’en occupe. » | « Oui, et Godet garde ses rapports à côté de l’historique de la machine et vous rappelle la prochaine échéance. » |
 | « Pas le temps. » | « Une saisie prend trente secondes sur le téléphone, photo comprise. » |
-| « C’est combien ? » | « L’essai est gratuit 30 jours, sans carte. Les tarifs, par entreprise, sont annoncés avant la fin de l’essai. » |
+| « C’est combien ? » | « L’essai est gratuit 15 jours, sans carte. Les tarifs, par entreprise, sont annoncés avant la fin de l’essai. » |
 | « Un éditeur suisse ? » | « L’application est en français, en euros et aux formats français ; les données sont hébergées dans l’UE. » |
 | « D’où vient notre adresse ? » | « De {source}. Je peux la supprimer tout de suite si vous le souhaitez. » |
 | « Pas intéressé. » | « Merci, c’est noté, vous ne serez plus sollicité. » → statut « Refus » (ou « Ne pas contacter ») |

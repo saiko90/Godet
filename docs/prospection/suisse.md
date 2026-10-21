@@ -117,7 +117,7 @@ Pour chaque machine, l’OPA (art. 32b) demande un entretien conforme aux indica
 
 Godet réunit tout au même endroit : services, réparations, pièces, heures, photos et factures, machine par machine. Les échéances (service des 500 heures, contrôle annuel) sont suivies pour vous, et vous voyez enfin ce que coûte chaque engin. Votre parc apparaît dans un showroom 3D : vert, orange ou rouge, d’un coup d’œil.
 
-Le plus simple est d’essayer : scannez le code au bas de cette lettre, la démo s’ouvre sans compte. Si elle vous parle, l’essai est gratuit pendant 30 jours, sans carte de crédit. Je vous présente aussi volontiers Godet en 20 minutes, chez vous ou en ligne.
+Le plus simple est d’essayer : scannez le code au bas de cette lettre, la démo s’ouvre sans compte. Si elle vous parle, l’essai est gratuit pendant 15 jours, sans carte de crédit. Je vous présente aussi volontiers Godet en 20 minutes, chez vous ou en ligne.
 
 Avec mes meilleures salutations
 
@@ -135,7 +135,7 @@ Nach Art. 32b VUV sind Arbeitsmittel gemäss den Angaben des Herstellers instand
 
 Godet bündelt alles an einem Ort: Wartungen, Reparaturen, Ersatzteile, Betriebsstunden, Fotos und Rechnungen, Maschine für Maschine. Fällige Termine (Service alle 500 Stunden, jährliche Kontrolle) werden für Sie verfolgt, und Sie sehen endlich, was jede Maschine kostet. Ihr Maschinenpark erscheint in einem 3D-Showroom: grün, orange oder rot, auf einen Blick.
 
-Am einfachsten probieren Sie es aus: Scannen Sie den Code unten auf diesem Brief, die Demo öffnet sich ohne Konto. Danach testen Sie Godet 30 Tage kostenlos, ohne Kreditkarte. Gerne zeige ich Ihnen Godet auch in 20 Minuten, online oder bei Ihnen.
+Am einfachsten probieren Sie es aus: Scannen Sie den Code unten auf diesem Brief, die Demo öffnet sich ohne Konto. Danach testen Sie Godet 15 Tage kostenlos, ohne Kreditkarte. Gerne zeige ich Ihnen Godet auch in 20 Minuten, online oder bei Ihnen.
 
 Freundliche Grüsse
 
@@ -153,7 +153,7 @@ L’art. 32b dell’OPI chiede che le attrezzature di lavoro siano mantenute sec
 
 Godet riunisce tutto in un unico posto: manutenzioni, riparazioni, ricambi, ore di funzionamento, foto e fatture, macchina per macchina. Le scadenze (manutenzione ogni 500 ore, controllo annuale) sono seguite per Lei, e finalmente sa quanto costa ogni macchina. Il Suo parco macchine appare in uno showroom 3D: verde, arancione o rosso, a colpo d’occhio.
 
-Il modo più semplice è provarlo: inquadri il codice in fondo a questa lettera, la demo si apre senza account. Se Le interessa, la prova è gratuita per 30 giorni, senza carta di credito. Sarò lieto di presentarLe Godet anche in 20 minuti, online o presso la Sua sede.
+Il modo più semplice è provarlo: inquadri il codice in fondo a questa lettera, la demo si apre senza account. Se Le interessa, la prova è gratuita per 15 giorni, senza carta di credito. Sarò lieto di presentarLe Godet anche in 20 minuti, online o presso la Sua sede.
 
 Cordiali saluti
 
@@ -363,7 +363,7 @@ Freundliche Grüsse
 6. **La valeur de revente** : un carnet complet et imprimable rassure l’acheteur.
 7. **Suisse** : formats suisses (6’842 h, CHF 1’240), quatre langues, données hébergées dans l’UE (Irlande),
    accès réservé à l’entreprise.
-8. **Sans risque** : démo 3D sans compte ; essai gratuit de 30 jours sans carte de crédit ; tarifs annoncés avant
+8. **Sans risque** : démo 3D sans compte ; essai gratuit de 15 jours sans carte de crédit ; tarifs annoncés avant
    la fin de l’essai.
 
 N’affirmez pas que Godet « rend conforme » : il aide à tenir et à prouver l’entretien.
@@ -375,7 +375,7 @@ N’affirmez pas que Godet « rend conforme » : il aide à tenir et à prouver 
 | « On a déjà un classeur, un Excel. » | « Gardez-le si vous voulez : Godet reprend les mêmes informations, mais les échéances se calculent seules et chaque saisie garde sa date et son auteur. Le carnet s’imprime quand il faut. » |
 | « Pas le temps de saisir. » | « Une saisie prend trente secondes sur le téléphone, photo comprise. Le machiniste peut saisir les heures lui-même. » |
 | « Notre concessionnaire a déjà un portail, la télématique. » | « Godet est toutes marques et garde aussi les petites et les anciennes machines. Il complète la télématique : coûts, réparations, factures, contrôles. » |
-| « C’est combien ? » | « L’essai de 30 jours est gratuit, sans carte. Les tarifs, par entreprise, vous sont annoncés avant la fin de l’essai. » |
+| « C’est combien ? » | « L’essai de 15 jours est gratuit, sans carte. Les tarifs, par entreprise, vous sont annoncés avant la fin de l’essai. » |
 | « Nos données dans le nuage ? » | « Hébergées dans l’UE, en Irlande ; seule votre entreprise y a accès ; rien ne s’efface ; vous imprimez ou exportez votre carnet en PDF. » |
 | « La 3D, c’est un gadget. » | « Elle sert à voir l’état du parc d’un coup d’œil : vert, orange, rouge. Pour saisir vite, il y a le mode atelier, sans 3D. » |
 | « Nous sommes trop petits. » | « Dès trois ou quatre machines, un service oublié coûte plus cher que l’outil. » |
@@ -385,13 +385,13 @@ N’affirmez pas que Godet « rend conforme » : il aide à tenir et à prouver 
 
 Réponses courtes en allemand : « Gerne behalten Sie Ihr Excel – Godet berechnet die Termine automatisch. » ·
 « Eine Erfassung dauert dreissig Sekunden auf dem Handy, mit Foto. » · « Godet funktioniert für alle Marken und
-ergänzt die Telematik. » · « Der Test ist 30 Tage kostenlos, ohne Kreditkarte; die Preise erfahren Sie vor Ende
+ergänzt die Telematik. » · « Der Test ist 15 Tage kostenlos, ohne Kreditkarte; die Preise erfahren Sie vor Ende
 des Tests. » · « Daten in der EU (Irland), nur Ihr Unternehmen hat Zugriff. » · « Danke, ich habe es notiert und
 melde mich nicht mehr. »
 
 Risposte brevi in italiano: « Può tenere il Suo Excel: Godet calcola le scadenze da solo. » · « Una registrazione
 richiede trenta secondi dal telefono, foto compresa. » · « Godet funziona con tutte le marche e completa la
-telematica. » · « La prova è gratuita per 30 giorni, senza carta; i prezzi Le vengono comunicati prima della
+telematica. » · « La prova è gratuita per 15 giorni, senza carta; i prezzi Le vengono comunicati prima della
 fine della prova. » · « Dati ospitati nell’UE (Irlanda), accesso riservato alla Sua impresa. » · « Grazie, ne
 prendo nota e non La ricontatterò. »
 

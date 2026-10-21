@@ -89,7 +89,7 @@ Il D.Lgs. 81/2008 (art. 71) chiede che le attrezzature di lavoro siano oggetto d
 
 Godet riunisce tutto in un unico posto: manutenzioni, riparazioni, ricambi, ore di funzionamento, verbali dei controlli, foto e fatture, macchina per macchina. Le scadenze (manutenzione ogni 500 ore, controlli periodici) sono seguite per Lei, e finalmente sa quanto costa ogni macchina. Il Suo parco macchine appare in uno showroom 3D: verde, arancione o rosso, a colpo d’occhio.
 
-Il modo più semplice è provarlo: inquadri il codice in fondo a questa lettera, la demo si apre senza account. La prova è gratuita per 30 giorni, senza carta di credito. Sarò lieto di presentarLe Godet anche in 20 minuti, in videoconferenza.
+Il modo più semplice è provarlo: inquadri il codice in fondo a questa lettera, la demo si apre senza account. La prova è gratuita per 15 giorni, senza carta di credito. Sarò lieto di presentarLe Godet anche in 20 minuti, in videoconferenza.
 
 Cordiali saluti
 
@@ -173,7 +173,7 @@ Cordiali saluti
 4. **Toutes marques**, anciennes et petites machines comprises.
 5. **L’équipe** : rôles (propriétaire, administrateur, mécanicien, opérateur) ; saisie rapide sur téléphone.
 6. **Formats italiens** (6.842 h, 1.240 €), interface en italien, données dans l’UE (Irlande).
-7. **Sans risque** : démo 3D sans compte, essai de 30 jours sans carte de crédit.
+7. **Sans risque** : démo 3D sans compte, essai de 15 jours sans carte de crédit.
 
 ## 8. Objections fréquentes
 
@@ -182,7 +182,7 @@ Cordiali saluti
 | Nous avons déjà un logiciel. | « Godet non sostituisce il gestionale: è il libretto di ogni macchina, con manutenzioni, controlli, riparazioni e costi, per l’officina e il cantiere. » |
 | Nos machines ont la télématique. | « La telematica dà ore e posizione; Godet aggiunge riparazioni, verbali, fatture e costi, anche per le macchine più vecchie e di altre marche. » |
 | Pas le temps. | « Una registrazione richiede trenta secondi dal telefono, foto compresa. » |
-| Combien ça coûte ? | « La prova è gratuita per 30 giorni, senza carta. I prezzi per impresa Le vengono comunicati prima della fine della prova. » |
+| Combien ça coûte ? | « La prova è gratuita per 15 giorni, senza carta. I prezzi per impresa Le vengono comunicati prima della fine della prova. » |
 | Données, cloud ? | « Dati ospitati nell’UE (Irlanda), accesso riservato alla Sua impresa, nulla viene cancellato, ogni libretto si stampa in PDF. » |
 | Un fournisseur suisse ? | « L’applicazione è interamente in italiano, in euro e con i formati italiani. Rispondiamo per iscritto in italiano. » |
 | D’où vient notre adresse ? | « Dal {fonte}. Se preferisce non ricevere altro, lo annoto subito. » |
