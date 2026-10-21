@@ -5,6 +5,11 @@ import { routing } from '@/i18n/routing';
 import { SUPABASE_PUBLISHABLE_KEY, SUPABASE_URL } from '@/lib/env';
 
 const handleI18n = createIntlMiddleware(routing);
+// Robots et aperçus de liens (messageries, réseaux, moteurs) : pas de détection de langue par le navigateur, sinon un
+// aperçu de godet.app dans un e-mail français sortait en anglais (le robot annonçait « en »). Ils restent sur le
+// français, ou sur la langue du préfixe (/de, /it, /en).
+const handleI18nForBots = createIntlMiddleware({ ...routing, localeDetection: false });
+const BOT_UA = /bot|crawl|spider|slurp|preview|fetch|facebookexternalhit|embedly|whatsapp|telegram|slack|discord|skype|linkedin|outlook|infomaniak|curl|wget|python|okhttp|java\/|go-http|headless|\(compatible;/i;
 
 // Pages réservées aux personnes connectées (chemins sans la langue).
 const PRIVATE = ['/garage', '/bienvenue', '/parametres', '/carnet', '/etiquettes', '/admin', '/location'];
@@ -57,7 +62,9 @@ export async function proxy(request: NextRequest) {
     return redirect;
   }
 
-  const response = handleI18n(request);
+  const ua = request.headers.get('user-agent') ?? '';
+  const isBot = !ua || BOT_UA.test(ua);
+  const response = isBot && !request.cookies.has('godet-lang') ? handleI18nForBots(request) : handleI18n(request);
   cookiesToSet.forEach(({ name, value, options }) => response.cookies.set(name, value, options));
   return response;
 }
