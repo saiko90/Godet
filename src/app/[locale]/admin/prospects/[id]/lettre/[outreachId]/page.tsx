@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation';
 import { AdminChrome } from '@/components/admin/AdminChrome';
 import { COUNTRY_LINE, LETTER_SENDER, senderComplete, windowSide } from '@/components/admin/letter-config';
 import { LetterSheet, type LetterData } from '@/components/admin/LetterSheet';
-import { contactPath, demoPath, localePrefix, prospectLocale, shortUrl, websiteDomain } from '@/components/admin/links';
+import { demoPath, localePrefix, prospectLocale, shortUrl, websiteDomain } from '@/components/admin/links';
 import { isOneOf, isUuid, LOCALES } from '@/components/admin/types';
 import { PrintButton } from '@/components/admin/ui';
 import { Icon } from '@/components/Icons';
@@ -94,11 +94,11 @@ export default async function AdminLetterPage({ params }: { params: Params }) {
   const demo: LetterData['demo'] = p.ref_code
     ? {
         title: tl('demoTitle'),
-        scan: tl('demoScan'),
-        url: `${base}${demoPath(letterLocale, p.ref_code)}`,
-        short: shortUrl(base, demoPath(letterLocale, p.ref_code)),
-        contactLabel: tl('contactLine'),
-        contactShort: shortUrl(base, contactPath(letterLocale, p.ref_code)),
+        scan: tl('demoType'),
+        url: `${base}${demoPath(letterLocale, p.ref_code, p.segment)}`,
+        short: shortUrl(base, demoPath(letterLocale, p.ref_code, p.segment)),
+        guideLabel: tl('guideLine'),
+        guideShort: shortUrl(base, `${localePrefix(letterLocale)}/aide`),
       }
     : null;
 

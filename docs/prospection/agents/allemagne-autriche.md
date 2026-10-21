@@ -168,8 +168,8 @@ Liens (allemand) : démo `URL_SITE/de/demo?ref=CODE`, demande de démonstration 
 Canal `lettre`, en allemand, à partir du modèle de l’annexe A (A.1 Allemagne, A.2 Autriche) :
 
 - objet de 80 caractères au plus ; texte de la formule d’appel à la signature, 120 à 220 mots ;
-- **ni adresse, ni date, ni lien** : la console ajoute à l’impression l’adresse (fenêtre à gauche, DIN 5008), la
-  date, le QR code, les liens, l’origine des coordonnées et la mention d’opposition ;
+- **ni adresse ni date** ; un seul lien, celui de la démo `godet.app/de/demo/{code}` : la console ajoute à l’impression l’adresse (fenêtre à gauche, DIN 5008), la
+  date, l’encadré avec le lien de la démo, l’origine des coordonnées et la mention d’opposition ;
 - première phrase personnelle tirée d’un signal réel, sobre ;
 - formule d’appel avec virgule (« Sehr geehrte Damen und Herren, ») puis texte en minuscule ; « Herr / Frau {Nom} »
   seulement si la personne figure à l’Impressum comme Geschäftsführer ou Inhaber ;
@@ -298,7 +298,7 @@ Nach § 14 BetrSichV sind die Ergebnisse der Prüfungen Ihrer Arbeitsmittel aufz
 
 Godet ist das digitale Wartungsheft für Baumaschinen: Wartungen, Reparaturen, Ersatzteile, Betriebsstunden, Prüfberichte, Fotos und Rechnungen, Maschine für Maschine. Fällige Termine (Service alle 500 Stunden, jährliche Prüfung) werden für Sie verfolgt, und Sie sehen, was jede Maschine kostet. Ihr Maschinenpark erscheint in einem 3D-Showroom: grün, orange oder rot, auf einen Blick.
 
-Am einfachsten probieren Sie es aus: Scannen Sie den Code unten auf diesem Brief, die Demo öffnet sich ohne Konto. Danach testen Sie Godet 15 Tage kostenlos, ohne Kreditkarte. Die Kurzanleitung als PDF finden Sie unter godet.app/de/aide, und Ihre Fragen beantworte ich gerne per E-Mail.
+Am einfachsten probieren Sie es aus: Öffnen Sie godet.app/de/demo/{code}, die Demo öffnet sich ohne Konto. Danach testen Sie Godet 15 Tage kostenlos, ohne Kreditkarte. Die Kurzanleitung als PDF finden Sie unter godet.app/de/aide, und Ihre Fragen beantworte ich gerne per E-Mail.
 
 Mit freundlichen Grüssen
 
@@ -318,7 +318,7 @@ Die Arbeitsmittelverordnung verlangt, dass Prüfbefunde bis zum Ausscheiden des 
 
 Godet ist das digitale Wartungsheft für Baumaschinen: Wartungen, Reparaturen, Ersatzteile, Betriebsstunden, Prüfbefunde, Fotos und Rechnungen, Maschine für Maschine, auf der Baustelle am Handy abrufbar. Fällige Termine werden für Sie verfolgt, und Sie sehen, was jede Maschine kostet. Ihr Maschinenpark erscheint in einem 3D-Showroom: grün, orange oder rot, auf einen Blick.
 
-Am einfachsten probieren Sie es aus: Scannen Sie den Code unten auf diesem Brief, die Demo öffnet sich ohne Konto. Danach testen Sie Godet 15 Tage kostenlos, ohne Kreditkarte. Die Kurzanleitung als PDF finden Sie unter godet.app/de/aide, und Ihre Fragen beantworte ich gerne per E-Mail.
+Am einfachsten probieren Sie es aus: Öffnen Sie godet.app/de/demo/{code}, die Demo öffnet sich ohne Konto. Danach testen Sie Godet 15 Tage kostenlos, ohne Kreditkarte. Die Kurzanleitung als PDF finden Sie unter godet.app/de/aide, und Ihre Fragen beantworte ich gerne per E-Mail.
 
 Mit freundlichen Grüssen
 
@@ -336,7 +336,7 @@ vor zwei Wochen habe ich Ihnen Godet vorgestellt, das digitale Wartungsheft für
 
 Eine Frage, die uns viele Betriebe stellen: Was hat jede Maschine im letzten Jahr wirklich gekostet, mit Ersatzteilen, Arbeitszeit und Stillstand? Godet zeigt es Ihnen Monat für Monat und erinnert Sie an jede fällige Prüfung.
 
-Die 3D-Demo öffnet sich ohne Konto mit dem Code unten. Wenn es gerade nicht passt, erhalten Sie keine weitere Post von uns.
+Die 3D-Demo öffnet sich ohne Konto unter godet.app/de/demo/{code}. Wenn es gerade nicht passt, erhalten Sie keine weitere Post von uns.
 
 Mit freundlichen Grüssen
 

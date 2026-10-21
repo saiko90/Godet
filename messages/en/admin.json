@@ -418,8 +418,8 @@
     "datePlace": "{place}, {date}",
     "subject": "{subject}",
     "demoTitle": "See Godet in 3D – no account needed",
-    "demoScan": "Scan the code or type the address:",
-    "contactLine": "For a guided demo, pick a time:",
+    "demoType": "Type this address into your browser:",
+    "guideLine": "Getting-started guide (PDF):",
     "optOut": "Prefer not to hear from us again? Just let us know (reply to this letter or use the contact form) and we will delete your details straight away.",
     "source": "Where we found your details: {source}.",
     "privacy": "Privacy: {url}"

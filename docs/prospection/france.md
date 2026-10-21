@@ -71,7 +71,7 @@ est publiée par l’entreprise. Jamais d’adresse « reconstituée » (prénom
 | 1 | J0 | E-mail personnalisé (ou lettre si pas d’adresse) | Faire ouvrir la démo 3D |
 | 2 | J+7 | Appel (script) | Trouver la bonne personne, proposer d’envoyer le guide PDF et le lien de la démo par e-mail |
 | 3 | J+14 | E-mail court | Rappel avec le lien direct |
-| 4 | J+30 | Lettre avec QR code | Dernier contact, sur un autre support |
+| 4 | J+30 | Lettre avec lien court de la démo | Dernier contact, sur un autre support |
 
 Sans réponse 14 jours après l’étape 4 : « Refus ou écarté », note « sans réponse ». Toute demande de désinscription :
 statut « Ne pas contacter », le jour même.
@@ -146,7 +146,7 @@ Les résultats des vérifications générales périodiques se consignent au regi
 
 Godet réunit tout au même endroit, machine par machine, et suit les échéances pour vous. Vous voyez enfin ce que coûte chaque engin, et votre parc apparaît dans un showroom 3D : vert, orange ou rouge, d’un coup d’œil.
 
-Le plus simple est d’essayer : scannez le code au bas de cette lettre, la démo s’ouvre sans compte. L’essai est gratuit pendant 15 jours, sans carte bancaire.
+Le plus simple est d’essayer : ouvrez godet.app/demo/{code}, la démo s’ouvre sans compte. L’essai est gratuit pendant 15 jours, sans carte bancaire.
 
 Je vous prie d’agréer, Madame, Monsieur, l’expression de mes salutations distinguées.
 

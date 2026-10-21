@@ -32,8 +32,10 @@ export function prospectLocale(locale: string | null | undefined, country: strin
 }
 
 /** « /de/demo?ref=ch-2610-0042 » */
-export function demoPath(locale: string, ref: string): string {
-  return `${localePrefix(locale)}/demo?ref=${encodeURIComponent(ref)}`;
+export function demoPath(locale: string, ref: string, segment?: string | null): string {
+  // Lien court lisible (godet.app/demo/ch-2610-0042) ; loueurs : la démo de l'option Location.
+  const page = segment === 'location' ? '/demo/location/' : '/demo/';
+  return `${localePrefix(locale)}${page}${encodeURIComponent(ref)}`;
 }
 
 /** « /de/contact?sujet=demo&ref=ch-2610-0042 » */

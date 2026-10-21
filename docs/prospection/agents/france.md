@@ -165,7 +165,7 @@ Liens (français, sans préfixe de langue) : démo `URL_SITE/demo?ref=CODE`, dem
 
 - **E-mail** (canal `email`, au plus `EMAILS_MAX` par semaine) si une adresse respecte la règle 2 : modèle A.1, avec
   les deux liens et le pied de message (identité, origine des données, « STOP »). Objet de 80 caractères au plus.
-- **Sinon, lettre** (canal `lettre`) : modèle A.4 ; ni adresse, ni date, ni lien (ajoutés à l’impression avec le QR
+- **Sinon, lettre** (canal `lettre`) : modèle A.4 ; ni adresse ni date ; un seul lien, celui de la démo `godet.app/demo/{code}` (ajoutés à l’impression avec l’encadré du lien de la démo
   code et la mention d’opposition).
 - Première phrase personnelle tirée d’un signal réel, sobre. 120 à 200 mots. Aucun prix. Essai gratuit de 15 jours
   (jamais 30).
@@ -348,7 +348,7 @@ Les résultats des vérifications générales périodiques se consignent au regi
 
 Godet réunit tout au même endroit, machine par machine, et suit les échéances pour vous. Vous voyez enfin ce que coûte chaque engin, et votre parc apparaît dans un showroom 3D : vert, orange ou rouge, d’un coup d’œil.
 
-Le plus simple est d’essayer : scannez le code au bas de cette lettre, la démo s’ouvre sans compte. L’essai est gratuit pendant 15 jours, sans carte bancaire.
+Le plus simple est d’essayer : ouvrez godet.app/demo/{code}, la démo s’ouvre sans compte. L’essai est gratuit pendant 15 jours, sans carte bancaire.
 
 Je vous prie d’agréer, Madame, Monsieur, l’expression de mes salutations distinguées.
 

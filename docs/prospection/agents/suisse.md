@@ -209,8 +209,9 @@ Liens du prospect, selon sa langue (`URL_SITE` en tête) :
 Canal `lettre`, dans la langue du prospect, à partir du modèle (annexe A). Règles :
 
 - **Objet** : 80 caractères au plus ; reprends celui du modèle ou adapte-le au signal.
-- **Texte** : de la formule d’appel à la signature, 120 à 220 mots. **Ni adresse, ni date, ni lien, ni QR code** :
-  la console les ajoute à l’impression (avec l’origine des coordonnées et la mention d’opposition).
+- **Texte** : de la formule d’appel à la signature, 120 à 220 mots. **Ni adresse ni date** : la console les ajoute à l’impression. Un seul lien : celui de la démo,
+  `godet.app/demo/{code}` (`/de/demo/`, `/it/demo/` ; loueurs : `/demo/location/{code}`), écrit dans le texte et repris
+  dans l’encadré imprimé (avec l’origine des coordonnées et la mention d’opposition).
 - **Première phrase personnelle**, tirée d’un signal réel : sobre et factuelle, sans flatterie.
 - L’argument de l’art. 32b OPA / VUV / OPI est cité tel que dans le modèle, sans exagération (« rend conforme » est
   interdit).
@@ -356,7 +357,7 @@ Pour chaque machine, l’OPA (art. 32b) demande un entretien conforme aux indica
 
 Godet réunit tout au même endroit : services, réparations, pièces, heures, photos et factures, machine par machine. Les échéances (service des 500 heures, contrôle annuel) sont suivies pour vous, et vous voyez enfin ce que coûte chaque engin. Votre parc apparaît dans un showroom 3D : vert, orange ou rouge, d’un coup d’œil.
 
-Le plus simple est d’essayer : scannez le code au bas de cette lettre, la démo s’ouvre sans compte. Si elle vous parle, l’essai est gratuit pendant 15 jours, sans carte de crédit. Le guide de démarrage en PDF est sur godet.app/aide, et je réponds volontiers à vos questions par e-mail.
+Le plus simple est d’essayer : ouvrez godet.app/demo/{code}, la démo s’ouvre sans compte. Si elle vous parle, l’essai est gratuit pendant 15 jours, sans carte de crédit. Le guide de démarrage en PDF est sur godet.app/aide, et je réponds volontiers à vos questions par e-mail.
 
 Avec mes meilleures salutations
 
@@ -374,7 +375,7 @@ Nach Art. 32b VUV sind Arbeitsmittel gemäss den Angaben des Herstellers instand
 
 Godet bündelt alles an einem Ort: Wartungen, Reparaturen, Ersatzteile, Betriebsstunden, Fotos und Rechnungen, Maschine für Maschine. Fällige Termine (Service alle 500 Stunden, jährliche Kontrolle) werden für Sie verfolgt, und Sie sehen endlich, was jede Maschine kostet. Ihr Maschinenpark erscheint in einem 3D-Showroom: grün, orange oder rot, auf einen Blick.
 
-Am einfachsten probieren Sie es aus: Scannen Sie den Code unten auf diesem Brief, die Demo öffnet sich ohne Konto. Danach testen Sie Godet 15 Tage kostenlos, ohne Kreditkarte. Die Kurzanleitung als PDF finden Sie unter godet.app/de/aide, und Ihre Fragen beantworte ich gerne per E-Mail.
+Am einfachsten probieren Sie es aus: Öffnen Sie godet.app/de/demo/{code}, die Demo öffnet sich ohne Konto. Danach testen Sie Godet 15 Tage kostenlos, ohne Kreditkarte. Die Kurzanleitung als PDF finden Sie unter godet.app/de/aide, und Ihre Fragen beantworte ich gerne per E-Mail.
 
 Freundliche Grüsse
 
@@ -392,7 +393,7 @@ L’art. 32b dell’OPI chiede che le attrezzature di lavoro siano mantenute sec
 
 Godet riunisce tutto in un unico posto: manutenzioni, riparazioni, ricambi, ore di funzionamento, foto e fatture, macchina per macchina. Le scadenze (manutenzione ogni 500 ore, controllo annuale) sono seguite per Lei, e finalmente sa quanto costa ogni macchina. Il Suo parco macchine appare in uno showroom 3D: verde, arancione o rosso, a colpo d’occhio.
 
-Il modo più semplice è provarlo: inquadri il codice in fondo a questa lettera, la demo si apre senza account. Se Le interessa, la prova è gratuita per 15 giorni, senza carta di credito. La guida introduttiva in PDF è su godet.app/it/aide e rispondo volentieri alle Sue domande per e-mail.
+Il modo più semplice è provarlo: apra godet.app/it/demo/{code}, la demo si apre senza account. Se Le interessa, la prova è gratuita per 15 giorni, senza carta di credito. La guida introduttiva in PDF è su godet.app/it/aide e rispondo volentieri alle Sue domande per e-mail.
 
 Cordiali saluti
 
@@ -524,7 +525,7 @@ Sehr geehrte Damen und Herren
 
 Vor einigen Wochen habe ich Ihnen Godet vorgestellt, das digitale Wartungsheft für Baumaschinen.
 
-Wenn Sie das Nachführen von Wartungen, Reparaturen und Kosten Ihrer Maschinen viel Zeit kostet, zeigt Ihnen die 3D-Demo in zwei Minuten, wie Godet das übernimmt. Sie öffnet sich ohne Konto mit dem Code unten.
+Wenn Sie das Nachführen von Wartungen, Reparaturen und Kosten Ihrer Maschinen viel Zeit kostet, zeigt Ihnen die 3D-Demo in zwei Minuten, wie Godet das übernimmt. Sie öffnet sich ohne Konto unter godet.app/de/demo/{code}.
 
 {Nur Schritt 4: Das ist mein letzter Brief: Wenn es gerade nicht passt, erhalten Sie keine weitere Post von uns.}
 

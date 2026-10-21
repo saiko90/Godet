@@ -1,5 +1,4 @@
 import { LogoMark } from '@/components/Logo';
-import { qrMatrix, qrPath } from './qr';
 
 export interface LetterData {
   /** Côté de la fenêtre d'enveloppe (adresse du destinataire). */
@@ -13,17 +12,15 @@ export interface LetterData {
   dateLine: string;
   subject: string | null;
   body: string;
-  demo: { title: string; scan: string; url: string; short: string; contactLabel: string; contactShort: string } | null;
+  demo: { title: string; scan: string; url: string; short: string; guideLabel: string; guideShort: string } | null;
   legal: string[];
 }
 
 /** Repères de pliage (mm depuis le haut) : en trois pour C5/6, forme B de la DIN 5008 pour DL. */
 const FOLDS: Record<LetterData['side'], number[]> = { right: [99, 198], left: [105, 210] };
 
-/** Lettre A4 prête à imprimer pour une enveloppe à fenêtre (adresse, date, objet, texte, lien et QR de la démo). */
+/** Lettre A4 prête à imprimer pour une enveloppe à fenêtre (adresse, date, objet, texte, lien de la démo et du guide). */
 export function LetterSheet({ data }: { data: LetterData }) {
-  const qr = data.demo ? qrMatrix(data.demo.url) : null;
-  const path = qr ? qrPath(qr) : null;
 
   return (
     <article className={`adm-letter is-${data.side}`} lang={data.lang}>
@@ -52,22 +49,14 @@ export function LetterSheet({ data }: { data: LetterData }) {
         <div className="adm-l-text">{data.body}</div>
         {data.demo ? (
           <aside className="adm-l-demo">
-            {path ? (
-              <svg viewBox={`0 0 ${path.size} ${path.size}`} role="img" aria-label={data.demo.short} shapeRendering="crispEdges">
-                <rect width={path.size} height={path.size} fill="#fff" />
-                <path d={path.d} fill="#000" />
-              </svg>
-            ) : (
-              <span />
-            )}
             <div>
               <p>
                 <b>{data.demo.title}</b>
                 {data.demo.scan}
               </p>
               <p className="adm-l-url">{data.demo.short}</p>
-              <p className="adm-l-gap">{data.demo.contactLabel}</p>
-              <p className="adm-l-url">{data.demo.contactShort}</p>
+              <p className="adm-l-gap">{data.demo.guideLabel}</p>
+              <p className="adm-l-url">{data.demo.guideShort}</p>
             </div>
           </aside>
         ) : null}

@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { FormatProvider } from '@/components/FormatProvider';
 import { DemoAgenda } from '@/components/site/location/demo';
+import { RefTracker } from '@/components/site/RefTracker';
 import { checkLocale, metaLocale, NO_INDEX } from '@/components/site/seo';
 import { SiteHeader, SkipLink } from '@/components/site/SiteChrome';
 import { nowMs } from '@/lib/clock';
@@ -27,6 +28,7 @@ export default async function DemoLocationPage({ params }: { params: Params }) {
           <DemoAgenda nowIso={new Date(nowMs()).toISOString()} />
         </FormatProvider>
       </main>
+      <RefTracker path="/demo/location" />
     </div>
   );
 }

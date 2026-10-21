@@ -65,7 +65,7 @@ Registro pubblico delle opposizioni. Pas de collecte d’adresse e-mail ni de nu
 
 | Étape | Jour | Canal | But |
 |---|---|---|---|
-| 1 | J0 | Lettre personnalisée + QR code | Faire ouvrir la démo 3D |
+| 1 | J0 | Lettre personnalisée + lien court de la démo | Faire ouvrir la démo 3D |
 | 2 | J+15 | Lettre courte | Rappel bref, autre angle (costi per macchina) |
 | 3 | J+35 | Invitation LinkedIn sans publicité | Créer un lien ; Godet seulement sur demande |
 
@@ -89,7 +89,7 @@ Il D.Lgs. 81/2008 (art. 71) chiede che le attrezzature di lavoro siano oggetto d
 
 Godet riunisce tutto in un unico posto: manutenzioni, riparazioni, ricambi, ore di funzionamento, verbali dei controlli, foto e fatture, macchina per macchina. Le scadenze (manutenzione ogni 500 ore, controlli periodici) sono seguite per Lei, e finalmente sa quanto costa ogni macchina. Il Suo parco macchine appare in uno showroom 3D: verde, arancione o rosso, a colpo d’occhio.
 
-Il modo più semplice è provarlo: inquadri il codice in fondo a questa lettera, la demo si apre senza account. La prova è gratuita per 15 giorni, senza carta di credito. La guida introduttiva in PDF è su godet.app/it/aide e rispondo volentieri alle Sue domande per e-mail.
+Il modo più semplice è provarlo: apra godet.app/it/demo/{code}, la demo si apre senza account. La prova è gratuita per 15 giorni, senza carta di credito. La guida introduttiva in PDF è su godet.app/it/aide e rispondo volentieri alle Sue domande per e-mail.
 
 Cordiali saluti
 

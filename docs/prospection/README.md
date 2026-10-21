@@ -65,7 +65,7 @@ La console :
 - `/admin/prospects/<id>` : fiche complète, messages préparés (valider, modifier, marquer comme envoyé, réponse,
   annuler), suivi (statut, prochaine action, notes), liens de démo prêts à copier, visites, effacement.
 - `/admin/prospects/<id>/lettre/<message>` : lettre A4 prête à imprimer (adresse placée pour une enveloppe à
-  fenêtre, date, objet, texte, QR code et adresse courte de la démo, mention d’opposition et origine des données).
+  fenêtre, date, objet, texte, lien court de la démo et du guide PDF, mention d’opposition et origine des données).
 - `/admin/messages`, `/admin/idees`, `/admin/visites`.
 
 Avant le premier envoi postal, complétez l’adresse de l’expéditeur dans `src/components/admin/letter-config.ts`

@@ -270,7 +270,7 @@ export default async function AdminProspectPage({ params }: { params: Params }) 
                 {p.ref_code ? (
                   <>
                     <p className="adm-hint">{t('prospect.linksHint', { code: p.ref_code, language: t(`locale.${lang}`) })}</p>
-                    <CopyField label={t('prospect.demoLink')} value={`${base}${demoPath(lang, p.ref_code)}`} />
+                    <CopyField label={t('prospect.demoLink')} value={`${base}${demoPath(lang, p.ref_code, p.segment)}`} />
                     <CopyField label={t('prospect.contactLink')} value={`${base}${contactPath(lang, p.ref_code)}`} />
                   </>
                 ) : (

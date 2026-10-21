@@ -256,13 +256,11 @@ a.adm-kpi:hover { border-color: var(--line-strong); background: rgba(236, 232, 2
 .adm-l-subject { margin: 2mm 0 0; font-weight: 700; font-size: 11pt; }
 .adm-l-text { white-space: pre-wrap; overflow-wrap: anywhere; }
 .adm-l-demo {
-  display: grid; grid-template-columns: 27mm minmax(0, 1fr); gap: 5mm; align-items: center;
   margin-top: 3mm; padding: 4mm; border: 0.4pt solid var(--rule); border-radius: 2mm; break-inside: avoid;
 }
-.adm-l-demo svg { width: 27mm; height: 27mm; display: block; }
 .adm-l-demo p { margin: 0; font-size: 9pt; color: var(--ink-2); }
 .adm-l-demo p b { display: block; color: var(--ink); font-size: 10pt; margin-bottom: 1mm; }
-.adm-l-url { font-family: var(--f-mono); font-size: 9.5pt; color: var(--ink); overflow-wrap: anywhere; }
+.adm-l-url { font-family: var(--f-mono); font-size: 11pt; font-weight: 600; color: var(--ink); overflow-wrap: anywhere; }
 .adm-l-demo p.adm-l-gap { margin-top: 2mm; }
 .adm-l-legal { margin: 2mm 0 0; font-size: 7.4pt; line-height: 1.35; color: var(--ink-2); display: grid; gap: 1mm; break-inside: avoid; }
 .adm-l-legal p { margin: 0; }

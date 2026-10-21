@@ -418,8 +418,8 @@
     "datePlace": "{place}, le {date}",
     "subject": "{subject}",
     "demoTitle": "Voyez Godet en 3D, sans compte",
-    "demoScan": "Scannez le code ou tapez l’adresse :",
-    "contactLine": "Pour une démonstration commentée, choisissez un moment :",
+    "demoType": "Tapez cette adresse dans votre navigateur :",
+    "guideLine": "Guide de démarrage en PDF :",
     "optOut": "Vous ne souhaitez plus recevoir de courrier de notre part ? Dites-le-nous simplement (réponse à cette lettre ou formulaire de contact) : nous effacerons aussitôt vos coordonnées.",
     "source": "Origine de vos coordonnées : {source}.",
     "privacy": "Protection des données : {url}"
