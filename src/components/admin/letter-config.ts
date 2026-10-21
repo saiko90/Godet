@@ -9,15 +9,15 @@ export const LETTER_SENDER = {
   /** Raison sociale telle qu'inscrite (registre du commerce le cas échéant). */
   company: 'Swiss Digital Studio',
   /** Rue et numéro. */
-  street: '',
+  street: 'Route de Derborence 28',
   /** Numéro postal. */
-  postalCode: '',
+  postalCode: '1976',
   /** Localité (reprise dans la ligne de date : « Sion, le 19 octobre 2026 »). */
-  city: '',
+  city: 'Aven',
   /** Pays de l'expéditeur (ISO). */
   country: 'CH',
-  phone: '',
-  email: '',
+  phone: '078 711 64 11',
+  email: 'contact@swissdigitalstudio.ch',
   website: 'www.swissdigitalstudio.ch',
 } as const;
 
