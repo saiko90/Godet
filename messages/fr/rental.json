@@ -34,7 +34,8 @@
     "out": "Louée",
     "late": "En retard",
     "done": "Rendue",
-    "risk": "Réservée · machine en réparation"
+    "risk": "Réservée · machine en réparation",
+    "delivery": "Livraison sur le chantier (transport à organiser)"
   },
   "state": {
     "louee": "Louée",
@@ -396,5 +397,22 @@
     "noEmail": "En démo, aucun rapport n’est envoyé. Dans votre compte, le PDF part au client par e-mail et se range dans le carnet de la machine.",
     "unavailable": "Cette étape n’est plus disponible pour cette location d’exemple.",
     "staff": "Atelier"
+  },
+  "delivery": {
+    "out": "À livrer sur le chantier",
+    "back": "À reprendre sur le chantier"
+  },
+  "card": {
+    "open": "Fiche rapide de {code}",
+    "ok": "En ordre",
+    "out": "Louée à {client} jusqu’au {date}",
+    "next": "Prochaine réservation : {client}, le {date}",
+    "repairs": "Réparations ouvertes",
+    "since": "depuis le {date}",
+    "noRepair": "Aucune réparation ouverte.",
+    "dues": "Échéances à surveiller",
+    "noDue": "Aucune échéance proche.",
+    "sheet": "Ouvrir la fiche complète",
+    "book": "Réserver cette machine"
   }
 }

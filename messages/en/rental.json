@@ -34,7 +34,8 @@
     "out": "On hire",
     "late": "Overdue",
     "done": "Returned",
-    "risk": "Booked · machine under repair"
+    "risk": "Booked · machine under repair",
+    "delivery": "Delivery to site (transport to arrange)"
   },
   "state": {
     "louee": "On hire",
@@ -396,5 +397,22 @@
     "noEmail": "In the demo no report is sent. In your account, the PDF is emailed to the customer and filed in the machine’s log.",
     "unavailable": "This step is no longer available for this sample rental.",
     "staff": "Workshop"
+  },
+  "delivery": {
+    "out": "To deliver to site",
+    "back": "To collect from site"
+  },
+  "card": {
+    "open": "Quick view of {code}",
+    "ok": "In order",
+    "out": "On hire to {client} until {date}",
+    "next": "Next booking: {client}, on {date}",
+    "repairs": "Open repairs",
+    "since": "since {date}",
+    "noRepair": "No open repair.",
+    "dues": "Due items to watch",
+    "noDue": "Nothing due soon.",
+    "sheet": "Open the full machine sheet",
+    "book": "Book this machine"
   }
 }

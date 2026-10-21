@@ -155,13 +155,13 @@ function seed(machines: DemoMachine[], inRepair: Set<string>, now: number, day: 
   const r1 = rental('demo-loc-1', mp.id, ['Paysages Fournier Sàrl', 'Julie Fournier'], at(now, -3, 7), at(now, 2, 17), 'en_cours', { site: 'Nendaz' });
   r1.out_at = r1.start_at;
   checks.push(check(r1, mp, 'depart', r1.start_at, mp.hours - 18));
-  const r2 = rental('demo-loc-2', na.id, ['Façades Rey SA', 'Marc Rey'], at(now, -6, 7), at(now, -1, 17), 'en_cours', { site: 'Sion, avenue de la Gare' });
+  const r2 = rental('demo-loc-2', na.id, ['Façades Rey SA', 'Marc Rey'], at(now, -6, 7), at(now, -1, 17), 'en_cours', { site: 'Sion, avenue de la Gare', delivery: 'enlevement' });
   r2.out_at = r2.start_at;
   checks.push(check(r2, na, 'depart', r2.start_at, na.hours - 22));
   rentals.push(r1, r2);
   rentals.push(rental('demo-loc-3', ro.id, ['Revêtements Morand SA', 'Luc Morand'], at(now, 0, 7), at(now, 3, 17), 'reservee', { site: 'Martigny' }));
   rentals.push(rental('demo-loc-4', ch.id, ['Terrassements Bonvin', 'Anne Bonvin'], at(now, 4, 7), at(now, 9, 17), 'reservee', { delivery: 'enlevement' }));
-  rentals.push(rental('demo-loc-5', ca.id, ['Transports Rossier', 'Paul Rossier'], at(now, 12, 7), at(now, 14, 17), 'reservee'));
+  rentals.push(rental('demo-loc-5', ca.id, ['Transports Rossier', 'Paul Rossier'], at(now, 12, 7), at(now, 14, 17), 'reservee', { delivery: 'enlevement' }));
   const r6 = rental('demo-loc-6', pe.id, ['Génie civil Crettenand SA', 'David Crettenand'], at(now, -12, 7), at(now, -8, 17), 'terminee', { site: 'Conthey' });
   r6.out_at = r6.start_at;
   r6.back_at = r6.end_at;

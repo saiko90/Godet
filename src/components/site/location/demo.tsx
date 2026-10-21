@@ -9,6 +9,7 @@ import { Link } from '@/i18n/navigation';
 import type { CheckItems, CheckKind, FuelLevel } from '@/lib/rental';
 import { demoRentalActions, DEMO_RENTAL_ORG, DEMO_RENTAL_USER } from '@/lib/rental-demo';
 import { useDemoLocation } from '@/lib/rental-demo-hook';
+import { buildMachineInfo } from '@/lib/rental-machine-info';
 import { useDomainText } from '@/lib/use-domain-text';
 import { RentalBackendContext, type RentalBackend } from './backend';
 import { Planner, type PlannerMachine } from './Planner';
@@ -59,8 +60,13 @@ function Waiting() {
 }
 
 export function DemoAgenda({ nowIso }: { nowIso: string }) {
-  const { machines, state, repairs, orgName } = useDemoLocation();
+  const { seed, machines, state, repairs, orgName } = useDemoLocation();
   const dt = useDomainText();
+  const info = useMemo(() => {
+    const open = seed.entries.filter((e) => e.kind === 'reparation' && (e.repair_status === 'en_cours' || e.repair_status === 'attente_piece') && !e.deleted_at);
+    const broken = (state?.broken ?? []).map((b) => ({ machine_id: b.machineId, title: b.note || '—', repair_status: 'en_cours' as const, date: seed.today, details: null }));
+    return buildMachineInfo(machines, seed.schedules, [...broken, ...open], seed.today, dt);
+  }, [seed, machines, state, dt]);
   const list: PlannerMachine[] = useMemo(
     () => machines.map((m) => ({ id: m.id, code: m.code, kind: m.kind, title: dt.machineTitle(m), make: [m.brand, m.model].filter(Boolean).join(' ') })),
     [machines, dt],
@@ -87,6 +93,7 @@ export function DemoAgenda({ nowIso }: { nowIso: string }) {
         checks={checks}
         clients={clients}
         repairs={repairs}
+        info={info}
         nowIso={nowIso}
         canManage
         userId={DEMO_RENTAL_USER}

@@ -9,8 +9,10 @@ import { useFormat } from '@/components/FormatProvider';
 import { Icon } from '@/components/Icons';
 import { Link } from '@/i18n/navigation';
 import { machineRentalState, type Rental } from '@/lib/rental';
+import type { MachineQuickInfo } from '@/lib/rental-machine-info';
 import type { MachineKind } from '@/lib/types';
 import { useRentalBackend } from './backend';
+import { MachineCard, Truck } from './MachineCard';
 import { RentalDetail } from './RentalDetail';
 import { RentalForm, type ClientSuggestion } from './RentalForm';
 
@@ -42,6 +44,7 @@ export function Planner({
   checks,
   clients,
   repairs,
+  info = {},
   nowIso,
   canManage,
   userId,
@@ -54,6 +57,8 @@ export function Planner({
   clients: ClientSuggestion[];
   /** Réparations ouvertes par machine : leurs réservations à venir sont signalées. */
   repairs: Record<string, { title: string; date: string }>;
+  /** Fiche rapide de chaque machine (clic sur son nom). */
+  info?: Record<string, MachineQuickInfo>;
   nowIso: string;
   canManage: boolean;
   userId: string;
@@ -66,6 +71,7 @@ export function Planner({
   const [from, setFrom] = useState(() => addDays(today, -2));
   const [span, setSpan] = useState(21);
   const [open, setOpen] = useState<string | null>(null);
+  const [card, setCard] = useState<string | null>(null);
   const [form, setForm] = useState<{
     rental?: Rental;
     machineId?: string;
@@ -178,6 +184,7 @@ export function Planner({
               <li key={r.id}>
                 <span className="s-rent-dot is-booked" aria-hidden="true" />
                 <span>
+                  {r.delivery === 'livraison' ? <Truck label={t('delivery.out')} /> : null}
                   <b>{machineOf(r.machine_id)?.code}</b> ·{' '}
                   {t('today.departure', {
                     client: r.client_company || r.client_name,
@@ -193,6 +200,7 @@ export function Planner({
               <li key={r.id}>
                 <span className={`s-rent-dot ${Date.parse(r.end_at) < now ? 'is-late' : 'is-out'}`} aria-hidden="true" />
                 <span>
+                  {r.delivery === 'livraison' ? <Truck label={t('delivery.back')} /> : null}
                   <b>{machineOf(r.machine_id)?.code}</b> ·{' '}
                   {Date.parse(r.end_at) < now
                     ? t('today.late', {
@@ -248,6 +256,9 @@ export function Planner({
         <span>
           <i className="is-done" /> {t('legend.done')}
         </span>
+        <span>
+          <Truck label="" /> {t('legend.delivery')}
+        </span>
         {atRisk.length ? (
           <span>
             <i className="is-risk" /> {t('legend.risk')}
@@ -277,8 +288,10 @@ export function Planner({
               return (
                 <div key={m.id} className="s-rent-row" role="group" aria-label={`${m.code} · ${t(`state.${st.state}`)}`}>
                   <div className="s-rent-machine">
-                    <b>{m.code}</b>
-                    <span>{m.title}</span>
+                    <button type="button" className="s-rent-mname" onClick={() => setCard(m.id)} aria-label={t('card.open', { code: m.code })}>
+                      <b>{m.code}</b>
+                      <span>{m.title}</span>
+                    </button>
                     {repairs[m.id] && st.state !== 'louee' ? (
                       <span className="s-rent-pill is-repair" title={repairs[m.id].title}>
                         {t('state.repair')}
@@ -321,9 +334,10 @@ export function Planner({
                             width: `calc(${p.width} * var(--col))`,
                           }}
                           onClick={() => setOpen(r.id)}
-                          title={`${r.client_company || r.client_name} · ${f.dateTime(r.start_at)} → ${f.dateTime(r.end_at)}${risk ? ` · ${t('legend.risk')}` : ''}`}
+                          title={`${r.client_company || r.client_name} · ${f.dateTime(r.start_at)} → ${f.dateTime(r.end_at)}${risk ? ` · ${t('legend.risk')}` : ''}${r.delivery === 'livraison' ? ` · ${t('form.deliveries.livraison')}` : ''}`}
                         >
                           {risk ? <Icon name="alert" /> : null}
+                          {r.delivery === 'livraison' && r.status !== 'terminee' ? <Truck label={t('form.deliveries.livraison')} /> : null}
                           <span>{r.client_company || r.client_name}</span>
                         </button>
                       );
@@ -352,6 +366,20 @@ export function Planner({
           onChanged={() => {
             setOpen(null);
             backend.refresh();
+          }}
+        />
+      ) : null}
+
+      {card ? (
+        <MachineCard
+          machine={machineOf(card)}
+          info={info[card]}
+          state={states.get(card)}
+          repairing={Boolean(repairs[card])}
+          onClose={() => setCard(null)}
+          onBook={() => {
+            setCard(null);
+            setForm({ machineId: card });
           }}
         />
       ) : null}

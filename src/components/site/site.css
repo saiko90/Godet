@@ -1245,3 +1245,29 @@
 .s-rent-demo p svg { width: 16px; height: 16px; color: var(--paint); flex: none; margin-top: 2px; }
 .s-rent-demo > div { display: flex; flex-wrap: wrap; gap: 8px; }
 .s-rent-wait { min-height: 40vh; }
+
+/* location : camion des livraisons, fiche rapide des machines */
+.s-rent-truck { display: inline-grid; place-items: center; flex: none; width: 22px; height: 18px; border-radius: 5px; background: #e5322d; color: #fff; vertical-align: -3px; margin-right: 4px; box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25); }
+.s-rent-truck svg { width: 15px; height: 15px; }
+.s-rent-bar .s-rent-truck { margin: 0 4px 0 0; order: -1; }
+.s-rent-legend .s-rent-truck { margin: 0; }
+.s-rent-mname { display: grid; gap: 2px; padding: 0; margin: 0; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; min-width: 0; }
+.s-rent-mname b { text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--paint) 60%, transparent); text-underline-offset: 3px; }
+.s-rent-mname span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.s-rent-mname:hover b, .s-rent-mname:focus-visible b { color: var(--paint); }
+.s-rent-mname:focus-visible { outline: 2px solid var(--paint); outline-offset: 2px; border-radius: 6px; }
+.s-rent-card { display: grid; gap: 12px; }
+.s-rent-card h3 { margin: 4px 0 6px; font-size: var(--t-sm); color: var(--steel); font-weight: 650; }
+.s-rent-card section p { margin: 0; font-size: var(--t-sm); }
+.s-rent-card-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+.s-rent-card-pills .s-rent-pill svg { width: 13px; height: 13px; }
+.s-rent-pill.is-health-ok { background: var(--ok-soft); color: var(--ok); }
+.s-rent-pill.is-health-warn { background: var(--warn-soft); color: var(--warn); }
+.s-rent-pill.is-health-bad { background: var(--bad-soft); color: var(--bad); }
+.s-rent-card-line { margin: 0; font-size: var(--t-sm); }
+.s-rent-card-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.s-rent-card-list li { display: grid; gap: 2px; padding: 8px 10px; border-radius: 10px; border-left: 3px solid var(--line-strong); background: rgba(236, 232, 222, 0.04); font-size: var(--t-sm); }
+.s-rent-card-list li.is-bad { border-left-color: var(--bad); }
+.s-rent-card-list li.is-warn { border-left-color: var(--warn); }
+.s-rent-card-list li span { color: var(--steel); font-size: var(--t-xs); }
+.s-rent-bar.is-late .s-rent-truck, .s-rent-bar.is-risk .s-rent-truck { box-shadow: 0 0 0 1.5px #fff; }

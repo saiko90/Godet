@@ -34,7 +34,8 @@
     "out": "Vermietet",
     "late": "Überfällig",
     "done": "Zurückgegeben",
-    "risk": "Reserviert · Maschine in Reparatur"
+    "risk": "Reserviert · Maschine in Reparatur",
+    "delivery": "Lieferung auf die Baustelle (Transport organisieren)"
   },
   "state": {
     "louee": "Vermietet",
@@ -396,5 +397,22 @@
     "noEmail": "In der Demo wird kein Bericht gesendet. In Ihrem Konto geht das PDF per E-Mail an den Kunden und wird im Maschinenheft abgelegt.",
     "unavailable": "Dieser Schritt ist für diese Beispielmiete nicht mehr verfügbar.",
     "staff": "Werkstatt"
+  },
+  "delivery": {
+    "out": "Auf die Baustelle liefern",
+    "back": "Auf der Baustelle abholen"
+  },
+  "card": {
+    "open": "Kurzinfo zu {code}",
+    "ok": "In Ordnung",
+    "out": "Vermietet an {client} bis {date}",
+    "next": "Nächste Reservation: {client}, am {date}",
+    "repairs": "Offene Reparaturen",
+    "since": "seit {date}",
+    "noRepair": "Keine offene Reparatur.",
+    "dues": "Zu beachtende Fälligkeiten",
+    "noDue": "Keine Fälligkeit in Sicht.",
+    "sheet": "Vollständige Maschinenkarte öffnen",
+    "book": "Diese Maschine reservieren"
   }
 }

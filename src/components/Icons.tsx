@@ -5,7 +5,7 @@ export type IconName =
   | 'plus' | 'close' | 'sound' | 'mute' | 'gauge' | 'wrench' | 'camera' | 'video' | 'upload' | 'drop'
   | 'shield' | 'cog' | 'note' | 'search' | 'power' | 'garage' | 'chevron-left' | 'chevron-right'
   | 'clock' | 'chf' | 'calendar' | 'users' | 'logout' | 'edit' | 'trash' | 'archive' | 'check'
-  | 'alert' | 'list' | 'cube' | 'file' | 'print' | 'link' | 'copy' | 'mail' | 'menu' | 'download' | 'qr' | 'table' | 'offline' | 'spark' | 'pin';
+  | 'alert' | 'list' | 'cube' | 'file' | 'print' | 'link' | 'copy' | 'mail' | 'menu' | 'download' | 'qr' | 'table' | 'offline' | 'spark' | 'pin' | 'truck';
 
 export function Icon({ name, className, title }: { name: IconName; className?: string; title?: string }) {
   return (
@@ -52,6 +52,7 @@ export function IconSprite() {
         <symbol id="i-trash" viewBox="0 0 24 24"><g {...stroke}><path d="M5 7h14M10 7V4.8h4V7M7 7l.8 12.2h8.4L17 7" /></g></symbol>
         <symbol id="i-archive" viewBox="0 0 24 24"><g {...stroke}><rect x="3.5" y="4.5" width="17" height="4.5" rx="1" /><path d="M5 9v10h14V9M10 13h4" /></g></symbol>
         <symbol id="i-check" viewBox="0 0 24 24"><g {...stroke} strokeWidth={2}><path d="M5 12.5l4.5 4.5L19 7.5" /></g></symbol>
+        <symbol id="i-truck" viewBox="0 0 24 24"><g {...stroke}><path d="M2.5 6.5h11v9.5h-11z" /><path d="M13.5 9.5h4l3.5 3.5v3h-7.5z" /><circle cx="6.5" cy="17.5" r="1.8" /><circle cx="17" cy="17.5" r="1.8" /></g></symbol>
         <symbol id="i-alert" viewBox="0 0 24 24"><g {...stroke}><path d="M12 4l9 15.5H3z" /><path d="M12 10v4.2M12 16.8v.2" /></g></symbol>
         <symbol id="i-list" viewBox="0 0 24 24"><g {...stroke}><path d="M9 6.5h11M9 12h11M9 17.5h11" /><circle cx="4.8" cy="6.5" r=".9" /><circle cx="4.8" cy="12" r=".9" /><circle cx="4.8" cy="17.5" r=".9" /></g></symbol>
         <symbol id="i-cube" viewBox="0 0 24 24"><g {...stroke}><path d="M12 3.5l7.5 4.2v8.6L12 20.5l-7.5-4.2V7.7z" /><path d="M4.5 7.7L12 12l7.5-4.3M12 12v8.5" /></g></symbol>
