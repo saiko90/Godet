@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Icon, type IconName } from '@/components/Icons';
 import { currencyFor } from '@/components/site/countries';
 import { HeroStage } from '@/components/site/HeroStage';
+import { JsonLd } from '@/components/site/JsonLd';
 import { heroImage } from '@/components/site/hero-image';
 import { RefTracker } from '@/components/site/RefTracker';
 import { checkLocale, metaLocale, ogLocale, type LocaleParams } from '@/components/site/seo';
@@ -14,7 +15,9 @@ import { Link } from '@/i18n/navigation';
 import { localizedAlternates } from '@/i18n/metadata';
 import type { AppLocale } from '@/i18n/routing';
 import { RENTAL_ADDON_MONTHLY, TIERS } from '@/lib/billing';
+import { siteUrl } from '@/lib/env';
 import { makeFormat } from '@/lib/format';
+import { localizePath } from '@/components/site/nav';
 
 // Page générée au déploiement (une par langue) : rapide, et la présence des images du héros et des films y est
 // vérifiée une fois. Le code de suivi ?ref= est traité dans le navigateur (RefTracker) pour que la page reste statique.
@@ -94,9 +97,51 @@ export default async function HomePage({ params }: { params: LocaleParams }) {
     return { country, label: tc(`countries.${country}`), values: [f.hours(6842), f.money(1240), f.date('2026-08-14')] };
   });
 
+  // Données structurées pour Google : l'éditeur, le site, l'application (avec ses prix) et les questions fréquentes.
+  const base = siteUrl();
+  const tm = await getTranslations({ locale, namespace: 'site.meta' });
+  const pageUrl = `${base}${localizePath('/', locale)}`;
+  const ld = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      '@id': `${base}/#editeur`,
+      name: 'Swiss Digital Studio',
+      url: 'https://www.swissdigitalstudio.ch',
+      email: 'contact@swissdigitalstudio.ch',
+      address: { '@type': 'PostalAddress', streetAddress: 'Route de Derborence 28', postalCode: '1976', addressLocality: 'Aven', addressRegion: 'VS', addressCountry: 'CH' },
+    },
+    { '@context': 'https://schema.org', '@type': 'WebSite', name: 'Godet', url: base, inLanguage: ['fr', 'de', 'it', 'en'], publisher: { '@id': `${base}/#editeur` } },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'SoftwareApplication',
+      name: 'Godet',
+      url: pageUrl,
+      description: tm('description'),
+      applicationCategory: 'BusinessApplication',
+      operatingSystem: 'Web, Android, iOS, Windows, macOS',
+      inLanguage: locale,
+      image: `${base}/icons/icon-512.png`,
+      publisher: { '@id': `${base}/#editeur` },
+      offers: {
+        '@type': 'AggregateOffer',
+        priceCurrency: 'CHF',
+        lowPrice: Math.min(...TIERS.map((x) => x.monthly)),
+        highPrice: Math.max(...TIERS.map((x) => x.monthly)),
+        offerCount: TIERS.length,
+      },
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: FAQ.map((key) => ({ '@type': 'Question', name: t(`faq.items.${key}.q`), acceptedAnswer: { '@type': 'Answer', text: t(`faq.items.${key}.a`) } })),
+    },
+  ];
+
   return (
     <div className="s-page">
       <SkipLink />
+      <JsonLd data={ld} />
       <RefTracker path="/" />
       <SiteHeader anchors />
       <main id="contenu" className="s-main">

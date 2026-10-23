@@ -1290,3 +1290,22 @@
 .s-transport-sum li.is-past { background: rgba(236, 232, 222, 0.05); color: var(--steel); }
 .s-transport-sum li > span { flex: 1 1 200px; }
 .s-transport-sum em { color: var(--steel); font-style: normal; }
+
+/* ---------- guides (pages de contenu) ---------- */
+.s-crumbs { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; color: var(--steel); font-size: var(--t-sm); margin-bottom: 18px; }
+.s-crumbs a { color: var(--steel); text-decoration: none; min-height: 32px; display: inline-flex; align-items: center; }
+.s-crumbs a:hover { color: var(--chalk); }
+.s-gd .s-guide-toc { margin-top: 26px; }
+.s-gd section { scroll-margin-top: 90px; }
+.s-guide-cta { margin-top: 28px; }
+.s-guide-cta p { margin: 0; }
+.s-guide-cta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+.s-guide-cta-row .btn { min-height: 46px; }
+.s-guide-faq { margin-top: 14px; max-width: none; }
+.s-guide-list { list-style: none; padding: 0 !important; }
+.s-guide-list a { color: var(--chalk); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: color-mix(in srgb, var(--paint) 60%, transparent); }
+.s-guide-cards { list-style: none; padding: 0 !important; margin-top: 28px !important; display: grid; gap: 12px !important; }
+.s-guide-card { display: grid; gap: 6px; padding: 18px 20px; border: 1px solid var(--line); border-radius: 16px; background: var(--s-surface); text-decoration: none; transition: border-color .2s; }
+.s-guide-card:hover, .s-guide-card:focus-visible { border-color: color-mix(in srgb, var(--paint) 55%, transparent); }
+.s-guide-card b { color: var(--chalk); font-size: var(--t-lg); font-weight: 650; line-height: 1.3; }
+.s-guide-card span { color: var(--steel); line-height: 1.55; }

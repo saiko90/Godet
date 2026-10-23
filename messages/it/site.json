@@ -45,6 +45,25 @@
       "backToGarage": "Torna al garage"
     }
   },
+  "guides": {
+    "eyebrow": "Guida",
+    "home": "Home",
+    "guides": "Guide",
+    "breadcrumb": "Percorso",
+    "updated": "Aggiornato il {date}",
+    "toc": "Sommario",
+    "faqTitle": "Domande frequenti",
+    "ctaTitle": "Provi Godet sulle Sue macchine.",
+    "ctaText": "Demo 3D senza account, poi prova gratuita di 15 giorni, senza carta di credito.",
+    "ctaDemo": "Guardare la demo 3D",
+    "ctaSignup": "Creare il mio garage",
+    "related": "Da leggere anche",
+    "hubMetaTitle": "Guide per la manutenzione delle macchine da cantiere",
+    "hubDescription": "Libretto di manutenzione, obbligo dell’art. 32b OPI, intervalli di servizio, costo orario, noleggio: guide pratiche per gestire il Suo parco macchine.",
+    "hubTitle": "Guide per gestire bene il Suo parco macchine",
+    "hubLead": "Risposte concrete alle domande di imprenditori e capi officina: manutenzione, obblighi, costi e noleggio delle macchine da cantiere.",
+    "footer": "Guide"
+  },
   "home": {
     "hero": {
       "kicker": "Libretto di manutenzione per macchine edili",

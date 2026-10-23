@@ -32,6 +32,11 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     manifest: '/manifest.webmanifest',
     appleWebApp: { capable: true, title: 'Godet', statusBarStyle: 'black-translucent' },
     formatDetection: { telephone: false },
+    // Vérification Google Search Console et Bing Webmaster (codes fournis par ces outils, variables d'environnement).
+    verification: {
+      ...(process.env.GOOGLE_SITE_VERIFICATION ? { google: process.env.GOOGLE_SITE_VERIFICATION } : {}),
+      ...(process.env.BING_SITE_VERIFICATION ? { other: { 'msvalidate.01': process.env.BING_SITE_VERIFICATION } } : {}),
+    },
     openGraph: {
       title: t('title'),
       description: t('ogDescription'),

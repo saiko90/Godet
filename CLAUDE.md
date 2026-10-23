@@ -130,6 +130,12 @@ Navigateur de test : Chromium de Playwright dans `/opt/pw-browsers` (ne pas lanc
   Démonstration : `/demo/location` (agenda, état des lieux, rapport) avec le parc d'exemple ; écritures dans le
   navigateur (`src/lib/rental-demo.ts`, hook `rental-demo-hook.ts`), branchées par le contexte `RentalBackendContext`
   (`components/site/location/backend.tsx` : base de données par défaut, mémoire en démo). Rapport commun : `ReportView`.
+- Référencement (SEO) : `src/app/sitemap.ts`, `robots.ts`, `localizedAlternates` (hreflang), données structurées JSON-LD
+  (`components/site/JsonLd.tsx` ; accueil : Organization, WebSite, SoftwareApplication avec prix, FAQPage). Guides : `/guides`
+  et `/guides/<slug traduit>` (contenu dans `src/content/guides/<id>.ts`, 4 langues, slugs par langue, liens internes
+  « [texte](/chemin) » ; le choix de langue suit le slug traduit). Vérification Search Console / Bing : variables
+  `GOOGLE_SITE_VERIFICATION`, `BING_SITE_VERIFICATION`. Les robots et aperçus de liens ne sont pas redirigés selon la
+  langue du navigateur (`src/proxy.ts`).
 - Aide : page `/aide` (textes `help`, structure `src/components/site/aide/content.ts`, tutoriel d'installation par
   appareil), guide imprimable `/aide/guide` → PDF `public/guides/godet-guide-<langue>.pdf` à régénérer après un
   changement de texte : `BASE=http://localhost:3000 node scripts/guides/make-guides.mjs`.

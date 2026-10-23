@@ -391,6 +391,7 @@
     "open": "Vedi la macchina"
   },
   "demo": {
+    "metaDescription": "Demo gratuita dell’opzione Noleggio di Godet: agenda dei noleggi, verbale di consegna e di ritorno firmato su tablet, rapporto PDF al cliente.",
     "label": "Demo",
     "banner": "Demo: prenoti una macchina, compili un verbale e firmi. Nulla viene inviato o salvato.",
     "garage": "Garage di prova",

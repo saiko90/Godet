@@ -4,16 +4,24 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { FormatProvider } from '@/components/FormatProvider';
 import { DemoAgenda } from '@/components/site/location/demo';
 import { RefTracker } from '@/components/site/RefTracker';
-import { checkLocale, metaLocale, NO_INDEX } from '@/components/site/seo';
+import { checkLocale, metaLocale, ogLocale } from '@/components/site/seo';
+import { localizedAlternates } from '@/i18n/metadata';
 import { SiteHeader, SkipLink } from '@/components/site/SiteChrome';
 import { nowMs } from '@/lib/clock';
 
 type Params = Promise<{ locale: string }>;
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
-  const { locale } = await params;
-  const t = await getTranslations({ locale: metaLocale(locale), namespace: 'rental' });
-  return { title: `${t('title')} · ${t('demo.label')}`, robots: NO_INDEX };
+  const locale = metaLocale((await params).locale);
+  const t = await getTranslations({ locale, namespace: 'rental' });
+  const alternates = localizedAlternates('/demo/location', locale);
+  const title = `${t('title')} · ${t('demo.label')}`;
+  return {
+    title,
+    description: t('demo.metaDescription'),
+    alternates,
+    openGraph: { title, description: t('demo.metaDescription'), url: alternates.canonical, locale: ogLocale(locale), type: 'website', siteName: 'Godet' },
+  };
 }
 
 export default async function DemoLocationPage({ params }: { params: Params }) {

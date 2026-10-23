@@ -10,7 +10,16 @@ import { routing, type AppLocale } from '@/i18n/routing';
  * Choix de la langue. « inline » : FR · DE · IT · EN (en-têtes) ; « select » : liste déroulante (paramètres).
  * Garde la page et les paramètres d'adresse, mémorise le choix (cookie + profil si connecté).
  */
-export function LanguageSwitcher({ variant = 'inline', className }: { variant?: 'inline' | 'select'; className?: string }) {
+export function LanguageSwitcher({
+  variant = 'inline',
+  className,
+  paths,
+}: {
+  variant?: 'inline' | 'select';
+  className?: string;
+  /** Pages dont l'adresse est traduite (guides) : chemin sans langue pour chaque langue. */
+  paths?: Partial<Record<AppLocale, string>>;
+}) {
   const locale = useLocale() as AppLocale;
   const t = useTranslations('common');
   const router = useRouter();
@@ -21,7 +30,7 @@ export function LanguageSwitcher({ variant = 'inline', className }: { variant?: 
     if (next === locale) return;
     start(() => {
       const search = typeof window !== 'undefined' ? window.location.search : '';
-      router.replace(`${pathname}${search}`, { locale: next });
+      router.replace(`${paths?.[next] ?? pathname}${search}`, { locale: next });
       void saveProfileLocale(next).catch(() => undefined);
     });
   };

@@ -391,6 +391,7 @@
     "open": "Maschine ansehen"
   },
   "demo": {
+    "metaDescription": "Kostenlose Demo der Option Vermietung von Godet: Mietkalender, Übergabe- und Rücknahmeprotokoll auf dem Tablet unterschrieben, PDF-Bericht für den Kunden.",
     "label": "Demo",
     "banner": "Demo: Reservieren Sie eine Maschine, erstellen Sie ein Protokoll und unterschreiben Sie. Nichts wird gesendet oder gespeichert.",
     "garage": "Demo-Garage",

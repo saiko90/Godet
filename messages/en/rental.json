@@ -391,6 +391,7 @@
     "open": "View machine"
   },
   "demo": {
+    "metaDescription": "Free demo of Godet’s Rental option: hire calendar, check-out and check-in reports signed on a tablet, PDF report emailed to the customer.",
     "label": "Demo",
     "banner": "Demo: book a machine, fill in a report and sign. Nothing is sent or saved.",
     "garage": "Demo garage",

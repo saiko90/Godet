@@ -391,6 +391,7 @@
     "open": "Voir la machine"
   },
   "demo": {
+    "metaDescription": "Démo gratuite de l’option Location de Godet : agenda des locations, état des lieux de départ et de retour signé sur tablette, rapport PDF au client.",
     "label": "Démo",
     "banner": "Démonstration : réservez une machine, faites un état des lieux et signez. Rien n’est envoyé ni enregistré.",
     "garage": "Garage de démonstration",

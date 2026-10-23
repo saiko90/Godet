@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { localizePath } from '@/components/site/nav';
+import { GUIDES, guidePath } from '@/content/guides';
 import { routing } from '@/i18n/routing';
 import { siteUrl } from '@/lib/env';
 
@@ -7,6 +8,8 @@ import { siteUrl } from '@/lib/env';
 const PAGES: { path: string; changeFrequency: 'monthly' | 'yearly'; priority: number }[] = [
   { path: '/', changeFrequency: 'monthly', priority: 1 },
   { path: '/demo', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/demo/location', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/guides', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/contact', changeFrequency: 'yearly', priority: 0.6 },
   { path: '/idees', changeFrequency: 'monthly', priority: 0.4 },
   { path: '/connexion', changeFrequency: 'yearly', priority: 0.4 },
@@ -19,6 +22,23 @@ const PAGES: { path: string; changeFrequency: 'monthly' | 'yearly'; priority: nu
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = siteUrl();
   const url = (path: string) => `${base}${path}`;
+  // Guides : adresse traduite dans chaque langue (/guides/carnet-…, /de/guides/wartungsheft-…).
+  const guides = GUIDES.flatMap((guide) => {
+    const languages: Record<string, string> = {};
+    for (const locale of routing.locales) languages[locale] = url(localizePath(guidePath(guide, locale), locale));
+    languages['x-default'] = languages[routing.defaultLocale];
+    return routing.locales.map((locale) => ({
+      url: languages[locale],
+      lastModified: guide.updated,
+      changeFrequency: 'monthly' as const,
+      priority: 0.8,
+      alternates: { languages },
+    }));
+  });
+  return [...pagesMap(url), ...guides];
+}
+
+function pagesMap(url: (path: string) => string): MetadataRoute.Sitemap {
   return PAGES.flatMap((page) => {
     const languages: Record<string, string> = {};
     for (const locale of routing.locales) languages[locale] = url(localizePath(page.path, locale));

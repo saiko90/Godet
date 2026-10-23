@@ -45,6 +45,25 @@
       "backToGarage": "Back to the garage"
     }
   },
+  "guides": {
+    "eyebrow": "Guide",
+    "home": "Home",
+    "guides": "Guides",
+    "breadcrumb": "Breadcrumb",
+    "updated": "Updated {date}",
+    "toc": "Contents",
+    "faqTitle": "Frequently asked questions",
+    "ctaTitle": "Try Godet on your own machines.",
+    "ctaText": "3D demo with no account, then a free 15-day trial, no credit card needed.",
+    "ctaDemo": "See the 3D demo",
+    "ctaSignup": "Create my garage",
+    "related": "Read next",
+    "hubMetaTitle": "Construction equipment maintenance guides",
+    "hubDescription": "Maintenance logs, the Swiss article 32b obligation, service intervals, cost per hour and equipment hire: practical guides for running your plant fleet.",
+    "hubTitle": "Guides for running your plant fleet",
+    "hubLead": "Straight answers for business owners and workshop managers: maintenance, legal duties, costs and hire of construction equipment.",
+    "footer": "Guides"
+  },
   "home": {
     "hero": {
       "kicker": "Maintenance log for construction machinery",

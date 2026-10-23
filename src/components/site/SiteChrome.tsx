@@ -5,6 +5,7 @@ import { Icon } from '@/components/Icons';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { Wordmark } from '@/components/Logo';
 import { Link } from '@/i18n/navigation';
+import type { AppLocale } from '@/i18n/routing';
 import './site.css';
 
 export const STUDIO_URL = 'https://www.swissdigitalstudio.ch';
@@ -26,7 +27,16 @@ export async function SkipLink({ label }: { label?: string } = {}) {
 }
 
 /** En-tête des pages publiques (accueil, contact, idées, confidentialité, 404). */
-export async function SiteHeader({ anchors = false, current }: { anchors?: boolean; current?: PublicPage }) {
+export async function SiteHeader({
+  anchors = false,
+  current,
+  paths,
+}: {
+  anchors?: boolean;
+  current?: PublicPage;
+  /** Adresse traduite de la page dans chaque langue (guides), pour le choix de la langue. */
+  paths?: Partial<Record<AppLocale, string>>;
+}) {
   const t = await getTranslations('site.chrome');
   return (
     <header className="s-header">
@@ -65,7 +75,7 @@ export async function SiteHeader({ anchors = false, current }: { anchors?: boole
             {t('signup')}
           </Link>
         </nav>
-        <LanguageSwitcher className="s-lang" />
+        <LanguageSwitcher className="s-lang" paths={paths} />
       </div>
     </header>
   );
@@ -76,6 +86,7 @@ export async function SiteFooter({ current }: { current?: PublicPage } = {}) {
   const t = await getTranslations('site.chrome.footer');
   const ts = await getTranslations('legal.securityPage');
   const th = await getTranslations('help.nav');
+  const tg = await getTranslations('site.guides');
   // Chaîne (et non nombre) : un nombre serait mis en forme (« 2 026 »).
   const year = String(new Date().getFullYear());
   return (
@@ -116,6 +127,9 @@ export async function SiteFooter({ current }: { current?: PublicPage } = {}) {
                 <Link href="/aide" aria-current={currentIf(current, 'aide')}>
                   {th('footer')}
                 </Link>
+              </li>
+              <li>
+                <Link href="/guides">{tg('footer')}</Link>
               </li>
               <li>
                 <Link href="/contact" aria-current={currentIf(current, 'contact')}>

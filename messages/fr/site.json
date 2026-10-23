@@ -45,6 +45,25 @@
       "backToGarage": "Retour au garage"
     }
   },
+  "guides": {
+    "eyebrow": "Guide",
+    "home": "Accueil",
+    "guides": "Guides",
+    "breadcrumb": "Fil d’Ariane",
+    "updated": "Mis à jour le {date}",
+    "toc": "Sommaire",
+    "faqTitle": "Questions fréquentes",
+    "ctaTitle": "Essayez Godet sur vos machines.",
+    "ctaText": "Démo 3D sans compte, puis essai gratuit de 15 jours, sans carte de crédit.",
+    "ctaDemo": "Voir la démo 3D",
+    "ctaSignup": "Créer mon garage",
+    "related": "À lire aussi",
+    "hubMetaTitle": "Guides pour l’entretien des machines de chantier",
+    "hubDescription": "Carnet d’entretien, obligation de l’art. 32b OPA, intervalles de service, coût horaire, location : des guides pratiques pour gérer votre parc d’engins.",
+    "hubTitle": "Guides pour bien gérer votre parc d’engins",
+    "hubLead": "Des réponses concrètes aux questions des chefs d’entreprise et d’atelier : entretien, obligations, coûts et location des machines de chantier.",
+    "footer": "Guides"
+  },
   "home": {
     "hero": {
       "kicker": "Carnet d’entretien des machines de chantier",

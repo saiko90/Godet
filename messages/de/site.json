@@ -45,6 +45,25 @@
       "backToGarage": "Zurück zur Garage"
     }
   },
+  "guides": {
+    "eyebrow": "Ratgeber",
+    "home": "Startseite",
+    "guides": "Ratgeber",
+    "breadcrumb": "Navigationspfad",
+    "updated": "Aktualisiert am {date}",
+    "toc": "Inhalt",
+    "faqTitle": "Häufige Fragen",
+    "ctaTitle": "Testen Sie Godet mit Ihren Maschinen.",
+    "ctaText": "3D-Demo ohne Konto, danach 15 Tage kostenlos testen, ohne Kreditkarte.",
+    "ctaDemo": "3D-Demo ansehen",
+    "ctaSignup": "Meine Garage erstellen",
+    "related": "Weitere Ratgeber",
+    "hubMetaTitle": "Ratgeber zur Wartung von Baumaschinen",
+    "hubDescription": "Wartungsheft, Instandhaltungspflicht nach Art. 32b VUV, Wartungsintervalle, Kosten pro Stunde, Vermietung: praktische Ratgeber für Ihren Maschinenpark.",
+    "hubTitle": "Ratgeber für Ihren Maschinenpark",
+    "hubLead": "Konkrete Antworten auf die Fragen von Unternehmern und Werkstattchefs: Wartung, Pflichten, Kosten und Vermietung von Baumaschinen.",
+    "footer": "Ratgeber"
+  },
   "home": {
     "hero": {
       "kicker": "Wartungsheft für Baumaschinen",
