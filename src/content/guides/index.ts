@@ -1,6 +1,7 @@
 // Registre des guides (pages de contenu du site). Ajouter un guide : un fichier <id>.ts, puis l'importer ici.
 import { routing, type AppLocale } from '@/i18n/routing';
 import { carnet } from './carnet';
+import { controles } from './controles';
 import { couts } from './couts';
 import { intervalles } from './intervalles';
 import { location } from './location';
@@ -10,7 +11,7 @@ import type { Guide, GuideContent } from './types';
 export type { Guide, GuideContent, GuideSection } from './types';
 
 /** Ordre d'affichage dans la page des guides et dans les liens « À lire aussi ». */
-export const GUIDES: readonly Guide[] = [carnet, obligation, location, intervalles, couts];
+export const GUIDES: readonly Guide[] = [carnet, obligation, location, intervalles, couts, controles];
 
 export function guideBySlug(locale: AppLocale, slug: string): Guide | undefined {
   return GUIDES.find((g) => g.content[locale].slug === slug);
