@@ -3,7 +3,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
 import { IdeaForm } from '@/components/site/IdeaForm';
 import { localizePath } from '@/components/site/nav';
-import { checkLocale, metaLocale, ogImages, ogLocale, type LocaleParams } from '@/components/site/seo';
+import { checkLocale, metaLocale, NO_INDEX_FOLLOW, ogImages, ogLocale, type LocaleParams } from '@/components/site/seo';
 import { SiteFooter, SiteHeader, SkipLink } from '@/components/site/SiteChrome';
 import { pickMessages, type AppMessages } from '@/i18n/messages';
 import { localizedAlternates } from '@/i18n/metadata';
@@ -20,6 +20,7 @@ export async function generateMetadata({ params }: { params: LocaleParams }): Pr
     title: t('title'),
     description: t('description'),
     alternates,
+    robots: NO_INDEX_FOLLOW,
     openGraph: { title: t('title'), description: t('description'), url: alternates.canonical, locale: ogLocale(locale), type: 'website', siteName: 'Godet', images: await ogImages(locale) },
   };
 }

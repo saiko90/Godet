@@ -4,7 +4,7 @@ import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server
 import { cookies } from 'next/headers';
 import { ConnexionForm } from '@/components/site/ConnexionForm';
 import { firstParam, isRefCode, looksLikeEmail, REF_COOKIE, safePath, splitLocale } from '@/components/site/nav';
-import { checkLocale, metaLocale, type LocaleParams } from '@/components/site/seo';
+import { checkLocale, metaLocale, NO_INDEX_FOLLOW, type LocaleParams } from '@/components/site/seo';
 import { AuthShell } from '@/components/site/SiteChrome';
 import { pickMessages, type AppMessages } from '@/i18n/messages';
 import { localizedAlternates } from '@/i18n/metadata';
@@ -21,6 +21,7 @@ export async function generateMetadata({ params, searchParams }: { params: Local
     title: signup ? t('signupTitle') : t('loginTitle'),
     description: signup ? t('signupDescription') : t('loginDescription'),
     alternates: localizedAlternates('/connexion', locale),
+    robots: NO_INDEX_FOLLOW,
   };
 }
 

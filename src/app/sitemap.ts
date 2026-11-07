@@ -4,15 +4,16 @@ import { GUIDES, guidePath } from '@/content/guides';
 import { routing } from '@/i18n/routing';
 import { siteUrl } from '@/lib/env';
 
-/** Pages publiques (chemin sans langue), avec leur fréquence de mise à jour et leur priorité. */
+/**
+ * Pages publiques (chemin sans langue), avec leur fréquence de mise à jour et leur priorité. /connexion et /idees n'y
+ * sont pas : pages sans intention de recherche, en noindex (liens toujours suivis).
+ */
 const PAGES: { path: string; changeFrequency: 'monthly' | 'yearly'; priority: number }[] = [
   { path: '/', changeFrequency: 'monthly', priority: 1 },
   { path: '/demo', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/demo/location', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/guides', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/contact', changeFrequency: 'yearly', priority: 0.6 },
-  { path: '/idees', changeFrequency: 'monthly', priority: 0.4 },
-  { path: '/connexion', changeFrequency: 'yearly', priority: 0.4 },
   { path: '/confidentialite', changeFrequency: 'yearly', priority: 0.2 },
   { path: '/securite', changeFrequency: 'yearly', priority: 0.3 },
   { path: '/aide', changeFrequency: 'monthly', priority: 0.5 },

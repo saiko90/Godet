@@ -25,6 +25,9 @@ export function ogLocale(locale: AppLocale): string {
   return locale === 'en' ? 'en_GB' : `${locale}_CH`;
 }
 
+/** Pages publiques sans intérêt dans Google (connexion, boîte à idées) : pas indexées, mais liens suivis. */
+export const NO_INDEX_FOLLOW = { index: false, follow: true } as const;
+
 /** Métadonnées des pages privées ou techniques : jamais indexées. */
 export const NO_INDEX = { index: false, follow: false } as const;
 
