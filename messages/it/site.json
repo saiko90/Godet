@@ -59,6 +59,13 @@
     "ctaDemo": "Guardare la demo 3D",
     "ctaSignup": "Creare il mio garage",
     "related": "Da leggere anche",
+    "template": {
+      "title": "Scarichi il modello Excel gratuito",
+      "text": "Due fogli (Macchine e Libretto), intestazioni e una riga di esempio. File .xlsx, senza registrazione.",
+      "button": "Scarica il modello (.xlsx)",
+      "preparing": "Preparazione del file…",
+      "error": "Non è stato possibile preparare il file. Riprovi tra un momento."
+    },
     "hubMetaTitle": "Guide per la manutenzione delle macchine da cantiere",
     "hubDescription": "Libretto di manutenzione, obbligo dell’art. 32b OPI, intervalli di servizio, costo orario, noleggio: guide pratiche per gestire il Suo parco macchine.",
     "hubTitle": "Guide per gestire bene il Suo parco macchine",

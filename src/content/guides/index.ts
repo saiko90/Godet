@@ -5,13 +5,14 @@ import { controles } from './controles';
 import { couts } from './couts';
 import { intervalles } from './intervalles';
 import { location } from './location';
+import { modele } from './modele';
 import { obligation } from './obligation';
 import type { Guide, GuideContent } from './types';
 
 export type { Guide, GuideContent, GuideSection, GuideTable } from './types';
 
 /** Ordre d'affichage dans la page des guides et dans les liens « À lire aussi ». */
-export const GUIDES: readonly Guide[] = [carnet, obligation, location, intervalles, couts, controles];
+export const GUIDES: readonly Guide[] = [carnet, modele, obligation, location, intervalles, couts, controles];
 
 export function guideBySlug(locale: AppLocale, slug: string): Guide | undefined {
   return GUIDES.find((g) => g.content[locale].slug === slug);

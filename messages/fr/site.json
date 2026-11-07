@@ -59,6 +59,13 @@
     "ctaDemo": "Voir la démo 3D",
     "ctaSignup": "Créer mon garage",
     "related": "À lire aussi",
+    "template": {
+      "title": "Télécharger le modèle Excel gratuit",
+      "text": "Deux feuilles (Machines et Carnet), en-têtes et une ligne d’exemple. Fichier .xlsx, sans inscription.",
+      "button": "Télécharger le modèle (.xlsx)",
+      "preparing": "Préparation du fichier…",
+      "error": "Le fichier n’a pas pu être préparé. Réessayez dans un instant."
+    },
     "hubMetaTitle": "Guides pour l’entretien des machines de chantier",
     "hubDescription": "Carnet d’entretien, obligation de l’art. 32b OPA, intervalles de service, coût horaire, location : des guides pratiques pour gérer votre parc d’engins.",
     "hubTitle": "Guides pour bien gérer votre parc d’engins",

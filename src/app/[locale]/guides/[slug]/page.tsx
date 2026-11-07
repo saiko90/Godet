@@ -1,14 +1,17 @@
 // Guide (page de contenu pour le référencement) : sujet du métier, réponse claire, liens vers la démo et l'essai.
 import type { Metadata } from 'next';
-import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
+import { FormatProvider } from '@/components/FormatProvider';
 import { Icon } from '@/components/Icons';
 import { JsonLd } from '@/components/site/JsonLd';
 import { plainText, RichText } from '@/components/site/guides/RichText';
+import { TemplateDownload } from '@/components/site/guides/TemplateDownload';
 import { localizePath } from '@/components/site/nav';
 import { checkLocale, metaLocale, ogImages, ogLocale } from '@/components/site/seo';
 import { SiteFooter, SiteHeader, SkipLink, STUDIO_ORG_ID, STUDIO_URL } from '@/components/site/SiteChrome';
 import { GUIDES, guideBySlug, guideParams, guidePath } from '@/content/guides';
+import type { AppMessages } from '@/i18n/messages';
 import { Link } from '@/i18n/navigation';
 import { routing, type AppLocale } from '@/i18n/routing';
 import { siteUrl } from '@/lib/env';
@@ -102,6 +105,27 @@ export default async function GuidePage({ params }: { params: Params }) {
     },
   ];
 
+  // Modèle Excel à télécharger (guide « modèle ») : textes de la zone excel passés au bouton, rien d'autre au navigateur.
+  let download: React.ReactNode = null;
+  if (guide.download === 'template') {
+    const messages = (await getMessages({ locale })) as unknown as AppMessages;
+    const xl = messages.excel;
+    download = (
+      <aside className="s-legal-box s-guide-cta" aria-label={t('template.title')}>
+        <p>
+          <strong>{t('template.title')}</strong> {t('template.text')}
+        </p>
+        <FormatProvider locale={locale} country="CH" currency="CHF">
+          <TemplateDownload
+            texts={{ sheets: xl.sheets, cols: xl.cols, example: xl.example }}
+            fileName={`godet-modele-carnet-entretien-${locale}.xlsx`}
+            labels={{ button: t('template.button'), preparing: t('template.preparing'), error: t('template.error') }}
+          />
+        </FormatProvider>
+      </aside>
+    );
+  }
+
   const cta = (
     <aside className="s-legal-box s-guide-cta" aria-label={t('ctaTitle')}>
       <p>
@@ -138,6 +162,8 @@ export default async function GuidePage({ params }: { params: Params }) {
             <p className="s-legal-intro">
               <RichText text={c.lead} />
             </p>
+
+            {download}
 
             <nav className="s-help-toc s-guide-toc" aria-label={t('toc')}>
               {c.sections.map((s, i) => (

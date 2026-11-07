@@ -59,6 +59,13 @@
     "ctaDemo": "3D-Demo ansehen",
     "ctaSignup": "Meine Garage erstellen",
     "related": "Weitere Ratgeber",
+    "template": {
+      "title": "Kostenlose Excel-Vorlage herunterladen",
+      "text": "Zwei Blätter (Maschinen und Serviceheft), Spaltenköpfe und eine Beispielzeile. Datei .xlsx, ohne Anmeldung.",
+      "button": "Vorlage herunterladen (.xlsx)",
+      "preparing": "Datei wird vorbereitet…",
+      "error": "Die Datei konnte nicht erstellt werden. Bitte versuchen Sie es gleich nochmals."
+    },
     "hubMetaTitle": "Ratgeber zur Wartung von Baumaschinen",
     "hubDescription": "Wartungsheft, Instandhaltungspflicht nach Art. 32b VUV, Wartungsintervalle, Kosten pro Stunde, Vermietung: praktische Ratgeber für Ihren Maschinenpark.",
     "hubTitle": "Ratgeber für Ihren Maschinenpark",

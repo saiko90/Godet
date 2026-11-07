@@ -54,5 +54,7 @@ export interface Guide {
   published?: string;
   /** Date de dernière mise à jour du contenu (AAAA-MM-JJ). */
   updated: string;
+  /** Bloc de téléchargement affiché sous le chapeau : 'template' = modèle Excel vide du carnet (facultatif). */
+  download?: 'template';
   content: Record<AppLocale, GuideContent>;
 }

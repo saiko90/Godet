@@ -85,7 +85,7 @@ export const carnet: Guide = {
         },
         {
           q: 'Un tableau Excel suffit-il comme carnet d’entretien ?',
-          a: 'Pour quelques machines suivies par une seule personne, souvent oui. Dès que plusieurs personnes interviennent ou que le parc grandit, les versions multiples, l’absence de rappels et l’accès impossible depuis le chantier deviennent un problème.',
+          a: 'Pour quelques machines suivies par une seule personne, souvent oui. Dès que plusieurs personnes interviennent ou que le parc grandit, les versions multiples, l’absence de rappels et l’accès impossible depuis le chantier deviennent un problème. Pour démarrer, notre [modèle de carnet d’entretien en Excel](/guides/modele-carnet-entretien-engins-excel) est gratuit.',
         },
         {
           q: 'Combien de temps garder l’historique d’une machine ?',
@@ -181,7 +181,7 @@ export const carnet: Guide = {
         },
         {
           q: 'Reicht eine Excel-Tabelle als Wartungsplaner?',
-          a: 'Für wenige Maschinen und eine verantwortliche Person oft schon. Sobald mehrere Personen eintragen oder der Maschinenpark wächst, werden doppelte Versionen, fehlende Erinnerungen und der fehlende Zugriff von der Baustelle zum Problem.',
+          a: 'Für wenige Maschinen und eine verantwortliche Person oft schon. Sobald mehrere Personen eintragen oder der Maschinenpark wächst, werden doppelte Versionen, fehlende Erinnerungen und der fehlende Zugriff von der Baustelle zum Problem. Für den Einstieg gibt es unsere kostenlose [Wartungsplan-Vorlage für Excel](/guides/wartungsplan-vorlage-baumaschinen-excel).',
         },
         {
           q: 'Wie lange soll die Geschichte einer Maschine aufbewahrt werden?',
@@ -277,7 +277,7 @@ export const carnet: Guide = {
         },
         {
           q: 'Un foglio Excel basta come libretto di manutenzione?',
-          a: 'Per poche macchine seguite da una sola persona spesso sì. Quando a compilarlo sono in più persone o il parco cresce, versioni doppie, promemoria assenti e accesso impossibile dal cantiere diventano un problema.',
+          a: 'Per poche macchine seguite da una sola persona spesso sì. Quando a compilarlo sono in più persone o il parco cresce, versioni doppie, promemoria assenti e accesso impossibile dal cantiere diventano un problema. Per iniziare, il nostro [modello di libretto di manutenzione in Excel](/guides/modello-libretto-manutenzione-macchine-edili-excel) è gratuito.',
         },
         {
           q: 'Per quanto tempo conservare la storia di una macchina?',
@@ -373,7 +373,7 @@ export const carnet: Guide = {
         },
         {
           q: 'Is an Excel spreadsheet enough as a maintenance log?',
-          a: 'For a few machines and one person in charge, often yes. Once several people write in it or the fleet grows, duplicate versions, missing reminders and no access from site become a problem.',
+          a: 'For a few machines and one person in charge, often yes. Once several people write in it or the fleet grows, duplicate versions, missing reminders and no access from site become a problem. To get started, our [maintenance log template for Excel](/guides/plant-maintenance-log-template-excel) is free.',
         },
         {
           q: 'How long should a machine’s history be kept?',

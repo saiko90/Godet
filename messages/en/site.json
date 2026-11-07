@@ -59,6 +59,13 @@
     "ctaDemo": "See the 3D demo",
     "ctaSignup": "Create my garage",
     "related": "Read next",
+    "template": {
+      "title": "Download the free Excel template",
+      "text": "Two sheets (Machines and Logbook), column headings and one example row. An .xlsx file, no sign-up.",
+      "button": "Download the template (.xlsx)",
+      "preparing": "Preparing the file…",
+      "error": "The file could not be prepared. Please try again in a moment."
+    },
     "hubMetaTitle": "Construction equipment maintenance guides",
     "hubDescription": "Maintenance logs, the Swiss article 32b obligation, service intervals, cost per hour and equipment hire: practical guides for running your plant fleet.",
     "hubTitle": "Guides for running your plant fleet",
