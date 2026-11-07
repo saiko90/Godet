@@ -18,7 +18,7 @@ export const LETTER_SENDER = {
   country: 'CH',
   phone: '078 711 64 11',
   email: 'contact@swissdigitalstudio.ch',
-  website: 'www.swissdigitalstudio.ch',
+  website: 'swissdigitalstudio.ch',
 } as const;
 
 export function senderComplete(): boolean {

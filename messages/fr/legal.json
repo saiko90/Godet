@@ -9,7 +9,7 @@
   "intro": "Godet est le carnet d’entretien numérique des machines de chantier. Cette page explique quelles données nous traitons, pourquoi, où elles sont hébergées et quels sont vos droits. Elle se fonde sur la loi fédérale sur la protection des données (nLPD) et, pour les personnes qui se trouvent dans l’Union européenne, sur le règlement général sur la protection des données (RGPD).",
   "controller": {
     "title": "Responsable du traitement",
-    "text": "<strong>Swiss Digital Studio</strong>, Valais, Suisse, éditeur de Godet. Pour toute question sur vos données, écrivez-nous via le <contact>formulaire de contact</contact> ou via <studio>www.swissdigitalstudio.ch</studio>.",
+    "text": "<strong>Swiss Digital Studio</strong>, Valais, Suisse, éditeur de Godet. Pour toute question sur vos données, écrivez-nous via le <contact>formulaire de contact</contact> ou via <studio>swissdigitalstudio.ch</studio>.",
     "customer": "Les données que votre entreprise saisit dans Godet (parc, interventions, médias) sont les siennes\u00a0: elle décide de leur contenu, et nous les traitons pour son compte."
   },
   "data": {

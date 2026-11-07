@@ -9,7 +9,7 @@
   "intro": "Godet is the digital maintenance log for construction machinery. This page explains what data we process, why, where it is hosted and what your rights are. It is based on the Swiss Federal Act on Data Protection (FADP) and, for people located in the European Union, on the General Data Protection Regulation (GDPR).",
   "controller": {
     "title": "Controller",
-    "text": "<strong>Swiss Digital Studio</strong>, Valais, Switzerland, publisher of Godet. If you have any questions about your data, write to us using the <contact>contact form</contact> or via <studio>www.swissdigitalstudio.ch</studio>.",
+    "text": "<strong>Swiss Digital Studio</strong>, Valais, Switzerland, publisher of Godet. If you have any questions about your data, write to us using the <contact>contact form</contact> or via <studio>swissdigitalstudio.ch</studio>.",
     "customer": "The data your company enters in Godet (fleet, work, media) belongs to your company: it decides what goes in, and we process it on its behalf."
   },
   "data": {

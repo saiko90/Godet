@@ -8,7 +8,9 @@ import { Link } from '@/i18n/navigation';
 import type { AppLocale } from '@/i18n/routing';
 import './site.css';
 
-export const STUDIO_URL = 'https://www.swissdigitalstudio.ch';
+export const STUDIO_URL = 'https://swissdigitalstudio.ch/';
+/** Identifiant JSON-LD de l'éditeur (le même sur le site du studio). */
+export const STUDIO_ORG_ID = 'https://swissdigitalstudio.ch/#org';
 
 /** Pages publiques reliées depuis l'en-tête et le pied de page (lien marqué « page actuelle »). */
 export type PublicPage = 'contact' | 'idees' | 'confidentialite' | 'securite' | 'aide';
@@ -150,9 +152,6 @@ export async function SiteFooter({ current }: { current?: PublicPage } = {}) {
                 <Link href="/securite" aria-current={currentIf(current, 'securite')}>
                   {ts('footer')}
                 </Link>
-              </li>
-              <li>
-                <a href={STUDIO_URL}>swissdigitalstudio.ch</a>
               </li>
             </ul>
           </nav>

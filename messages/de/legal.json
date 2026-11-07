@@ -9,7 +9,7 @@
   "intro": "Godet ist das digitale Wartungsheft für Baumaschinen. Diese Seite erklärt, welche Daten wir verarbeiten, warum, wo sie gespeichert sind und welche Rechte Sie haben. Sie stützt sich auf das Schweizer Bundesgesetz über den Datenschutz (DSG) und, für Personen in der Europäischen Union, auf die Datenschutz-Grundverordnung (DSGVO).",
   "controller": {
     "title": "Verantwortliche Stelle",
-    "text": "<strong>Swiss Digital Studio</strong>, Wallis, Schweiz, Herausgeberin von Godet. Bei Fragen zu Ihren Daten schreiben Sie uns über das <contact>Kontaktformular</contact> oder über <studio>www.swissdigitalstudio.ch</studio>.",
+    "text": "<strong>Swiss Digital Studio</strong>, Wallis, Schweiz, Herausgeberin von Godet. Bei Fragen zu Ihren Daten schreiben Sie uns über das <contact>Kontaktformular</contact> oder über <studio>swissdigitalstudio.ch</studio>.",
     "customer": "Die Daten, die Ihr Unternehmen in Godet erfasst (Maschinenpark, Arbeiten, Medien), gehören ihm: Es entscheidet über deren Inhalt, und wir verarbeiten sie in seinem Auftrag."
   },
   "data": {

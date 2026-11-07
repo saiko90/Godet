@@ -7,7 +7,7 @@ import { JsonLd } from '@/components/site/JsonLd';
 import { plainText, RichText } from '@/components/site/guides/RichText';
 import { localizePath } from '@/components/site/nav';
 import { checkLocale, metaLocale, ogImages, ogLocale } from '@/components/site/seo';
-import { SiteFooter, SiteHeader, SkipLink } from '@/components/site/SiteChrome';
+import { SiteFooter, SiteHeader, SkipLink, STUDIO_ORG_ID, STUDIO_URL } from '@/components/site/SiteChrome';
 import { GUIDES, guideBySlug, guideParams, guidePath } from '@/content/guides';
 import { Link } from '@/i18n/navigation';
 import { routing, type AppLocale } from '@/i18n/routing';
@@ -83,7 +83,7 @@ export default async function GuidePage({ params }: { params: Params }) {
       dateModified: guide.updated,
       image: images,
       mainEntityOfPage: url,
-      author: { '@type': 'Organization', name: 'Swiss Digital Studio', url: 'https://www.swissdigitalstudio.ch' },
+      author: { '@type': 'Organization', '@id': STUDIO_ORG_ID, name: 'Swiss Digital Studio', url: STUDIO_URL },
       publisher: { '@type': 'Organization', name: 'Godet', url: base, logo: { '@type': 'ImageObject', url: `${base}/icons/icon-512.png` } },
     },
     {

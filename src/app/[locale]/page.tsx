@@ -7,7 +7,7 @@ import { JsonLd } from '@/components/site/JsonLd';
 import { heroImage } from '@/components/site/hero-image';
 import { RefTracker } from '@/components/site/RefTracker';
 import { checkLocale, metaLocale, ogImages, ogLocale, type LocaleParams } from '@/components/site/seo';
-import { SiteFooter, SiteHeader, SkipLink } from '@/components/site/SiteChrome';
+import { SiteFooter, SiteHeader, SkipLink, STUDIO_ORG_ID, STUDIO_URL } from '@/components/site/SiteChrome';
 import { SiteIcon, type SiteIconName } from '@/components/site/SiteIcons';
 import { SiteVideos } from '@/components/site/SiteVideos';
 import { siteVideos } from '@/components/site/videos';
@@ -106,13 +106,13 @@ export default async function HomePage({ params }: { params: LocaleParams }) {
     {
       '@context': 'https://schema.org',
       '@type': 'Organization',
-      '@id': `${base}/#editeur`,
+      '@id': STUDIO_ORG_ID,
       name: 'Swiss Digital Studio',
-      url: 'https://www.swissdigitalstudio.ch',
+      url: STUDIO_URL,
       email: 'contact@swissdigitalstudio.ch',
       address: { '@type': 'PostalAddress', streetAddress: 'Route de Derborence 28', postalCode: '1976', addressLocality: 'Aven', addressRegion: 'VS', addressCountry: 'CH' },
     },
-    { '@context': 'https://schema.org', '@type': 'WebSite', name: 'Godet', url: base, inLanguage: ['fr', 'de', 'it', 'en'], publisher: { '@id': `${base}/#editeur` } },
+    { '@context': 'https://schema.org', '@type': 'WebSite', name: 'Godet', url: base, inLanguage: ['fr', 'de', 'it', 'en'], publisher: { '@id': STUDIO_ORG_ID } },
     {
       '@context': 'https://schema.org',
       '@type': 'SoftwareApplication',
@@ -123,7 +123,7 @@ export default async function HomePage({ params }: { params: LocaleParams }) {
       operatingSystem: 'Web, Android, iOS, Windows, macOS',
       inLanguage: locale,
       image: `${base}/icons/icon-512.png`,
-      publisher: { '@id': `${base}/#editeur` },
+      publisher: { '@id': STUDIO_ORG_ID },
       offers: {
         '@type': 'AggregateOffer',
         priceCurrency: 'CHF',
