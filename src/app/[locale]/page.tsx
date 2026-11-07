@@ -11,6 +11,7 @@ import { SiteFooter, SiteHeader, SkipLink } from '@/components/site/SiteChrome';
 import { SiteIcon, type SiteIconName } from '@/components/site/SiteIcons';
 import { SiteVideos } from '@/components/site/SiteVideos';
 import { siteVideos } from '@/components/site/videos';
+import { GUIDES, guidePath } from '@/content/guides';
 import { Link } from '@/i18n/navigation';
 import { localizedAlternates } from '@/i18n/metadata';
 import type { AppLocale } from '@/i18n/routing';
@@ -90,6 +91,7 @@ export default async function HomePage({ params }: { params: LocaleParams }) {
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: 'site.home' });
   const tc = await getTranslations({ locale, namespace: 'common' });
+  const tg = await getTranslations({ locale, namespace: 'site.guides' });
 
   // Exemples de formats calculés avec les règles de l'application (6’842 h, CHF 1’240, 1.240 €…).
   const formats = MARKETS[locale].map((country) => {
@@ -357,6 +359,26 @@ export default async function HomePage({ params }: { params: LocaleParams }) {
               </div>
               <small>{t('pricing.small')}</small>
             </div>
+          </div>
+        </section>
+
+        {/* ---------- guides (maillage interne vers chaque guide) ---------- */}
+        <section className="s-section s-section-line" aria-labelledby="titre-guides" id="guides">
+          <div className="s-wrap">
+            <div className="s-head">
+              <p className="eyebrow">{tg('guides')}</p>
+              <h2 className="s-h2" id="titre-guides">
+                {t('guides.title')}
+              </h2>
+              <p>{t('guides.text')}</p>
+            </div>
+            <ul className="s-guide-list s-home-guides">
+              {GUIDES.map((g) => (
+                <li key={g.id}>
+                  <Link href={guidePath(g, locale)}>{g.content[locale].h1}</Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 

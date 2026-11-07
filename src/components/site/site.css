@@ -1310,6 +1310,9 @@
 .s-guide-faq { margin-top: 14px; max-width: none; }
 .s-guide-list { list-style: none; padding: 0 !important; }
 .s-guide-list a { color: var(--chalk); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: color-mix(in srgb, var(--paint) 60%, transparent); }
+.s-home-guides { margin: 0; display: grid; gap: 4px 28px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); }
+.s-home-guides li { line-height: 1.45; }
+.s-home-guides a { display: flex; align-items: center; min-height: 44px; padding: 6px 0; }
 .s-guide-cards { list-style: none; padding: 0 !important; margin-top: 28px !important; display: grid; gap: 12px !important; }
 .s-guide-card { display: grid; gap: 6px; padding: 18px 20px; border: 1px solid var(--line); border-radius: 16px; background: var(--s-surface); text-decoration: none; transition: border-color .2s; }
 .s-guide-card:hover, .s-guide-card:focus-visible { border-color: color-mix(in srgb, var(--paint) 55%, transparent); }
