@@ -38,8 +38,22 @@ export const intervalles: Guide = {
         {
           h2: 'Vidange de pelle toutes les combien d’heures\u00a0? Les intervalles typiques',
           paragraphs: [
+            'La plupart des pelles récentes demandent une vidange moteur vers 500\u00a0h, beaucoup de mini-pelles et de machines plus anciennes vers 250\u00a0h. Le tableau résume les repères typiques, détaillés dans la liste qui suit.',
             'Voici les ordres de grandeur que l’on retrouve dans les documents publics de constructeurs comme Caterpillar, Komatsu, Volvo, Liebherr, John Deere ou Kubota. Ce sont des repères typiques pour une pelle ou une chargeuse en conditions normales, pas des valeurs officielles\u00a0: chaque modèle a son propre tableau, à suivre selon le manuel du constructeur.',
           ],
+          table: {
+            caption: 'Intervalles d’entretien typiques (repères\u00a0: suivez le manuel du constructeur)',
+            head: ['Intervalle', 'Pelle récente', 'Mini-pelle ou machine plus ancienne', 'Remarque'],
+            rows: [
+              ['Quotidien (10\u00a0h)', 'Niveaux, purge d’eau, filtre à air, tour de la machine, graissage des articulations', 'Les mêmes contrôles', 'Avant de démarrer, par le machiniste'],
+              ['Premier service (50 à 100\u00a0h)', 'Selon le modèle\u00a0: première vidange moteur ou premiers filtres hydrauliques, resserrage de la visserie', 'Premier service vers 50\u00a0h fréquent', 'Machine neuve seulement'],
+              ['250\u00a0h', 'Courroies, batterie et réducteurs contrôlés\u00a0; graissage de la couronne d’orientation', 'Vidange moteur et filtre, plus les mêmes contrôles', 'Petit service'],
+              ['500\u00a0h', '«\u00a0Service 500 heures\u00a0»\u00a0: vidange moteur et filtre à huile, filtres à gasoil, filtre de cabine, souvent un échantillon d’huile', 'Nouvelle vidange moteur et filtre (rythme de 250\u00a0h)', 'Avec souvent une limite de 12\u00a0mois'],
+              ['1000\u00a0h', 'Filtre hydraulique principal, huile des réducteurs de translation et d’orientation, reniflard du réservoir', 'Selon le manuel du constructeur', 'Quelques modèles récents\u00a0: vidange moteur à 1000\u00a0h avec l’huile et les filtres du constructeur'],
+              ['2000\u00a0h', 'Vidange de l’huile hydraulique (beaucoup de pelles moyennes), jeu aux soupapes, huiles de transmission', 'Selon le manuel du constructeur', 'Jusqu’à 4000 ou 5000\u00a0h dans certains manuels, avec filtres d’origine et analyses d’huile'],
+              ['Annuel', 'Contrôle de sécurité, liquide de refroidissement et antigel, extincteur', 'Les mêmes opérations', 'Opérations «\u00a0au plus tard tous les 12\u00a0mois\u00a0», même si les heures ne sont pas atteintes'],
+            ],
+          },
           bullets: [
             'Quotidien (10 h)\u00a0: niveaux, purge d’eau, filtre à air, tour de la machine, graissage des articulations.',
             'Premier service (50 à 100 h, machine neuve)\u00a0: selon le modèle, première vidange moteur ou premiers filtres hydrauliques, resserrage de la visserie.',
@@ -141,9 +155,23 @@ export const intervalles: Guide = {
         {
           h2: 'Wartungsplan Bagger: Service 500 Stunden, Ölwechsel und Filter',
           paragraphs: [
+            'Die meisten neueren Bagger verlangen einen Motorölwechsel um 500 h, viele Minibagger und ältere Maschinen um 250 h. Die Tabelle fasst die typischen Richtwerte zusammen, die Liste darunter erklärt sie im Detail.',
             'Die folgenden Werte sind Grössenordnungen aus öffentlich zugänglichen Unterlagen von Herstellern wie Caterpillar, Komatsu, Volvo, Liebherr, John Deere oder Kubota. Es sind typische Richtwerte für Bagger und Lader unter normalen Bedingungen, keine offiziellen Zahlen. Verbindlich ist der Wartungsplan in der Betriebsanleitung des Herstellers.',
             'Die Unterschiede zwischen Modellen sind gross. Zwei Bagger derselben Gewichtsklasse können den Motorölwechsel nach 250 h beziehungsweise nach 500 h verlangen. Übernehmen Sie deshalb den Wartungsplan jeder Maschine direkt aus ihrer Anleitung.',
           ],
+          table: {
+            caption: 'Typische Wartungsintervalle (Richtwerte: massgebend ist die Betriebsanleitung des Herstellers)',
+            head: ['Intervall', 'Neuerer Bagger', 'Minibagger oder ältere Maschine', 'Hinweis'],
+            rows: [
+              ['Täglich (10 h)', 'Füllstände, Wasserabscheider, Luftfilter, Rundgang, Abschmieren', 'Dieselben Kontrollen', 'Vor Arbeitsbeginn, durch den Maschinisten'],
+              ['Erster Service (50 bis 100 h)', 'Je nach Modell erster Motorölwechsel oder erste Hydraulikfilter, Schrauben nachziehen', 'Erster Service nach etwa 50 h häufig', 'Nur bei neuen Maschinen'],
+              ['250 h', 'Keilriemen, Batterie und Fahrantriebe prüfen; Drehkranz schmieren', 'Motoröl und Filter wechseln, dazu dieselben Kontrollen', 'Kleiner Service'],
+              ['500 h', '500-Stunden-Service: Motoröl und Ölfilter, Dieselfilter, Kabinenfilter, oft eine Ölprobe', 'Erneuter Wechsel von Motoröl und Filter (250-h-Rhythmus)', 'Oft mit einer Grenze von 12 Monaten'],
+              ['1000 h', 'Hydraulik-Hauptfilter, Öl in Fahr- und Schwenkgetriebe, Tankentlüfter', 'Gemäss Betriebsanleitung des Herstellers', 'Einige neuere Modelle: Motorölwechsel erst nach 1000 h mit Herstelleröl und -filter'],
+              ['2000 h', 'Hydraulikölwechsel (viele mittlere Bagger), Ventilspiel, Getriebeöle', 'Gemäss Betriebsanleitung des Herstellers', 'Manche Anleitungen nennen 4000 oder 5000 h, mit Originalfiltern und Ölanalysen'],
+              ['Jährlich', 'Sicherheitskontrolle, Kühlmittel und Frostschutz, Feuerlöscher', 'Dieselben Arbeiten', 'Arbeiten mit dem Vermerk «spätestens alle 12 Monate», auch wenn die Stunden nicht erreicht sind'],
+            ],
+          },
           bullets: [
             'Täglich (10 h): Füllstände, Wasserabscheider, Luftfilter, Rundgang, Abschmieren.',
             'Erster Service (50 bis 100 h, neue Maschine): je nach Modell erster Motorölwechsel oder erste Hydraulikfilter, Schrauben nachziehen.',
@@ -246,9 +274,23 @@ export const intervalles: Guide = {
         {
           h2: 'Cambio olio dell’escavatore ogni quante ore? Gli intervalli tipici',
           paragraphs: [
+            'La maggior parte degli escavatori recenti chiede il cambio olio motore verso le 500 ore, molti miniescavatori e macchine meno recenti verso le 250 ore. La tabella riassume i valori tipici, spiegati in dettaglio nell’elenco che segue.',
             'Questi sono ordini di grandezza ricavati da documenti pubblici di costruttori come Caterpillar, Komatsu, Volvo, Liebherr, John Deere o Kubota. Sono valori tipici per escavatori e pale in condizioni normali, non dati ufficiali: ogni modello ha la propria tabella, da seguire secondo il manuale del costruttore.',
             'Le differenze tra modelli sono reali: due escavatori della stessa classe possono chiedere il cambio olio motore uno a 250 ore, l’altro a 500. Riporti quindi la tabella di manutenzione di ogni macchina così com’è nel suo manuale.',
           ],
+          table: {
+            caption: 'Intervalli di manutenzione tipici (valori indicativi: segua il manuale del costruttore)',
+            head: ['Intervallo', 'Escavatore recente', 'Miniescavatore o macchina meno recente', 'Nota'],
+            rows: [
+              ['Ogni giorno (10 ore)', 'Livelli, spurgo acqua, filtro aria, giro della macchina, ingrassaggio', 'Gli stessi controlli', 'Prima di partire, a cura dell’operatore'],
+              ['Primo tagliando (50-100 ore)', 'A seconda del modello, primo cambio olio motore o primi filtri idraulici, serraggio delle viti', 'Primo tagliando dopo circa 50 ore frequente', 'Solo macchine nuove'],
+              ['250 ore', 'Controllo di cinghie, batteria e riduttori; ingrassaggio della ralla', 'Cambio olio motore e filtro, più gli stessi controlli', 'Piccolo tagliando'],
+              ['500 ore', 'Tagliando delle 500 ore: olio motore e filtro, filtri gasolio, filtro cabina, spesso un campione d’olio', 'Nuovo cambio olio motore e filtro (ritmo di 250 ore)', 'Spesso con un limite di 12 mesi'],
+              ['1000 ore', 'Filtro idraulico principale, olio dei riduttori di traslazione e rotazione, sfiato del serbatoio', 'Secondo il manuale del costruttore', 'Alcuni modelli recenti: cambio olio motore a 1000 ore con olio e filtri del costruttore'],
+              ['2000 ore', 'Cambio dell’olio idraulico (molti escavatori medi), gioco valvole, oli della trasmissione', 'Secondo il manuale del costruttore', 'Alcuni manuali arrivano a 4000 o 5000 ore, con filtri originali e analisi dell’olio'],
+              ['Ogni anno', 'Controllo di sicurezza, liquido di raffreddamento e antigelo, estintore', 'Le stesse operazioni', 'Operazioni indicate «al più tardi ogni 12 mesi», anche se le ore non sono state raggiunte'],
+            ],
+          },
           bullets: [
             'Ogni giorno (10 ore): livelli, spurgo acqua, filtro aria, giro della macchina, ingrassaggio.',
             'Primo tagliando (50-100 ore, macchina nuova): a seconda del modello, primo cambio olio motore o primi filtri idraulici, serraggio delle viti.',
@@ -351,9 +393,23 @@ export const intervalles: Guide = {
         {
           h2: 'Construction equipment service schedule: typical intervals',
           paragraphs: [
+            'Most current excavators call for an engine oil change around 500 hours, many mini diggers and older machines around 250 hours. The table sums up the typical reference points, which the list below explains in detail.',
             'The figures below are orders of magnitude taken from publicly available material from manufacturers such as Caterpillar, Komatsu, Volvo, Liebherr, John Deere and Kubota. They are typical reference points for excavators and loaders in normal conditions, not official values. Every model has its own chart, and the manufacturer’s manual always takes precedence.',
             'Differences between models are real. Two excavators in the same weight class can call for an engine oil change at 250 hours and 500 hours respectively. Copy each machine’s service chart from its own manual rather than applying one rule to the whole fleet.',
           ],
+          table: {
+            caption: 'Typical service intervals (guidelines: follow the manufacturer’s manual)',
+            head: ['Interval', 'Current excavator', 'Mini digger or older machine', 'Note'],
+            rows: [
+              ['Daily (10 hours)', 'Levels, water separator, air filter, walk-round, greasing', 'The same checks', 'Before starting, by the operator'],
+              ['First service (50 to 100 hours)', 'Depending on the model, first engine oil change or first hydraulic filters, re-torque fasteners', 'First service after about 50 hours is common', 'New machines only'],
+              ['250 hours', 'Check belts, battery and final drives; grease the slew ring', 'Engine oil and filter, plus the same checks', 'Minor service'],
+              ['500 hours', '500-hour service: engine oil and filter, fuel filters, cab filter, often an oil sample', 'Another engine oil and filter change (250-hour rhythm)', 'Often with a 12-month limit as well'],
+              ['1,000 hours', 'Main hydraulic filter, travel and swing gearbox oil, tank breather', 'As per the manufacturer’s manual', 'Some recent models: engine oil at 1,000 hours with the manufacturer’s own oil and filters'],
+              ['2,000 hours', 'Hydraulic oil change (many mid-size excavators), valve clearances, transmission oils', 'As per the manufacturer’s manual', 'Some manuals extend this to 4,000 or 5,000 hours with genuine filters and oil analysis'],
+              ['Annual', 'Safety inspection, coolant and antifreeze, fire extinguisher', 'The same tasks', 'Tasks marked ‘at least every 12 months’, even if the hours have not been reached'],
+            ],
+          },
           bullets: [
             'Daily (10 hours): levels, water separator, air filter, walk-round, greasing.',
             'First service (50 to 100 hours, new machine): depending on the model, first engine oil change or first hydraulic filters, re-torque fasteners.',

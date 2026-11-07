@@ -7,8 +7,22 @@ export interface GuideSection {
   h2: string;
   /** Paragraphes ; un lien interne s'écrit [texte](/chemin-sans-langue), par ex. [la démo](/demo). */
   paragraphs: string[];
+  /**
+   * Tableau facultatif, affiché après les paragraphes et avant les puces. La première cellule de chaque ligne sert
+   * d'en-tête de ligne ; les cellules acceptent les liens [texte](/chemin).
+   */
+  table?: GuideTable;
   /** Liste à puces facultative, affichée après les paragraphes. */
   bullets?: string[];
+}
+
+export interface GuideTable {
+  /** Légende du tableau (ce qu'il montre, et ses limites). */
+  caption: string;
+  /** En-têtes de colonnes. */
+  head: string[];
+  /** Lignes : autant de cellules que d'en-têtes. */
+  rows: string[][];
 }
 
 export interface GuideContent {

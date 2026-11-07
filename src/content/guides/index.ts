@@ -8,7 +8,7 @@ import { location } from './location';
 import { obligation } from './obligation';
 import type { Guide, GuideContent } from './types';
 
-export type { Guide, GuideContent, GuideSection } from './types';
+export type { Guide, GuideContent, GuideSection, GuideTable } from './types';
 
 /** Ordre d'affichage dans la page des guides et dans les liens « À lire aussi ». */
 export const GUIDES: readonly Guide[] = [carnet, obligation, location, intervalles, couts, controles];

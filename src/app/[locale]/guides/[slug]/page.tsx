@@ -156,6 +156,39 @@ export default async function GuidePage({ params }: { params: Params }) {
                     <RichText text={p} />
                   </p>
                 ))}
+                {s.table ? (
+                  <div className="s-table-wrap">
+                    <table>
+                      <caption>{s.table.caption}</caption>
+                      <thead>
+                        <tr>
+                          {s.table.head.map((h, j) => (
+                            <th key={j} scope="col">
+                              {h}
+                            </th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {s.table.rows.map((row, j) => (
+                          <tr key={j}>
+                            {row.map((cell, k) =>
+                              k === 0 ? (
+                                <th key={k} scope="row">
+                                  <RichText text={cell} />
+                                </th>
+                              ) : (
+                                <td key={k}>
+                                  <RichText text={cell} />
+                                </td>
+                              ),
+                            )}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                ) : null}
                 {s.bullets?.length ? (
                   <ul>
                     {s.bullets.map((b, j) => (
