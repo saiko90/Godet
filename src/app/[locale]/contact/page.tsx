@@ -6,7 +6,7 @@ import { Icon, type IconName } from '@/components/Icons';
 import { ContactForm, type ContactInitial } from '@/components/site/ContactForm';
 import { countryOptions, isCountryCode } from '@/components/site/countries';
 import { firstParam, isRefCode, REF_COOKIE } from '@/components/site/nav';
-import { checkLocale, metaLocale, ogLocale, type LocaleParams } from '@/components/site/seo';
+import { checkLocale, metaLocale, ogImages, ogLocale, type LocaleParams } from '@/components/site/seo';
 import { SiteFooter, SiteHeader, SkipLink, STUDIO_URL } from '@/components/site/SiteChrome';
 import { SiteIcon } from '@/components/site/SiteIcons';
 import { pickMessages, type AppMessages } from '@/i18n/messages';
@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: { params: LocaleParams }): Pr
     title: t('title'),
     description: t('description'),
     alternates,
-    openGraph: { title: t('title'), description: t('description'), url: alternates.canonical, locale: ogLocale(locale), type: 'website', siteName: 'Godet' },
+    openGraph: { title: t('title'), description: t('description'), url: alternates.canonical, locale: ogLocale(locale), type: 'website', siteName: 'Godet', images: await ogImages(locale) },
   };
 }
 

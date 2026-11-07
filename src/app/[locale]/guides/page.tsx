@@ -2,7 +2,7 @@
 import type { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { RichText } from '@/components/site/guides/RichText';
-import { checkLocale, metaLocale, ogLocale, type LocaleParams } from '@/components/site/seo';
+import { checkLocale, metaLocale, ogImages, ogLocale, type LocaleParams } from '@/components/site/seo';
 import { SiteFooter, SiteHeader, SkipLink } from '@/components/site/SiteChrome';
 import { GUIDES, guidePath } from '@/content/guides';
 import { localizedAlternates } from '@/i18n/metadata';
@@ -23,6 +23,7 @@ export async function generateMetadata({ params }: { params: LocaleParams }): Pr
       locale: ogLocale(locale),
       type: 'website',
       siteName: 'Godet',
+      images: await ogImages(locale),
     },
   };
 }

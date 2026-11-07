@@ -6,7 +6,7 @@ import { HeroStage } from '@/components/site/HeroStage';
 import { JsonLd } from '@/components/site/JsonLd';
 import { heroImage } from '@/components/site/hero-image';
 import { RefTracker } from '@/components/site/RefTracker';
-import { checkLocale, metaLocale, ogLocale, type LocaleParams } from '@/components/site/seo';
+import { checkLocale, metaLocale, ogImages, ogLocale, type LocaleParams } from '@/components/site/seo';
 import { SiteFooter, SiteHeader, SkipLink } from '@/components/site/SiteChrome';
 import { SiteIcon, type SiteIconName } from '@/components/site/SiteIcons';
 import { SiteVideos } from '@/components/site/SiteVideos';
@@ -28,7 +28,6 @@ export async function generateMetadata({ params }: { params: LocaleParams }): Pr
   const locale = metaLocale((await params).locale);
   const t = await getTranslations({ locale, namespace: 'site.meta' });
   const alternates = localizedAlternates('/', locale);
-  const hero = heroImage(locale);
   return {
     title: { absolute: t('title') },
     description: t('description'),
@@ -40,7 +39,7 @@ export async function generateMetadata({ params }: { params: LocaleParams }): Pr
       locale: ogLocale(locale),
       type: 'website',
       siteName: 'Godet',
-      ...(hero ? { images: [{ url: hero.src, width: hero.width, height: hero.height, alt: t('ogImageAlt') }] } : {}),
+      images: await ogImages(locale),
     },
   };
 }

@@ -4,7 +4,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { FormatProvider } from '@/components/FormatProvider';
 import { DemoAgenda } from '@/components/site/location/demo';
 import { RefTracker } from '@/components/site/RefTracker';
-import { checkLocale, metaLocale, ogLocale } from '@/components/site/seo';
+import { checkLocale, metaLocale, ogImages, ogLocale } from '@/components/site/seo';
 import { localizedAlternates } from '@/i18n/metadata';
 import { SiteHeader, SkipLink } from '@/components/site/SiteChrome';
 import { nowMs } from '@/lib/clock';
@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
     title,
     description: t('demo.metaDescription'),
     alternates,
-    openGraph: { title, description: t('demo.metaDescription'), url: alternates.canonical, locale: ogLocale(locale), type: 'website', siteName: 'Godet' },
+    openGraph: { title, description: t('demo.metaDescription'), url: alternates.canonical, locale: ogLocale(locale), type: 'website', siteName: 'Godet', images: await ogImages(locale) },
   };
 }
 

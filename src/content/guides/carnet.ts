@@ -2,6 +2,7 @@ import type { Guide } from './types';
 
 export const carnet: Guide = {
   id: 'carnet',
+  published: '2026-10-23',
   updated: '2026-10-23',
   content: {
     fr: {

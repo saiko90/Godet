@@ -4,7 +4,7 @@ import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server
 import { Icon } from '@/components/Icons';
 import { RENTAL_STEPS, START_STEPS, TASKS, guidePdf } from '@/components/site/aide/content';
 import { InstallGuide } from '@/components/site/aide/InstallGuide';
-import { checkLocale, metaLocale, ogLocale, type LocaleParams } from '@/components/site/seo';
+import { checkLocale, metaLocale, ogImages, ogLocale, type LocaleParams } from '@/components/site/seo';
 import { SiteFooter, SiteHeader, SkipLink } from '@/components/site/SiteChrome';
 import { localizedAlternates } from '@/i18n/metadata';
 import { pickMessages, type AppMessages } from '@/i18n/messages';
@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: { params: LocaleParams }): Pr
     title: t('title'),
     description: t('description'),
     alternates,
-    openGraph: { title: t('title'), description: t('description'), url: alternates.canonical, locale: ogLocale(locale), type: 'article', siteName: 'Godet' },
+    openGraph: { title: t('title'), description: t('description'), url: alternates.canonical, locale: ogLocale(locale), type: 'article', siteName: 'Godet', images: await ogImages(locale) },
   };
 }
 

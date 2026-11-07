@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { checkLocale, metaLocale, ogLocale, type LocaleParams } from '@/components/site/seo';
+import { checkLocale, metaLocale, ogImages, ogLocale, type LocaleParams } from '@/components/site/seo';
 import { SiteFooter, SiteHeader, SkipLink, STUDIO_URL } from '@/components/site/SiteChrome';
 import { localizedAlternates } from '@/i18n/metadata';
 import { Link } from '@/i18n/navigation';
@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: { params: LocaleParams }): Pr
     title: t('title'),
     description: t('description'),
     alternates,
-    openGraph: { title: t('title'), description: t('description'), url: alternates.canonical, locale: ogLocale(locale), type: 'article', siteName: 'Godet' },
+    openGraph: { title: t('title'), description: t('description'), url: alternates.canonical, locale: ogLocale(locale), type: 'article', siteName: 'Godet', images: await ogImages(locale) },
   };
 }
 

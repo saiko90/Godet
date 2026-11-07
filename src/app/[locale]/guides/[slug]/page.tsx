@@ -6,7 +6,7 @@ import { Icon } from '@/components/Icons';
 import { JsonLd } from '@/components/site/JsonLd';
 import { plainText, RichText } from '@/components/site/guides/RichText';
 import { localizePath } from '@/components/site/nav';
-import { checkLocale, metaLocale, ogLocale } from '@/components/site/seo';
+import { checkLocale, metaLocale, ogImages, ogLocale } from '@/components/site/seo';
 import { SiteFooter, SiteHeader, SkipLink } from '@/components/site/SiteChrome';
 import { GUIDES, guideBySlug, guideParams, guidePath } from '@/content/guides';
 import { Link } from '@/i18n/navigation';
@@ -48,6 +48,8 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
       locale: ogLocale(locale),
       type: 'article',
       siteName: 'Godet',
+      images: await ogImages(locale),
+      publishedTime: guide.published ?? guide.updated,
       modifiedTime: guide.updated,
     },
   };
@@ -68,6 +70,7 @@ export default async function GuidePage({ params }: { params: Params }) {
   const url = `${base}${localizePath(guidePath(guide, locale), locale)}`;
   const related = GUIDES.filter((g) => g.id !== guide.id);
   const half = Math.ceil(c.sections.length / 2);
+  const images = (await ogImages(locale)).map((i) => `${base}${i.url}`);
 
   const ld = [
     {
@@ -76,8 +79,9 @@ export default async function GuidePage({ params }: { params: Params }) {
       headline: c.h1,
       description: c.description,
       inLanguage: locale,
+      datePublished: guide.published ?? guide.updated,
       dateModified: guide.updated,
-      datePublished: guide.updated,
+      image: images,
       mainEntityOfPage: url,
       author: { '@type': 'Organization', name: 'Swiss Digital Studio', url: 'https://www.swissdigitalstudio.ch' },
       publisher: { '@type': 'Organization', name: 'Godet', url: base, logo: { '@type': 'ImageObject', url: `${base}/icons/icon-512.png` } },

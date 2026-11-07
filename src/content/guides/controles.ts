@@ -2,6 +2,7 @@ import type { Guide } from './types';
 
 export const controles: Guide = {
   id: 'controles',
+  published: '2026-11-05',
   updated: '2026-11-05',
   content: {
     fr: {

@@ -4,6 +4,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { FormatProvider } from '@/components/FormatProvider';
 import { DemoGarage } from '@/components/garage/DemoGarage';
+import { ogImages } from '@/components/site/seo';
 import { localizedAlternates } from '@/i18n/metadata';
 import { routing } from '@/i18n/routing';
 
@@ -20,6 +21,7 @@ export async function generateMetadata({ params }: Pick<Props, 'params'>): Promi
   const title = t('title');
   const shareTitle = t('shareTitle');
   const description = t('description');
+  const images = await ogImages(locale);
   return {
     title,
     description,
@@ -35,8 +37,9 @@ export async function generateMetadata({ params }: Pick<Props, 'params'>): Promi
       type: 'website',
       locale: locale === 'en' ? 'en_GB' : `${locale}_CH`,
       siteName: 'Godet',
+      images,
     },
-    twitter: { card: 'summary', title: shareTitle, description },
+    twitter: { card: 'summary_large_image', title: shareTitle, description, images: images.map((i) => i.url) },
   };
 }
 

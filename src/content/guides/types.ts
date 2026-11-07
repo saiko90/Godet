@@ -33,6 +33,11 @@ export interface GuideContent {
 export interface Guide {
   /** Identifiant stable (ne change jamais). */
   id: string;
+  /**
+   * Date de première publication (AAAA-MM-JJ), qui ne change plus ensuite. Facultative pour rester compatible avec
+   * les anciens guides : sans elle, la date de mise à jour sert de date de publication.
+   */
+  published?: string;
   /** Date de dernière mise à jour du contenu (AAAA-MM-JJ). */
   updated: string;
   content: Record<AppLocale, GuideContent>;
