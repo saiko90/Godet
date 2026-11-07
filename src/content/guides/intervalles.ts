@@ -2,13 +2,13 @@ import type { Guide } from './types';
 
 export const intervalles: Guide = {
   id: 'intervalles',
-  updated: '2026-10-23',
+  updated: '2026-11-07',
   content: {
     fr: {
       slug: 'intervalles-entretien-engins-chantier',
-      metaTitle: 'Intervalle d’entretien pelle mécanique et engins de chantier',
+      metaTitle: 'Intervalle d’entretien pelle et engins\u00a0: 250, 500, 1000 h',
       description:
-        'Intervalle d’entretien des engins de chantier\u00a0: graissage quotidien, service 250 et 500 h, vidanges, filtres. Repères typiques et méthode pour ne rien oublier.',
+        'Intervalle d’entretien des engins de chantier\u00a0: graissage quotidien, services 250, 500 et 1000 h, vidange, filtres. Repères pour pelle et mini-pelle.',
       h1: 'Intervalles d’entretien des engins de chantier\u00a0: toutes les combien d’heures\u00a0?',
       lead: 'La plupart des pelles, mini-pelles et chargeuses suivent un rythme en heures moteur\u00a0: contrôles et graissage chaque jour, petit service vers 250 h, service complet vers 500 h, filtres et huile hydraulique entre 1000 et 5000 h selon le modèle. Les chiffres exacts sont dans le manuel du constructeur, et ils raccourcissent en conditions sévères. Ce guide donne des repères typiques et une méthode simple pour ne rater aucune échéance.',
       sections: [
@@ -108,10 +108,10 @@ export const intervalles: Guide = {
     },
     de: {
       slug: 'wartungsintervalle-baumaschinen',
-      metaTitle: 'Wartungsintervalle Baumaschinen: Bagger, Lader, Minibagger',
+      metaTitle: 'Wartungsplan Baumaschinen: Wartungsintervalle Bagger, Lader',
       description:
-        'Wartungsintervalle für Baumaschinen: tägliches Abschmieren, Service 250 und 500 h, Ölwechsel, Filter. Typische Richtwerte und wie Sie keinen Termin verpassen.',
-      h1: 'Wartungsintervalle für Baumaschinen: wann welcher Service fällig ist',
+        'Wartungsplan für Baumaschinen: tägliches Abschmieren, Service nach 250, 500 und 1000 h, Ölwechsel, Filter. Richtwerte für Bagger, Radlader und Minibagger.',
+      h1: 'Wartungsplan und Wartungsintervalle für Baumaschinen: wann welcher Service fällig ist',
       lead: 'Bagger, Minibagger und Radlader werden nach Betriebsstunden gewartet: täglich kontrollieren und abschmieren, kleiner Service um 250 h, grosser Service um 500 h, Hydraulikfilter und Hydrauliköl je nach Modell zwischen 1000 und 5000 h. Massgebend ist immer die Betriebsanleitung des Herstellers, und unter harten Bedingungen werden die Abstände kürzer. Hier finden Sie typische Richtwerte und eine einfache Methode, damit kein Termin untergeht.',
       sections: [
         {
@@ -138,7 +138,7 @@ export const intervalles: Guide = {
           ],
         },
         {
-          h2: 'Bagger Service 500 Stunden, Ölwechsel und Filter: typische Intervalle',
+          h2: 'Wartungsplan Bagger: Service 500 Stunden, Ölwechsel und Filter',
           paragraphs: [
             'Die folgenden Werte sind Grössenordnungen aus öffentlich zugänglichen Unterlagen von Herstellern wie Caterpillar, Komatsu, Volvo, Liebherr, John Deere oder Kubota. Es sind typische Richtwerte für Bagger und Lader unter normalen Bedingungen, keine offiziellen Zahlen. Verbindlich ist der Wartungsplan in der Betriebsanleitung des Herstellers.',
             'Die Unterschiede zwischen Modellen sind gross. Zwei Bagger derselben Gewichtsklasse können den Motorölwechsel nach 250 h beziehungsweise nach 500 h verlangen. Übernehmen Sie deshalb den Wartungsplan jeder Maschine direkt aus ihrer Anleitung.',

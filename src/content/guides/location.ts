@@ -2,15 +2,15 @@ import type { Guide } from './types';
 
 export const location: Guide = {
   id: 'location',
-  updated: '2026-10-23',
+  updated: '2026-11-07',
   content: {
     fr: {
       slug: 'logiciel-location-machines-chantier',
-      metaTitle: 'Logiciel location machines de chantier : planning, état des lieux',
+      metaTitle: 'Logiciel location matériel TP : planning et état des lieux',
       description:
-        'Logiciel location machines de chantier : planning sans double réservation, état des lieux photo signé, litiges réglés. Essai gratuit de 15 jours.',
+        'Logiciel de location de matériel TP et BTP : planning sans double réservation, état des lieux photo signé, rapport PDF au client. Essai gratuit de 15 jours.',
       h1: 'Logiciel de location de machines de chantier : planning, états des lieux et litiges',
-      lead: 'Un logiciel de location de machines de chantier sert à trois choses : savoir quelle machine est libre et quand, documenter son état au départ et au retour, puis facturer sans discussion ce qui a changé entre les deux. Des photos imposées, un relevé du compteur et deux signatures règlent la plupart des litiges sur les dégâts. Voici comment organiser vos locations, avec une check-list d’état des lieux prête à l’emploi.',
+      lead: 'Un logiciel de location de machines de chantier et de matériel TP sert à trois choses : savoir quelle machine est libre et quand, documenter son état au départ et au retour, puis facturer sans discussion ce qui a changé entre les deux. Des photos imposées, un relevé du compteur et deux signatures règlent la plupart des litiges sur les dégâts. Voici comment organiser vos locations, avec une check-list d’état des lieux prête à l’emploi.',
       sections: [
         {
           h2: 'Location d’engins de chantier : les problèmes qui reviennent toujours',
@@ -109,7 +109,7 @@ export const location: Guide = {
     },
     de: {
       slug: 'software-baumaschinenvermietung',
-      metaTitle: 'Software Baumaschinenvermietung: Mietplanung, Übergabeprotokoll',
+      metaTitle: 'Software Baumaschinenvermietung: Mietplanung und Übergabe',
       description:
         'Software für die Baumaschinenvermietung: Mietplanung ohne Doppelbuchung, Übergabeprotokoll mit Fotos und Unterschrift. 15 Tage kostenlos testen.',
       h1: 'Software für die Baumaschinenvermietung: Planung, Übergabe und Rückgabe',
@@ -315,9 +315,9 @@ export const location: Guide = {
     },
     en: {
       slug: 'equipment-rental-software',
-      metaTitle: 'Construction equipment rental software: bookings and check-in',
+      metaTitle: 'Construction equipment hire and rental software: bookings',
       description:
-        'Construction equipment rental software: no double bookings, photo check-out and check-in signed on a tablet, fewer damage disputes. Try it free for 15 days.',
+        'Construction equipment hire software: no double bookings, photo check-out and check-in signed on a tablet, fewer damage disputes. Free 15-day trial.',
       h1: 'Construction equipment rental software: bookings, check-out and check-in',
       lead: 'Construction equipment rental software does three jobs: shows which machine is free and when, records its condition at check-out and check-in, and backs up any charge for what changed in between. Required photos, an hour meter reading and two signatures settle most damage disputes. Here is how to organise it, with a ready-to-use check-out checklist.',
       sections: [

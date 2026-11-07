@@ -6,7 +6,7 @@ export const obligation: Guide = {
   content: {
     fr: {
       slug: 'obligation-entretien-art-32b-opa',
-      metaTitle: 'Obligation d’entretien des machines de chantier (art. 32b OPA)',
+      metaTitle: 'Obligation d’entretien machines de chantier (art. 32b OPA)',
       description:
         'Obligation d’entretien des machines de chantier selon l’art. 32b OPA : ce qu’il faut consigner, qui est responsable et comment s’organiser simplement.',
       h1: 'L’obligation d’entretien des machines de chantier (art. 32b OPA)',
@@ -102,7 +102,7 @@ export const obligation: Guide = {
     },
     de: {
       slug: 'instandhaltungspflicht-art-32b-vuv',
-      metaTitle: 'Instandhaltungspflicht für Baumaschinen: Art. 32b VUV erklärt',
+      metaTitle: 'Instandhaltungspflicht Baumaschinen: Art. 32b VUV erklärt',
       description:
         'Instandhaltungspflicht für Baumaschinen nach Art. 32b VUV: was Sie dokumentieren müssen, wer verantwortlich ist und wie Sie die Wartung sauber planen.',
       h1: 'Instandhaltungspflicht für Baumaschinen nach Art. 32b VUV',

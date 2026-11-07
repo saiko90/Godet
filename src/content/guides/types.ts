@@ -14,7 +14,10 @@ export interface GuideSection {
 export interface GuideContent {
   /** Adresse dans cette langue (minuscules, chiffres, tirets), sans /guides/. */
   slug: string;
-  /** Titre de l'onglet et de Google (55 à 65 caractères ; « · Godet » est ajouté automatiquement). */
+  /**
+   * Titre de l'onglet et de Google, 60 caractères au plus, espaces comprises (titre absolu : pas de « · Godet »
+   * ajouté). Mettre le mot-clé exact au début.
+   */
   metaTitle: string;
   /** Description Google (140 à 160 caractères). */
   description: string;

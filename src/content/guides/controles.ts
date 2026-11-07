@@ -6,7 +6,7 @@ export const controles: Guide = {
   content: {
     fr: {
       slug: 'controle-annuel-nacelles-chariots-elevateurs-grues',
-      metaTitle: 'Contrôle annuel nacelles, chariots élévateurs et grues (Suva)',
+      metaTitle: 'Contrôle annuel nacelles, chariots élévateurs, grues (Suva)',
       description:
         'Nacelles, chariots élévateurs et grues : ce que demandent l’OPA, l’ordonnance sur les grues et la Suva, qui contrôle, à quel rythme et comment le prouver.',
       h1: 'Contrôle annuel de sécurité : nacelles, chariots élévateurs et grues',
@@ -184,7 +184,7 @@ export const controles: Guide = {
     },
     it: {
       slug: 'controllo-annuale-piattaforme-carrelli-elevatori-gru',
-      metaTitle: 'Controllo annuale piattaforme, carrelli elevatori e gru (Suva)',
+      metaTitle: 'Controllo annuale piattaforme, carrelli e gru (Suva)',
       description:
         'Piattaforme aeree, carrelli elevatori e gru: cosa chiedono l’OPI, l’ordinanza sulle gru e la Suva, chi controlla, con quale frequenza e come dimostrarlo.',
       h1: 'Controllo annuale di sicurezza: piattaforme, carrelli elevatori e gru',
@@ -273,7 +273,7 @@ export const controles: Guide = {
     },
     en: {
       slug: 'annual-inspection-mewp-forklift-crane-switzerland',
-      metaTitle: 'Annual inspection of MEWPs, forklifts and cranes in Switzerland',
+      metaTitle: 'Annual inspection of MEWPs, forklifts and cranes (Swiss)',
       description:
         'MEWPs, forklifts and cranes in Switzerland: what the OPA, the Crane Ordinance and Suva require, who inspects, how often, and how to keep the records.',
       h1: 'Annual safety inspection: MEWPs, forklifts and cranes',

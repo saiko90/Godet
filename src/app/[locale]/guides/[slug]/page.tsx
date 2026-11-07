@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   const c = guide.content[locale];
   const alternates = alternatesFor(guide.id, locale);
   return {
-    title: c.metaTitle,
+    title: { absolute: c.metaTitle },
     description: c.description,
     alternates,
     openGraph: {
