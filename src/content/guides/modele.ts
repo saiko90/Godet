@@ -104,7 +104,7 @@ export const modele: Guide = {
         },
         {
           q: 'Un carnet d’entretien en Excel suffit-il pour l’art. 32b OPA\u00a0?',
-          a: 'L’ordonnance demande d’entretenir les équipements de travail selon les instructions du fabricant\u00a0; elle n’impose pas de logiciel. Un tableur complet, daté et tenu à jour peut servir de trace. Sa faiblesse\u00a0: une ligne peut être modifiée ou effacée sans laisser de trace, ce qui affaiblit la preuve en cas de litige.',
+          a: 'L’ordonnance demande d’entretenir les équipements de travail selon les instructions du fabricant et de consigner les résultats de l’entretien\u00a0; elle n’impose pas de logiciel. Un tableur complet, daté et tenu à jour peut servir de trace. Sa faiblesse\u00a0: une ligne peut être modifiée ou effacée sans laisser de trace, ce qui affaiblit la preuve en cas de litige.',
         },
         {
           q: 'Quels formats de date et de nombre utiliser\u00a0?',
@@ -209,7 +209,7 @@ export const modele: Guide = {
         },
         {
           q: 'Genügt ein Wartungsheft in Excel für Art. 32b VUV?',
-          a: 'Die Verordnung verlangt, Arbeitsmittel nach den Angaben des Herstellers instand zu halten; eine bestimmte Software schreibt sie nicht vor. Eine vollständige, datierte und aktuelle Tabelle kann als Nachweis dienen. Ihre Schwäche: Eine Zeile lässt sich spurlos ändern oder löschen, was den Nachweis im Streitfall schwächt.',
+          a: 'Die Verordnung verlangt, Arbeitsmittel nach den Angaben des Herstellers instand zu halten und die Ergebnisse der Instandhaltung festzuhalten; eine bestimmte Software schreibt sie nicht vor. Eine vollständige, datierte und aktuelle Tabelle kann als Nachweis dienen. Ihre Schwäche: Eine Zeile lässt sich spurlos ändern oder löschen, was den Nachweis im Streitfall schwächt.',
         },
         {
           q: 'Welche Datums- und Zahlenformate funktionieren?',
@@ -314,7 +314,7 @@ export const modele: Guide = {
         },
         {
           q: 'Un libretto di manutenzione in Excel basta per l’art. 32b OPI?',
-          a: 'L’ordinanza chiede di mantenere le attrezzature di lavoro secondo le istruzioni del fabbricante; non impone un software. Un foglio completo, datato e aggiornato può servire come traccia. Il suo punto debole: una riga può essere modificata o cancellata senza lasciare traccia, il che indebolisce la prova in caso di contestazione.',
+          a: 'L’ordinanza chiede di mantenere le attrezzature di lavoro secondo le istruzioni del fabbricante e di registrare i risultati della manutenzione; non impone un software. Un foglio completo, datato e aggiornato può servire come traccia. Il suo punto debole: una riga può essere modificata o cancellata senza lasciare traccia, il che indebolisce la prova in caso di contestazione.',
         },
         {
           q: 'Quali formati di data e di numero usare?',
@@ -419,7 +419,7 @@ export const modele: Guide = {
         },
         {
           q: 'Is an Excel maintenance log enough for Art. 32b of the Swiss ordinance?',
-          a: 'The ordinance requires work equipment to be maintained according to the manufacturer’s instructions; it does not prescribe any particular software. A complete, dated and up-to-date spreadsheet can serve as a record. Its weak point: a row can be changed or deleted without trace, which weakens the evidence in a dispute.',
+          a: 'The ordinance requires work equipment to be maintained according to the manufacturer’s instructions and the results of maintenance to be recorded; it does not prescribe any particular software. A complete, dated and up-to-date spreadsheet can serve as a record. Its weak point: a row can be changed or deleted without trace, which weakens the evidence in a dispute.',
         },
         {
           q: 'Which date and number formats work?',
