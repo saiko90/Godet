@@ -1,7 +1,8 @@
 {
   "meta": {
-    "title": "Godet — le garage de votre parc d’engins",
-    "description": "Le carnet d’entretien numérique des machines de chantier\u00a0: services, réparations, pièces, coûts, photos, vidéos et échéances. Essai gratuit de 15\u00a0jours, sans carte de crédit.",
+    "title": "Logiciel d’entretien des machines de chantier | Godet",
+    "ogTitle": "Godet — le garage de votre parc d’engins",
+    "description": "Carnet d’entretien numérique des machines de chantier\u00a0: services, réparations, échéances, coûts par engin, conforme art. 32b OPA. 15\u00a0jours gratuits.",
     "ogDescription": "Chaque machine a son carnet complet. Les contrôles ne s’oublient plus, les coûts par machine sont clairs. Conforme à l’art. 32b OPA.",
     "ogImageAlt": "Le showroom 3D de Godet"
   },

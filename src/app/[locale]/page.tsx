@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: { params: LocaleParams }): Pr
     description: t('description'),
     alternates,
     openGraph: {
-      title: t('title'),
+      title: t('ogTitle'),
       description: t('ogDescription'),
       url: alternates.canonical,
       locale: ogLocale(locale),
@@ -148,11 +148,14 @@ export default async function HomePage({ params }: { params: LocaleParams }) {
         {/* ---------- héros ---------- */}
         <section className="s-hero" aria-labelledby="titre">
           <div className="s-wrap">
-            <p className="s-kicker">
-              <i aria-hidden="true" />
-              {t('hero.kicker')}
-            </p>
-            <h1 id="titre">{t.rich('hero.title', { em: (chunks) => <em>{chunks}</em> })}</h1>
+            {/* Le kicker (mot-clé métier) fait partie du h1 ; le rendu reste celui d'une étiquette au-dessus du titre. */}
+            <h1 id="titre">
+              <span className="s-kicker">
+                <i aria-hidden="true" />
+                {t('hero.kicker')}
+              </span>{' '}
+              <span className="s-h1-main">{t.rich('hero.title', { em: (chunks) => <em>{chunks}</em> })}</span>
+            </h1>
             <p className="s-lead">{t('hero.lead')}</p>
             <div className="s-cta">
               <Link href="/demo" className="btn btn-primary">

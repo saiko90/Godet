@@ -1,7 +1,8 @@
 {
   "meta": {
-    "title": "Godet — the garage for your equipment fleet",
-    "description": "The digital maintenance log for construction machinery: services, repairs, parts, costs, photos, videos and due dates. Free 15-day trial, no credit card required.",
+    "title": "Construction equipment maintenance software | Godet",
+    "ogTitle": "Godet — the garage for your equipment fleet",
+    "description": "Digital maintenance log for construction equipment: services, repairs, due dates and cost per machine, full history. Free 15-day trial, no card needed.",
     "ogDescription": "Every machine gets its complete log. No more missed inspections, and clear costs for every machine.",
     "ogImageAlt": "Godet’s 3D showroom"
   },
