@@ -799,7 +799,7 @@ export function GarageApp({ mode, makeRepo, orgName, initialFleet, initialMachin
     <div className={rootClass}>
       {/* Tout ce qui est derrière une modale ou la visionneuse devient inerte (clavier, lecteurs d'écran). */}
       <div className="g-layer" inert={covered}>
-        <h1 className="g-sr">{t('app.srTitle', { org: displayName })}</h1>
+        <h1 className="g-sr">{mode === 'demo' ? t('app.srTitleDemo') : t('app.srTitle', { org: displayName })}</h1>
         {mode === 'demo' ? (
           <div className="g-demo-strip" role="note">
             <span>

@@ -43,6 +43,7 @@
   },
   "app": {
     "srTitle": "Godet · garage di {org}",
+    "srTitleDemo": "Demo di Godet: libretto di manutenzione di otto macchine edili",
     "hintTouch": "Tocchi una macchina per aprirne la scheda",
     "hintClick": "Clicchi su una macchina per aprirne la scheda",
     "emptyTitle": "Il garage è vuoto",

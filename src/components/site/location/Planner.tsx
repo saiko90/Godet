@@ -49,6 +49,7 @@ export function Planner({
   nowIso,
   canManage,
   userId,
+  titleAs: Title = 'h1',
 }: {
   orgId: string;
   orgName: string;
@@ -63,6 +64,8 @@ export function Planner({
   nowIso: string;
   canManage: boolean;
   userId: string;
+  /** Niveau du titre « Location » : h2 quand la page a déjà son h1 (démonstration). */
+  titleAs?: 'h1' | 'h2';
 }) {
   const t = useTranslations('rental');
   const f = useFormat();
@@ -122,7 +125,7 @@ export function Planner({
       <div className="s-rent-head">
         <div>
           <p className="eyebrow">{orgName}</p>
-          <h1>{t('title')}</h1>
+          <Title>{t('title')}</Title>
         </div>
         <button type="button" className="btn btn-primary" onClick={() => setForm({})}>
           <Icon name="plus" />

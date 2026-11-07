@@ -98,6 +98,7 @@ export function DemoAgenda({ nowIso }: { nowIso: string }) {
         nowIso={nowIso}
         canManage
         userId={DEMO_RENTAL_USER}
+        titleAs="h2"
       />
     </Shell>
   );

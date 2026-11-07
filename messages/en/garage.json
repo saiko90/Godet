@@ -43,6 +43,7 @@
   },
   "app": {
     "srTitle": "Godet · {org} garage",
+    "srTitleDemo": "Godet demo: maintenance log for eight construction machines",
     "hintTouch": "Tap a machine to open its details",
     "hintClick": "Click a machine to open its details",
     "emptyTitle": "The garage is empty",

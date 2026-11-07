@@ -43,6 +43,7 @@
   },
   "app": {
     "srTitle": "Godet · garage de {org}",
+    "srTitleDemo": "Démo de Godet\u00a0: carnet d’entretien de huit machines de chantier",
     "hintTouch": "Touchez une machine pour ouvrir sa fiche",
     "hintClick": "Cliquez sur une machine pour ouvrir sa fiche",
     "emptyTitle": "Le garage est vide",

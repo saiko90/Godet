@@ -43,6 +43,7 @@
   },
   "app": {
     "srTitle": "Godet · Garage von {org}",
+    "srTitleDemo": "Godet-Demo: Wartungsheft für acht Baumaschinen",
     "hintTouch": "Tippen Sie auf eine Maschine, um ihre Details zu öffnen",
     "hintClick": "Klicken Sie auf eine Maschine, um ihre Details zu öffnen",
     "emptyTitle": "Die Garage ist leer",

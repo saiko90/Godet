@@ -14,8 +14,9 @@ type Params = Promise<{ locale: string }>;
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const locale = metaLocale((await params).locale);
   const t = await getTranslations({ locale, namespace: 'rental' });
+  const tm = await getTranslations({ locale, namespace: 'demo.meta' });
   const alternates = localizedAlternates('/demo/location', locale);
-  const title = `${t('title')} · ${t('demo.label')}`;
+  const title = tm('locationTitle');
   return {
     title,
     description: t('demo.metaDescription'),
@@ -27,11 +28,14 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 export default async function DemoLocationPage({ params }: { params: Params }) {
   const locale = checkLocale((await params).locale);
   setRequestLocale(locale);
+  const tm = await getTranslations({ locale, namespace: 'demo.meta' });
   return (
     <div className="s-page">
       <SkipLink />
       <SiteHeader />
       <main id="contenu" className="s-wrap s-rent">
+        {/* Titre de la page pour Google et les lecteurs d'écran ; l'agenda (rendu dans le navigateur) garde son titre visible en h2. */}
+        <h1 className="s-sr">{tm('locationTitle')}</h1>
         <FormatProvider locale={locale} country="CH" currency="CHF">
           <DemoAgenda nowIso={new Date(nowMs()).toISOString()} />
         </FormatProvider>
