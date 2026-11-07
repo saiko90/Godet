@@ -7,6 +7,9 @@ export const routing = defineRouting({
   defaultLocale: 'fr',
   localePrefix: 'as-needed',
   localeCookie: { name: 'godet-lang', maxAge: 60 * 60 * 24 * 365, sameSite: 'lax' },
+  // Les hreflang viennent des balises HTML (localizedAlternates, alternatesFor) et du sitemap ; l'en-tête Link de
+  // next-intl ignore les adresses traduites des guides et pointait vers des 404.
+  alternateLinks: false,
 });
 
 export type AppLocale = (typeof routing.locales)[number];
